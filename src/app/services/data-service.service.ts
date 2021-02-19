@@ -12,8 +12,8 @@ export class DataServiceService {
   }
 
   authenticateUser(form: any): Observable<any> {
-    const url = 'http://104.236.233.114:8883/logout/arg1_arg2';
-    return this.http.get(url, form.value).pipe(map((response: any) => {
+    const url = 'http://104.236.233.114:8883/login';
+    return this.http.post(url, form.value).pipe(map((response: any) => {
       return response.data;
     }));
   }
