@@ -8,7 +8,11 @@
 
   .left-section {
     background: rgb(84, 182, 191);
-    background: linear-gradient(90deg, rgba(84, 182, 191, 0.9700922605370274) 44%, rgba(197, 230, 228, 1) 100%);
+    background: linear-gradient(
+      90deg,
+      rgba(84, 182, 191, 0.9700922605370274) 44%,
+      rgba(197, 230, 228, 1) 100%
+    );
     width: 70%;
     padding: 40px 20px 20px 40px;
 
@@ -27,7 +31,6 @@
     }
 
     .heading {
-
       &__white {
         color: #ffffff;
         font-size: 60px;
@@ -40,7 +43,6 @@
         font-weight: 700;
         line-height: 45px;
       }
-
     }
 
     .login-form {
@@ -98,7 +100,6 @@
     }
   }
 
-
   .right-section {
     width: 30%;
     padding: 40px 20px 20px;
@@ -142,14 +143,10 @@
       font-size: 10px;
       text-align: center;
     }
-
-
-
   }
 
   .left-section,
   .right-section {
     height: 100%;
   }
-
 }

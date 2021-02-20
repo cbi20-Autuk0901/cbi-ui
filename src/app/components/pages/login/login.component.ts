@@ -1,37 +1,30 @@
-import {Component, OnInit} from '@angular/core';
-import { FormBuilder } from '@angular/forms';
-import {DataServiceService} from '../../../services/data-service.service';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DataServiceService } from '../../../services/data-service.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.scss']
+  styleUrls: ['./login.component.scss'],
 })
 export class LoginComponent implements OnInit {
-
-  loginForm = this.formBuilder.group({
-      username: '',
-      password: ''
+  loginForm = new FormGroup({
+    email: new FormControl('', [Validators.required]),
+    password: new FormControl('', [Validators.required]),
   });
 
-  
-  constructor(private dataService: DataServiceService, private formBuilder: FormBuilder) {
-  }
+  constructor(private dataService: DataServiceService) {}
 
-  loginStatus: string ='';
-  toasterId: string ='';
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   authenticateUser = (): any => {
-    this.dataService.authenticateUser(this.loginForm).subscribe((data) => {
-         alert('Login success')
-    }, () => {
-      alert('Invalid credentials')
-    });
-
-    console.log(this.loginForm);
+    this.dataService.authenticateUser(this.loginForm).subscribe(
+      (data) => {
+        alert('Login success');
+      },
+      () => {
+        alert('Invalid credentials');
+      }
+    );
   };
-
 }
