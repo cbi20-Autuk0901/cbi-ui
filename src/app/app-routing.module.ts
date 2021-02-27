@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
 import { DashboardComponent } from './components/pages/dashboard/dashboard.component';
 import { LoginComponent } from './components/pages/login/login.component';
-import { AuthGuard } from './auth.guard';
+import { AuthGuard } from './guards/auth/auth.guard';
 import { CertificationTypesComponent } from './components/pages/certification-types/certification-types.component';
 
 const routes: Routes = [

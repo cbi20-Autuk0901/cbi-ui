@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './components/pages/login/login.component';
 import { CertificationTypesComponent } from './components/pages/certification-types/certification-types.component';
 import { environment } from '../environments/environment';
+import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({}),
   ],
   providers: [],
   bootstrap: [AppComponent],
