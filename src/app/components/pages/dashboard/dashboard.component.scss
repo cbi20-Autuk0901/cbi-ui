@@ -1,0 +1,80 @@
+.stat-card {
+  .title {
+    font-weight: 700;
+    font-size: 16px;
+    margin: 10px 0 0;
+  }
+  .count {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 40px;
+    margin: 5px 0 0;
+  }
+}
+
+.user-options {
+  margin-top: 30px;
+  border-radius: 20px;
+  border: 2px solid #88898a;
+  padding: 25px 60px;
+}
+
+.btn {
+  font-weight: 700;
+  font-size: 20px;
+  border-radius: 10px;
+  padding: 10px 40px;
+
+  &.btn-primary {
+    background: #fff;
+    color: #808085;
+    border: 2px solid #88898a;
+  }
+
+  &.btn-secondary {
+    background: #ffcc4e;
+    border: 2px solid #ffcc4e;
+    color: #ffffff;
+  }
+
+  &.btn-secondary-sm {
+    background: #ffcc4e;
+    border: 2px solid #ffcc4e;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 300;
+    padding: 2px 15px;
+    border-radius: 8px;
+  }
+}
+
+.recent-certifications {
+  border: 1px solid #88898a;
+  border-top: 8px solid #ffcc4e;
+  width: 95%;
+  padding: 0 10px 20px;
+
+  &__title {
+    color: #565758;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    border-bottom: 2px solid #88898a;
+    margin: 0 -5px;
+  }
+
+  &__list {
+    padding: 0 5px 0;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+
+    &__id {
+      font-size: 14px;
+      font-weight: 300;
+    }
+  }
+}

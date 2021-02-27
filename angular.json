@@ -129,5 +129,8 @@
       }
     }
   },
-  "defaultProject": "CBI"
+  "defaultProject": "CBI",
+  "cli": {
+    "defaultCollection": "@ngrx/schematics"
+  }
 }

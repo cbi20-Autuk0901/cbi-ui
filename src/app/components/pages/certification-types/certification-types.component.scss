@@ -1,0 +1,39 @@
+.card {
+  border-radius: 45px;
+  padding: 0 0 50px;
+  border: 1px solid #88898a;
+
+  &__ribbon {
+    border-top-width: 8px;
+    margin-top: 40px;
+  }
+
+  .title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffcc4e;
+    margin-top: 40px;
+    margin-bottom: 100px;
+  }
+}
+
+.btn {
+  font-weight: 700;
+  font-size: 16px;
+  border-radius: 10px;
+  padding: 5px 0;
+  width: 120px;
+  margin: auto;
+
+  &.btn-primary {
+    background: #fff;
+    color: #808085;
+    border: 2px solid #88898a;
+  }
+
+  &.btn-secondary {
+    background: #ffcc4e;
+    border: 2px solid #ffcc4e;
+    color: #ffffff;
+  }
+}

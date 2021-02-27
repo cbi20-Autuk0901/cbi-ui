@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DataServiceService } from '../../../services/data-service.service';
+import { UserService } from './../../../services/user/user.service';
+import { Router, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -13,18 +14,19 @@ export class LoginComponent implements OnInit {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(private dataService: DataServiceService) {}
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {}
 
-  authenticateUser = (): any => {
-    this.dataService.authenticateUser(this.loginForm).subscribe(
+  authenticateUser() {
+    this.userService.loginUser(this.loginForm.value).subscribe(
       (data) => {
-        alert('Login success');
+        console.log('success', data);
+        this.router.navigate(['/dashboard']);
       },
-      () => {
-        alert('Invalid credentials');
+      (err) => {
+        console.log('error', err);
       }
     );
-  };
+  }
 }
