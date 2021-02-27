@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { LoginForm } from './../../models/forms';
+import { LoginForm } from '../../models/forms.model';
 import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { map } from 'rxjs/operators';
