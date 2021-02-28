@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
-import { Store } from '@ngrx/store';
 import { UserService } from 'src/app/services/user/user.service';
 import { Observable } from 'rxjs';
 
