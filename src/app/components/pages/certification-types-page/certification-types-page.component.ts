@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-
 @Component({
   selector: 'app-certification-types-page',
   templateUrl: './certification-types-page.component.html',

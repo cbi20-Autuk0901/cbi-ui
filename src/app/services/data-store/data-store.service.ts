@@ -4,4 +4,4 @@ import { Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class DataStoreService {}
+export class DatastoreService {}

@@ -12,6 +12,10 @@ import { LoginPageComponent } from './components/pages/login-page/login-page.com
 import { CertificationTypesPageComponent } from './components/pages/certification-types-page/certification-types-page.component';
 import { environment } from '../environments/environment';
 
+import { StoreModule } from '@ngrx/store';
+import { reducer } from './reducers/data-store.reducer';
+import { NgrxComponent } from './components/shared/ngrx/ngrx.component';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -20,6 +24,7 @@ import { environment } from '../environments/environment';
     HeaderComponent,
     SidebarComponent,
     CertificationTypesPageComponent,
+    NgrxComponent,
   ],
   imports: [
     BrowserModule,
@@ -27,6 +32,9 @@ import { environment } from '../environments/environment';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({
+      dataStore: reducer,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],
