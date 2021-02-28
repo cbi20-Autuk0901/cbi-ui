@@ -3,7 +3,6 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { UserService } from 'src/app/services/user/user.service';
-import { setUserToken } from '../../../app.action';
 import { Observable } from 'rxjs';
 
 @Component({
@@ -18,22 +17,15 @@ export class LoginPageComponent implements OnInit {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(
-    private userService: UserService,
-    private router: Router,
-    private store: Store<{ userToken: string }>
-  ) {
-    this.token = store.select('userToken');
-  }
+  constructor(private userService: UserService, private router: Router) {}
 
   ngOnInit(): void {}
 
   authenticateUser() {
     this.userService.loginUser(this.loginForm.value).subscribe(
       (data) => {
-        //console.log('success', data);
-        this.store.dispatch(setUserToken(data.token));
-        //this.router.navigate(['/dashboard']);
+        console.log('success', data);
+        this.router.navigate(['/dashboard']);
       },
       (err) => {
         console.log('error', err);
