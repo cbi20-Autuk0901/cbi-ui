@@ -3,24 +3,23 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { DashboardComponent } from './components/pages/dashboard/dashboard.component';
+import { DashboardPageComponent } from './components/pages/dashboard-page/dashboard-page.component';
 import { HeaderComponent } from './components/shared/header/header.component';
 import { SidebarComponent } from './components/shared/sidebar/sidebar.component';
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { LoginComponent } from './components/pages/login/login.component';
-import { CertificationTypesComponent } from './components/pages/certification-types/certification-types.component';
+import { LoginPageComponent } from './components/pages/login-page/login-page.component';
+import { CertificationTypesPageComponent } from './components/pages/certification-types-page/certification-types-page.component';
 import { environment } from '../environments/environment';
-import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
     AppComponent,
-    DashboardComponent,
-    LoginComponent,
+    DashboardPageComponent,
+    LoginPageComponent,
     HeaderComponent,
     SidebarComponent,
-    CertificationTypesComponent,
+    CertificationTypesPageComponent,
   ],
   imports: [
     BrowserModule,
@@ -28,7 +27,6 @@ import { StoreModule } from '@ngrx/store';
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({}),
   ],
   providers: [],
   bootstrap: [AppComponent],

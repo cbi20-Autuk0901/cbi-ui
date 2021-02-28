@@ -1,22 +1,22 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
-import { DashboardComponent } from './components/pages/dashboard/dashboard.component';
-import { LoginComponent } from './components/pages/login/login.component';
+import { DashboardPageComponent } from './components/pages/dashboard-page/dashboard-page.component';
+import { LoginPageComponent } from './components/pages/login-page/login-page.component';
 import { AuthGuard } from './guards/auth/auth.guard';
-import { CertificationTypesComponent } from './components/pages/certification-types/certification-types.component';
+import { CertificationTypesPageComponent } from './components/pages/certification-types-page/certification-types-page.component';
 
 const routes: Routes = [
   {
     path: 'dashboard',
     canActivate: [AuthGuard],
-    component: DashboardComponent,
+    component: DashboardPageComponent,
   },
-  { path: 'login', canActivate: [AuthGuard], component: LoginComponent },
+  { path: 'login', canActivate: [AuthGuard], component: LoginPageComponent },
   {
     path: 'certification-types',
     canActivate: [AuthGuard],
-    component: CertificationTypesComponent,
+    component: CertificationTypesPageComponent,
   },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/dashboard' },
