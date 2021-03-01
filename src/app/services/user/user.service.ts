@@ -17,10 +17,15 @@ export class UserService {
   };
 
   loginUser = (form: LoginForm): Observable<any> => {
-    // const url = 'http://104.236.233.114:8883/login';
+    const url = 'http://104.236.233.114:8883/cbi_login';
 
-    const url = 'https://reqres.in/api/login';
-    return this.http.post(url, form).pipe(
+    // const url = 'https://reqres.in/api/login';
+
+    const payload = {
+      user_email_address: form.email,
+      user_password: form.password,
+    };
+    return this.http.post(url, payload).pipe(
       map((response: any) => {
         localStorage.setItem('userSession', response.token);
         return response;
