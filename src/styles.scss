@@ -11,6 +11,13 @@ body {
   height: 100%;
 }
 
+.height-fill {
+  height: 100%;
+  min-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
 .main-content {
   padding: 30px 20px 30px 140px;
 }
@@ -33,4 +40,20 @@ body {
   color: #ffcc4e;
   font-weight: bold;
   margin-bottom: 50px;
+}
+
+.btn {
+  &:focus,
+  &:active {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  &.btn-secondary {
+    &:focus,
+    &:active {
+      background-color: #ffcc4e !important;
+      border-color: #ffcc4e !important;
+    }
+  }
 }

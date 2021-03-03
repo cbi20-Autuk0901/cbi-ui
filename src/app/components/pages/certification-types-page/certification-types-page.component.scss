@@ -13,8 +13,25 @@
     font-weight: 700;
     color: #ffcc4e;
     margin-top: 40px;
-    margin-bottom: 100px;
+    margin-bottom: 80px;
   }
+
+  &.certificate {
+    width: 300px;
+
+    .title {
+      font-size: 22px;
+      margin-top: 90px;
+    }
+  }
+}
+
+.back-link {
+  color: #808085;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  word-spacing: 3px;
 }
 
 .btn {
@@ -35,5 +52,55 @@
     background: #ffcc4e;
     border: 2px solid #ffcc4e;
     color: #ffffff;
+  }
+}
+
+.debt-instruments {
+  background-color: #ffcc4e;
+  padding: 20px 60px 10px 50px;
+  height: 100vh;
+  position: relative;
+  top: -30px;
+
+  &__title {
+    font-size: 20px;
+    font-weight: 700;
+    color: #ffffff;
+    margin-bottom: 10px;
+  }
+
+  .card {
+    border-radius: 20px;
+    padding: 10px 30px 15px;
+    border: 1px solid #88898a;
+    text-align: left;
+    max-width: 400px;
+    margin-top: 10px;
+
+    .title {
+      color: #ffcc4e;
+      font-size: 18px;
+      font-weight: 700;
+      margin: 0;
+    }
+
+    .description {
+      font-size: 13px;
+      line-height: 16px;
+      color: #000000;
+      margin-bottom: 10px;
+    }
+
+    .btn {
+      margin: 0;
+    }
+
+    .contact-us {
+      border: none;
+      background-color: #ececec;
+      padding: 8px;
+      border-radius: 4px;
+      width: 55%;
+    }
   }
 }

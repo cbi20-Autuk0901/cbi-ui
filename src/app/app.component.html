@@ -1,7 +1,8 @@
-<div class="container-fluid p-0">
-  <div class="row no-gutters">
-    <div class="col-12">
-      <router-outlet></router-outlet>
-    </div>
+<div class="container-fluid height-fill p-0">
+  <div *ngIf="currentPage !== '/login'">
+    <app-sidebar></app-sidebar> <app-header></app-header>
+  </div>
+  <div [ngClass]="{ 'main-content height-fill': currentPage !== '/login' }">
+    <router-outlet></router-outlet>
   </div>
 </div>

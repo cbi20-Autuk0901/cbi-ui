@@ -1,4 +1,3 @@
 export interface Datastore {
-  name: string;
-  data: string;
+  currentPage: string;
 }
