@@ -1,4 +1,16 @@
 .stat-card {
+  width: 30%;
+  max-width: 250px;
+  border-radius: 20px;
+  border: 2px solid #c8c8cb;
+  color: #565758;
+  text-align: center;
+  padding: 0 0 20px;
+
+  &__ribbon {
+    border-top: 4px solid #ffcc4f;
+    margin-top: 18px;
+  }
   .title {
     font-weight: 700;
     font-size: 16px;
@@ -15,7 +27,7 @@
 .user-options {
   margin-top: 30px;
   border-radius: 20px;
-  border: 2px solid #88898a;
+  border: 2px solid #c8c8cb;
   padding: 25px 60px;
 }
 
@@ -28,18 +40,18 @@
   &.btn-primary {
     background: #fff;
     color: #808085;
-    border: 2px solid #88898a;
+    border: 2px solid #c8c8cb;
   }
 
   &.btn-secondary {
-    background: #ffcc4e;
-    border: 2px solid #ffcc4e;
+    background: #ffcc4f;
+    border: 2px solid #ffcc4f;
     color: #ffffff;
   }
 
   &.btn-secondary-sm {
-    background: #ffcc4e;
-    border: 2px solid #ffcc4e;
+    background: #ffcc4f;
+    border: 2px solid #ffcc4f;
     color: #ffffff;
     font-size: 12px;
     font-weight: 300;
@@ -49,8 +61,8 @@
 }
 
 .recent-certifications {
-  border: 1px solid #88898a;
-  border-top: 8px solid #ffcc4e;
+  border: 1px solid #c8c8cb;
+  border-top: 8px solid #ffcc4f;
   width: 95%;
   padding: 0 10px 20px;
 
@@ -59,7 +71,7 @@
     padding: 10px;
     font-size: 14px;
     font-weight: 700;
-    border-bottom: 2px solid #88898a;
+    border-bottom: 2px solid #c8c8cb;
     margin: 0 -5px;
   }
 

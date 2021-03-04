@@ -11,6 +11,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginPageComponent } from './components/pages/login-page/login-page.component';
 import { CertificationTypesPageComponent } from './components/pages/certification-types-page/certification-types-page.component';
 import { environment } from '../environments/environment';
+import { FormEntryPageComponent } from './components/pages/form-entry-page/form-entry-page.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { environment } from '../environments/environment';
     HeaderComponent,
     SidebarComponent,
     CertificationTypesPageComponent,
+    FormEntryPageComponent,
   ],
   imports: [
     BrowserModule,

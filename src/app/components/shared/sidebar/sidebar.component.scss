@@ -17,15 +17,17 @@
   &__items {
     overflow-x: hidden;
     overflow-y: auto;
-    height: calc(100vh - 175px);
+    height: calc(100vh - 250px);
 
     .nav {
+      .nav-item {
+        padding-bottom: 50px;
+      }
       .nav-link {
         color: #9595a2;
-        padding-bottom: 50px;
 
         &.active {
-          color: #ffcc4e;
+          color: #ffcc4f;
         }
       }
     }

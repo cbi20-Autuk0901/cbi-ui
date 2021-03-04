@@ -5,6 +5,7 @@ import { DashboardPageComponent } from './components/pages/dashboard-page/dashbo
 import { LoginPageComponent } from './components/pages/login-page/login-page.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { CertificationTypesPageComponent } from './components/pages/certification-types-page/certification-types-page.component';
+import { FormEntryPageComponent } from './components/pages/form-entry-page/form-entry-page.component';
 
 const routes: Routes = [
   {
@@ -17,6 +18,11 @@ const routes: Routes = [
     path: 'certification-types',
     canActivate: [AuthGuard],
     component: CertificationTypesPageComponent,
+  },
+  {
+    path: 'form-entry/:type',
+    canActivate: [AuthGuard],
+    component: FormEntryPageComponent,
   },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/dashboard' },

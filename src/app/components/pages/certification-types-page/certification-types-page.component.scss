@@ -1,23 +1,26 @@
 .card {
   border-radius: 45px;
   padding: 0 0 50px;
-  border: 1px solid #88898a;
+  border: 1px solid #c8c8cb;
+  width: 100%;
+  max-width: 250px;
 
   &__ribbon {
-    border-top-width: 8px;
+    border-top: 8px solid #ffcc4f;
     margin-top: 40px;
   }
 
   .title {
     font-size: 18px;
     font-weight: 700;
-    color: #ffcc4e;
+    color: #ffcc4f;
     margin-top: 40px;
     margin-bottom: 80px;
+    text-align: center;
   }
 
   &.certificate {
-    width: 300px;
+    max-width: 300px;
 
     .title {
       font-size: 22px;
@@ -45,22 +48,24 @@
   &.btn-primary {
     background: #fff;
     color: #808085;
-    border: 2px solid #88898a;
+    border: 2px solid #c8c8cb;
   }
 
   &.btn-secondary {
-    background: #ffcc4e;
-    border: 2px solid #ffcc4e;
+    background: #ffcc4f;
+    border: 2px solid #ffcc4f;
     color: #ffffff;
   }
 }
 
 .debt-instruments {
-  background-color: #ffcc4e;
-  padding: 20px 60px 10px 50px;
-  height: 100vh;
-  position: relative;
-  top: -30px;
+  background-color: #ffcc4f;
+  padding: 20px 60px 40px 50px;
+  position: fixed;
+  top: 80px;
+  bottom: 0;
+  right: 0;
+  overflow-y: auto;
 
   &__title {
     font-size: 20px;
@@ -72,16 +77,17 @@
   .card {
     border-radius: 20px;
     padding: 10px 30px 15px;
-    border: 1px solid #88898a;
+    border: 1px solid #c8c8cb;
     text-align: left;
     max-width: 400px;
     margin-top: 10px;
 
     .title {
-      color: #ffcc4e;
+      color: #ffcc4f;
       font-size: 18px;
       font-weight: 700;
       margin: 0;
+      text-align: left;
     }
 
     .description {

@@ -2,7 +2,7 @@
 
 body {
   font-size: 14px;
-  font-family: "Source Sans Pro", sans-serif;
+  font-family: "Source Sans Pro", "sans-serif";
   margin: auto;
 }
 
@@ -19,25 +19,11 @@ body {
 }
 
 .main-content {
-  padding: 30px 20px 30px 140px;
-}
-
-.card {
-  min-width: 250px;
-  border-radius: 20px;
-  border: 2px solid #88898a;
-  color: #565758;
-  text-align: center;
-  padding: 0 0 20px;
-
-  &__ribbon {
-    border-top: 4px solid #ffcc4e;
-    margin-top: 18px;
-  }
+  padding: 110px 20px 40px 140px;
 }
 
 .page-header {
-  color: #ffcc4e;
+  color: #ffcc4f;
   font-weight: bold;
   margin-bottom: 50px;
 }
@@ -52,8 +38,8 @@ body {
   &.btn-secondary {
     &:focus,
     &:active {
-      background-color: #ffcc4e !important;
-      border-color: #ffcc4e !important;
+      background-color: #ffcc4f !important;
+      border-color: #ffcc4f !important;
     }
   }
 }
