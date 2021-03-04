@@ -1,15 +1,25 @@
 .login-page {
+  background: rgb(84, 182, 191);
+  background: linear-gradient(
+    90deg,
+    rgba(84, 182, 191, 0.9) 44%,
+    rgba(197, 230, 228, 1) 100%
+  );
+  position: fixed;
+  right: 0;
+  left: 0;
+  bottom: 0;
+  top: 0;
+  overflow-y: auto;
+  max-width: 1600px;
+  margin: auto;
+  width: 100%;
+
   .form-control {
     border-radius: 0;
   }
 
   .left-section {
-    background: rgb(84, 182, 191);
-    background: linear-gradient(
-      90deg,
-      rgba(84, 182, 191, 0.9) 44%,
-      rgba(197, 230, 228, 1) 100%
-    );
     padding: 40px 20px 20px 40px;
 
     .banner {
@@ -101,6 +111,8 @@
     display: flex;
     justify-content: space-between;
     flex-direction: column;
+    height: 100%;
+    background-color: #ffffff;
 
     .link-bar {
       display: flex;
@@ -142,6 +154,5 @@
 
   .left-section,
   .right-section {
-    height: 100vh;
   }
 }
