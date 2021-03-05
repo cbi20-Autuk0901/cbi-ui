@@ -22,17 +22,17 @@
         </div>
       </div>
       <div class="user-options">
-        <button type="button" class="btn btn-primary" (click)="test('Bond')">
-          Bond Redemption
-        </button>
-        <span class="px-3"></span>
-        <button
-          type="button"
-          class="btn btn-secondary"
-          routerLink="/certification-types"
-        >
+        <a class="btn btn-primary" routerLink="/certification-types">
           Apply For Certification
-        </button>
+        </a>
+        <div class="btn btn-secondary upload-btn"> Submit Annual Report
+           <input class="btn btn-secondary" type="file">
+        </div>
+
+        <a class="btn btn-primary">
+          Bond Redemption
+        </a>
+
       </div>
     </div>
     <div class="col-4 pl-5">

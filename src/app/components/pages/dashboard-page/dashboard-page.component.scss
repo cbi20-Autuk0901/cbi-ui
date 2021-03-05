@@ -29,13 +29,15 @@
   border-radius: 20px;
   border: 2px solid #c8c8cb;
   padding: 25px 60px;
+  display: flex;
+  justify-content: space-between;
 }
 
 .btn {
   font-weight: 700;
-  font-size: 18px;
+  font-size: 14px;
   border-radius: 10px;
-  padding: 10px 40px;
+  padding: 10px 20px;
 
   &.btn-primary {
     background: #fff;
