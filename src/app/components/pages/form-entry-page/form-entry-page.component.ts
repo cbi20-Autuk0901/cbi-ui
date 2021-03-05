@@ -6,14 +6,25 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./form-entry-page.component.scss'],
 })
 export class FormEntryPageComponent implements OnInit {
-  page: string = '1';
-  showNext: boolean = false;
-  constructor() {}
+  currentForm: number;
+  pageData: object;
+
+  constructor() {
+    this.currentForm = 1;
+  }
 
   ngOnInit(): void {}
 
-  changePage = (pageNo: string) => {
-    this.page = pageNo;
-    this.showNext = pageNo !== '1';
+  switchForm = (type: string) => {
+    if (type === 'next' && this.currentForm < 3) {
+      ++this.currentForm;
+    }
+    if (type === 'back' && this.currentForm > 1) {
+      --this.currentForm;
+    }
+  };
+
+  getPageInfo = (data: object) => {
+    this.pageData = data;
   };
 }

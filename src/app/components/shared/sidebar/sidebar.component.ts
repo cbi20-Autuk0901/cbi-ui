@@ -8,9 +8,12 @@ import { DatastoreService } from '../../../services/data-store/data-store.servic
   styleUrls: ['./sidebar.component.scss'],
 })
 export class SidebarComponent implements OnInit {
-  currentPage: Subject<string>;
+  currentPage: string;
   constructor(private ds: DatastoreService) {
-    this.currentPage = this.ds.currentPage;
+    this.ds.currentPage.subscribe((e) => {
+      this.currentPage = e;
+      console.log(e);
+    });
   }
 
   ngOnInit(): void {}

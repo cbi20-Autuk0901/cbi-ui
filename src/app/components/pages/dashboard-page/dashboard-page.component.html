@@ -1,5 +1,7 @@
 <div class="">
   <h4 class="page-header">Certification Dashboard</h4>
+  <h4 class="page-header">{{ user.email }}</h4>
+
   <div class="row">
     <div class="col-8">
       <div class="d-flex justify-content-between">
@@ -20,7 +22,7 @@
         </div>
       </div>
       <div class="user-options">
-        <button type="button" class="btn btn-primary" (click)="test()">
+        <button type="button" class="btn btn-primary" (click)="test('Bond')">
           Bond Redemption
         </button>
         <span class="px-3"></span>

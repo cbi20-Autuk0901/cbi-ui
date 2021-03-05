@@ -43,3 +43,40 @@ body {
     }
   }
 }
+
+input,
+select {
+  font-size: 14px !important;
+}
+
+.upload-btn {
+  position: relative;
+
+  input[type="file"] {
+    width: 100%;
+    position: absolute;
+    font-size: 50px;
+    opacity: 0;
+    right: 0;
+    top: 0;
+  }
+}
+
+.back-link {
+  color: #808085;
+  font-size: 16px;
+  font-weight: 700;
+  text-decoration: none;
+  word-spacing: 3px;
+  cursor: pointer;
+
+  &:hover {
+    color: #808085;
+    text-decoration: none;
+  }
+}
+
+.btn {
+  font-weight: 700;
+  padding: 4px 20px;
+}

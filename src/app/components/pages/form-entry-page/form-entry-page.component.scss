@@ -1,46 +1,17 @@
 .form-entry {
-  &__title {
-    .step {
-      font-weight: 700;
-      font-size: 15px;
-    }
-    padding-bottom: 15px;
-  }
-
-  .form-button {
-    color: #ffcc4f;
-    font-size: 50px;
+  .next-link {
+    color: #8dc63f;
+    font-size: 16px;
+    font-weight: 700;
+    text-decoration: none;
+    word-spacing: 3px;
     cursor: pointer;
-  }
-
-  .form-card {
-    position: relative;
-    &__title {
-      font-weight: 700;
-      font-size: 16px;
-      display: flex;
-      justify-content: space-between;
-      border-bottom: 2px solid #ffcc4f;
-      padding: 5px;
-      margin-bottom: 20px;
-
-      .edit {
-        color: #808085;
-        font-weight: 300;
-        cursor: pointer;
-      }
-    }
-    padding: 10px 20px;
-    box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 25%);
-    -webkit-box-shadow: 0px 0px 3px 1px rgb(0 0 0 / 25%);
-    -moz-box-shadow: 0px 0px 3px 1px rgba(0, 0, 0, 0.25);
   }
 
   .btn {
     font-size: 16px;
     border-radius: 4px;
-    padding: 2px 0;
-    width: 120px;
+    padding: 2px 20px;
 
     &.btn-primary {
       background: #fff;
@@ -60,12 +31,50 @@
       color: #ffffff;
     }
   }
+}
 
-  .back-link {
-    color: #8dc63f;
-    font-size: 16px;
-    font-weight: 700;
-    text-decoration: none;
-    word-spacing: 3px;
+.modal {
+  .modal-content {
+    height: 250px;
+    position: relative;
+    padding: 60px 40px;
+
+    .close {
+      display: block;
+      width: 15px;
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      font-weight: 300;
+    }
+
+    .fa {
+      font-size: 100px;
+      color: #8dc63f;
+    }
+
+    .application-details {
+      padding: 10px;
+
+      &__title {
+        color: #8dc63f;
+        font-size: 18px;
+      }
+
+      &__id {
+        font-size: 12px;
+        font-weight: 700;
+      }
+
+      &__contactus {
+        margin-top: 30px;
+        font-size: 10px;
+
+        .link {
+          text-decoration: underline;
+        }
+      }
+    }
   }
 }
