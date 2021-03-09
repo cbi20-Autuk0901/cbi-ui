@@ -12,14 +12,12 @@ export class UserService {
   constructor(private http: HttpClient, private router: Router) {}
 
   isLoggedin = (): any => {
-    const user = localStorage.getItem('userSession');
+    const user = localStorage.getItem('isLoggedin');
     return !!user;
   };
 
-  loginUser = (form: LoginForm): Observable<any> => {
-    const url = 'http://104.236.233.114:8883/cbi_login';
-
-    // const url = 'https://reqres.in/api/login';
+  authenticateUser = (form: LoginForm): Observable<any> => {
+    const url = '/api/login';
 
     const payload = {
       user_email_address: form.email,
@@ -27,7 +25,7 @@ export class UserService {
     };
     return this.http.post(url, payload).pipe(
       map((response: any) => {
-        localStorage.setItem('userSession', response.token);
+        localStorage.setItem('isLoggedin', 'true');
         return response;
       })
     );

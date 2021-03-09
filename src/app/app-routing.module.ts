@@ -5,7 +5,7 @@ import { DashboardPageComponent } from './components/pages/dashboard-page/dashbo
 import { LoginPageComponent } from './components/pages/login-page/login-page.component';
 import { AuthGuard } from './guards/auth/auth.guard';
 import { CertificationTypesPageComponent } from './components/pages/certification-types-page/certification-types-page.component';
-import { FormEntryPageComponent } from './components/pages/form-entry-page/form-entry-page.component';
+import { DebtInstrumentPageComponent } from './components/pages/debt-instrument-page/debt-instrument-page.component';
 
 const routes: Routes = [
   {
@@ -20,9 +20,9 @@ const routes: Routes = [
     component: CertificationTypesPageComponent,
   },
   {
-    path: 'form-entry/:type',
+    path: 'debt-instrument/:type',
     canActivate: [AuthGuard],
-    component: FormEntryPageComponent,
+    component: DebtInstrumentPageComponent,
   },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/dashboard' },

@@ -1,0 +1,48 @@
+<div class="form-title">
+  <div>
+    <span class="step"> Step 3/4 </span>
+    <span class="px-1">-</span>
+    <span>Certification Agreement</span>
+  </div>
+</div>
+<div formGroupName="assuranceReportForm" enctype="multipart/form-data">
+  <div class="row">
+    <div class="col">
+      <div class="form-card h-100">
+        <div class="form-card__title">
+          <div>Assurance Report Produced by Verifier</div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <div class="btn btn-secondary upload-btn">
+            Upload +
+            <input type="file" name="caAssuranceReport" (change)="onChange($event, 'caName')">
+          </div>
+          <p>{{caName}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="form-title mt-4">
+    <div>
+      <span class="step"> Step 4/4 </span>
+      <span class="px-1">-</span>
+      <span>Green Bond Framework Document</span>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div class="form-card h-100">
+        <div class="form-card__title">
+          <div>Assurance Report Produced by Verifier</div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <div class="btn btn-secondary upload-btn">
+            Upload +
+            <input type="file" name="gbAssuranceReport" (change)="onChange($event, 'gbName')">
+          </div>
+          <p>{{gbName}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

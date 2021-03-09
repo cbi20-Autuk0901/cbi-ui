@@ -10,14 +10,10 @@ import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginPageComponent } from './components/pages/login-page/login-page.component';
 import { CertificationTypesPageComponent } from './components/pages/certification-types-page/certification-types-page.component';
-import { environment } from '../environments/environment';
-import { FormEntryPageComponent } from './components/pages/form-entry-page/form-entry-page.component';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
-import { StoreModule } from '@ngrx/store';
-import { loginReducer } from './reducers/login.reducer';
+import { DebtInstrumentPageComponent } from './components/pages/debt-instrument-page/debt-instrument-page.component';
 import { ClimateBondInformationComponent } from './components/shared/climate-bond-information/climate-bond-information.component';
 import { CertificationAgreementComponent } from './components/shared/certification-agreement/certification-agreement.component';
-import { GreenBondComponent } from './components/shared/green-bond/green-bond.component';
+import { AssuranceReportComponent } from './components/shared/assurance-report/assurance-report.component';
 
 @NgModule({
   declarations: [
@@ -27,10 +23,10 @@ import { GreenBondComponent } from './components/shared/green-bond/green-bond.co
     HeaderComponent,
     SidebarComponent,
     CertificationTypesPageComponent,
-    FormEntryPageComponent,
+    DebtInstrumentPageComponent,
     ClimateBondInformationComponent,
     CertificationAgreementComponent,
-    GreenBondComponent,
+    AssuranceReportComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,11 +34,6 @@ import { GreenBondComponent } from './components/shared/green-bond/green-bond.co
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
-    StoreModule.forRoot({ login: loginReducer }),
-    StoreDevtoolsModule.instrument({
-      maxAge: 25,
-      logOnly: environment.production,
-    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

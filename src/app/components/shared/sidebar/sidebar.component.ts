@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Subject } from 'rxjs';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 
 @Component({

@@ -5,243 +5,245 @@
     <span>Climate Bond Information</span>
   </div>
 </div>
-<div *ngIf="form === 'first'">
-  <div class="row">
-    <div class="col">
-      <div class="form-card">
-        <div class="form-card__title">
-          <div>Description of Bond Details and Assets</div>
-          <button class="btn btn-secondary">Add +</button>
-        </div>
-        <div class="form-group row">
-          <label for="uniqueBondName1" class="col-sm-4 col-form-label">Unique Name of Bond</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="uniqueBondName1" />
+<div formGroupName="cbiForm">
+  <div *ngIf="currentPage === 'first'">
+    <div class="row">
+      <div class="col">
+        <div class="form-card">
+          <div class="form-card__title">
+            <div>Description of Bond Details and Assets</div>
+            <button class="btn btn-secondary">Add +</button>
           </div>
-        </div>
-        <div>
           <div class="form-group row">
-            <label for="uniqueBondName1" class="col-sm-4 col-form-label">Country of Issuance</label>
-            <div class="col">
-              <input type="text" class="form-control" id="uniqueBondName1" />
-            </div>
-            <label for="uniqueBondName1" class="col-sm-2 col-form-label">CUSIP</label>
-            <div class="col-sm-2">
-              <input type="text" class="form-control" id="uniqueBondName1" />
+            <label for="uniqueName" class="col-sm-4 col-form-label">Unique Name of Bond</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="uniqueName" formControlName="uniqueName" />
             </div>
           </div>
-        </div>
-        <div>
+          <div>
+            <div class="form-group row">
+              <label for="issuanceCountry" class="col-sm-4 col-form-label">Country of Issuance</label>
+              <div class="col">
+                <input type="text" class="form-control" id="issuanceCountry" formControlName="issuanceCountry" />
+              </div>
+              <label for="cusip" class="col-sm-2 col-form-label">CUSIP</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="cusip" formControlName="cusip" />
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="form-group row">
+              <label for="localCurrency" class="col-sm-4 col-form-label">Local Currency</label>
+              <div class="col">
+                <input type="text" class="form-control" id="localCurrency" formControlName="localCurrency" />
+              </div>
+              <label for="isin" class="col-sm-2 col-form-label">ISIN</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="isin" formControlName="isin" />
+              </div>
+            </div>
+          </div>
+          <div>
+            <div class="form-group row">
+              <label for="amountIssued" class="col-sm-4 col-form-label">Amount Issued In Local Currency</label>
+              <div class="col">
+                <input type="text" class="form-control" id="amountIssued" formControlName="amountIssued" />
+              </div>
+              <label for="coupon" class="col-sm-2 col-form-label">Coupon</label>
+              <div class="col-sm-2">
+                <input type="text" class="form-control" id="coupon" formControlName="coupon" />
+              </div>
+            </div>
+          </div>
           <div class="form-group row">
-            <label for="uniqueBondName1" class="col-sm-4 col-form-label">Local Currency</label>
-            <div class="col">
-              <input type="text" class="form-control" id="uniqueBondName1" />
-            </div>
-            <label for="uniqueBondName1" class="col-sm-2 col-form-label">ISIN</label>
-            <div class="col-sm-2">
-              <input type="text" class="form-control" id="uniqueBondName1" />
+            <label for="underwriter" class="col-sm-4 col-form-label">Underwriter</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="underwriter" formControlName="underwriter" />
             </div>
           </div>
-        </div>
-        <div>
           <div class="form-group row">
-            <label for="uniqueBondName1" class="col-sm-4 col-form-label">Amount Issued In Local Currency</label>
-            <div class="col">
-              <input type="text" class="form-control" id="uniqueBondName1" />
-            </div>
-            <label for="uniqueBondName1" class="col-sm-2 col-form-label">Coupon</label>
-            <div class="col-sm-2">
-              <input type="text" class="form-control" id="uniqueBondName1" />
+            <label for="issueDate" class="col-sm-4 col-form-label">Issue Date</label>
+            <div class="col-6">
+              <input type="date" class="form-control" id="issueDate" formControlName="issueDate" />
             </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="uniqueBondName1" class="col-sm-4 col-form-label">Underwriter</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="uniqueBondName1" />
-          </div>
-        </div>
-        <div>
           <div class="form-group row">
-            <label for="uniqueBondName1" class="col-sm-4 col-form-label">Issue Date</label>
-            <div class="col">
-              <input type="text" class="form-control" id="uniqueBondName1" />
-            </div>
-            <label for="uniqueBondName1" class="col col-form-label">Maturity Date</label>
-            <div class="col">
-              <input type="text" class="form-control" id="uniqueBondName1" />
+            <label for="maturityDate" class="col-sm-4 col-form-label">Maturity Date</label>
+            <div class="col-6">
+              <input type="date" class="form-control" id="maturityDate" formControlName="maturityDate" />
             </div>
           </div>
-        </div>
-        <div class="form-card__title">
-          <div>Bond Type</div>
-          <button class="btn btn-secondary">Add +</button>
-        </div>
-        <div class="form-group row">
-          <label for="uniqueBondName1" class="col-sm-6 col-form-label">Use of Proceeds Bond</label>
-          <div class="col-sm-6">
-            <input type="text" class="form-control" id="uniqueBondName1" />
+          <div class="form-card__title">
+            <div>Bond Type</div>
+            <button class="btn btn-secondary">Add +</button>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="uniqueBondName1" class="col-sm-6 col-form-label">Use of Proceeds Revenue Bond</label>
-          <div class="col-sm-6">
-            <input type="text" class="form-control" id="uniqueBondName1" />
+          <div class="form-group row">
+            <label for="useOfProceeds" class="col-sm-6 col-form-label">Use of Proceeds Bond</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="useOfProceeds" formControlName="useOfProceeds" />
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="uniqueBondName1" class="col-sm-6 col-form-label">Verifier Name</label>
-          <div class="col-sm-6">
-            <select class="form-control">
-              <option>AECLU</option>
-              <option>BAM</option>
-              <option>BlockC</option>
-              <option>Blue Snow Consulting</option>
-              <option>Bureau Veritas</option>
-              <option>Carbon Trust</option>
-              <option>CECEP</option>
-              <option>Deloitte</option>
-              <option>DNV.GL</option>
-              <option>DQS CFS</option>
-              <option>EPIC Sustainability</option>
-              <option>EQA Spain</option>
-              <option>EY</option>
-            </select>
+          <div class="form-group row">
+            <label for="useOfProceedsRevenue" class="col-sm-6 col-form-label">Use of Proceeds Revenue Bond</label>
+            <div class="col-sm-6">
+              <input type="text" class="form-control" id="useOfProceedsRevenue" formControlName="useOfProceedsRevenue" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="verifierName" class="col-sm-6 col-form-label">Verifier Name</label>
+            <div class="col-sm-6">
+              <select class="form-control" id="verifierName" formControlName="verifierName">
+                <option>AECLU</option>
+                <option>BAM</option>
+                <option>BlockC</option>
+                <option>Blue Snow Consulting</option>
+                <option>Bureau Veritas</option>
+                <option>Carbon Trust</option>
+                <option>CECEP</option>
+                <option>Deloitte</option>
+                <option>DNV.GL</option>
+                <option>DQS CFS</option>
+                <option>EPIC Sustainability</option>
+                <option>EQA Spain</option>
+                <option>EY</option>
+              </select>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col">
-      <div class="form-card h-100">
-        <div class="form-card__title">
-          <div>Bond Details</div>
-          <button class="btn btn-secondary">Add +</button>
-        </div>
-        <div class="form-group row">
-          <div class="col-sm-4">
-            <select class="form-control">
-              <option>Renewable Energy</option>
-              <option value="agriculture">Agriculture</option>
-              <option value="bioenergy">Bioenergy</option>
-              <option value="forestry">Forestry</option>
-              <option value="lowCarbonTransport">Low carbon transport</option>
-              <option value="marineRenewableEnergy">Marine Renewable Energy</option>
-              <option value="protectedAgriculture">Protected Agriculture</option>
-              <option value="shipping">Shipping</option>
-              <option value="solar">Solar</option>
-              <option value="waterInfrastructure">Water Infrastructure</option>
-              <option value="wasteManagement">Waste Management</option>
-              <option value="wind">Wind</option>
-            </select>
+      <div class="col">
+        <div class="form-card h-100">
+          <div class="form-card__title">
+            <div>Bond Details</div>
+            <button class="btn btn-secondary">Add +</button>
           </div>
-          <div class="col-sm-8">
-            <textarea class="form-control"></textarea>
+          <div class="form-group row">
+            <div class="col-sm-4">
+              <select class="form-control" formControlName="renewableEnergy">
+                <option>Renewable Energy</option>
+                <option value="agriculture">Agriculture</option>
+                <option value="bioenergy">Bioenergy</option>
+                <option value="forestry">Forestry</option>
+                <option value="lowCarbonTransport">Low carbon transport</option>
+                <option value="marineRenewableEnergy">Marine Renewable Energy</option>
+                <option value="protectedAgriculture">Protected Agriculture</option>
+                <option value="shipping">Shipping</option>
+                <option value="solar">Solar</option>
+                <option value="waterInfrastructure">Water Infrastructure</option>
+                <option value="wasteManagement">Waste Management</option>
+                <option value="wind">Wind</option>
+              </select>
+            </div>
+            <div class="col-sm-8">
+              <textarea class="form-control" formControlName="renewableEnergyText"></textarea>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col-1 align-self-center">
-      <i class="fa fa-chevron-circle-right form-button" aria-hidden="true" (click)="switchForm('second')"></i>
+      <div class="col-1 align-self-center">
+        <i class="fa fa-chevron-circle-right form-button" aria-hidden="true" (click)="switchForm('second')"></i>
+      </div>
     </div>
   </div>
-</div>
-<div *ngIf="form === 'second'">
-  <div class="row">
-    <div class="col-1 align-self-center">
-      <i class="fa fa-chevron-circle-left form-button" aria-hidden="true" (click)="switchForm('first')"></i>
-    </div>
-    <div class="col">
-      <div class="form-card h-100">
-        <div class="form-card__title">
-          <div>Bond Details</div>
-          <button class="btn btn-secondary">Add +</button>
-        </div>
-        <div class="form-group row">
-          <div class="col-sm-4">
-            <select class="form-control">
-              <option>Renewable Energy</option>
-              <option value="agriculture">Agriculture</option>
-              <option value="bioenergy">Bioenergy</option>
-              <option value="forestry">Forestry</option>
-              <option value="lowCarbonTransport">Low carbon transport</option>
-              <option value="marineRenewableEnergy">Marine Renewable Energy</option>
-              <option value="protectedAgriculture">Protected Agriculture</option>
-              <option value="shipping">Shipping</option>
-              <option value="solar">Solar</option>
-              <option value="waterInfrastructure">Water Infrastructure</option>
-              <option value="wasteManagement">Waste Management</option>
-              <option value="wind">Wind</option>
-            </select>
+  <div *ngIf="currentPage === 'second'">
+    <div class="row">
+      <div class="col-1 align-self-center">
+        <i class="fa fa-chevron-circle-left form-button" aria-hidden="true" (click)="switchForm('first')"></i>
+      </div>
+      <div class="col">
+        <div class="form-card h-100">
+          <div class="form-card__title">
+            <div>Bond Details</div>
+            <button class="btn btn-secondary">Add +</button>
           </div>
-          <div class="col-sm-8">
-            <textarea class="form-control"></textarea>
+          <div class="form-group row">
+            <div class="col-sm-4">
+              <select class="form-control" formControlName="renewableEnergy">
+                <option>Renewable Energy</option>
+                <option value="agriculture">Agriculture</option>
+                <option value="bioenergy">Bioenergy</option>
+                <option value="forestry">Forestry</option>
+                <option value="lowCarbonTransport">Low carbon transport</option>
+                <option value="marineRenewableEnergy">Marine Renewable Energy</option>
+                <option value="protectedAgriculture">Protected Agriculture</option>
+                <option value="shipping">Shipping</option>
+                <option value="solar">Solar</option>
+                <option value="waterInfrastructure">Water Infrastructure</option>
+                <option value="wasteManagement">Waste Management</option>
+                <option value="wind">Wind</option>
+              </select>
+            </div>
+            <div class="col-sm-8">
+              <textarea class="form-control" formControlName="renewableEnergyText"></textarea>
+            </div>
           </div>
         </div>
       </div>
-    </div>
-    <div class="col">
-      <div class="form-card">
-        <div class="form-card__title">
-          <div>Company Information</div>
-          <div class="edit">
-            <span class="pr-2"> Edit</span>
-            <i class="fa fa-pencil" aria-hidden="true"></i>
+      <div class="col">
+        <div class="form-card">
+          <div class="form-card__title">
+            <div>Company Information</div>
+            <div class="edit">
+              <span class="pr-2"> Edit</span>
+              <i class="fa fa-pencil" aria-hidden="true"></i>
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="uniqueBondName1" class="col-sm-4 col-form-label">Address of Head Office</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="uniqueBondName1" />
+          <div class="form-group row">
+            <label for="headOfficeAddress" class="col-sm-4 col-form-label">Address of Head Office</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="headOfficeAddress" formControlName="headOfficeAddress"/>
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="uniqueBondName1" class="col-sm-4 col-form-label">VAT Number (EU Countries)</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="uniqueBondName1" />
+          <div class="form-group row">
+            <label for="vatNumber" class="col-sm-4 col-form-label">VAT Number (EU Countries)</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="vatNumber" formControlName="vatNumber"/>
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="uniqueBondName1" class="col-sm-4 col-form-label">Business Registration No.</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="uniqueBondName1" />
+          <div class="form-group row">
+            <label for="businessRegistration" class="col-sm-4 col-form-label">Business Registration No.</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="businessRegistration" formControlName="businessRegistration" />
+            </div>
           </div>
-        </div>
-        <div class="form-card__title">
-          <div>Contact Person</div>
-          <button class="btn btn-secondary">Add +</button>
-        </div>
-        <div class="form-group row">
-          <label for="uniqueBondName1" class="col-sm-4 col-form-label">Name</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="uniqueBondName1" />
+          <div class="form-card__title">
+            <div>Contact Person</div>
+            <button class="btn btn-secondary">Add +</button>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="uniqueBondName1" class="col-sm-4 col-form-label">Position</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="uniqueBondName1" />
+          <div class="form-group row">
+            <label for="contactName" class="col-sm-4 col-form-label">Name</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="contactName" formControlName="contactName" />
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="uniqueBondName1" class="col-sm-4 col-form-label">Company</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="uniqueBondName1" />
+          <div class="form-group row">
+            <label for="position" class="col-sm-4 col-form-label">Position</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="position" formControlName="position" />
+            </div>
           </div>
-        </div>
-        <div class="form-group row">
-          <label for="uniqueBondName1" class="col-sm-4 col-form-label">Contact number</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="uniqueBondName1" />
+          <div class="form-group row">
+            <label for="company" class="col-sm-4 col-form-label">Company</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="company" formControlName="company" />
+            </div>
           </div>
-        </div>
-        <div class="form-card__title">
-          <div>Invoice Details</div>
-          <button class="btn btn-secondary">Add +</button>
-        </div>
-        <div class="form-group row">
-          <label for="uniqueBondName1" class="col-sm-4 col-form-label">Name</label>
-          <div class="col-sm-8">
-            <input type="text" class="form-control" id="uniqueBondName1" />
+          <div class="form-group row">
+            <label for="contactNumber" class="col-sm-4 col-form-label">Contact number</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="contactNumber" formControlName="contactNumber" />
+            </div>
+          </div>
+          <div class="form-card__title">
+            <div>Invoice Details</div>
+            <button class="btn btn-secondary">Add +</button>
+          </div>
+          <div class="form-group row">
+            <label for="invoiceName" class="col-sm-4 col-form-label">Name</label>
+            <div class="col-sm-8">
+              <input type="text" class="form-control" id="invoiceName" />
+            </div>
           </div>
         </div>
       </div>
