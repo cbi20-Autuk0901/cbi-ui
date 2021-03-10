@@ -15,15 +15,52 @@ export class DatastoreService {
     this.currentPage.next(value);
   }
 
+  getDashboard = (payload: object): Observable<any> => {
+    const url = '/api/issuerDashboard';
+    return this.http.post(url, payload);
+  };
+
   upload = (data: any): Observable<any> => {
     const formData = new FormData();
+    const url = '/api/assuranceReport';
     Object.entries(data).forEach(([key, value]): any => {
       formData.append(key, data[key]);
     });
-    return this.http.post('http://143.110.213.22:8883/api/files', formData);
+    return this.http.post(url, formData);
   };
 
-  formSave = (data: any): Observable<any> => {
-    return this.http.post('http://143.110.213.22:8883/api/files', data);
+  formSave = (data: any, page: string): Observable<any> => {
+    let url = '';
+    switch (page) {
+      case 'cbiForm':
+        url = '/api/climateBondInformation';
+        break;
+      case 'cbiFormContd':
+        url = '/api/climateBondInformationContd';
+        break;
+      case 'caForm':
+        url = '/api/certificateAgreement';
+        break;
+      default:
+        url = '';
+        break;
+    }
+    return this.http.post(url, data);
+  };
+
+  submitApplication = (payload: object): Observable<any> => {
+    const url = '/api/submitApplication';
+    return this.http.post(url, payload);
+  };
+
+  setStore = (key, value) => {
+    const lsData = JSON.stringify(value);
+    localStorage.setItem(key, lsData);
+  };
+
+  getStore = (key) => {
+    const lsData = localStorage.getItem(key);
+    const data = JSON.parse(lsData);
+    return data;
   };
 }

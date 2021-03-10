@@ -1,22 +1,22 @@
-<div class="">
+<div *ngIf="dashboardData">
   <h4 class="page-header">Certification Dashboard</h4>
   <div class="row">
     <div class="col-8">
-      <div class="d-flex justify-content-between">
+      <div class="d-flex justify-content-between" *ngIf="userData['userRole'] === 'Verifier'">
         <div class="card stat-card">
           <div class="card__ribbon"></div>
           <p class="title">In-Progress Certifications</p>
-          <p class="count">09</p>
+          <p class="count">{{dashboardData['stats'].inprogress}}</p>
         </div>
         <div class="card stat-card">
           <div class="card__ribbon"></div>
           <p class="title">Completed Certifications</p>
-          <p class="count">89</p>
+          <p class="count">{{dashboardData['stats'].completed}}</p>
         </div>
         <div class="card stat-card">
           <div class="card__ribbon"></div>
           <p class="title">Total Certifications</p>
-          <p class="count">97</p>
+          <p class="count">{{dashboardData['stats'].total}}</p>
         </div>
       </div>
       <div class="user-options">
@@ -34,39 +34,38 @@
       </div>
     </div>
     <div class="col-4 pl-5">
-      <div class="recent-certifications">
+      <div class="recent-certifications" *ngIf="userData['userRole'] === 'Verifier'">
         <div class="recent-certifications__title">Recent Certifications</div>
         <div class="recent-certifications__list">
-          <div class="recent-certifications__item">
-            <div class="recent-certifications__item__id">COL284736478</div>
+          <div class="recent-certifications__item" *ngFor="let list of dashboardData['recentCertifications']">
+            <div class="recent-certifications__item__id">{{list.certificationId}}</div>
             <div>
               <button class="btn btn-secondary-sm" type="button">
                 Submit Now
               </button>
             </div>
           </div>
+        </div>
+      </div>
+      <div class="recent-certifications" *ngIf="userData['userRole'] === 'Issuer'">
+        <div class="recent-certifications__title">Certification Status</div>
+        <div class="recent-certifications__list">
           <div class="recent-certifications__item">
-            <div class="recent-certifications__item__id">COL284736478</div>
+            <div class="recent-certifications__item__id">Pre-Issuance Certification</div>
             <div>
-              <button class="btn btn-secondary-sm" type="button">
-                Submit Now
-              </button>
+              <i class="fa fa-check-circle active" aria-hidden="true"></i>
             </div>
           </div>
           <div class="recent-certifications__item">
-            <div class="recent-certifications__item__id">COL284736478</div>
+            <div class="recent-certifications__item__id">Post-Issuance Certification</div>
             <div>
-              <button class="btn btn-secondary-sm" type="button">
-                Submit Now
-              </button>
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
             </div>
           </div>
           <div class="recent-certifications__item">
-            <div class="recent-certifications__item__id">COL284736478</div>
+            <div class="recent-certifications__item__id">Bond Redemption</div>
             <div>
-              <button class="btn btn-secondary-sm" type="button">
-                Submit Now
-              </button>
+              <i class="fa fa-check-circle" aria-hidden="true"></i>
             </div>
           </div>
         </div>

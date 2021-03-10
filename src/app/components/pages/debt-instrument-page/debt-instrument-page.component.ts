@@ -6,6 +6,7 @@ import {
   FormBuilder,
 } from '@angular/forms';
 import { DatastoreService } from 'src/app/services/data-store/data-store.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-debt-instrument-page',
@@ -16,9 +17,21 @@ export class DebtInstrumentPageComponent implements OnInit {
   currentForm: number;
   pageData: object;
   diForm: FormGroup;
-  constructor(private fb: FormBuilder, private ds: DatastoreService) {
+  userData: object;
+  instrumentType: string;
+  certificationId: string;
+  certificationType: string;
+
+  constructor(
+    private fb: FormBuilder,
+    private ds: DatastoreService,
+    private route: ActivatedRoute
+  ) {
     this.currentForm = 1;
     this.diForm = new FormGroup({});
+    this.userData = this.ds.getStore('userData');
+    this.instrumentType = this.route.snapshot.paramMap.get('type');
+    this.certificationType = this.ds.getStore('certificationType');
   }
 
   ngOnInit(): void {}
@@ -37,14 +50,36 @@ export class DebtInstrumentPageComponent implements OnInit {
   };
 
   saveFormStatus = (page: string) => {
+    const payload = {
+      ...this.diForm.value[page],
+      userEmail: this.userData['userEmail'],
+      instrumentType: this.instrumentType,
+      certificationType: this.certificationType,
+      certificationId: this.certificationId || '',
+    };
     if (page === 'arForm') {
-      this.ds.upload(this.diForm.value[page]).subscribe((e) => {
+      this.ds.upload(payload).subscribe((data) => {
+        this.certificationId = data.certificationId;
         alert('Data Saved');
       });
     } else {
-      this.ds.formSave(this.diForm.value[page]).subscribe((e) => {
+      this.ds.formSave(payload, page).subscribe((data) => {
+        this.certificationId = data.certificationId;
         alert('Data Saved');
       });
     }
+  };
+
+  submitApplication = () => {
+    const payload = {
+      userEmail: this.userData['userEmail'],
+      instrumentType: this.instrumentType,
+      certificationType: this.certificationType,
+      certificationId: this.certificationId || '',
+    };
+
+    this.ds.submitApplication(payload).subscribe((data) => {
+      this.certificationId = data.certificationId;
+    });
   };
 }

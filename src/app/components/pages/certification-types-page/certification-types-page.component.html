@@ -3,9 +3,9 @@
     <div class="col-6">
       <div class="d-flex justify-content-between">
         <h4 class="page-header">Certification Type</h4>
-        <a class="back-link" *ngIf="userSelection" routerLink="/certification-types">&lt;&lt; Back</a>
+        <a class="back-link" *ngIf="certificationType" routerLink="/certification-types">&lt;&lt; Back</a>
       </div>
-      <div class="row" *ngIf="!userSelection">
+      <div class="row" *ngIf="!certificationType">
         <div class="col-6">
           <div class="card">
             <div class="card__ribbon"></div>
@@ -25,13 +25,13 @@
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center" *ngIf="userSelection && userSelection === 'pre'">
+      <div class="d-flex justify-content-center" *ngIf="certificationType && certificationType === 'pre'">
         <div class="card certificate">
           <div class="card__ribbon"></div>
           <h4 class="title">Pre-Issuance Certification</h4>
         </div>
       </div>
-      <div class="d-flex justify-content-center" *ngIf="userSelection && userSelection === 'post'">
+      <div class="d-flex justify-content-center" *ngIf="certificationType && certificationType === 'post'">
         <div class="card certificate">
           <div class="card__ribbon"></div>
           <h4 class="title">Post-Issuance Certification</h4>
@@ -40,7 +40,7 @@
     </div>
     <div class="col-6">
       <div class="debt-instruments" *ngIf="
-          userSelection && (userSelection === 'pre' || userSelection === 'post')
+          certificationType && (certificationType === 'pre' || certificationType === 'post')
         ">
         <div class="debt-instruments__title">Debt Instruments</div>
 

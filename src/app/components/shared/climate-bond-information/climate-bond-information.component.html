@@ -27,7 +27,7 @@
                 <input type="text" class="form-control" id="issuanceCountry" formControlName="issuanceCountry" />
               </div>
               <label for="cusip" class="col-sm-2 col-form-label">CUSIP</label>
-              <div class="col-sm-2">
+              <div class="col">
                 <input type="text" class="form-control" id="cusip" formControlName="cusip" />
               </div>
             </div>
@@ -39,7 +39,7 @@
                 <input type="text" class="form-control" id="localCurrency" formControlName="localCurrency" />
               </div>
               <label for="isin" class="col-sm-2 col-form-label">ISIN</label>
-              <div class="col-sm-2">
+              <div class="col">
                 <input type="text" class="form-control" id="isin" formControlName="isin" />
               </div>
             </div>
@@ -51,7 +51,7 @@
                 <input type="text" class="form-control" id="amountIssued" formControlName="amountIssued" />
               </div>
               <label for="coupon" class="col-sm-2 col-form-label">Coupon</label>
-              <div class="col-sm-2">
+              <div class="col">
                 <input type="text" class="form-control" id="coupon" formControlName="coupon" />
               </div>
             </div>
@@ -94,19 +94,20 @@
             <label for="verifierName" class="col-sm-6 col-form-label">Verifier Name</label>
             <div class="col-sm-6">
               <select class="form-control" id="verifierName" formControlName="verifierName">
-                <option>AECLU</option>
-                <option>BAM</option>
-                <option>BlockC</option>
-                <option>Blue Snow Consulting</option>
-                <option>Bureau Veritas</option>
-                <option>Carbon Trust</option>
-                <option>CECEP</option>
-                <option>Deloitte</option>
-                <option>DNV.GL</option>
-                <option>DQS CFS</option>
-                <option>EPIC Sustainability</option>
-                <option>EQA Spain</option>
-                <option>EY</option>
+                <option value="">Select</option>
+                <option value="AECLU">AECLU</option>
+                <option value="bam">BAM</option>
+                <option value="blockc">BlockC</option>
+                <option value="bsu">Blue Snow Consulting</option>
+                <option value="bv">Bureau Veritas</option>
+                <option value="ct">Carbon Trust</option>
+                <option value="cecep">CECEP</option>
+                <option value="deloitte">Deloitte</option>
+                <option value="dnv">DNV.GL</option>
+                <option value="dqs">DQS CFS</option>
+                <option value="epicsustainability">EPIC Sustainability</option>
+                <option value="eqa">EQA Spain</option>
+                <option value="ey">EY</option>
               </select>
             </div>
           </div>
@@ -121,7 +122,7 @@
           <div class="form-group row">
             <div class="col-sm-4">
               <select class="form-control" formControlName="renewableEnergy">
-                <option>Renewable Energy</option>
+                <option value="">Renewable Energy</option>
                 <option value="agriculture">Agriculture</option>
                 <option value="bioenergy">Bioenergy</option>
                 <option value="forestry">Forestry</option>
@@ -146,6 +147,8 @@
       </div>
     </div>
   </div>
+</div>
+<div formGroupName="cbiFormContd">
   <div *ngIf="currentPage === 'second'">
     <div class="row">
       <div class="col-1 align-self-center">
@@ -160,7 +163,7 @@
           <div class="form-group row">
             <div class="col-sm-4">
               <select class="form-control" formControlName="renewableEnergy">
-                <option>Renewable Energy</option>
+                <option value="">Renewable Energy</option>
                 <option value="agriculture">Agriculture</option>
                 <option value="bioenergy">Bioenergy</option>
                 <option value="forestry">Forestry</option>
@@ -192,13 +195,13 @@
           <div class="form-group row">
             <label for="headOfficeAddress" class="col-sm-4 col-form-label">Address of Head Office</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="headOfficeAddress" formControlName="headOfficeAddress"/>
+              <input type="text" class="form-control" id="headOfficeAddress" formControlName="headOfficeAddress" />
             </div>
           </div>
           <div class="form-group row">
             <label for="vatNumber" class="col-sm-4 col-form-label">VAT Number (EU Countries)</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="vatNumber" formControlName="vatNumber"/>
+              <input type="text" class="form-control" id="vatNumber" formControlName="vatNumber" />
             </div>
           </div>
           <div class="form-group row">

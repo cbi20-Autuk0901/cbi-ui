@@ -15,7 +15,7 @@
         <a class="next-link" *ngIf="pageData && pageData['showNext']" (click)="switchForm('next')">
           Next <i class="fa fa-angle-double-right" aria-hidden="true"></i>
         </a>
-        <a class="btn btn-green py-2" *ngIf="pageData && pageData['showSubmit']" data-toggle="modal" data-target="#successModal">
+        <a class="btn btn-green py-2" (click)="submitApplication()" *ngIf="pageData && pageData['showSubmit']" data-toggle="modal" data-target="#successModal">
           Submit Application
         </a>
 
@@ -39,7 +39,7 @@
             <div class="application-details__title">
               Submission Successful
             </div>
-            <span class="application-details__id">Certification ID - COL2893746</span>
+            <span class="application-details__id"> {{'Certification ID - ' + certificationId}}</span>
             <div class="application-details__contactus">
               For more information, please contact us on
               <a href="certification@climatebonds.net" class="link">certification@climatebonds.net</a>

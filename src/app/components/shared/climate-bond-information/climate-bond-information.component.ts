@@ -65,7 +65,8 @@ export class ClimateBondInformationComponent implements OnInit {
       renewableEnergyText: this.fb.control('', [Validators.required]),
     });
 
-    this.initializeForm(this.firstForm);
+    this.parent.form.addControl('cbiForm', this.firstForm);
+    this.parent.form.addControl('cbiFormContd', this.secondForm);
   }
 
   switchForm = (name: string) => {
@@ -73,20 +74,9 @@ export class ClimateBondInformationComponent implements OnInit {
     this.pageData = {
       showNext: this.currentPage === 'second',
       showBack: false,
-      pageName: 'cbiForm',
+      pageName: this.currentPage === 'second' ? 'cbiFormContd' : 'cbiForm',
     };
 
     this.currentPageEvent.emit(this.pageData);
-    const currentPageForm =
-      this.currentPage === 'second' ? this.secondForm : this.firstForm;
-    this.initializeForm(currentPageForm);
-  };
-
-  initializeForm = (currentPageForm: FormGroup) => {
-    if (this.parent.form.contains('cbiForm')) {
-      this.parent.form.setControl('cbiForm', currentPageForm);
-    } else {
-      this.parent.form.addControl('cbiForm', currentPageForm);
-    }
   };
 }
