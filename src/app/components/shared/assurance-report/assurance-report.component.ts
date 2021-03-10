@@ -6,7 +6,6 @@ import {
   FormGroupDirective,
   Validators,
 } from '@angular/forms';
-import { DatastoreService } from 'src/app/services/data-store/data-store.service';
 
 @Component({
   selector: 'app-assurance-report',
@@ -23,9 +22,9 @@ export class AssuranceReportComponent implements OnInit {
     showNext: false,
     showBack: true,
     showSubmit: true,
-    pageName: 'assuranceReportForm',
+    pageName: 'arForm',
   };
-  assuranceReportForm: FormGroup;
+  arForm: FormGroup;
   caName: string;
   gbName: string;
 
@@ -36,18 +35,21 @@ export class AssuranceReportComponent implements OnInit {
       this.currentPageEvent.emit(this.pageData);
     });
 
-    this.assuranceReportForm = this.fb.group({
-      caAssuranceReport: this.fb.control('', [Validators.required]),
-      gbAssuranceReport: this.fb.control('', [Validators.required]),
+    this.arForm = this.fb.group({
+      caAssuranceReport: this.fb.control(null, [Validators.required]),
+      gbAssuranceReport: this.fb.control(null, [Validators.required]),
     });
 
-    this.parent.form.addControl(
-      'assuranceReportForm',
-      this.assuranceReportForm
-    );
+    this.parent.form.addControl('arForm', this.arForm);
   }
 
   onChange = (event, name) => {
     this[name] = event.target.files[0].name;
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const currentControl =
+        name === 'caName' ? 'caAssuranceReport' : 'gbAssuranceReport';
+      this.arForm.patchValue({ [currentControl]: file });
+    }
   };
 }

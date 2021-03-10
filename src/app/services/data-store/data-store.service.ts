@@ -15,8 +15,12 @@ export class DatastoreService {
     this.currentPage.next(value);
   }
 
-  upload = (form): Observable<any> => {
-    return this.http.post('http://143.110.213.22:8883/api/files', form);
+  upload = (data: any): Observable<any> => {
+    const formData = new FormData();
+    Object.entries(data).forEach(([key, value]): any => {
+      formData.append(key, data[key]);
+    });
+    return this.http.post('http://143.110.213.22:8883/api/files', formData);
   };
 
   formSave = (data: any): Observable<any> => {

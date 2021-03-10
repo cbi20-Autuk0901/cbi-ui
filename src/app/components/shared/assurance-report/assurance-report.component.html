@@ -5,7 +5,7 @@
     <span>Certification Agreement</span>
   </div>
 </div>
-<div formGroupName="assuranceReportForm" enctype="multipart/form-data">
+<div formGroupName="arForm">
   <div class="row">
     <div class="col">
       <div class="form-card h-100">
@@ -17,7 +17,7 @@
             Upload +
             <input type="file" name="caAssuranceReport" (change)="onChange($event, 'caName')">
           </div>
-          <p>{{caName}}</p>
+          <div>{{caName}}</div>
         </div>
       </div>
     </div>
@@ -40,7 +40,7 @@
             Upload +
             <input type="file" name="gbAssuranceReport" (change)="onChange($event, 'gbName')">
           </div>
-          <p>{{gbName}}</p>
+          <div>{{gbName}}</div>
         </div>
       </div>
     </div>

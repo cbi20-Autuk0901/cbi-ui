@@ -37,8 +37,14 @@ export class DebtInstrumentPageComponent implements OnInit {
   };
 
   saveFormStatus = (page: string) => {
-    this.ds.formSave(this.diForm.value[page]).subscribe((e) => {
-      alert('Data Saved');
-    });
+    if (page === 'arForm') {
+      this.ds.upload(this.diForm.value[page]).subscribe((e) => {
+        alert('Data Saved');
+      });
+    } else {
+      this.ds.formSave(this.diForm.value[page]).subscribe((e) => {
+        alert('Data Saved');
+      });
+    }
   };
 }
