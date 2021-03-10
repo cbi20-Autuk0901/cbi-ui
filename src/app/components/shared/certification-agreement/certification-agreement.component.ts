@@ -6,6 +6,7 @@ import {
   FormGroupDirective,
   Validators,
 } from '@angular/forms';
+import { DatastoreService } from 'src/app/services/data-store/data-store.service';
 
 @Component({
   selector: 'app-certification-agreement',
@@ -24,8 +25,13 @@ export class CertificationAgreementComponent implements OnInit {
     pageName: 'caForm',
   };
   caForm: FormGroup;
+  userData: object;
 
-  constructor(private fb: FormBuilder, private parent: FormGroupDirective) {}
+  constructor(
+    private fb: FormBuilder,
+    private parent: FormGroupDirective,
+    private ds: DatastoreService
+  ) {}
 
   ngOnInit(): void {
     setTimeout(() => {
@@ -41,6 +47,8 @@ export class CertificationAgreementComponent implements OnInit {
       issuerContactPerson: this.fb.control('', [Validators.required]),
       signature: this.fb.control('', [Validators.required]),
     });
+
+    this.userData = this.ds.getStore('userData');
 
     this.parent.form.addControl('caForm', this.caForm);
   }
