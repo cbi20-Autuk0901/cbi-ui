@@ -6,6 +6,7 @@ import {
   FormGroupDirective,
   Validators,
 } from '@angular/forms';
+import { DatastoreService } from 'src/app/services/data-store/data-store.service';
 
 @Component({
   selector: 'app-climate-bond-information',
@@ -26,8 +27,13 @@ export class ClimateBondInformationComponent implements OnInit {
   };
   firstForm: FormGroup;
   secondForm: FormGroup;
+  instrumentType: string;
 
-  constructor(private fb: FormBuilder, private parent: FormGroupDirective) {}
+  constructor(
+    private fb: FormBuilder,
+    private parent: FormGroupDirective,
+    private ds: DatastoreService
+  ) {}
 
   ngOnInit(): void {
     this.currentPage = 'first';
@@ -67,6 +73,7 @@ export class ClimateBondInformationComponent implements OnInit {
 
     this.parent.form.addControl('cbiForm', this.firstForm);
     this.parent.form.addControl('cbiFormContd', this.secondForm);
+    this.instrumentType = this.ds.getStore('instrumentType');
   }
 
   switchForm = (name: string) => {

@@ -11,11 +11,11 @@
       <div class="col">
         <div class="form-card">
           <div class="form-card__title">
-            <div>Description of Bond Details and Assets</div>
+            <div>Description of {{instrumentType}} Details and Assets</div>
             <button class="btn btn-secondary">Add +</button>
           </div>
           <div class="form-group row">
-            <label for="uniqueName" class="col-sm-4 col-form-label">Unique Name of Bond</label>
+            <label for="uniqueName" class="col-sm-4 col-form-label">Unique Name of {{instrumentType}}</label>
             <div class="col-sm-8">
               <input type="text" class="form-control" id="uniqueName" formControlName="uniqueName" />
             </div>
@@ -75,17 +75,17 @@
             </div>
           </div>
           <div class="form-card__title">
-            <div>Bond Type</div>
+            <div>{{instrumentType}} Type</div>
             <button class="btn btn-secondary">Add +</button>
           </div>
           <div class="form-group row">
-            <label for="useOfProceeds" class="col-sm-6 col-form-label">Use of Proceeds Bond</label>
+            <label for="useOfProceeds" class="col-sm-6 col-form-label">Use of Proceeds {{instrumentType}}</label>
             <div class="col-sm-6">
               <input type="text" class="form-control" id="useOfProceeds" formControlName="useOfProceeds" />
             </div>
           </div>
           <div class="form-group row">
-            <label for="useOfProceedsRevenue" class="col-sm-6 col-form-label">Use of Proceeds Revenue Bond</label>
+            <label for="useOfProceedsRevenue" class="col-sm-6 col-form-label">Use of Proceeds Revenue {{instrumentType}}</label>
             <div class="col-sm-6">
               <input type="text" class="form-control" id="useOfProceedsRevenue" formControlName="useOfProceedsRevenue" />
             </div>
@@ -116,7 +116,7 @@
       <div class="col">
         <div class="form-card h-100">
           <div class="form-card__title">
-            <div>Bond Details</div>
+            <div>{{instrumentType}} Details</div>
             <button class="btn btn-secondary">Add +</button>
           </div>
           <div class="form-group row">
@@ -157,7 +157,7 @@
       <div class="col">
         <div class="form-card h-100">
           <div class="form-card__title">
-            <div>Bond Details</div>
+            <div>{{instrumentType}} Details</div>
             <button class="btn btn-secondary">Add +</button>
           </div>
           <div class="form-group row">

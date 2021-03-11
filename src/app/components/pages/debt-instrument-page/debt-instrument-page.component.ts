@@ -32,6 +32,12 @@ export class DebtInstrumentPageComponent implements OnInit {
     this.userData = this.ds.getStore('userData');
     this.instrumentType = this.route.snapshot.paramMap.get('type');
     this.certificationType = this.ds.getStore('certificationType');
+    this.ds.setStore(
+      'instrumentType',
+      this.instrumentType.replace(/(^[a-z])|(\s+[a-z])/g, (txt) =>
+        txt.toUpperCase()
+      )
+    );
   }
 
   ngOnInit(): void {}
