@@ -6,6 +6,7 @@ import { LoginPageComponent } from './components/pages/login-page/login-page.com
 import { AuthGuard } from './guards/auth/auth.guard';
 import { CertificationTypesPageComponent } from './components/pages/certification-types-page/certification-types-page.component';
 import { DebtInstrumentPageComponent } from './components/pages/debt-instrument-page/debt-instrument-page.component';
+import { RegistrationComponent } from './components/pages/registration/registration.component';
 
 const routes: Routes = [
   {
@@ -14,6 +15,10 @@ const routes: Routes = [
     component: DashboardPageComponent,
   },
   { path: 'login', canActivate: [AuthGuard], component: LoginPageComponent },
+  {
+    path: 'registration',
+    component: RegistrationComponent,
+  },
   {
     path: 'certification-types',
     canActivate: [AuthGuard],

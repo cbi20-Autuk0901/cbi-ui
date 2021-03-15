@@ -1,7 +1,9 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import {
   ControlContainer,
+  FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   FormGroupDirective,
   Validators,
@@ -25,9 +27,29 @@ export class ClimateBondInformationComponent implements OnInit {
     showBack: false,
     pageName: 'cbiForm',
   };
-  firstForm: FormGroup;
-  secondForm: FormGroup;
   instrumentType: string;
+
+  testData: object = {
+    uniqueName: 'jkhkjhk',
+    issuanceCountry: '',
+    cusip: 'klsdkl',
+    isin: '',
+    coupon: '',
+    amountIssued: '',
+    underwriter: '',
+    issueDate: '',
+    maturityDate: '',
+    useOfProceeds: '',
+    useOfProceedsRevenue: '',
+    verifierName: '',
+    renewableEnergy: '',
+    renewableEnergyText: '',
+    localCurrency: [],
+    userEmail: 'issuer@vigameq.com',
+    instrumentType: 'bond',
+    certificationType: 'pre',
+    certificationId: '',
+  };
 
   constructor(
     private fb: FormBuilder,
@@ -41,40 +63,74 @@ export class ClimateBondInformationComponent implements OnInit {
       this.currentPageEvent.emit(this.pageData);
     });
 
-    this.firstForm = this.fb.group({
-      uniqueName: this.fb.control('', [Validators.required]),
-      issuanceCountry: this.fb.control('', [Validators.required]),
-      cusip: this.fb.control('', [Validators.required]),
-      localCurrency: this.fb.control('', [Validators.required]),
-      isin: this.fb.control('', [Validators.required]),
-      coupon: this.fb.control('', [Validators.required]),
-      amountIssued: this.fb.control('', [Validators.required]),
-      underwriter: this.fb.control('', [Validators.required]),
-      issueDate: this.fb.control('', [Validators.required]),
-      maturityDate: this.fb.control('', [Validators.required]),
-      useOfProceeds: this.fb.control('', [Validators.required]),
-      useOfProceedsRevenue: this.fb.control('', [Validators.required]),
-      verifierName: this.fb.control('', [Validators.required]),
-      renewableEnergy: this.fb.control('', [Validators.required]),
-      renewableEnergyText: this.fb.control('', [Validators.required]),
-    });
-    this.secondForm = this.fb.group({
-      headOfficeAddress: this.fb.control('', [Validators.required]),
-      vatNumber: this.fb.control('', [Validators.required]),
-      businessRegistration: this.fb.control('', [Validators.required]),
-      contactName: this.fb.control('', [Validators.required]),
-      position: this.fb.control('', [Validators.required]),
-      company: this.fb.control('', [Validators.required]),
-      contactNumber: this.fb.control('', [Validators.required]),
-      invoiceName: this.fb.control('', [Validators.required]),
-      renewableEnergy: this.fb.control('', [Validators.required]),
-      renewableEnergyText: this.fb.control('', [Validators.required]),
-    });
+    this.parent.form.addControl(
+      'cbiForm',
+      this.fb.group({
+        uniqueName: this.fb.control('', [Validators.required]),
+        issuanceCountry: this.fb.control('', [Validators.required]),
+        cusip: this.fb.control('', [Validators.required]),
+        isin: this.fb.control('', [Validators.required]),
+        coupon: this.fb.control('', [Validators.required]),
+        amountIssued: this.fb.control('', [Validators.required]),
+        underwriter: this.fb.control('', [Validators.required]),
+        issueDate: this.fb.control('', [Validators.required]),
+        maturityDate: this.fb.control('', [Validators.required]),
+        useOfProceeds: this.fb.control('', [Validators.required]),
+        useOfProceedsRevenue: this.fb.control('', [Validators.required]),
+        verifierName: this.fb.control('', [Validators.required]),
+        renewableEnergy: this.fb.control('', [Validators.required]),
+        renewableEnergyText: this.fb.control('', [Validators.required]),
+        localCurrency: this.fb.array([]),
+      })
+    );
+    this.parent.form.addControl(
+      'cbiFormContd',
+      this.fb.group({
+        headOfficeAddress: this.fb.control('', [Validators.required]),
+        vatNumber: this.fb.control('', [Validators.required]),
+        businessRegistration: this.fb.control('', [Validators.required]),
+        contactName: this.fb.control('', [Validators.required]),
+        position: this.fb.control('', [Validators.required]),
+        company: this.fb.control('', [Validators.required]),
+        contactNumber: this.fb.control('', [Validators.required]),
+        invoiceName: this.fb.control('', [Validators.required]),
+        renewableEnergy: this.fb.control('', [Validators.required]),
+        renewableEnergyText: this.fb.control('', [Validators.required]),
+      })
+    );
 
-    this.parent.form.addControl('cbiForm', this.firstForm);
-    this.parent.form.addControl('cbiFormContd', this.secondForm);
     this.instrumentType = this.ds.getStore('instrumentType');
+
+    this.formGenerator(this.testData);
+
+    this.cbiForm.patchValue(this.testData);
   }
+
+  get localCurrency() {
+    return this.cbiForm.get('localCurrency') as FormArray;
+  }
+
+  get cbiForm() {
+    return this.parent.form.get('cbiForm') as FormGroup;
+  }
+
+  addField(name: string, value: string) {
+    this[name].push(this.fb.control(value));
+  }
+
+  formGenerator = (data) => {
+    Object.entries(data).forEach(([key, value]) => {
+      if (Array.isArray(value)) {
+        if (value.length > 0) {
+          value.forEach((e) => {
+            (this.cbiForm.get(key) as FormArray).push(this.fb.control(e));
+          });
+        } else {
+          this.addField(key, '');
+        }
+      }
+    });
+  };
 
   switchForm = (name: string) => {
     this.currentPage = name;

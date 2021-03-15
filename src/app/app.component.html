@@ -1,8 +1,8 @@
 <div class="container-fluid p-0">
-  <div *ngIf="currentPage !== '/login'">
+  <div *ngIf="currentPage !== '/login' && currentPage !== '/registration'">
     <app-sidebar></app-sidebar> <app-header></app-header>
   </div>
-  <div [ngClass]="{ 'main-content': currentPage !== '/login' }">
+  <div [ngClass]="{ 'main-content': currentPage !== '/login' && currentPage !== '/registration' }">
     <router-outlet></router-outlet>
   </div>
 </div>

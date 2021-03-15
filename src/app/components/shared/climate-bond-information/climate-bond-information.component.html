@@ -12,7 +12,7 @@
         <div class="form-card">
           <div class="form-card__title">
             <div>Description of {{instrumentType}} Details and Assets</div>
-            <button class="btn btn-secondary">Add +</button>
+            <button class="btn btn-secondary" (click)="addField('localCurrency', '')">Add +</button>
           </div>
           <div class="form-group row">
             <label for="uniqueName" class="col-sm-4 col-form-label">Unique Name of {{instrumentType}}</label>
@@ -34,9 +34,11 @@
           </div>
           <div>
             <div class="form-group row">
-              <label for="localCurrency" class="col-sm-4 col-form-label">Local Currency</label>
-              <div class="col">
-                <input type="text" class="form-control" id="localCurrency" formControlName="localCurrency" />
+              <label for="lc" class="col-sm-4 col-form-label">Local Currency</label>
+              <div formArrayName="localCurrency" class="col">
+                <div [ngClass]="{'mb-3': localCurrency.controls.length >1}" *ngFor="let _ of localCurrency.controls; index as i">
+                  <input type="text" class="form-control" [formControlName]="i" />
+                </div>
               </div>
               <label for="isin" class="col-sm-2 col-form-label">ISIN</label>
               <div class="col">

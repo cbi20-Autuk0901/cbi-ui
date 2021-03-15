@@ -14,6 +14,7 @@ import { DebtInstrumentPageComponent } from './components/pages/debt-instrument-
 import { ClimateBondInformationComponent } from './components/shared/climate-bond-information/climate-bond-information.component';
 import { CertificationAgreementComponent } from './components/shared/certification-agreement/certification-agreement.component';
 import { AssuranceReportComponent } from './components/shared/assurance-report/assurance-report.component';
+import { RegistrationComponent } from './components/pages/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { AssuranceReportComponent } from './components/shared/assurance-report/a
     ClimateBondInformationComponent,
     CertificationAgreementComponent,
     AssuranceReportComponent,
+    RegistrationComponent,
   ],
   imports: [
     BrowserModule,
