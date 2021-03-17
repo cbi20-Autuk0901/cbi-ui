@@ -44,7 +44,7 @@ export class RegistrationComponent implements OnInit {
     const payload = this.registerForm.value;
     this.userS.registerUser(payload)
       .subscribe((e) => {
-        console.log(e);
+       alert('Registered Successfully')
       });
 
   }

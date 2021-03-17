@@ -9,7 +9,6 @@ import {
   ControlContainer,
   FormArray,
   FormBuilder,
-  FormControl,
   FormGroup,
   FormGroupDirective,
   Validators,
@@ -28,7 +27,7 @@ import {
   }, ],
 })
 export class ClimateBondInformationComponent implements OnInit {
-  @Input() mainData:object;
+  @Input() mainData: object;
   @Output() currentPageEvent = new EventEmitter < object > ();
 
   currentPage: string;
@@ -40,36 +39,6 @@ export class ClimateBondInformationComponent implements OnInit {
 
   instrType: string;
 
-  testData: object = {
-    uniqueName: 'jkhkjhk',
-    issuanceCountry: '',
-    cusip: 'klsdkl',
-    isin: '',
-    coupon: '',
-    amountIssued: [],
-    underwriter: [],
-    issueDate: '',
-    maturityDate: '',
-    useOfProceeds: '',
-    useOfProceedsRevenue: '',
-    verifierName: '',
-    renewableEnergy: [],
-    renewableEnergyText: [],
-    localCurrency: [],
-    userEmail: 'issuer@vigameq.com',
-    instrumentType: 'bond',
-    certificationType: 'pre',
-    certificationId: '',
-    headOfficeAddress: "",
-    vatNumber: "",
-    businessRegistration: "",
-    contactName: "",
-    position: "",
-    company: "",
-    contactNumber: "",
-    invoiceName: "",
-  };
-
   constructor(
     private fb: FormBuilder,
     private parent: FormGroupDirective,
@@ -77,7 +46,7 @@ export class ClimateBondInformationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-
+    this.instrType = this.mainData['instrType'];
     this.parent.form.addControl(
       'cbiForm',
       this.fb.group({
@@ -110,8 +79,15 @@ export class ClimateBondInformationComponent implements OnInit {
     setTimeout(() => {
       this.switchForm('first');
     });
-    
-    this.instrType = this.mainData['instrType'];
+
+    if (this.mainData['certId']) {
+      this.ds.formResume('cbiForm', this.mainData)
+        .subscribe((data) => {
+          this.cbiForm.patchValue(data);
+          this.formGenerator('cbiForm', data);
+        });
+    }
+
   }
 
   get localCurrency() {
@@ -135,11 +111,6 @@ export class ClimateBondInformationComponent implements OnInit {
   get cbiForm() {
     return this.parent.form.get('cbiForm') as FormGroup;
   }
-
-  get cbiFormContd() {
-    return this.parent.form.get('cbiFormContd') as FormGroup;
-  }
-
 
   addField(name: string, value: string) {
     if (this[name].controls.length < 5)
@@ -167,9 +138,5 @@ export class ClimateBondInformationComponent implements OnInit {
     };
 
     this.currentPageEvent.emit(this.pageData);
-
-    this.cbiForm.patchValue(this.testData);
-    this.formGenerator('cbiForm', this.testData);
-
   };
 }

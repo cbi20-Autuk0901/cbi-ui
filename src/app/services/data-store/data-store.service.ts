@@ -30,7 +30,23 @@ export class DatastoreService {
   };
 
   formSave = (data: any, page: string): Observable<any> => {
-    let url = '';
+    let url = this.getPageUrl(page);
+    return this.http.post(url, data);
+  };
+
+  formResume = (page: string, headers:object): Observable<any> => {
+    const url = this.getPageUrl(page);
+    const options = {
+      headers: new HttpHeaders({
+        'userEmail':headers['userEmail'],
+        'certificationId': headers['certId']
+      })
+    }
+    return this.http.get(url, options);
+  }
+
+  getPageUrl = (page):string => {
+    let url = ''
     switch (page) {
       case 'cbiForm':
         url = '/api/climateBondInformation';
@@ -45,8 +61,9 @@ export class DatastoreService {
         url = '';
         break;
     }
-    return this.http.post(url, data);
-  };
+
+    return url;
+  }
 
   submitApplication = (payload: object): Observable<any> => {
     const url = '/api/submitApplication';

@@ -42,11 +42,13 @@ export class DebtInstrumentPageComponent implements OnInit {
         txt.toUpperCase()
       ),
       certType: this.certType,
-      certId: this.certId
+      certId: this.certId,
+      userEmail: this.userData['userEmail']
     };
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+  }
 
   switchForm = (type: string) => {
     if (type === 'next' && this.currentForm < 3) {
@@ -89,9 +91,9 @@ export class DebtInstrumentPageComponent implements OnInit {
   submitApplication = () => {
     const payload = {
       userEmail: this.userData['userEmail'],
-      instrType: this.instrType,
-      certType: this.certType,
-      certId: this.certId || '',
+      instrumentType: this.instrType,
+      certificationType: this.certType,
+      certificationId: this.certId || '',
     };
 
     this.ds.submitApplication(payload)

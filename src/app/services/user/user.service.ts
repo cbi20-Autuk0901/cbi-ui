@@ -50,7 +50,7 @@ export class UserService {
   };
 
   registerUser = (payload: object): Observable < any > => {
-    const url = "/api/registration";
+    const url = "/api/register";
     return this.http.post(url, payload);
   }
 
