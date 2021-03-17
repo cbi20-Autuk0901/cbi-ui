@@ -4,7 +4,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { DashboardPageComponent } from './components/pages/dashboard-page/dashboard-page.component';
 import { LoginPageComponent } from './components/pages/login-page/login-page.component';
 import { AuthGuard } from './guards/auth/auth.guard';
-import { CertificationTypesPageComponent } from './components/pages/certification-types-page/certification-types-page.component';
+import { certTypesPageComponent } from './components/pages/certification-types-page/certification-types-page.component';
 import { DebtInstrumentPageComponent } from './components/pages/debt-instrument-page/debt-instrument-page.component';
 import { RegistrationComponent } from './components/pages/registration/registration.component';
 
@@ -22,10 +22,10 @@ const routes: Routes = [
   {
     path: 'certification-types',
     canActivate: [AuthGuard],
-    component: CertificationTypesPageComponent,
+    component: certTypesPageComponent,
   },
   {
-    path: 'debt-instrument/:type',
+    path: 'debt-instrument/:certType/:instrType',
     canActivate: [AuthGuard],
     component: DebtInstrumentPageComponent,
   },

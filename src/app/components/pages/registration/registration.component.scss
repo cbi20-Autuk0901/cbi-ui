@@ -61,16 +61,20 @@
     border-bottom: 1px solid #acacac;
     border-radius: 0;
     color: #5c5c5c;
-    font-size: 14px !important;
+    font-size: 15px !important;
     outline: 0;
     padding: 0;
-    height: 22px;
+    height: 18px;
     letter-spacing: 0.5px;
 
     &:active,
     &:focus {
       outline: 0;
       box-shadow: none;
+    }
+
+    &.ng-invalid:not(.ng-pristine) {
+      border-bottom: 1px solid red;
     }
   }
 
@@ -81,6 +85,10 @@
     padding: 6px 35px;
     margin-top: 80px;
     width: 100%;
+
+    &:disabled {
+      background-color: #acacac;
+    }
   }
 
   .login-text {

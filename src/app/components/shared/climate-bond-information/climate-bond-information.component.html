@@ -11,11 +11,20 @@
       <div class="col">
         <div class="form-card">
           <div class="form-card__title">
-            <div>Description of {{instrumentType}} Details and Assets</div>
-            <button class="btn btn-secondary" (click)="addField('localCurrency', '')">Add +</button>
+            <div>Description of {{instrType}} Details and Assets</div>
+            <div class="dropdown">
+              <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                Add +
+              </button>
+              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                <a class="dropdown-item" role="button" (click)="addField('localCurrency', '')">Local Currency</a>
+                <a class="dropdown-item" role="button" (click)="addField('amountIssued', '')">Amount Issued</a>
+                <a class="dropdown-item" role="button" (click)="addField('underwriter', '')">Underwriter</a>
+              </div>
+            </div>
           </div>
           <div class="form-group row">
-            <label for="uniqueName" class="col-sm-4 col-form-label">Unique Name of {{instrumentType}}</label>
+            <label for="uniqueName" class="col-sm-4 col-form-label">Unique Name of {{instrType}}</label>
             <div class="col-sm-8">
               <input type="text" class="form-control" id="uniqueName" formControlName="uniqueName" />
             </div>
@@ -49,8 +58,10 @@
           <div>
             <div class="form-group row">
               <label for="amountIssued" class="col-sm-4 col-form-label">Amount Issued In Local Currency</label>
-              <div class="col">
-                <input type="text" class="form-control" id="amountIssued" formControlName="amountIssued" />
+              <div formArrayName="amountIssued" class="col">
+                <div [ngClass]="{'mb-3': amountIssued.controls.length >1}" *ngFor="let _ of amountIssued.controls; index as i">
+                  <input type="text" class="form-control" [formControlName]="i" />
+                </div>
               </div>
               <label for="coupon" class="col-sm-2 col-form-label">Coupon</label>
               <div class="col">
@@ -60,8 +71,10 @@
           </div>
           <div class="form-group row">
             <label for="underwriter" class="col-sm-4 col-form-label">Underwriter</label>
-            <div class="col-sm-8">
-              <input type="text" class="form-control" id="underwriter" formControlName="underwriter" />
+            <div formArrayName="underwriter" class="col-sm-8">
+              <div [ngClass]="{'mb-3': underwriter.controls.length >1}" *ngFor="let _ of underwriter.controls; index as i">
+                <input type="text" class="form-control" [formControlName]="i" />
+              </div>
             </div>
           </div>
           <div class="form-group row">
@@ -77,17 +90,16 @@
             </div>
           </div>
           <div class="form-card__title">
-            <div>{{instrumentType}} Type</div>
-            <button class="btn btn-secondary">Add +</button>
+            <div>{{instrType}} Type</div>
           </div>
           <div class="form-group row">
-            <label for="useOfProceeds" class="col-sm-6 col-form-label">Use of Proceeds {{instrumentType}}</label>
+            <label for="useOfProceeds" class="col-sm-6 col-form-label">Use of Proceeds {{instrType}}</label>
             <div class="col-sm-6">
               <input type="text" class="form-control" id="useOfProceeds" formControlName="useOfProceeds" />
             </div>
           </div>
           <div class="form-group row">
-            <label for="useOfProceedsRevenue" class="col-sm-6 col-form-label">Use of Proceeds Revenue {{instrumentType}}</label>
+            <label for="useOfProceedsRevenue" class="col-sm-6 col-form-label">Use of Proceeds Revenue {{instrType}}</label>
             <div class="col-sm-6">
               <input type="text" class="form-control" id="useOfProceedsRevenue" formControlName="useOfProceedsRevenue" />
             </div>
@@ -118,28 +130,32 @@
       <div class="col">
         <div class="form-card h-100">
           <div class="form-card__title">
-            <div>{{instrumentType}} Details</div>
-            <button class="btn btn-secondary">Add +</button>
+            <div>{{instrType}} Details</div>
+            <button class="btn btn-secondary" (click)="addField('renewableEnergy', ''); addField('renewableEnergyText', ''); ">Add +</button>
           </div>
           <div class="form-group row">
-            <div class="col-sm-4">
-              <select class="form-control" formControlName="renewableEnergy">
-                <option value="">Renewable Energy</option>
-                <option value="agriculture">Agriculture</option>
-                <option value="bioenergy">Bioenergy</option>
-                <option value="forestry">Forestry</option>
-                <option value="lowCarbonTransport">Low carbon transport</option>
-                <option value="marineRenewableEnergy">Marine Renewable Energy</option>
-                <option value="protectedAgriculture">Protected Agriculture</option>
-                <option value="shipping">Shipping</option>
-                <option value="solar">Solar</option>
-                <option value="waterInfrastructure">Water Infrastructure</option>
-                <option value="wasteManagement">Waste Management</option>
-                <option value="wind">Wind</option>
-              </select>
+            <div formArrayName="renewableEnergy" class="col-sm-4">
+              <div [ngClass]="{'renewable-spacing': renewableEnergy.controls.length >1}" *ngFor="let _ of renewableEnergy.controls; index as i">
+                <select class="form-control" [formControlName]="i">
+                  <option value="">Renewable Energy</option>
+                  <option value="agriculture">Agriculture</option>
+                  <option value="bioenergy">Bioenergy</option>
+                  <option value="forestry">Forestry</option>
+                  <option value="lowCarbonTransport">Low carbon transport</option>
+                  <option value="marineRenewableEnergy">Marine Renewable Energy</option>
+                  <option value="protectedAgriculture">Protected Agriculture</option>
+                  <option value="shipping">Shipping</option>
+                  <option value="solar">Solar</option>
+                  <option value="waterInfrastructure">Water Infrastructure</option>
+                  <option value="wasteManagement">Waste Management</option>
+                  <option value="wind">Wind</option>
+                </select>
+              </div>
             </div>
-            <div class="col-sm-8">
-              <textarea class="form-control" formControlName="renewableEnergyText"></textarea>
+            <div formArrayName="renewableEnergyText" class="col-sm-8">
+              <div [ngClass]="{'mb-3': renewableEnergyText.controls.length >1}" *ngFor="let _ of renewableEnergyText.controls; index as i">
+                <textarea class="form-control" [formControlName]="i"></textarea>
+              </div>
             </div>
           </div>
         </div>
@@ -149,8 +165,6 @@
       </div>
     </div>
   </div>
-</div>
-<div formGroupName="cbiFormContd">
   <div *ngIf="currentPage === 'second'">
     <div class="row">
       <div class="col-1 align-self-center">
@@ -159,28 +173,32 @@
       <div class="col">
         <div class="form-card h-100">
           <div class="form-card__title">
-            <div>{{instrumentType}} Details</div>
-            <button class="btn btn-secondary">Add +</button>
+            <div>{{instrType}} Details</div>
+            <button class="btn btn-secondary" (click)="addField('renewableEnergy', ''); addField('renewableEnergyText', ''); ">Add +</button>
           </div>
           <div class="form-group row">
-            <div class="col-sm-4">
-              <select class="form-control" formControlName="renewableEnergy">
-                <option value="">Renewable Energy</option>
-                <option value="agriculture">Agriculture</option>
-                <option value="bioenergy">Bioenergy</option>
-                <option value="forestry">Forestry</option>
-                <option value="lowCarbonTransport">Low carbon transport</option>
-                <option value="marineRenewableEnergy">Marine Renewable Energy</option>
-                <option value="protectedAgriculture">Protected Agriculture</option>
-                <option value="shipping">Shipping</option>
-                <option value="solar">Solar</option>
-                <option value="waterInfrastructure">Water Infrastructure</option>
-                <option value="wasteManagement">Waste Management</option>
-                <option value="wind">Wind</option>
-              </select>
+            <div formArrayName="renewableEnergy" class="col-sm-4">
+              <div [ngClass]="{'renewable-spacing': renewableEnergy.controls.length >1}" *ngFor="let _ of renewableEnergy.controls; index as i">
+                <select class="form-control" [formControlName]="i">
+                  <option value="">Renewable Energy</option>
+                  <option value="agriculture">Agriculture</option>
+                  <option value="bioenergy">Bioenergy</option>
+                  <option value="forestry">Forestry</option>
+                  <option value="lowCarbonTransport">Low carbon transport</option>
+                  <option value="marineRenewableEnergy">Marine Renewable Energy</option>
+                  <option value="protectedAgriculture">Protected Agriculture</option>
+                  <option value="shipping">Shipping</option>
+                  <option value="solar">Solar</option>
+                  <option value="waterInfrastructure">Water Infrastructure</option>
+                  <option value="wasteManagement">Waste Management</option>
+                  <option value="wind">Wind</option>
+                </select>
+              </div>
             </div>
-            <div class="col-sm-8">
-              <textarea class="form-control" formControlName="renewableEnergyText"></textarea>
+            <div formArrayName="renewableEnergyText" class="col-sm-8">
+              <div [ngClass]="{'mb-3': renewableEnergyText.controls.length >1}" *ngFor="let _ of renewableEnergyText.controls; index as i">
+                <textarea class="form-control" [formControlName]="i"></textarea>
+              </div>
             </div>
           </div>
         </div>
@@ -214,7 +232,6 @@
           </div>
           <div class="form-card__title">
             <div>Contact Person</div>
-            <button class="btn btn-secondary">Add +</button>
           </div>
           <div class="form-group row">
             <label for="contactName" class="col-sm-4 col-form-label">Name</label>
@@ -242,12 +259,11 @@
           </div>
           <div class="form-card__title">
             <div>Invoice Details</div>
-            <button class="btn btn-secondary">Add +</button>
           </div>
           <div class="form-group row">
             <label for="invoiceName" class="col-sm-4 col-form-label">Name</label>
             <div class="col-sm-8">
-              <input type="text" class="form-control" id="invoiceName" />
+              <input type="text" class="form-control" id="invoiceName" formControlName="invoiceName" />
             </div>
           </div>
         </div>

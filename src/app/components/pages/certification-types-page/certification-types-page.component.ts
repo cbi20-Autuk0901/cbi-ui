@@ -6,18 +6,17 @@ import { DatastoreService } from 'src/app/services/data-store/data-store.service
   templateUrl: './certification-types-page.component.html',
   styleUrls: ['./certification-types-page.component.scss'],
 })
-export class CertificationTypesPageComponent implements OnInit {
-  certificationType: string = '';
+export class certTypesPageComponent implements OnInit {
+  certType: string = '';
   userSelection: object = {
-    certificationType: '',
-    instrumentType: '',
+    certType: '',
+    instrType: '',
   };
   constructor(private route: ActivatedRoute, private ds: DatastoreService) {}
 
   ngOnInit(): void {
     this.route.queryParams.subscribe((params) => {
-      this.certificationType = params['select'];
-      this.ds.setStore('certificationType', this.certificationType);
+      this.certType = params['certType'];
     });
   }
 }

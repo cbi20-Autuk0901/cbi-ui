@@ -9,7 +9,7 @@ import { SidebarComponent } from './components/shared/sidebar/sidebar.component'
 import { HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { LoginPageComponent } from './components/pages/login-page/login-page.component';
-import { CertificationTypesPageComponent } from './components/pages/certification-types-page/certification-types-page.component';
+import { certTypesPageComponent } from './components/pages/certification-types-page/certification-types-page.component';
 import { DebtInstrumentPageComponent } from './components/pages/debt-instrument-page/debt-instrument-page.component';
 import { ClimateBondInformationComponent } from './components/shared/climate-bond-information/climate-bond-information.component';
 import { CertificationAgreementComponent } from './components/shared/certification-agreement/certification-agreement.component';
@@ -23,7 +23,7 @@ import { RegistrationComponent } from './components/pages/registration/registrat
     LoginPageComponent,
     HeaderComponent,
     SidebarComponent,
-    CertificationTypesPageComponent,
+    certTypesPageComponent,
     DebtInstrumentPageComponent,
     ClimateBondInformationComponent,
     CertificationAgreementComponent,

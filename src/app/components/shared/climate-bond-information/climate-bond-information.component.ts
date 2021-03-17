@@ -1,4 +1,10 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output
+} from '@angular/core';
 import {
   ControlContainer,
   FormArray,
@@ -8,18 +14,22 @@ import {
   FormGroupDirective,
   Validators,
 } from '@angular/forms';
-import { DatastoreService } from 'src/app/services/data-store/data-store.service';
+import {
+  DatastoreService
+} from 'src/app/services/data-store/data-store.service';
 
 @Component({
   selector: 'app-climate-bond-information',
   templateUrl: './climate-bond-information.component.html',
   styleUrls: ['./climate-bond-information.component.scss'],
-  viewProviders: [
-    { provide: ControlContainer, useExisting: FormGroupDirective },
-  ],
+  viewProviders: [{
+    provide: ControlContainer,
+    useExisting: FormGroupDirective
+  }, ],
 })
 export class ClimateBondInformationComponent implements OnInit {
-  @Output() currentPageEvent = new EventEmitter<object>();
+  @Input() mainData:object;
+  @Output() currentPageEvent = new EventEmitter < object > ();
 
   currentPage: string;
   pageData: object = {
@@ -27,7 +37,8 @@ export class ClimateBondInformationComponent implements OnInit {
     showBack: false,
     pageName: 'cbiForm',
   };
-  instrumentType: string;
+
+  instrType: string;
 
   testData: object = {
     uniqueName: 'jkhkjhk',
@@ -35,20 +46,28 @@ export class ClimateBondInformationComponent implements OnInit {
     cusip: 'klsdkl',
     isin: '',
     coupon: '',
-    amountIssued: '',
-    underwriter: '',
+    amountIssued: [],
+    underwriter: [],
     issueDate: '',
     maturityDate: '',
     useOfProceeds: '',
     useOfProceedsRevenue: '',
     verifierName: '',
-    renewableEnergy: '',
-    renewableEnergyText: '',
+    renewableEnergy: [],
+    renewableEnergyText: [],
     localCurrency: [],
     userEmail: 'issuer@vigameq.com',
     instrumentType: 'bond',
     certificationType: 'pre',
     certificationId: '',
+    headOfficeAddress: "",
+    vatNumber: "",
+    businessRegistration: "",
+    contactName: "",
+    position: "",
+    company: "",
+    contactNumber: "",
+    invoiceName: "",
   };
 
   constructor(
@@ -58,10 +77,6 @@ export class ClimateBondInformationComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.currentPage = 'first';
-    setTimeout(() => {
-      this.currentPageEvent.emit(this.pageData);
-    });
 
     this.parent.form.addControl(
       'cbiForm',
@@ -71,21 +86,16 @@ export class ClimateBondInformationComponent implements OnInit {
         cusip: this.fb.control('', [Validators.required]),
         isin: this.fb.control('', [Validators.required]),
         coupon: this.fb.control('', [Validators.required]),
-        amountIssued: this.fb.control('', [Validators.required]),
-        underwriter: this.fb.control('', [Validators.required]),
+        amountIssued: this.fb.array([this.fb.control('')]),
+        underwriter: this.fb.array([this.fb.control('')]),
         issueDate: this.fb.control('', [Validators.required]),
         maturityDate: this.fb.control('', [Validators.required]),
         useOfProceeds: this.fb.control('', [Validators.required]),
         useOfProceedsRevenue: this.fb.control('', [Validators.required]),
         verifierName: this.fb.control('', [Validators.required]),
-        renewableEnergy: this.fb.control('', [Validators.required]),
-        renewableEnergyText: this.fb.control('', [Validators.required]),
-        localCurrency: this.fb.array([]),
-      })
-    );
-    this.parent.form.addControl(
-      'cbiFormContd',
-      this.fb.group({
+        renewableEnergy: this.fb.array([this.fb.control('')]),
+        renewableEnergyText: this.fb.array([this.fb.control('')]),
+        localCurrency: this.fb.array([this.fb.control('')]),
         headOfficeAddress: this.fb.control('', [Validators.required]),
         vatNumber: this.fb.control('', [Validators.required]),
         businessRegistration: this.fb.control('', [Validators.required]),
@@ -94,42 +104,58 @@ export class ClimateBondInformationComponent implements OnInit {
         company: this.fb.control('', [Validators.required]),
         contactNumber: this.fb.control('', [Validators.required]),
         invoiceName: this.fb.control('', [Validators.required]),
-        renewableEnergy: this.fb.control('', [Validators.required]),
-        renewableEnergyText: this.fb.control('', [Validators.required]),
       })
     );
 
-    this.instrumentType = this.ds.getStore('instrumentType');
-
-    this.formGenerator(this.testData);
-
-    this.cbiForm.patchValue(this.testData);
+    setTimeout(() => {
+      this.switchForm('first');
+    });
+    
+    this.instrType = this.mainData['instrType'];
   }
 
   get localCurrency() {
     return this.cbiForm.get('localCurrency') as FormArray;
   }
 
+  get underwriter() {
+    return this.cbiForm.get('underwriter') as FormArray;
+  }
+
+  get amountIssued() {
+    return this.cbiForm.get('amountIssued') as FormArray;
+  }
+  get renewableEnergy() {
+    return this.cbiForm.get('renewableEnergy') as FormArray;
+  }
+  get renewableEnergyText() {
+    return this.cbiForm.get('renewableEnergyText') as FormArray;
+  }
+
   get cbiForm() {
     return this.parent.form.get('cbiForm') as FormGroup;
   }
 
-  addField(name: string, value: string) {
-    this[name].push(this.fb.control(value));
+  get cbiFormContd() {
+    return this.parent.form.get('cbiFormContd') as FormGroup;
   }
 
-  formGenerator = (data) => {
-    Object.entries(data).forEach(([key, value]) => {
-      if (Array.isArray(value)) {
-        if (value.length > 0) {
+
+  addField(name: string, value: string) {
+    if (this[name].controls.length < 5)
+      this[name].push(this.fb.control(value));
+  }
+
+  formGenerator = (form, data) => {
+    Object.entries(data)
+      .forEach(([key, value]) => {
+        if (Array.isArray(value)) {
           value.forEach((e) => {
-            (this.cbiForm.get(key) as FormArray).push(this.fb.control(e));
+            (this[form].get(key) as FormArray)
+            .push(this.fb.control(e));
           });
-        } else {
-          this.addField(key, '');
         }
-      }
-    });
+      });
   };
 
   switchForm = (name: string) => {
@@ -141,5 +167,9 @@ export class ClimateBondInformationComponent implements OnInit {
     };
 
     this.currentPageEvent.emit(this.pageData);
+
+    this.cbiForm.patchValue(this.testData);
+    this.formGenerator('cbiForm', this.testData);
+
   };
 }

@@ -3,9 +3,9 @@
     <a class="back-link" (click)="switchForm('back')"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</a>
   </div>
   <form [formGroup]="diForm">
-      <app-climate-bond-information *ngIf="currentForm === 1" (currentPageEvent)="getPageInfo($event)"></app-climate-bond-information>
-    <app-certification-agreement *ngIf="currentForm === 2" (currentPageEvent)="getPageInfo($event)"></app-certification-agreement>
-    <app-assurance-report *ngIf="currentForm === 3" (currentPageEvent)="getPageInfo($event)"></app-assurance-report>
+      <app-climate-bond-information [mainData]="mainData" *ngIf="currentForm === 1" (currentPageEvent)="getPageInfo($event)"></app-climate-bond-information>
+    <app-certification-agreement [mainData]="mainData" *ngIf="currentForm === 2" (currentPageEvent)="getPageInfo($event)"></app-certification-agreement>
+    <app-assurance-report [mainData]="mainData" *ngIf="currentForm === 3" (currentPageEvent)="getPageInfo($event)"></app-assurance-report>
 
     <div class="row mt-3">
       <div class="col-6">
@@ -39,7 +39,7 @@
             <div class="application-details__title">
               Submission Successful
             </div>
-            <span class="application-details__id"> {{'Certification ID - ' + certificationId}}</span>
+            <span class="application-details__id"> {{'Certification ID - ' + certId}}</span>
             <div class="application-details__contactus">
               For more information, please contact us on
               <a href="certification@climatebonds.net" class="link">certification@climatebonds.net</a>

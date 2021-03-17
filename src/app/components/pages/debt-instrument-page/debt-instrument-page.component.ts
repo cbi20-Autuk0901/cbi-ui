@@ -1,12 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
 import {
   FormGroup,
-  FormControl,
-  Validators,
-  FormBuilder,
 } from '@angular/forms';
-import { DatastoreService } from 'src/app/services/data-store/data-store.service';
-import { ActivatedRoute } from '@angular/router';
+import {
+  DatastoreService
+} from 'src/app/services/data-store/data-store.service';
+import {
+  ActivatedRoute
+} from '@angular/router';
 
 @Component({
   selector: 'app-debt-instrument-page',
@@ -18,26 +22,28 @@ export class DebtInstrumentPageComponent implements OnInit {
   pageData: object;
   diForm: FormGroup;
   userData: object;
-  instrumentType: string;
-  certificationId: string;
-  certificationType: string;
+  instrType: string;
+  certId: string;
+  certType: string;
+  mainData: object;
 
   constructor(
-    private fb: FormBuilder,
     private ds: DatastoreService,
     private route: ActivatedRoute
   ) {
     this.currentForm = 1;
     this.diForm = new FormGroup({});
     this.userData = this.ds.getStore('userData');
-    this.instrumentType = this.route.snapshot.paramMap.get('type');
-    this.certificationType = this.ds.getStore('certificationType');
-    this.ds.setStore(
-      'instrumentType',
-      this.instrumentType.replace(/(^[a-z])|(\s+[a-z])/g, (txt) =>
+    this.instrType = this.route.snapshot.paramMap.get('instrType');
+    this.certType = this.route.snapshot.paramMap.get('certType');
+    this.certId = this.route.snapshot.queryParamMap.get('certId');
+    this.mainData = {
+      instrType: this.instrType.replace(/(^[a-z])|(\s+[a-z])/g, (txt) =>
         txt.toUpperCase()
-      )
-    );
+      ),
+      certType: this.certType,
+      certId: this.certId
+    };
   }
 
   ngOnInit(): void {}
@@ -55,37 +61,42 @@ export class DebtInstrumentPageComponent implements OnInit {
     this.pageData = data;
   };
 
-  saveFormStatus = (page: string) => {
+  saveFormStatus = (form: string) => {
+    const page = form;
+    if (form === 'cbiFormContd') form = 'cbiForm';
     const payload = {
-      ...this.diForm.value[page],
+      ...this.diForm.value[form],
       userEmail: this.userData['userEmail'],
-      instrumentType: this.instrumentType,
-      certificationType: this.certificationType,
-      certificationId: this.certificationId || '',
+      instrumentType: this.instrType,
+      certificationType: this.certType,
+      certificationId: this.certId || '',
     };
     if (page === 'arForm') {
-      this.ds.upload(payload).subscribe((data) => {
-        this.certificationId = data.certificationId;
-        alert('Data Saved');
-      });
+      this.ds.upload(payload)
+        .subscribe((data) => {
+          this.certId = data.certificationId;
+          alert('Data Saved');
+        });
     } else {
-      this.ds.formSave(payload, page).subscribe((data) => {
-        this.certificationId = data.certificationId;
-        alert('Data Saved');
-      });
+      this.ds.formSave(payload, page)
+        .subscribe((data) => {
+          this.certId = data.certificationId;
+          alert('Data Saved');
+        });
     }
   };
 
   submitApplication = () => {
     const payload = {
       userEmail: this.userData['userEmail'],
-      instrumentType: this.instrumentType,
-      certificationType: this.certificationType,
-      certificationId: this.certificationId || '',
+      instrType: this.instrType,
+      certType: this.certType,
+      certId: this.certId || '',
     };
 
-    this.ds.submitApplication(payload).subscribe((data) => {
-      this.certificationId = data.certificationId;
-    });
+    this.ds.submitApplication(payload)
+      .subscribe((data) => {
+        this.certId = data.certId;
+      });
   };
 }

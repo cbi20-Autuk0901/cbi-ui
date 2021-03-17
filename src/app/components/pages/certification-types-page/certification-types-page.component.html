@@ -3,14 +3,14 @@
     <div class="col-6">
       <div class="d-flex justify-content-between">
         <h4 class="page-header">Certification Type</h4>
-        <a class="back-link" *ngIf="certificationType" routerLink="/certification-types">&lt;&lt; Back</a>
+        <a class="back-link" *ngIf="certType" routerLink="/certification-types">&lt;&lt; Back</a>
       </div>
-      <div class="row" *ngIf="!certificationType">
+      <div class="row" *ngIf="!certType">
         <div class="col-6">
           <div class="card">
             <div class="card__ribbon"></div>
             <h4 class="title">Pre-Issuance Certification</h4>
-            <a [routerLink]="['/certification-types']" [queryParams]="{ select: 'pre' }" class="btn btn-secondary">
+            <a [routerLink]="['/certification-types']" [queryParams]="{ certType: 'pre' }" class="btn btn-secondary">
               Apply
             </a>
           </div>
@@ -19,19 +19,19 @@
           <div class="card">
             <div class="card__ribbon"></div>
             <h4 class="title">Post-Issuance Certification</h4>
-            <a [routerLink]="['/certification-types']" [queryParams]="{ select: 'post' }" class="btn btn-secondary">
+            <a [routerLink]="['/certification-types']" [queryParams]="{ certType: 'post' }" class="btn btn-secondary">
               Apply
             </a>
           </div>
         </div>
       </div>
-      <div class="d-flex justify-content-center" *ngIf="certificationType && certificationType === 'pre'">
+      <div class="d-flex justify-content-center" *ngIf="certType && certType === 'pre'">
         <div class="card certificate">
           <div class="card__ribbon"></div>
           <h4 class="title">Pre-Issuance Certification</h4>
         </div>
       </div>
-      <div class="d-flex justify-content-center" *ngIf="certificationType && certificationType === 'post'">
+      <div class="d-flex justify-content-center" *ngIf="certType && certType === 'post'">
         <div class="card certificate">
           <div class="card__ribbon"></div>
           <h4 class="title">Post-Issuance Certification</h4>
@@ -40,7 +40,7 @@
     </div>
     <div class="col-6">
       <div class="debt-instruments" *ngIf="
-          certificationType && (certificationType === 'pre' || certificationType === 'post')
+          certType && (certType === 'pre' || certType === 'post')
         ">
         <div class="debt-instruments__title">Debt Instruments</div>
 
@@ -50,7 +50,7 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ad
             minim veniam, quis nostrud exercitation.
           </div>
-          <a class="btn btn-secondary" [routerLink]="['/debt-instrument/bond']">Apply</a>
+          <a class="btn btn-secondary" [routerLink]="['/debt-instrument', certType, 'bond']">Apply</a>
         </div>
         <div class="card">
           <div class="title">Loan</div>
@@ -58,7 +58,7 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ad
             minim veniam, quis nostrud exercitation.
           </div>
-          <a class="btn btn-secondary" [routerLink]="['/debt-instrument/loan']">Apply</a>
+          <a class="btn btn-secondary" [routerLink]="['/debt-instrument', certType, 'loan']">Apply</a>
         </div>
         <div class="card">
           <div class="title">Deposit</div>
@@ -66,7 +66,7 @@
             Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do ad
             minim veniam, quis nostrud exercitation.
           </div>
-          <a class="btn btn-secondary" [routerLink]="['/debt-instrument/deposit']">Apply</a>
+          <a class="btn btn-secondary" [routerLink]="['/debt-instrument', certType, 'deposit']">Apply</a>
         </div>
         <div class="card">
           <div class="title">Others</div>
