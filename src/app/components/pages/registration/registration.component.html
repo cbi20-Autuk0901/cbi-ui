@@ -9,7 +9,7 @@
           <a href="mailto:support@vigameq.com" class="link">Support</a>
         </div>
       </div>
-      <form class="needs-validation" [formGroup]="registerForm" novalidate>
+      <form (ngSubmit)="registerUser()" [formGroup]="registerForm" novalidate>
         <hr />
 
         <div class="row no-gutters">
@@ -17,29 +17,51 @@
             <div class="pr-5">
               <div class="form-title">User Information</div>
               <div class="form-group">
-                <label for="validationTooltip01">First Name</label>
+                <label for="firstName">First Name</label>
                 <input type="text" class="form-control" id="firstName" formControlName="firstName" />
+                <span class="text-danger error" *ngIf="(controls.firstName.touched || submitted) && controls.firstName.errors?.required">
+                  First Name is required
+                </span>
               </div>
               <div class="form-group">
                 <label for="lastName">Last Name</label>
                 <input type="text" class="form-control" id="lastName" formControlName="lastName" />
+                <span class="text-danger error" *ngIf="(controls.lastName.touched || submitted) && controls.lastName.errors?.required">
+                  Last Name is required
+                </span>
               </div>
               <div class="form-group">
                 <label for="userEmail">Email Address</label>
-                <input type="email" class="form-control" id="userEmail" formControlName="userEmail" />
-                <div class="invalid-tooltip">Please provide a valid city.</div>
+                <input type="email" class="form-control" autocomplete="off" id="userEmail" formControlName="userEmail" />
+                <span class="text-danger error" *ngIf="(controls.userEmail.touched || submitted) && controls.userEmail.errors?.required">
+                  Email is required
+                </span>
+                <span class="text-danger error" *ngIf="(controls.userEmail.touched || submitted) && controls.userEmail.errors?.pattern">
+                  Invalid Email
+                </span>
               </div>
               <div class="form-group">
                 <div class="row">
                   <div class="col-6">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" formControlName="password" />
-                    <div class="invalid-tooltip">Please provide a valid state.</div>
+                    <input type="password" class="form-control" id="password" formControlName="password" autocomplete="new-password" />
+                    <span class="text-danger error" *ngIf="(controls.password.touched || submitted) && controls.password.errors?.required">
+                      Password is required
+                    </span>
+                    <span class="text-danger error" *ngIf="(controls.password.touched || submitted) && controls.password.errors?.pattern">
+                      Password should contain minimum of 8 Characters with uppercase, lowercase, numbers & Special characters {{ "! @ # $ % ^ & * ( ) _ + - = [ ] { } | '"}}
+                    </span>
+
                   </div>
                   <div class="col-6">
                     <label for="confirmPassword">Confirm Password</label>
                     <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" />
-                    <div class="invalid-tooltip">Please provide a valid zip.</div>
+                    <span class="text-danger error" *ngIf="(controls.confirmPassword.touched || submitted) && controls.confirmPassword.errors?.required">
+                      Please Confirm Password
+                    </span>
+                    <span class="text-danger error" *ngIf="controls.confirmPassword.touched && controls.confirmPassword.errors?.passwordMismatch">
+                      Passwords doesnot match
+                    </span>
                   </div>
                 </div>
               </div>
@@ -48,36 +70,43 @@
                   <div class="col-6">
                     <label for="companyName">Company Name</label>
                     <input type="text" class="form-control" id="companyName" formControlName="companyName" />
-                    <div class="invalid-tooltip">Please provide a valid state.</div>
+                    <span class="text-danger error" *ngIf="(controls.companyName.touched || submitted) && controls.companyName.errors?.required">
+                      Company Name is required
+                    </span>
                   </div>
                   <div class="col-6">
                     <label for="location">Location</label>
                     <input type="text" class="form-control" id="location" formControlName="location" />
-                    <div class="invalid-tooltip">Please provide a valid zip.</div>
+                    <span class="text-danger error" *ngIf="(controls.location.touched || submitted) && controls.location.errors?.required">
+                      Location is required
+                    </span>
                   </div>
                 </div>
               </div>
               <div class="form-group">
                 <div class="form-row">
                   <div class="col-md-6">
-                    <div class="form-check form-check-inline">
+                    <div class="form-check">
                       <input class="form-check-input" type="radio" formControlName="userRole" id="singleIssuer" value="singleIssuer" />
                       <label class="form-check-label" for="singleIssuer">Single Issuer</label>
                     </div>
                   </div>
                   <div class="col-md-6">
-                    <div class="form-check form-check-inline">
+                    <div class="form-check">
                       <input class="form-check-input" type="radio" formControlName="userRole" id="programmaticIssuer" value="programmaticIssuer" />
                       <label class="form-check-label" for="programmaticIssuer">Programmatic Issuer</label>
                     </div>
                   </div>
                   <div class="col-md-6 mt-1">
-                    <div class="form-check form-check-inline">
+                    <div class="form-check">
                       <input class="form-check-input" type="radio" formControlName="userRole" id="verifier" value="verifier" />
                       <label class="form-check-label" for="verifier">Verifier</label>
                     </div>
                   </div>
                 </div>
+                <span class="text-danger error" *ngIf="(controls.firstName.touched || submitted) && controls.firstName.errors?.required">
+                  User Role is required
+                </span>
               </div>
             </div>
           </div>
@@ -87,29 +116,43 @@
               <div class="form-group">
                 <label for="invoiceCompanyName">Company Name</label>
                 <input type="text" class="form-control" id="invoiceCompanyName" formControlName="invoiceCompanyName" />
-                <div class="valid-tooltip">Looks good!</div>
+                <span class="text-danger error" *ngIf="(controls.invoiceCompanyName.touched || submitted) && controls.invoiceCompanyName.errors?.required">
+                  Company Name is required
+                </span>
               </div>
               <div class="form-group">
                 <label for="businessRegistrationNo">Business Registration Number</label>
                 <input type="text" class="form-control" id="businessRegistrationNo" formControlName="businessRegistrationNo" />
-                <div class="valid-tooltip">Looks good!</div>
+                <span class="text-danger error" *ngIf="(controls.businessRegistrationNo.touched || submitted) && controls.businessRegistrationNo.errors?.required">
+                  Business Registration Number is required
+                </span>
               </div>
               <div class="form-group">
                 <label for="invoiceEmail">Email Address</label>
                 <input type="text" class="form-control" id="invoiceEmail" formControlName="invoiceEmail" />
-                <div class="valid-tooltip">Looks good!</div>
+                <span class="text-danger error" *ngIf="(controls.invoiceEmail.touched || submitted) && controls.invoiceEmail.errors?.required">
+                  Email Address is required
+                </span>
               </div>
               <div class="form-group">
                 <label for="phoneNumber">Phone Number</label>
                 <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber" />
-                <div class="valid-tooltip">Looks good!</div>
+                <span class="text-danger error" *ngIf="(controls.phoneNumber.touched || submitted) && controls.phoneNumber.errors?.required">
+                  Phone Number is required
+                </span>
+                <span class="text-danger error" *ngIf="(controls.phoneNumber.touched || submitted) && controls.phoneNumber.errors?.pattern">
+                  Invalid Phone Number
+                </span>
               </div>
               <div class="form-group">
                 <label for="businessAddress">Business Address</label>
                 <input type="text" class="form-control" id="businessAddress" formControlName="businessAddress" />
+                <span class="text-danger error" *ngIf="(controls.businessAddress.touched || submitted) && controls.businessAddress.errors?.required">
+                  Business Address is required
+                </span>
               </div>
               <div class="form-group">
-                <button class="btn btn-register" [disabled]="registerForm.invalid" (click)="registerUser()">Register</button>
+                <button class="btn btn-register" type="submit">Register</button>
                 <p class="login-text">
                   Have an account?
                   <a routerLink="/login">Sign In</a>

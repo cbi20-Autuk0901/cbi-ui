@@ -29,6 +29,7 @@ body {
 }
 
 .btn {
+
   &:focus,
   &:active {
     box-shadow: none !important;
@@ -36,6 +37,7 @@ body {
   }
 
   &.btn-secondary {
+
     &:focus,
     &:active {
       background-color: #ffcc4f !important;

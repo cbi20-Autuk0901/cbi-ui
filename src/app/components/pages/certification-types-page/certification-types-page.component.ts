@@ -1,6 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { Router, ActivatedRoute, ParamMap } from '@angular/router';
-import { DatastoreService } from 'src/app/services/data-store/data-store.service';
+import {
+  Component,
+  OnInit
+} from '@angular/core';
+import {
+  ActivatedRoute
+} from '@angular/router';
+import {
+  DatastoreService
+} from 'src/app/services/data-store/data-store.service';
 @Component({
   selector: 'app-certification-types-page',
   templateUrl: './certification-types-page.component.html',
@@ -12,9 +19,9 @@ export class certTypesPageComponent implements OnInit {
     certType: '',
     instrType: '',
   };
-  constructor(private route: ActivatedRoute, private ds: DatastoreService) {}
+  constructor (private route: ActivatedRoute, private ds: DatastoreService) { }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.route.queryParams.subscribe((params) => {
       this.certType = params['certType'];
     });

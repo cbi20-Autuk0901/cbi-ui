@@ -7,9 +7,8 @@ import {
   FormGroup,
   Validators
 } from '@angular/forms';
-import {
-  UserService
-} from 'src/app/services/user/user.service';
+import { UserService } from 'src/app/services/user/user.service';
+import { CustomValidationService } from 'src/app/services/custom-validation/custom-validation.service';
 
 @Component({
   selector: 'app-registration',
@@ -19,34 +18,48 @@ import {
 export class RegistrationComponent implements OnInit {
 
   registerForm: FormGroup;
+  submitted: boolean;
 
-  constructor(private userS: UserService, private fb: FormBuilder) {}
-
-  ngOnInit(): void {
+  constructor (private userS: UserService, private fb: FormBuilder, private customValidator: CustomValidationService) {
     this.registerForm = this.fb.group({
-      firstName: this.fb.control('', Validators.required),
-      lastName: this.fb.control('', Validators.required),
-      userEmail: this.fb.control('', Validators.required),
-      password: this.fb.control('', Validators.required),
-      confirmPassword: this.fb.control('', Validators.required),
-      companyName: this.fb.control('', Validators.required),
-      location: this.fb.control('', Validators.required),
-      userRole: this.fb.control('', Validators.required),
-      invoiceCompanyName: this.fb.control('', Validators.required),
-      businessRegistrationNo: this.fb.control('', Validators.required),
-      invoiceEmail: this.fb.control('', Validators.required),
-      phoneNumber: this.fb.control('', Validators.required),
-      businessAddress: this.fb.control('', Validators.required),
+      firstName: ['', Validators.required],
+      lastName: ['', Validators.required],
+      userEmail: ['', [Validators.required, Validators.pattern('/^[^\s@]+@[^\s@]+$/')]],
+      password: ['', [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')]],
+      confirmPassword: ['', Validators.required],
+      companyName: ['', Validators.required],
+      location: ['', Validators.required],
+      userRole: ['', Validators.required],
+      invoiceCompanyName: ['', Validators.required],
+      businessRegistrationNo: ['', Validators.required],
+      invoiceEmail: ['', Validators.required],
+      phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      businessAddress: ['', Validators.required],
+    }, {
+      validator: this.customValidator.MatchPassword('password', 'confirmPassword')
     });
   }
 
-  registerUser = () => {
-    const payload = this.registerForm.value;
-    this.userS.registerUser(payload)
-      .subscribe((e) => {
-       alert('Registered Successfully')
-      });
+  ngOnInit (): void {
+
 
   }
+
+  get controls () {
+    return this.registerForm.controls;
+  }
+
+  registerUser = () => {
+    this.submitted = true;
+    if (this.registerForm.valid) {
+      const payload = this.registerForm.value;
+      this.userS.registerUser(payload)
+        .subscribe((e) => {
+          alert('Registered Successfully');
+        });
+
+    }
+
+  };
 
 }
