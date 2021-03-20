@@ -9,6 +9,7 @@ import {
   ControlContainer,
   FormArray,
   FormBuilder,
+  FormControl,
   FormGroup,
   FormGroupDirective,
   Validators,
@@ -24,11 +25,12 @@ import {
   viewProviders: [{
     provide: ControlContainer,
     useExisting: FormGroupDirective
-  }, ],
+  },],
 })
 export class ClimateBondInformationComponent implements OnInit {
   @Input() mainData: object;
-  @Output() currentPageEvent = new EventEmitter < object > ();
+  @Output() currentPageEvent = new EventEmitter<object>();
+
 
   currentPage: string;
   pageData: object = {
@@ -39,13 +41,13 @@ export class ClimateBondInformationComponent implements OnInit {
 
   instrType: string;
 
-  constructor(
+  constructor (
     private fb: FormBuilder,
     private parent: FormGroupDirective,
     private ds: DatastoreService
-  ) {}
+  ) { }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
     this.instrType = this.mainData['instrType'];
     this.parent.form.addControl(
       'cbiForm',
@@ -83,50 +85,59 @@ export class ClimateBondInformationComponent implements OnInit {
     if (this.mainData['certId']) {
       this.ds.formResume('cbiForm', this.mainData)
         .subscribe((data) => {
-          this.cbiForm.patchValue(data);
-          this.formGenerator('cbiForm', data);
+          this.formGenerator(data);
         });
     }
 
   }
 
-  get localCurrency() {
+  get localCurrency () {
     return this.cbiForm.get('localCurrency') as FormArray;
   }
 
-  get underwriter() {
+  get underwriter () {
     return this.cbiForm.get('underwriter') as FormArray;
   }
 
-  get amountIssued() {
+  get amountIssued () {
     return this.cbiForm.get('amountIssued') as FormArray;
   }
-  get renewableEnergy() {
+  get renewableEnergy () {
     return this.cbiForm.get('renewableEnergy') as FormArray;
   }
-  get renewableEnergyText() {
+  get renewableEnergyText () {
     return this.cbiForm.get('renewableEnergyText') as FormArray;
   }
+  get issueDate () {
+    return this.cbiForm.get('issueDate') as FormControl;
+  }
+  get maturityDate () {
+    return this.cbiForm.get('maturityDate') as FormControl;
+  }
 
-  get cbiForm() {
+  get cbiForm () {
     return this.parent.form.get('cbiForm') as FormGroup;
   }
 
-  addField(name: string, value: string) {
+  addField (name: string, value: string) {
     if (this[name].controls.length < 5)
       this[name].push(this.fb.control(value));
   }
 
-  formGenerator = (form, data) => {
-    Object.entries(data)
-      .forEach(([key, value]) => {
+  formGenerator = (FormData) => {
+    Object.entries(FormData)
+      .forEach(([name, value]) => {
         if (Array.isArray(value)) {
-          value.forEach((e) => {
-            (this[form].get(key) as FormArray)
-            .push(this.fb.control(e));
-          });
+          for (let i = this[name].length; i < value.length; i++) {
+            this[name].push(this.fb.control(''));
+          }
+        }
+        const formattedDate = new Date(FormData[name]).toLocaleDateString('fr-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
+        if (formattedDate !== 'Invalid Date') {
+          FormData[name] = formattedDate;
         }
       });
+    this.cbiForm.patchValue(FormData);
   };
 
   switchForm = (name: string) => {

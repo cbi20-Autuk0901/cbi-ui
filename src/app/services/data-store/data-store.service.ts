@@ -9,9 +9,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class DatastoreService {
   public currentPage: Subject<string> = new Subject<string>();
 
-  constructor(private http: HttpClient) {}
+  constructor (private http: HttpClient) { }
 
-  updateValue(key: string, value: any) {
+  updateValue (key: string, value: any) {
     this.currentPage.next(value);
   }
 
@@ -34,19 +34,20 @@ export class DatastoreService {
     return this.http.post(url, data);
   };
 
-  formResume = (page: string, headers:object): Observable<any> => {
+  formResume = (page: string, headers: object): Observable<any> => {
     const url = this.getPageUrl(page);
     const options = {
       headers: new HttpHeaders({
-        'userEmail':headers['userEmail'],
-        'certificationId': headers['certId']
+        'userEmail': headers['userEmail'],
+        'certificationId': headers['certId'],
+        'certificationType': headers['certType']
       })
-    }
+    };
     return this.http.get(url, options);
-  }
+  };
 
-  getPageUrl = (page):string => {
-    let url = ''
+  getPageUrl = (page): string => {
+    let url = '';
     switch (page) {
       case 'cbiForm':
         url = '/api/climateBondInformation';
@@ -63,7 +64,7 @@ export class DatastoreService {
     }
 
     return url;
-  }
+  };
 
   submitApplication = (payload: object): Observable<any> => {
     const url = '/api/submitApplication';

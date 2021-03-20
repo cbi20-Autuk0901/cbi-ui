@@ -26,8 +26,9 @@ export class DebtInstrumentPageComponent implements OnInit {
   certId: string;
   certType: string;
   mainData: object;
+  date1: Date;
 
-  constructor(
+  constructor (
     private ds: DatastoreService,
     private route: ActivatedRoute
   ) {
@@ -47,7 +48,7 @@ export class DebtInstrumentPageComponent implements OnInit {
     };
   }
 
-  ngOnInit(): void {
+  ngOnInit (): void {
   }
 
   switchForm = (type: string) => {

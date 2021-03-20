@@ -1,6 +1,7 @@
 import {
   BrowserModule
 } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {
   NgModule
 } from '@angular/core';
@@ -48,6 +49,7 @@ import {
 import {
   RegistrationComponent
 } from './components/pages/registration/registration.component';
+import { PrimeComponentsModule } from './prime-components.module';
 
 @NgModule({
   declarations: [
@@ -65,10 +67,12 @@ import {
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
     ReactiveFormsModule,
+    PrimeComponentsModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

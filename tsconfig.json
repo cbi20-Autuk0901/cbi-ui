@@ -6,6 +6,10 @@
 */
 {
   "files": [],
+  "include": [
+    "src/**/*.d.ts",
+    "src/**/*.ts"
+  ],
   "references": [
     {
       "path": "./tsconfig.app.json"
@@ -16,5 +20,5 @@
     {
       "path": "./e2e/tsconfig.json"
     }
-]
+  ]
 }
