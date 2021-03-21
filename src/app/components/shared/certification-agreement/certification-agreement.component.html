@@ -1,9 +1,10 @@
 <div class="form-title">
   <div>
-    <span class="step"> Step 2/4 </span>
+    <span class="step"> Step {{mainData['userRole'] === 'singleIssuer' ? '1' : '2'}}/4 </span>
     <span class="px-1">-</span>
     <span>Certification Agreement</span>
   </div>
+  <a class="back-link" *ngIf="mainData['userRole'] !== 'singleIssuer'" (click)="switchPage('back')"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</a>
 </div>
 <div class="row">
   <div class="col-5">
@@ -11,7 +12,7 @@
       <div class="form-card__title">
         <div>User Information</div>
       </div>
-      <div formGroupName="caForm">
+      <form [formGroup]="caForm">
         <div class="form-group row">
           <label for="applicationDate" class="col-sm-6 col-form-label">Date of application</label>
           <div class="col-sm-6">
@@ -56,7 +57,7 @@
             <input type="text" class="form-control" id="signature" formControlName="signature" />
           </div>
         </div>
-      </div>
+      </form>
     </div>
   </div>
   <div class="col-7">
@@ -96,3 +97,15 @@
     </div>
   </div>
 </div>
+<div class="row mt-3">
+  <div class="col-6">
+    <a class="btn btn-green" (click)="saveFormStatus('caForm')">Save</a>
+  </div>
+  <div class="col-6 text-right">
+    <a class="next-link" (click)="switchPage('next')">
+      Next <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+    </a>
+  </div>
+  <div class="offset-1"></div>
+</div>
+<p-toast position="bottom-center" key="bc"></p-toast>

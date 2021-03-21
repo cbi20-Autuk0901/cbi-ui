@@ -45,7 +45,7 @@
   font-size: 16px;
   border-radius: 4px;
   padding: 2px 0;
-  width: 120px;
+  min-width: 120px;
 
   &.btn-primary {
     background: #fff;
@@ -63,5 +63,52 @@
     background-color: #8dc63f;
     border: 2px solid #8dc63f;
     color: #ffffff;
+    padding: 3px 30px;
+  }
+}
+
+.modal {
+  .modal-content {
+    height: 250px;
+    position: relative;
+    padding: 60px 40px;
+
+    .close {
+      display: block;
+      width: 15px;
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      font-weight: 300;
+    }
+
+    .fa {
+      font-size: 100px;
+      color: #8dc63f;
+    }
+
+    .application-details {
+      padding: 10px;
+
+      &__title {
+        color: #8dc63f;
+        font-size: 20px;
+      }
+
+      &__id {
+        font-size: 14px;
+        font-weight: 700;
+      }
+
+      &__contactus {
+        margin-top: 30px;
+        font-size: 14px;
+
+        .link {
+          text-decoration: underline;
+        }
+      }
+    }
   }
 }

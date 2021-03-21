@@ -1,97 +1,92 @@
 import {
   Component,
-  EventEmitter,
   Input,
   OnInit,
-  Output
 } from '@angular/core';
 import {
-  ControlContainer,
   FormArray,
   FormBuilder,
   FormControl,
   FormGroup,
-  FormGroupDirective,
   Validators,
 } from '@angular/forms';
 import {
   DatastoreService
 } from 'src/app/services/data-store/data-store.service';
 
+import { MessageService } from 'primeng/api';
+
 @Component({
   selector: 'app-climate-bond-information',
   templateUrl: './climate-bond-information.component.html',
   styleUrls: ['./climate-bond-information.component.scss'],
-  viewProviders: [{
-    provide: ControlContainer,
-    useExisting: FormGroupDirective
-  },],
+  providers: [MessageService]
 })
 export class ClimateBondInformationComponent implements OnInit {
+
   @Input() mainData: object;
-  @Output() currentPageEvent = new EventEmitter<object>();
 
+  cbiForm: FormGroup;
+  cbiFormContd: FormGroup;
 
-  currentPage: string;
-  pageData: object;
+  currentForm: string;
   instrType: string;
-  dateHandler: object;
+  calendarYears: Array<object>;
 
   constructor (
     private fb: FormBuilder,
-    private parent: FormGroupDirective,
-    private ds: DatastoreService
+    private ds: DatastoreService,
+    private messageService: MessageService
   ) {
-    this.pageData = {
-      showNext: false,
-      showBack: false,
-      pageName: 'cbiForm',
-    };
-
+    this.currentForm = 'cbiForm';
+    this.calendarYears = this.generateYearList(2000, 2099);
+    this.cbiForm = this.fb.group({
+      uniqueName: ['', [Validators.required]],
+      issuanceCountry: ['', [Validators.required]],
+      cusip: ['', [Validators.required]],
+      isin: ['', [Validators.required]],
+      coupon: ['', [Validators.required]],
+      amountIssued: this.fb.array(['']),
+      localCurrency: this.fb.array(['']),
+      underwriter: this.fb.array(['']),
+      issueDate: [null, Validators.required],
+      maturityDate: [null, Validators.required],
+      renewableEnergy: this.fb.array(['']),
+      renewableEnergyText: this.fb.array(['']),
+      financingAssets: ['', [Validators.required]],
+      proceedsAllocation: ['', [Validators.required]],
+      portfolioApproach: ['', [Validators.required]],
+      decisionProcedure: ['', [Validators.required]],
+      proceedsType: ['', [Validators.required]],
+      proceedsProcessDetail: ['', [Validators.required]],
+      proceedsAllocationTiming: ['', [Validators.required]],
+      proceedsUse: ['', [Validators.required]],
+    });
+    this.cbiFormContd = this.fb.group({
+      allocationReportFreq: ['', [Validators.required]],
+      allocationReportFormat: ['', [Validators.required]],
+      allocationReportAccess: ['', [Validators.required]],
+      allocationReportAddressLink: ['', [Validators.required]],
+      breakdownInclusion: ['', [Validators.required]],
+      impactReportFreq: ['', [Validators.required]],
+      impactReportFormat: ['', [Validators.required]],
+      impactReportAccess: ['', [Validators.required]],
+      impactReportAddressLink: ['', [Validators.required]],
+      quantitativeImpact: ['', [Validators.required]],
+      headOfficeAddress: ['', [Validators.required]],
+      vatNumber: ['', [Validators.required]],
+      businessRegistration: ['', [Validators.required]],
+      contactName: ['', [Validators.required]],
+      position: ['', [Validators.required]],
+      company: ['', [Validators.required]],
+      contactNumber: ['', [Validators.required]],
+      invoiceName: ['', [Validators.required]],
+    });
   }
 
   ngOnInit (): void {
     this.instrType = this.mainData['instrType'];
-    this.parent.form.addControl(
-      'cbiForm',
-      this.fb.group({
-        uniqueName: this.fb.control('', [Validators.required]),
-        issuanceCountry: this.fb.control('', [Validators.required]),
-        cusip: this.fb.control('', [Validators.required]),
-        isin: this.fb.control('', [Validators.required]),
-        coupon: this.fb.control('', [Validators.required]),
-        amountIssued: this.fb.array([this.fb.control('')]),
-        underwriter: this.fb.array([this.fb.control('')]),
-        issueDate: [null, Validators.required],
-        maturityDate: this.fb.control(null, [Validators.required]),
-        useOfProceeds: this.fb.control('', [Validators.required]),
-        useOfProceedsRevenue: this.fb.control('', [Validators.required]),
-        verifierName: this.fb.control('', [Validators.required]),
-        renewableEnergy: this.fb.array([this.fb.control('')]),
-        renewableEnergyText: this.fb.array([this.fb.control('')]),
-        localCurrency: this.fb.array([this.fb.control('')]),
-        headOfficeAddress: this.fb.control('', [Validators.required]),
-        vatNumber: this.fb.control('', [Validators.required]),
-        businessRegistration: this.fb.control('', [Validators.required]),
-        contactName: this.fb.control('', [Validators.required]),
-        position: this.fb.control('', [Validators.required]),
-        company: this.fb.control('', [Validators.required]),
-        contactNumber: this.fb.control('', [Validators.required]),
-        invoiceName: this.fb.control('', [Validators.required]),
-      })
-    );
-
-    setTimeout(() => {
-      this.switchForm('first');
-    });
-
-    if (this.mainData['certId']) {
-      this.ds.formResume('cbiForm', this.mainData)
-        .subscribe((data) => {
-          this.formGenerator(data);
-        });
-    }
-
+    this.switchForm('cbiForm');
   }
 
   get localCurrency () {
@@ -118,38 +113,79 @@ export class ClimateBondInformationComponent implements OnInit {
     return this.cbiForm.get('maturityDate') as FormControl;
   }
 
-  get cbiForm () {
-    return this.parent.form.get('cbiForm') as FormGroup;
-  }
-
   addField (name: string, value: string) {
     if (this[name].controls.length < 5)
       this[name].push(this.fb.control(value));
   }
 
-  formGenerator = (FormData) => {
-    Object.entries(FormData)
-      .forEach(([name, value]) => {
-        if (Array.isArray(value)) {
-          for (let i = this[name].length; i < value.length; i++) {
-            this[name].push(this.fb.control(''));
+  formGenerator = (formName, FormData?) => {
+
+    if (FormData) {
+      Object.keys(FormData)
+        .forEach((name) => {
+          const val = FormData[name];
+          if (Array.isArray(val)) {
+            for (let i = this[name].length; i < val.length; i++) {
+              this[name].push(this.fb.control(''));
+            }
           }
-        }
-        if (Date.parse(FormData[name])) {
-          FormData[name] = new Date(FormData[name]);
-        }
-      });
-    this.cbiForm.patchValue(FormData);
+          if (typeof val === 'string' && isNaN(FormData[name]) && !isNaN(Date.parse(val))) {
+            FormData[name] = new Date(val);
+          }
+        });
+
+      this[formName].patchValue(FormData);
+    }
+
   };
 
   switchForm = (name: string) => {
-    this.currentPage = name;
-    this.pageData = {
-      showNext: this.currentPage === 'second',
-      showBack: false,
-      pageName: this.currentPage === 'second' ? 'cbiFormContd' : 'cbiForm',
-    };
 
-    this.currentPageEvent.emit(this.pageData);
+    if (this.mainData['certId']) {
+      this.ds.formResume(name, this.mainData)
+        .subscribe((data) => {
+          this.formGenerator(name, data);
+        });
+    }
+
+    this.currentForm = name;
+  };
+
+  switchPage = (type: string) => {
+    if (type === 'next') {
+      this.ds.updateValue('currentFormPage', this.mainData['userRole'] !== 'singleIssuer' ? 'caPage' : 'arPage');
+    }
+
+    if (type === 'back') {
+      this.ds.updateValue('currentFormPage', 'caPage');
+    }
+  };
+
+  saveFormStatus = (form: string) => {
+    const payload = {
+      ...this[form].value,
+      userEmail: this.mainData['userEmail'],
+      instrumentType: this.instrType,
+      certificationType: this.mainData['certType'],
+      certificationId: this.mainData['certId'] || '',
+    };
+    this.ds.formSave(payload, form)
+      .subscribe((data) => {
+        this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Data Saved' });
+      }, (error) => {
+        this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Invalid Form Details' });
+      });
+  };
+
+  generateYearList = (start: number, end: number) => {
+    let yearsList = [];
+    for (let i = start; i <= end; i++) {
+      const item = {
+        name: i,
+        value: i
+      };
+      yearsList.push(item);
+    }
+    return yearsList;
   };
 }

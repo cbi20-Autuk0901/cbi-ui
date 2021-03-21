@@ -53,7 +53,7 @@ textarea{
   font-size: 16px;
   border-radius: 4px;
   padding: 2px 0;
-  width: 120px;
+  min-width: 120px;
 
   &.btn-primary {
     background: #fff;

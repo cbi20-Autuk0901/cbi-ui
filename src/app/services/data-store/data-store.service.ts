@@ -7,12 +7,14 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class DatastoreService {
+
   public currentPage: Subject<string> = new Subject<string>();
+  public currentFormPage: Subject<string> = new Subject<string>();
 
   constructor (private http: HttpClient) { }
 
   updateValue (key: string, value: any) {
-    this.currentPage.next(value);
+    this[key].next(value);
   }
 
   getDashboard = (payload: object): Observable<any> => {

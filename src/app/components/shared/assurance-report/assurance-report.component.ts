@@ -1,48 +1,71 @@
-import { Component, OnInit, Output, EventEmitter, Input } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import {
-  ControlContainer,
   FormBuilder,
   FormGroup,
-  FormGroupDirective,
   Validators,
 } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { DatastoreService } from '../../../services/data-store/data-store.service';
 
 @Component({
   selector: 'app-assurance-report',
   templateUrl: './assurance-report.component.html',
   styleUrls: ['./assurance-report.component.scss'],
-  viewProviders: [
-    { provide: ControlContainer, useExisting: FormGroupDirective },
-  ],
+  providers: [MessageService]
 })
 export class AssuranceReportComponent implements OnInit {
-  @Input() mainData:object;
-  @Output() currentPageEvent = new EventEmitter<object>();
 
-  pageData: object = {
-    showNext: false,
-    showBack: true,
-    showSubmit: true,
-    pageName: 'arForm',
-  };
+  @Input() mainData: object;
+
   arForm: FormGroup;
   caName: string;
   gbName: string;
+  certId: string;
 
-  constructor(private fb: FormBuilder, private parent: FormGroupDirective) {}
+  constructor (private fb: FormBuilder, private ds: DatastoreService, private messageService: MessageService) { }
 
-  ngOnInit(): void {
-    setTimeout(() => {
-      this.currentPageEvent.emit(this.pageData);
-    });
+  ngOnInit (): void {
 
     this.arForm = this.fb.group({
       caAssuranceReport: this.fb.control(null, [Validators.required]),
       gbAssuranceReport: this.fb.control(null, [Validators.required]),
     });
 
-    this.parent.form.addControl('arForm', this.arForm);
   }
+
+  switchPage = (type: string) => {
+    if (type === 'back') {
+      this.ds.updateValue('currentFormPage', this.mainData['userRole'] !== 'singleIssuer' ? 'caPage' : 'cbiPage');
+    }
+  };
+
+  saveFormStatus = (form: string) => {
+    const payload = {
+      ...this[form].value,
+      userEmail: this.mainData['userEmail'],
+      instrumentType: this.mainData['instrType'],
+      certificationType: this.mainData['certType'],
+      certificationId: this.mainData['certId'] || '',
+    };
+    this.ds.upload(payload)
+      .subscribe((data) => {
+        this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Data Saved' });
+      });
+  };
+
+  submitApplication = () => {
+    const payload = {
+      userEmail: this.mainData['userEmail'],
+      instrumentType: this.mainData['instrType'],
+      certificationType: this.mainData['certType'],
+      certificationId: this.mainData['certId'] || '',
+    };
+
+    this.ds.submitApplication(payload)
+      .subscribe((data) => {
+        this.certId = data.certId;
+      });
+  };
 
   onChange = (event, name) => {
     this[name] = event.target.files[0].name;

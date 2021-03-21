@@ -1,17 +1,14 @@
 import {
   Component,
   OnInit,
-  Output,
-  EventEmitter,
   Input
 } from '@angular/core';
 import {
-  ControlContainer,
   FormBuilder,
   FormGroup,
-  FormGroupDirective,
   Validators,
 } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 import {
   DatastoreService
 } from 'src/app/services/data-store/data-store.service';
@@ -20,35 +17,25 @@ import {
   selector: 'app-certification-agreement',
   templateUrl: './certification-agreement.component.html',
   styleUrls: ['./certification-agreement.component.scss'],
-  viewProviders: [{
-    provide: ControlContainer,
-    useExisting: FormGroupDirective
-  }, ],
+  providers: [MessageService]
 })
 export class CertificationAgreementComponent implements OnInit {
   @Input() mainData: object;
-  @Output() currentPageEvent = new EventEmitter < object > ();
 
   pageData: object;
   userData: object;
 
-  constructor(
+  caForm: FormGroup;
+
+  constructor (
     private fb: FormBuilder,
-    private parent: FormGroupDirective,
-    private ds: DatastoreService
-  ) {}
+    private ds: DatastoreService,
+    private messageService: MessageService
+  ) { }
 
-  ngOnInit(): void {
-    this.pageData = {
-      showNext: true,
-      showBack: true,
-      pageName: 'caForm',
-    };
-    setTimeout(() => {
-      this.currentPageEvent.emit(this.pageData);
-    });
+  ngOnInit (): void {
 
-    this.parent.form.addControl('caForm', this.fb.group({
+    this.caForm = this.fb.group({
       applicationDate: this.fb.control('', [Validators.required]),
       issuingEntityLegalName: this.fb.control('', [Validators.required]),
       debtInstrumentsUniqueName: this.fb.control('', [Validators.required]),
@@ -56,7 +43,7 @@ export class CertificationAgreementComponent implements OnInit {
       email: this.fb.control('', [Validators.required]),
       issuerContactPerson: this.fb.control('', [Validators.required]),
       signature: this.fb.control('', [Validators.required]),
-    }));
+    });
 
     this.userData = this.ds.getStore('userData');
 
@@ -68,7 +55,29 @@ export class CertificationAgreementComponent implements OnInit {
     }
   }
 
-  get caForm() {
-    return this.parent.form.get('caForm') as FormGroup;
-  }
+  switchPage = (type: string) => {
+    if (type === 'next') {
+      this.ds.updateValue('currentFormPage', this.mainData['userRole'] === 'singleIssuer' ? 'cbiPage' : 'arPage');
+    }
+    if (type === 'back') {
+      this.ds.updateValue('currentFormPage', 'cbiPage');
+    }
+  };
+
+  saveFormStatus = (form: string) => {
+    const payload = {
+      ...this[form].value,
+      userEmail: this.mainData['userEmail'],
+      instrumentType: this.mainData['instrType'],
+      certificationType: this.mainData['certType'],
+      certificationId: this.mainData['Id'] || '',
+    };
+    this.ds.formSave(payload, form)
+      .subscribe((data) => {
+        this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Data Saved' });
+      }, (error) => {
+        this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Invalid Form Details' });
+      });
+  };
+
 }

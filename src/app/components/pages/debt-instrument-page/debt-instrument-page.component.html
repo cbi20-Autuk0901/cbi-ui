@@ -1,53 +1,6 @@
 <div class="debt-instrument">
-  <div *ngIf="pageData && pageData['showBack']" class="text-right">
-    <a class="back-link" (click)="switchForm('back')"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</a>
-  </div>
-  <form [formGroup]="diForm">
-      <app-climate-bond-information [mainData]="mainData" *ngIf="currentForm === 1" (currentPageEvent)="getPageInfo($event)"></app-climate-bond-information>
-    <app-certification-agreement [mainData]="mainData" *ngIf="currentForm === 2" (currentPageEvent)="getPageInfo($event)"></app-certification-agreement>
-    <app-assurance-report [mainData]="mainData" *ngIf="currentForm === 3" (currentPageEvent)="getPageInfo($event)"></app-assurance-report>
-
-    <div class="row mt-3">
-      <div class="col-6">
-        <a class="btn btn-green" (click)="saveFormStatus(pageData['pageName'])">Save</a>
-      </div>
-      <div class="col-6 text-right">
-        <a class="next-link" *ngIf="pageData && pageData['showNext']" (click)="switchForm('next')">
-          Next <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-        </a>
-        <a class="btn btn-green py-2" (click)="submitApplication()" *ngIf="pageData && pageData['showSubmit']" data-toggle="modal" data-target="#successModal">
-          Submit Application
-        </a>
-
-      </div>
-      <div class="offset-1"></div>
-    </div>
-  </form>
+  <app-climate-bond-information [mainData]="mainData" *ngIf="currentFormPage === 'cbiPage'"></app-climate-bond-information>
+  <app-certification-agreement [mainData]="mainData" *ngIf="currentFormPage === 'caPage'"></app-certification-agreement>
+  <app-assurance-report [mainData]="mainData" *ngIf="currentFormPage === 'arPage'"></app-assurance-report>
 </div>
-<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered" role="document">
-    <div class="modal-content">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-      <div class="row">
-        <div class="col-3">
-          <i class="fa fa-check-circle" aria-hidden="true"></i>
-        </div>
-        <div class="col-9">
-          <div class="application-details">
-            <div class="application-details__title">
-              Submission Successful
-            </div>
-            <span class="application-details__id"> {{'Certification ID - ' + certId}}</span>
-            <div class="application-details__contactus">
-              For more information, please contact us on
-              <a href="certification@climatebonds.net" class="link">certification@climatebonds.net</a>
-            </div>
-          </div>
-        </div>
-      </div>
 
-    </div>
-  </div>
-</div>
