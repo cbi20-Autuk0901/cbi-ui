@@ -33,19 +33,22 @@ export class ClimateBondInformationComponent implements OnInit {
 
 
   currentPage: string;
-  pageData: object = {
-    showNext: false,
-    showBack: false,
-    pageName: 'cbiForm',
-  };
-
+  pageData: object;
   instrType: string;
+  dateHandler: object;
 
   constructor (
     private fb: FormBuilder,
     private parent: FormGroupDirective,
     private ds: DatastoreService
-  ) { }
+  ) {
+    this.pageData = {
+      showNext: false,
+      showBack: false,
+      pageName: 'cbiForm',
+    };
+
+  }
 
   ngOnInit (): void {
     this.instrType = this.mainData['instrType'];
@@ -59,8 +62,8 @@ export class ClimateBondInformationComponent implements OnInit {
         coupon: this.fb.control('', [Validators.required]),
         amountIssued: this.fb.array([this.fb.control('')]),
         underwriter: this.fb.array([this.fb.control('')]),
-        issueDate: this.fb.control('', [Validators.required]),
-        maturityDate: this.fb.control('', [Validators.required]),
+        issueDate: [null, Validators.required],
+        maturityDate: this.fb.control(null, [Validators.required]),
         useOfProceeds: this.fb.control('', [Validators.required]),
         useOfProceedsRevenue: this.fb.control('', [Validators.required]),
         verifierName: this.fb.control('', [Validators.required]),
@@ -132,9 +135,8 @@ export class ClimateBondInformationComponent implements OnInit {
             this[name].push(this.fb.control(''));
           }
         }
-        const formattedDate = new Date(FormData[name]).toLocaleDateString('fr-CA', { year: 'numeric', month: '2-digit', day: '2-digit' });
-        if (formattedDate !== 'Invalid Date') {
-          FormData[name] = formattedDate;
+        if (Date.parse(FormData[name])) {
+          FormData[name] = new Date(FormData[name]);
         }
       });
     this.cbiForm.patchValue(FormData);
