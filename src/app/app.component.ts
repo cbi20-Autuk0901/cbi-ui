@@ -11,7 +11,7 @@ export class AppComponent {
   title = 'CBI';
   currentPage = '';
 
-  constructor(private router: Router, private ds: DatastoreService) {
+  constructor (private router: Router, private ds: DatastoreService) {
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
         this.currentPage = this.router.url;

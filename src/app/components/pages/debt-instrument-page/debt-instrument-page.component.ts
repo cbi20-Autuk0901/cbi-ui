@@ -1,13 +1,15 @@
+
 import {
   Component,
   OnInit
 } from '@angular/core';
-import {
-  DatastoreService
-} from 'src/app/services/data-store/data-store.service';
+
 import {
   ActivatedRoute
 } from '@angular/router';
+
+import { DatastoreService } from './../../../services/data-store/data-store.service';
+import { UtilsService } from './../../../services/utils/utils.service';
 
 @Component({
   selector: 'app-debt-instrument-page',
@@ -24,13 +26,12 @@ export class DebtInstrumentPageComponent implements OnInit {
 
   constructor (
     private ds: DatastoreService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private utils: UtilsService
   ) {
     this.userData = this.ds.getStore('userData');
     this.mainData = {
-      instrType: this.route.snapshot.paramMap.get('instrType').replace(/(^[a-z])|(\s+[a-z])/g, (txt) =>
-        txt.toUpperCase()
-      ),
+      instrType: this.utils.toSentenceCase(this.route.snapshot.paramMap.get('instrType')),
       certType: this.route.snapshot.paramMap.get('certType'),
       certId: this.route.snapshot.queryParamMap.get('certId'),
       userEmail: this.userData['userEmail'],

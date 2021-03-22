@@ -1,3 +1,4 @@
+
 import {
   Component,
   Input,
@@ -10,17 +11,16 @@ import {
   FormGroup,
   Validators,
 } from '@angular/forms';
-import {
-  DatastoreService
-} from 'src/app/services/data-store/data-store.service';
+
+import { UtilsService } from './../../../services/utils/utils.service';
 
 import { MessageService } from 'primeng/api';
+import { DatastoreService } from './../../../services/data-store/data-store.service';
 
 @Component({
   selector: 'app-climate-bond-information',
   templateUrl: './climate-bond-information.component.html',
   styleUrls: ['./climate-bond-information.component.scss'],
-  providers: [MessageService]
 })
 export class ClimateBondInformationComponent implements OnInit {
 
@@ -36,10 +36,11 @@ export class ClimateBondInformationComponent implements OnInit {
   constructor (
     private fb: FormBuilder,
     private ds: DatastoreService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private utils: UtilsService
   ) {
     this.currentForm = 'cbiForm';
-    this.calendarYears = this.generateYearList(2000, 2099);
+    this.calendarYears = this.utils.generateYearList(2000, 2099);
     this.cbiForm = this.fb.group({
       uniqueName: ['', [Validators.required]],
       issuanceCountry: ['', [Validators.required]],
@@ -177,15 +178,5 @@ export class ClimateBondInformationComponent implements OnInit {
       });
   };
 
-  generateYearList = (start: number, end: number) => {
-    let yearsList = [];
-    for (let i = start; i <= end; i++) {
-      const item = {
-        name: i,
-        value: i
-      };
-      yearsList.push(item);
-    }
-    return yearsList;
-  };
+
 }

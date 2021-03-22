@@ -1,3 +1,4 @@
+import { CertificationsListComponent } from './components/shared/certifications-list/certifications-list.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Routes, RouterModule } from '@angular/router';
@@ -28,6 +29,11 @@ const routes: Routes = [
     path: 'debt-instrument/:certType/:instrType',
     canActivate: [AuthGuard],
     component: DebtInstrumentPageComponent,
+  },
+  {
+    path: 'certifications-listing',
+    canActivate: [AuthGuard],
+    component: CertificationsListComponent,
   },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/dashboard' },

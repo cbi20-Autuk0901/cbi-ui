@@ -1,0 +1,42 @@
+  <p-table [value]="certifications" selectionMode="single" styleClass="p-datatable-sm" [loading]="loading" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true">
+    <ng-template pTemplate="caption">
+      <h4 class="page-header"> Approved Pre-Issuance Certifications </h4>
+      <!--  <p-columnFilter field="certType" matchMode="equals">
+        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+          <p-dropdown [ngModel]="value" [options]="statuses" optionLabel="name" optionValue="value" (onChange)="filter($event.value)" placeholder="Select a Status" [showClear]="true">
+          </p-dropdown>
+        </ng-template>
+      </p-columnFilter> -->
+    </ng-template>
+    <ng-template pTemplate="header">
+      <tr>
+        <th>No.</th>
+        <th>Certification ID</th>
+        <th>Name</th>
+        <th>Certification Type</th>
+        <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon>
+        </th>
+        <th pSortableColumn="instrType">Instrument Type <p-sortIcon field="instrType"></p-sortIcon>
+        </th>
+        <th></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-list>
+      <tr>
+        <td>{{list.no}}</td>
+        <td>{{list.certId}}</td>
+        <td>{{list.uniqueName}}</td>
+        <td>{{list.certType + '-issuance'}}</td>
+        <td>{{list.date}}</td>
+        <td>{{list.instrType}}</td>
+        <td> <a class="btn btn-green" [routerLink]="['/debt-instrument', 'post', list.instrType]" [queryParams]="{certId:list.certId}">Apply</a></td>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="emptymessage" let-columns>
+      <tr>
+        <td class="p-5 text-center" colspan="7">
+          No Certifications Found
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>

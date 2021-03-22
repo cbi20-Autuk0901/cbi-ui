@@ -4,6 +4,9 @@ import { CalendarModule } from 'primeng/calendar';
 import { DropdownModule } from 'primeng/dropdown';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
+import { TableModule } from 'primeng/table';
+import { PaginatorModule } from 'primeng/paginator';
+import { MessageService } from 'primeng/api';
 
 
 @NgModule({
@@ -13,14 +16,21 @@ import { ToastModule } from 'primeng/toast';
     CalendarModule,
     DropdownModule,
     ProgressSpinnerModule,
-    ToastModule
+    ToastModule,
+    TableModule,
+    PaginatorModule
   ],
   exports: [
     CalendarModule,
     DropdownModule,
     ProgressSpinnerModule,
-    ToastModule
+    ToastModule,
+    TableModule,
+    PaginatorModule
 
+  ],
+  providers: [
+    MessageService
   ]
 })
 export class PrimeComponentsModule { }

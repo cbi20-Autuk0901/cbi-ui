@@ -17,7 +17,6 @@ import {
   selector: 'app-certification-agreement',
   templateUrl: './certification-agreement.component.html',
   styleUrls: ['./certification-agreement.component.scss'],
-  providers: [MessageService]
 })
 export class CertificationAgreementComponent implements OnInit {
   @Input() mainData: object;

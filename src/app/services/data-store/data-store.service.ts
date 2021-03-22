@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { Observable, of, Subject } from 'rxjs';
-import { Datastore } from '../../models/data-store.model';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -20,6 +19,16 @@ export class DatastoreService {
   getDashboard = (payload: object): Observable<any> => {
     const url = '/api/issuerDashboard';
     return this.http.post(url, payload);
+  };
+
+  getCertifications = (headers: object): Observable<any> => {
+    const url = '/api/getCertifications';
+    const options = {
+      headers: new HttpHeaders({
+        'userEmail': headers['userEmail'],
+      })
+    };
+    return this.http.get(url, options);
   };
 
   upload = (data: any): Observable<any> => {

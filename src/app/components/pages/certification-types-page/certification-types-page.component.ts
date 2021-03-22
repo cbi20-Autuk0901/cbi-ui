@@ -5,9 +5,9 @@ import {
 import {
   ActivatedRoute
 } from '@angular/router';
-import {
-  DatastoreService
-} from 'src/app/services/data-store/data-store.service';
+import { DatastoreService } from '../../../services/data-store/data-store.service';
+
+
 @Component({
   selector: 'app-certification-types-page',
   templateUrl: './certification-types-page.component.html',

@@ -19,7 +19,7 @@
           <div class="card">
             <div class="card__ribbon"></div>
             <h4 class="title">Post-Issuance Certification</h4>
-            <a [routerLink]="['/certification-types']" [queryParams]="{ certType: 'post' }" class="btn btn-secondary">
+            <a [routerLink]="['/certifications-listing']" [queryParams]="{ certType: 'Post' }" class="btn btn-secondary">
               Apply
             </a>
           </div>
@@ -31,7 +31,7 @@
           <h4 class="title">Pre-Issuance Certification</h4>
         </div>
       </div>
-      <div class="d-flex justify-content-center" *ngIf="certType && certType === 'post'">
+      <div class="d-flex justify-content-center" *ngIf="certType && certType === 'Post'">
         <div class="card certificate">
           <div class="card__ribbon"></div>
           <h4 class="title">Post-Issuance Certification</h4>
@@ -40,7 +40,7 @@
     </div>
     <div class="col-6">
       <div class="debt-instruments" *ngIf="
-          certType && (certType === 'pre' || certType === 'post')
+          certType && (certType === 'pre')
         ">
         <div class="debt-instruments__title">Debt Instruments</div>
 

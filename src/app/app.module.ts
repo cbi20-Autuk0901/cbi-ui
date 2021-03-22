@@ -50,6 +50,7 @@ import {
   RegistrationComponent
 } from './components/pages/registration/registration.component';
 import { PrimeComponentsModule } from './prime-components.module';
+import { CertificationsListComponent } from './components/shared/certifications-list/certifications-list.component';
 
 @NgModule({
   declarations: [
@@ -64,6 +65,7 @@ import { PrimeComponentsModule } from './prime-components.module';
     CertificationAgreementComponent,
     AssuranceReportComponent,
     RegistrationComponent,
+    CertificationsListComponent,
   ],
   imports: [
     BrowserModule,

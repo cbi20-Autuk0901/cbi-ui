@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="col-4 pl-5">
-      <div class="recent-certifications" *ngIf="userData['userRole'] !== 'singleIssuer' && dashboardData['recentCertifications']">
+      <div class="recent-certifications" *ngIf="userData['userRole'] !== 'singleIssuer' && dashboardData['recentCertifications'].length>0">
         <div class="recent-certifications__title">Recent Certifications</div>
         <div class="recent-certifications__list">
           <div class="recent-certifications__item" *ngFor="let list of dashboardData['recentCertifications']">

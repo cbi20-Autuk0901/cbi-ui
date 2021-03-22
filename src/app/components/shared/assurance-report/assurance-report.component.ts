@@ -1,17 +1,24 @@
-import { Component, OnInit, Input } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Input
+} from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
   Validators,
 } from '@angular/forms';
-import { MessageService } from 'primeng/api';
-import { DatastoreService } from '../../../services/data-store/data-store.service';
+import {
+  MessageService
+} from 'primeng/api';
+import {
+  DatastoreService
+} from '../../../services/data-store/data-store.service';
 
 @Component({
   selector: 'app-assurance-report',
   templateUrl: './assurance-report.component.html',
   styleUrls: ['./assurance-report.component.scss'],
-  providers: [MessageService]
 })
 export class AssuranceReportComponent implements OnInit {
 
@@ -49,7 +56,16 @@ export class AssuranceReportComponent implements OnInit {
     };
     this.ds.upload(payload)
       .subscribe((data) => {
-        this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Data Saved' });
+        this.messageService.add({
+          key: 'bc',
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Data Saved'
+        });
+
+        this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Files Saved' });
+      }, (error) => {
+        this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Invalid Files' });
       });
   };
 
@@ -73,7 +89,9 @@ export class AssuranceReportComponent implements OnInit {
       const file = event.target.files[0];
       const currentControl =
         name === 'caName' ? 'caAssuranceReport' : 'gbAssuranceReport';
-      this.arForm.patchValue({ [currentControl]: file });
+      this.arForm.patchValue({
+        [currentControl]: file
+      });
     }
   };
 }
