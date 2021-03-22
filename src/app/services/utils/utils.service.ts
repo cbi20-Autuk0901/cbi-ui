@@ -28,8 +28,8 @@ export class UtilsService {
       let yearsList = [];
       for (let i = start; i <= end; i++) {
         const item = {
-          name: i,
-          value: i
+          name: i.toString(),
+          value: i.toString()
         };
         yearsList.push(item);
       }

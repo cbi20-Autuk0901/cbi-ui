@@ -47,6 +47,7 @@ export class CertificationsListComponent implements OnInit {
         const temp = {
           no: index + 1,
           certId: item.certificationId,
+          name: item.uniqueName,
           certType: (this.utils.toSentenceCase(item.certificationType)),
           date: this.utils.formatDate(item.applicationDate),
           instrType: item.instrumentType,

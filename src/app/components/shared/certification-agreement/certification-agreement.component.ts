@@ -12,6 +12,7 @@ import { MessageService } from 'primeng/api';
 import {
   DatastoreService
 } from 'src/app/services/data-store/data-store.service';
+import { UtilsService } from './../../../services/utils/utils.service';
 
 @Component({
   selector: 'app-certification-agreement',
@@ -29,7 +30,8 @@ export class CertificationAgreementComponent implements OnInit {
   constructor (
     private fb: FormBuilder,
     private ds: DatastoreService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private utils: UtilsService
   ) { }
 
   ngOnInit (): void {
@@ -49,6 +51,7 @@ export class CertificationAgreementComponent implements OnInit {
     if (this.mainData['certId']) {
       this.ds.formResume('caForm', this.mainData)
         .subscribe((data) => {
+          if (data.applicationDate) data['applicationDate'] = new Date(data.applicationDate);
           this.caForm.patchValue(data);
         });
     }
@@ -69,7 +72,7 @@ export class CertificationAgreementComponent implements OnInit {
       userEmail: this.mainData['userEmail'],
       instrumentType: this.mainData['instrType'],
       certificationType: this.mainData['certType'],
-      certificationId: this.mainData['Id'] || '',
+      certificationId: this.mainData['certId'] || '',
     };
     this.ds.formSave(payload, form)
       .subscribe((data) => {
