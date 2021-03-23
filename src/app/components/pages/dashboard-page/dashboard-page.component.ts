@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { DatastoreService } from 'src/app/services/data-store/data-store.service';
+import { UtilsService } from './../../../services/utils/utils.service';
+import { DatastoreService } from './../../../services/data-store/data-store.service';
 
 @Component({
   selector: 'app-dashboard-page',
@@ -9,10 +10,10 @@ import { DatastoreService } from 'src/app/services/data-store/data-store.service
 export class DashboardPageComponent implements OnInit {
   userData: object;
   dashboardData: object;
-  constructor(private ds: DatastoreService) {
-    this.userData = this.ds.getStore('userData');
+  constructor (private ds: DatastoreService, private utils: UtilsService) {
+    this.userData = this.utils.getStore('userData');
   }
-  ngOnInit(): void {
+  ngOnInit (): void {
     const payload = {
       userEmail: this.userData['userEmail'],
     };

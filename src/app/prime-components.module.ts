@@ -7,6 +7,7 @@ import { ToastModule } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
 import { MessageService } from 'primeng/api';
+import { DialogModule } from 'primeng/dialog';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { MessageService } from 'primeng/api';
     ProgressSpinnerModule,
     ToastModule,
     TableModule,
-    PaginatorModule
+    PaginatorModule,
+    DialogModule
   ],
   exports: [
     CalendarModule,
@@ -26,7 +28,8 @@ import { MessageService } from 'primeng/api';
     ProgressSpinnerModule,
     ToastModule,
     TableModule,
-    PaginatorModule
+    PaginatorModule,
+    DialogModule
 
   ],
   providers: [

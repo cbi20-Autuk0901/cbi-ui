@@ -16,6 +16,7 @@ import { UtilsService } from './../../../services/utils/utils.service';
 
 import { MessageService } from 'primeng/api';
 import { DatastoreService } from './../../../services/data-store/data-store.service';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-climate-bond-information',
@@ -33,12 +34,17 @@ export class ClimateBondInformationComponent implements OnInit {
   instrType: string;
   calendarYears: Array<object>;
 
+  isLoading: boolean;
+
   constructor (
     private fb: FormBuilder,
     private ds: DatastoreService,
     private messageService: MessageService,
-    private utils: UtilsService
+    private utils: UtilsService,
+    private router: Router,
+    private route: ActivatedRoute
   ) {
+    this.isLoading = true;
     this.currentForm = 'cbiForm';
     this.calendarYears = this.utils.generateYearList(2000, 2099);
     this.cbiForm = this.fb.group({
@@ -142,14 +148,17 @@ export class ClimateBondInformationComponent implements OnInit {
 
   switchForm = (name: string) => {
 
-    if (this.mainData['certId']) {
-      this.ds.formResume(name, this.mainData)
-        .subscribe((data) => {
-          this.formGenerator(name, data);
+    this.ds.formResume(name, this.mainData)
+      .subscribe((data) => {
+        this.formGenerator(name, data);
+        this.currentForm = name;
+        this.isLoading = false;
+      }, () => {
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/debt-instrument/pre/bond']);
         });
-    }
+      });
 
-    this.currentForm = name;
   };
 
   switchPage = (type: string) => {

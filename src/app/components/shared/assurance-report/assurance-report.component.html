@@ -52,15 +52,16 @@
     <a class="btn btn-green" (click)="saveFormStatus('arForm')">Save</a>
   </div>
   <div class="col-6 text-right">
-    <a class="btn btn-green py-2" (click)="submitApplication()" data-toggle="modal" data-target="#successModal">
+    <a class="btn btn-green py-2" (click)="submitApplication()">
       Submit Application
     </a>
+    <button #submitModal class="d-none" data-toggle="modal" data-target="#submitModal"></button>
 
   </div>
   <div class="offset-1"></div>
 </div>
 
-<div class="modal fade" id="successModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" role="document">
     <div class="modal-content">
       <button type="button" class="close" data-dismiss="modal" aria-label="Close">

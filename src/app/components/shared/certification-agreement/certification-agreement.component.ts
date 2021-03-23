@@ -9,10 +9,8 @@ import {
   Validators,
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import {
-  DatastoreService
-} from 'src/app/services/data-store/data-store.service';
 import { UtilsService } from './../../../services/utils/utils.service';
+import { DatastoreService } from './../../../services/data-store/data-store.service';
 
 @Component({
   selector: 'app-certification-agreement',
@@ -46,7 +44,7 @@ export class CertificationAgreementComponent implements OnInit {
       signature: this.fb.control('', [Validators.required]),
     });
 
-    this.userData = this.ds.getStore('userData');
+    this.userData = this.utils.getStore('userData');
 
     if (this.mainData['certId']) {
       this.ds.formResume('caForm', this.mainData)

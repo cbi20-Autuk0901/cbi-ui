@@ -19,22 +19,26 @@ import {
 import {
   DatastoreService
 } from '../data-store/data-store.service';
+import { UtilsService } from '../utils/utils.service';
+
+
 
 @Injectable({
   providedIn: 'root',
 })
 export class UserService {
-  constructor(
+  constructor (
     private http: HttpClient,
     private router: Router,
-    private ds: DatastoreService
-  ) {}
+    private ds: DatastoreService,
+    private utils: UtilsService
+  ) { }
 
   isLoggedin = (): any => {
-    return this.ds.getStore('isLoggedin');
+    return this.utils.getStore('isLoggedin');
   };
 
-  authenticateUser = (form: LoginForm): Observable < any > => {
+  authenticateUser = (form: LoginForm): Observable<any> => {
     const url = '/api/login';
 
     const payload = {
@@ -49,10 +53,10 @@ export class UserService {
       );
   };
 
-  registerUser = (payload: object): Observable < any > => {
+  registerUser = (payload: object): Observable<any> => {
     const url = "/api/register";
     return this.http.post(url, payload);
-  }
+  };
 
   logoutUser = (): void => {
     const ls = localStorage;

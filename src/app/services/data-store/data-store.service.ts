@@ -21,6 +21,19 @@ export class DatastoreService {
     return this.http.post(url, payload);
   };
 
+  generateCertification = (headers: object): Observable<any> => {
+    const url = '/api/generateCertificationId';
+    const options = {
+      headers: new HttpHeaders({
+        'userEmail': headers['userEmail'],
+        'certificationType': headers['certType'],
+        'instrumentType': headers['instrType'],
+        'certificationId': headers['certId']
+      })
+    };
+    return this.http.get(url, options);
+  };
+
   getCertifications = (headers: object): Observable<any> => {
     const url = '/api/getCertifications';
     const options = {
@@ -80,16 +93,5 @@ export class DatastoreService {
   submitApplication = (payload: object): Observable<any> => {
     const url = '/api/submitApplication';
     return this.http.post(url, payload);
-  };
-
-  setStore = (key, value) => {
-    const lsData = JSON.stringify(value);
-    localStorage.setItem(key, lsData);
-  };
-
-  getStore = (key) => {
-    const lsData = localStorage.getItem(key);
-    const data = JSON.parse(lsData);
-    return data;
   };
 }

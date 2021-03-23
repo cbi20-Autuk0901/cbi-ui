@@ -7,6 +7,17 @@ export class UtilsService {
 
   constructor () { }
 
+  setStore = (key, value) => {
+    const lsData = JSON.stringify(value);
+    localStorage.setItem(key, lsData);
+  };
+
+  getStore = (key) => {
+    const lsData = localStorage.getItem(key);
+    const data = JSON.parse(lsData);
+    return data;
+  };
+
   toTitleCase = (str) => {
     if (str) {
       return str.toLowerCase().split(' ').map(function (word) {

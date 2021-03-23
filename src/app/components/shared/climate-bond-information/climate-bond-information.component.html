@@ -1,4 +1,6 @@
   
+<div *ngIf="!isLoading">
+
   <div class="form-title">
     <div>
       <span class="step"> Step {{mainData['userRole'] === 'singleIssuer' ? '2' : '1'}}/4 </span>
@@ -372,4 +374,4 @@
     <div class="offset-1"></div>
   </div>
 
-  
+</div>

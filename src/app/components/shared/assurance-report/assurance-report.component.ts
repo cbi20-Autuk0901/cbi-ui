@@ -1,7 +1,8 @@
 import {
   Component,
   OnInit,
-  Input
+  Input,
+  ViewChild
 } from '@angular/core';
 import {
   FormBuilder,
@@ -23,6 +24,7 @@ import {
 export class AssuranceReportComponent implements OnInit {
 
   @Input() mainData: object;
+  @ViewChild('submitModal') modalBtn;
 
   arForm: FormGroup;
   caName: string;
@@ -79,7 +81,8 @@ export class AssuranceReportComponent implements OnInit {
 
     this.ds.submitApplication(payload)
       .subscribe((data) => {
-        this.certId = data.certId;
+        this.certId = data.certificationId;
+        this.modalBtn.nativeElement.click();
       });
   };
 

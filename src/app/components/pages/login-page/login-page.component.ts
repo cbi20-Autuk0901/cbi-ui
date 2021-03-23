@@ -11,12 +11,9 @@ import {
   Router,
   RouterModule
 } from '@angular/router';
-import {
-  DatastoreService
-} from 'src/app/services/data-store/data-store.service';
-import {
-  UserService
-} from 'src/app/services/user/user.service';
+import { DatastoreService } from '../../../services/data-store/data-store.service';
+import { UserService } from '../../../services/user/user.service';
+import { UtilsService } from '../../../services/utils/utils.service';
 
 @Component({
   selector: 'app-login-page',
@@ -29,20 +26,21 @@ export class LoginPageComponent implements OnInit {
     password: new FormControl('', [Validators.required]),
   });
 
-  constructor(
+  constructor (
     private userService: UserService,
     private router: Router,
-    private ds: DatastoreService
-  ) {}
+    private ds: DatastoreService,
+    private utils: UtilsService
+  ) { }
 
-  ngOnInit(): void {}
+  ngOnInit (): void { }
 
-  loginUser() {
+  loginUser () {
     this.userService.authenticateUser(this.loginForm.value)
       .subscribe(
         (data) => {
-          this.ds.setStore('isLoggedin', true);
-          this.ds.setStore('userData', data);
+          this.utils.setStore('isLoggedin', true);
+          this.utils.setStore('userData', data);
           this.router.navigate(['/dashboard']);
         },
         (err) => {

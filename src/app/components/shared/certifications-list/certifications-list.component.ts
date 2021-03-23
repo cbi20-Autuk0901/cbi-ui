@@ -16,7 +16,7 @@ export class CertificationsListComponent implements OnInit {
   statuses: Array<object>;
 
   constructor (private ds: DatastoreService, private utils: UtilsService) {
-    this.userData = this.ds.getStore('userData');
+    this.userData = this.utils.getStore('userData');
   }
 
   ngOnInit (): void {
@@ -43,7 +43,7 @@ export class CertificationsListComponent implements OnInit {
   modelData = (data) => {
     let processedData = [];
     data.forEach((item, index) => {
-      if (item.certificationStatus = "Completed") {
+      if (item.certificationStatus === "completed") {
         const temp = {
           no: index + 1,
           certId: item.certificationId,
