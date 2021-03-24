@@ -8,6 +8,7 @@ import { AuthGuard } from './guards/auth/auth.guard';
 import { certTypesPageComponent } from './components/pages/certification-types-page/certification-types-page.component';
 import { DebtInstrumentPageComponent } from './components/pages/debt-instrument-page/debt-instrument-page.component';
 import { RegistrationComponent } from './components/pages/registration/registration.component';
+import { ReportsPageComponent } from './components/pages/reports-page/reports-page.component';
 
 const routes: Routes = [
   {
@@ -34,6 +35,11 @@ const routes: Routes = [
     path: 'certifications-listing',
     canActivate: [AuthGuard],
     component: CertificationsListComponent,
+  },
+  {
+    path: 'reports',
+    canActivate: [AuthGuard],
+    component: ReportsPageComponent
   },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/dashboard' },

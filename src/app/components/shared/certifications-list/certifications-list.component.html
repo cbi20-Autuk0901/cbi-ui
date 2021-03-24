@@ -1,12 +1,6 @@
-  <p-table [value]="certifications" selectionMode="single" styleClass="p-datatable-sm" [loading]="loading" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true">
+  <p-table [value]="certifications" selectionMode="single" [loading]="loading" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true">
     <ng-template pTemplate="caption">
       <h4 class="page-header"> Approved Pre-Issuance Certifications </h4>
-      <!--  <p-columnFilter field="certType" matchMode="equals">
-        <ng-template pTemplate="filter" let-value let-filter="filterCallback">
-          <p-dropdown [ngModel]="value" [options]="statuses" optionLabel="name" optionValue="value" (onChange)="filter($event.value)" placeholder="Select a Status" [showClear]="true">
-          </p-dropdown>
-        </ng-template>
-      </p-columnFilter> -->
     </ng-template>
     <ng-template pTemplate="header">
       <tr>

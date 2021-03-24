@@ -42,10 +42,12 @@ export class CertificationsListComponent implements OnInit {
 
   modelData = (data) => {
     let processedData = [];
-    data.forEach((item, index) => {
+    let index = 0;
+    data.forEach((item) => {
       if (item.certificationStatus === "completed") {
+        ++index;
         const temp = {
-          no: index + 1,
+          no: index,
           certId: item.certificationId,
           name: item.uniqueName,
           certType: (this.utils.toSentenceCase(item.certificationType)),
@@ -56,7 +58,6 @@ export class CertificationsListComponent implements OnInit {
         processedData.push(temp);
       }
     });
-    console.log(processedData);
     return processedData;
 
   };

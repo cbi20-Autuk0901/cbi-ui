@@ -3,13 +3,15 @@
   "extends": "./tsconfig.base.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
-    "types": []
+    "types": [],
+    "experimentalDecorators": true,
+    "importHelpers": true,
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  },   
+    "strictTemplates": true,
+  },
   "files": [
     "src/main.ts",
     "src/polyfills.ts"

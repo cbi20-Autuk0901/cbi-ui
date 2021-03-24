@@ -10,6 +10,8 @@ import { DatastoreService } from './../../../services/data-store/data-store.serv
 export class DashboardPageComponent implements OnInit {
   userData: object;
   dashboardData: object;
+  uploadedFiles = [];
+
   constructor (private ds: DatastoreService, private utils: UtilsService) {
     this.userData = this.utils.getStore('userData');
   }
@@ -22,4 +24,8 @@ export class DashboardPageComponent implements OnInit {
       this.dashboardData = data;
     });
   }
+
+  onUpload = (event) => {
+
+  };
 }
