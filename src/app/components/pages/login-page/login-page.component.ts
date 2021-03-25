@@ -26,31 +26,42 @@ export class LoginPageComponent implements OnInit {
     password: new FormControl('', [Validators.required]),
   });
 
+  submitted: boolean;
+
   constructor (
     private userService: UserService,
     private router: Router,
     private ds: DatastoreService,
     private utils: UtilsService
-  ) { }
+  ) {
+    this.submitted = false;
+  }
 
   ngOnInit (): void { }
 
   loginUser () {
-    this.userService.authenticateUser(this.loginForm.value)
-      .subscribe(
-        (data) => {
-          this.utils.setStore('isLoggedin', true);
-          this.utils.setStore('userData', data);
-          this.router.navigate(['/dashboard']);
-        },
-        (err) => {
-          if (err.status === 403) {
-            alert('Invalid Credentials');
+    this.submitted = true;
+    if (this.loginForm.valid) {
+      this.userService.authenticateUser(this.loginForm.value)
+        .subscribe(
+          (data) => {
+            this.utils.setStore('isLoggedin', true);
+            this.utils.setStore('userData', data);
+            this.router.navigate(['/dashboard']);
+          },
+          (err) => {
+            if (err.status === 403) {
+              alert('Invalid Credentials');
+            }
+            if (err.status === 401) {
+              alert("User doesn't exist");
+            }
           }
-          if (err.status === 401) {
-            alert("User doesn't exist");
-          }
-        }
-      );
+        );
+    }
+  }
+
+  get controls () {
+    return this.loginForm.controls;
   }
 }

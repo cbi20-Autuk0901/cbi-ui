@@ -1,10 +1,8 @@
 .login-page {
   background: rgb(84, 182, 191);
-  background: linear-gradient(
-    90deg,
-    rgba(84, 182, 191, 0.9) 44%,
-    rgba(197, 230, 228, 1) 100%
-  );
+  background: linear-gradient(90deg,
+      rgba(84, 182, 191, 0.9) 44%,
+      rgba(197, 230, 228, 1) 100%);
   position: fixed;
   right: 0;
   left: 0;
@@ -64,7 +62,8 @@
         text-align: right;
         display: block;
         color: #ffffff;
-        margin-top: 5px;
+        position: relative;
+        top: 0;
       }
 
       .login-btn {
@@ -153,6 +152,5 @@
   }
 
   .left-section,
-  .right-section {
-  }
+  .right-section {}
 }
