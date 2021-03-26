@@ -30,7 +30,7 @@ export class ReportsPageComponent implements OnInit {
 
 
     this.statuses = [
-      { name: 'Completed', value: 'completed', count: 0, severity: 'success' },
+      { name: 'Submitted', value: 'submitted', count: 0, severity: 'success' },
       { name: 'Under-Review', value: 'underReview', count: 0, severity: 'warning' },
       { name: 'Draft', value: 'draft', count: 0, severity: 'danger' },
     ];

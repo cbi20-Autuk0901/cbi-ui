@@ -34,14 +34,45 @@ export class DatastoreService {
     return this.http.get(url, options);
   };
 
-  getCertifications = (headers: object): Observable<any> => {
-    const url = '/api/getCertifications';
+
+  submitBondRedemption = (data: any): Observable<any> => {
+    const formData = new FormData();
+    const url = '/api/bondRedemption';
+    Object.entries(data).forEach(([key, value]): any => {
+      formData.append(key, data[key]);
+    });
+    return this.http.post(url, formData);
+  };
+
+
+  getCertifications = (headers: object, type?: string): Observable<any> => {
+    let url: string = '';
+
+    switch (type) {
+      case 'post': {
+        url = '/api/getPreCertifications';
+        break;
+      }
+      case 'bondRedemption': {
+        url = '/api/getPostCertifications';
+        break;
+      }
+      default: {
+        url = '/api/getCertifications';
+        break;
+      }
+    }
     const options = {
       headers: new HttpHeaders({
         'userEmail': headers['userEmail'],
       })
     };
     return this.http.get(url, options);
+  };
+
+  forgotPassword = (payload): Observable<any> => {
+    const url = '/api/forgotPassword';
+    return this.http.post(url, payload);
   };
 
   upload = (data: any): Observable<any> => {

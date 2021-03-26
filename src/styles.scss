@@ -106,3 +106,50 @@ select {
   }
 
 }
+
+.form-group {
+  .form-control {
+    box-shadow: none;
+
+    &.ng-invalid.ng-dirty {
+      border: 1px solid #d00;
+    }
+
+  }
+
+
+
+  &.required {
+
+    select,
+    textarea {
+      display: inline;
+
+      +label {
+        position: absolute;
+
+        &:after {
+          color: #d00;
+          content: "\f069";
+          position: absolute;
+          margin-left: 3px;
+          font-size: 7px;
+          margin-top: 2px;
+          font-family: 'FontAwesome';
+        }
+      }
+    }
+
+    .col-form-label:after {
+      color: #d00;
+      content: "\f069";
+      position: absolute;
+      margin-left: 3px;
+      font-size: 7px;
+      margin-top: 2px;
+      font-family: 'FontAwesome';
+    }
+  }
+
+
+}

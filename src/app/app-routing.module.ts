@@ -9,6 +9,7 @@ import { certTypesPageComponent } from './components/pages/certification-types-p
 import { DebtInstrumentPageComponent } from './components/pages/debt-instrument-page/debt-instrument-page.component';
 import { RegistrationComponent } from './components/pages/registration/registration.component';
 import { ReportsPageComponent } from './components/pages/reports-page/reports-page.component';
+import { BondRedemptionComponent } from './components/pages/bond-redemption/bond-redemption.component';
 
 const routes: Routes = [
   {
@@ -35,6 +36,11 @@ const routes: Routes = [
     path: 'certifications-listing',
     canActivate: [AuthGuard],
     component: CertificationsListComponent,
+  },
+  {
+    path: 'bond-redemption/:instrType',
+    canActivate: [AuthGuard],
+    component: BondRedemptionComponent,
   },
   {
     path: 'reports',

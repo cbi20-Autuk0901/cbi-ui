@@ -61,6 +61,16 @@ export class LoginPageComponent implements OnInit {
     }
   }
 
+  forgotPassword = () => {
+    const email = this.loginForm.get('email').value;
+    if (email) {
+      this.ds.forgotPassword({ userEmail: email }).subscribe((res) => {
+        console.log(res);
+
+      });
+    }
+  };
+
   get controls () {
     return this.loginForm.controls;
   }

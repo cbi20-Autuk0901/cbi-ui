@@ -49,8 +49,8 @@
       <td>{{list.date}}</td>
       <td>{{list.instrType | titlecase}}</td>
       <td ngClass="{{list.status + ' status-text'}}">{{list.status | titlecase}}</td>
-      <td> <a class="btn btn-green" *ngIf="list.status === 'completed'">Download</a>
-        <button type="button" *ngIf="list.status !== 'completed'" disabled class="btn btn-secondary btn-sm">Not Available</button>
+      <td> <a class="btn btn-green" *ngIf="list.status === 'submitted'">Download</a>
+        <button type="button" *ngIf="list.status !== 'submitted'" disabled class="btn btn-secondary btn-sm">Not Available</button>
     </tr>
   </ng-template>
   <ng-template pTemplate="emptymessage" let-columns>

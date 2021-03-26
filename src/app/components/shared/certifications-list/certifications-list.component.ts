@@ -2,6 +2,7 @@ import { DatastoreService } from './../../../services/data-store/data-store.serv
 import { Component, OnInit } from '@angular/core';
 import { SortEvent } from 'primeng/api';
 import { UtilsService } from './../../../services/utils/utils.service';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-certifications-list',
@@ -13,9 +14,9 @@ export class CertificationsListComponent implements OnInit {
   userData: object;
   certifications: Array<object>;
   loading: boolean = true;
-  statuses: Array<object>;
+  certType: string;
 
-  constructor (private ds: DatastoreService, private utils: UtilsService) {
+  constructor (private ds: DatastoreService, private utils: UtilsService, private route: ActivatedRoute) {
     this.userData = this.utils.getStore('userData');
   }
 
@@ -24,19 +25,15 @@ export class CertificationsListComponent implements OnInit {
     const payload = {
       userEmail: this.userData['userEmail'],
     };
-    this.ds.getCertifications(payload).subscribe((e) => {
-      this.certifications = this.modelData(e.recentCertifications);
-      this.loading = false;
+
+    this.route.queryParams.subscribe((params) => {
+      this.certType = params['certType'];
+      this.ds.getCertifications(payload, this.certType).subscribe((e) => {
+        this.certifications = this.modelData(e.recentCertifications);
+        this.loading = false;
+      });
     });
 
-    this.statuses = [
-      { name: 'Approved', value: 'unqualified' },
-      { name: 'Qualified', value: 'qualified' },
-      { name: 'New', value: 'new' },
-      { name: 'Negotiation', value: 'negotiation' },
-      { name: 'Renewal', value: 'renewal' },
-      { name: 'Proposal', value: 'proposal' }
-    ];
 
   }
 
@@ -44,19 +41,17 @@ export class CertificationsListComponent implements OnInit {
     let processedData = [];
     let index = 0;
     data.forEach((item) => {
-      if (item.certificationStatus === "completed") {
-        ++index;
-        const temp = {
-          no: index,
-          certId: item.certificationId,
-          name: item.uniqueName,
-          certType: (this.utils.toSentenceCase(item.certificationType)),
-          date: this.utils.formatDate(item.applicationDate),
-          instrType: item.instrumentType,
-          status: item.certificationStatus
-        };
-        processedData.push(temp);
-      }
+      ++index;
+      const temp = {
+        no: index,
+        certId: item.certificationId,
+        name: item.uniqueName,
+        certType: item.certificationType,
+        date: this.utils.formatDate(item.applicationDate),
+        instrType: item.instrumentType,
+        status: item.certificationStatus
+      };
+      processedData.push(temp);
     });
     return processedData;
 

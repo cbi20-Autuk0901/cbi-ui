@@ -29,7 +29,7 @@
                   <span class="p-error float-left" *ngIf="(controls.password.touched || submitted) && controls.password.errors?.required">
                     Please enter Password
                   </span>
-                  <a href="#" class="forgot-password float-right clearfix">Forgot password?</a>
+                  <a (click)="forgotPassword()" class="forgot-password float-right clearfix">Forgot password?</a>
                 </div>
               </div>
               <button type="submit" class="login-btn">Login</button>

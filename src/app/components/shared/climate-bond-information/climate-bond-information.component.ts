@@ -3,6 +3,7 @@ import {
   Component,
   Input,
   OnInit,
+  ViewChild,
 } from '@angular/core';
 import {
   FormArray,
@@ -26,9 +27,12 @@ import { ActivatedRoute, Router } from '@angular/router';
 export class ClimateBondInformationComponent implements OnInit {
 
   @Input() mainData: object;
+  @ViewChild('formTrigger') frmBtn;
 
   cbiForm: FormGroup;
   cbiFormContd: FormGroup;
+  cbiFormSubmitted: boolean;
+  cbiFormContdSubmitted: boolean;
 
   currentForm: string;
   instrType: string;
@@ -42,24 +46,24 @@ export class ClimateBondInformationComponent implements OnInit {
     private messageService: MessageService,
     private utils: UtilsService,
     private router: Router,
-    private route: ActivatedRoute
   ) {
     this.isLoading = true;
     this.currentForm = 'cbiForm';
     this.calendarYears = this.utils.generateYearList(2000, 2099);
     this.cbiForm = this.fb.group({
       uniqueName: ['', [Validators.required]],
-      issuanceCountry: ['', [Validators.required]],
-      cusip: ['', [Validators.required]],
-      isin: ['', [Validators.required]],
-      coupon: ['', [Validators.required]],
+      issuanceCountry: [''],
+      cusip: [''],
+      isin: [''],
+      coupon: [''],
       amountIssued: this.fb.array(['']),
       localCurrency: this.fb.array(['']),
       underwriter: this.fb.array(['']),
-      issueDate: ['', Validators.required],
-      maturityDate: ['', Validators.required],
-      renewableEnergy: this.fb.array(['']),
-      renewableEnergyText: this.fb.array(['']),
+      daInstrumentType: [''],
+      issueDate: [''],
+      maturityDate: [''],
+      renewableEnergy: this.fb.array([this.fb.control('', Validators.required)]), //mandatory
+      renewableEnergyText: this.fb.array([this.fb.control('', Validators.required)]), //mandatory
       financingAssets: ['', [Validators.required]],
       proceedsAllocation: ['', [Validators.required]],
       portfolioApproach: ['', [Validators.required]],
@@ -83,17 +87,24 @@ export class ClimateBondInformationComponent implements OnInit {
       headOfficeAddress: ['', [Validators.required]],
       vatNumber: ['', [Validators.required]],
       businessRegistration: ['', [Validators.required]],
-      contactName: ['', [Validators.required]],
-      position: ['', [Validators.required]],
-      company: ['', [Validators.required]],
-      contactNumber: ['', [Validators.required]],
-      invoiceName: ['', [Validators.required]],
+      contactName: [''],
+      position: [''],
+      company: [''],
+      contactNumber: ['', [Validators.pattern('^[0-9]*$')]],
+      invoiceName: [''],
     });
   }
 
   ngOnInit (): void {
     this.instrType = this.mainData['instrType'];
     this.switchForm('cbiForm');
+
+    this.cbiForm.valueChanges.subscribe((e) => {
+      this.cbiFormSubmitted = false;
+    });
+    this.cbiFormContd.valueChanges.subscribe((e) => {
+      this.cbiFormContdSubmitted = false;
+    });
   }
 
   get localCurrency () {
@@ -120,7 +131,7 @@ export class ClimateBondInformationComponent implements OnInit {
     return this.cbiForm.get('maturityDate') as FormControl;
   }
 
-  addField (name: string, value: string) {
+  addField (name: string, value: string, required?: boolean) {
     if (this[name].controls.length < 5)
       this[name].push(this.fb.control(value));
   }
@@ -136,9 +147,8 @@ export class ClimateBondInformationComponent implements OnInit {
               this[name].push(this.fb.control(''));
             }
           }
-          if (typeof val === 'string' && isNaN(FormData[name]) && !isNaN(Date.parse(val))) {
-            FormData[name] = new Date(val);
-          }
+          if (name === 'issueDate' && val) FormData['issueDate'] = new Date(val);
+          if (name === 'maturityDate' && val) FormData['maturityDate'] = new Date(val);
         });
 
       this[formName].patchValue(FormData);
@@ -147,7 +157,10 @@ export class ClimateBondInformationComponent implements OnInit {
   };
 
   switchForm = (name: string) => {
-
+    if (name === 'cbiFormContd' && !this.cbiFormSubmitted) {
+      this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Warning', detail: 'Please Save form before proceeding to next page' });
+      return false;
+    }
     this.ds.formResume(name, this.mainData)
       .subscribe((data) => {
         this.formGenerator(name, data);
@@ -162,6 +175,10 @@ export class ClimateBondInformationComponent implements OnInit {
   };
 
   switchPage = (type: string) => {
+    if (!this.cbiFormContdSubmitted) {
+      this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Warning', detail: 'Please Save form before proceeding to next page' });
+      return false;
+    }
     if (type === 'next') {
       this.ds.updateValue('currentFormPage', this.mainData['userRole'] !== 'singleIssuer' ? 'caPage' : 'arPage');
     }
@@ -172,19 +189,32 @@ export class ClimateBondInformationComponent implements OnInit {
   };
 
   saveFormStatus = (form: string) => {
-    const payload = {
-      ...this[form].value,
-      userEmail: this.mainData['userEmail'],
-      instrumentType: this.instrType,
-      certificationType: this.mainData['certType'],
-      certificationId: this.mainData['certId'] || '',
-    };
-    this.ds.formSave(payload, form)
-      .subscribe((data) => {
-        this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Data Saved' });
-      }, (error) => {
-        this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Invalid Form Details' });
+    if (this[form].valid) {
+      const payload = {
+        ...this[form].value,
+        userEmail: this.mainData['userEmail'],
+        instrumentType: this.instrType,
+        certificationType: this.mainData['certType'],
+        certificationId: this.mainData['certId'] || '',
+      };
+      this.ds.formSave(payload, form)
+        .subscribe((data) => {
+          this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Data Saved' });
+          this[form + 'Submitted'] = true;
+        }, (error) => {
+          this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Invalid Form Details' });
+        });
+    } else {
+      Object.keys(this[form].controls).forEach(field => {
+        const control = this[form].get(field);
+        control.markAsDirty({ onlySelf: true });
       });
+      this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Please fill all mandatory fields mentioned with "*" ' });
+    }
+  };
+
+  triggerFormSave = () => {
+    this.frmBtn.nativeElement.click();
   };
 
 

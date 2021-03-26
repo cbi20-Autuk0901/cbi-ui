@@ -1,6 +1,6 @@
   <p-table [value]="certifications" selectionMode="single" [loading]="loading" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true">
     <ng-template pTemplate="caption">
-      <h4 class="page-header"> Approved Pre-Issuance Certifications </h4>
+      <h4 class="page-header"> Approved Certifications </h4>
     </ng-template>
     <ng-template pTemplate="header">
       <tr>
@@ -19,11 +19,14 @@
       <tr>
         <td>{{list.no}}</td>
         <td>{{list.certId}}</td>
-        <td>{{list.name}}</td>
-        <td>{{list.certType + '-issuance'}}</td>
+        <td>{{list.name | titlecase}}</td>
+        <td>{{(list.certType | titlecase) + '-issuance'}}</td>
         <td>{{list.date}}</td>
-        <td>{{list.instrType}}</td>
-        <td> <a class="btn btn-green" [routerLink]="['/debt-instrument', 'post', list.instrType]" [queryParams]="{certId:list.certId}">Apply</a></td>
+        <td>{{list.instrType | titlecase}}</td>
+        <td>
+          <a class="btn btn-green" *ngIf="certType === 'post'" [routerLink]="['/debt-instrument', certType, list.instrType]" [queryParams]="{certId:list.certId}">Apply</a>
+          <a class="btn btn-green" *ngIf="certType === 'bondRedemption'" [routerLink]="['/bond-redemption', list.instrType]" [queryParams]="{certId:list.certId}">Apply</a>
+        </td>
       </tr>
     </ng-template>
     <ng-template pTemplate="emptymessage" let-columns>

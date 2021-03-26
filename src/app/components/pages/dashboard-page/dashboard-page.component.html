@@ -11,7 +11,7 @@
         <div class="card stat-card">
           <div class="card__ribbon"></div>
           <p class="title">Completed Certifications</p>
-          <p class="count">{{dashboardData['stats'].completed}}</p>
+          <p class="count">{{dashboardData['stats'].submitted}}</p>
         </div>
         <div class="card stat-card">
           <div class="card__ribbon"></div>
@@ -27,7 +27,8 @@
           <input class="btn btn-secondary" type="file">
         </div>
 
-        <a class="btn btn-primary">
+        <a class="btn btn-primary" routerLink="/certifications-listing" 
+        [queryParams]="{ certType: 'bondRedemption' }">
           Bond Redemption
         </a>
 

@@ -84,7 +84,7 @@ export class DebtInstrumentPageComponent implements OnInit {
 
   loadPage = () => {
     this.mainData = {
-      instrType: this.utils.toSentenceCase(this.route.snapshot.paramMap.get('instrType')),
+      instrType: this.route.snapshot.paramMap.get('instrType'),
       certType: this.certType,
       certId: this.certId,
       userEmail: this.userData['userEmail'],

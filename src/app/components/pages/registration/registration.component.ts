@@ -51,7 +51,7 @@ export class RegistrationComponent implements OnInit {
 
   registerUser = () => {
     this.submitted = true;
-    if (this.registerForm.valid) {
+    if (!this.registerForm.valid) {
       const payload = this.registerForm.value;
       this.userS.registerUser(payload)
         .subscribe((e) => {
