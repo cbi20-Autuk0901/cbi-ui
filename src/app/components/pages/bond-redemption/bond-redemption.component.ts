@@ -61,14 +61,8 @@ export class BondRedemptionComponent implements OnInit {
     };
     this.ds.submitBondRedemption(payload)
       .subscribe((data) => {
-        this.messageService.add({
-          key: 'bc',
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Data Saved'
-        });
 
-        this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Files Saved' });
+        this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Application Submitted Successfully' });
       }, (res) => {
         this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: res.error.error });
       });

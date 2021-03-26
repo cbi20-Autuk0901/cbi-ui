@@ -13,7 +13,9 @@
 }
 
 .status-text {
-  &.submitted {
+
+  &.submitted,
+  &.redeemed {
     color: #689F38;
   }
 
