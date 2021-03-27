@@ -16,7 +16,6 @@
         <div class="form-group row">
           <label for="applicationDate" class="col-sm-6 col-form-label">Date of application</label>
           <div class="col-sm-6">
-           <!--  <input type="text" class="form-control" id="applicationDate" formControlName="applicationDate" /> -->
             <p-calendar styleClass="form-control p-0" [showIcon]="true" icon="fa fa-calendar" formControlName="applicationDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2099" inputId="applicationDate" dateFormat="dd-mm-yy"></p-calendar>
           </div>
         </div>
@@ -76,10 +75,8 @@
         </div>
       </div>
       <div class="dummy-doc">
-        <div class="dummy-doc__page">
-          <div class="number">{{userData['userRole'] + ' Page 1'}}</div>
-        </div>
-        <div class="dummy-doc__page">
+          <app-pi-agreement [userInput]="caForm.value"></app-pi-agreement>
+        <!-- <div class="dummy-doc__page">
           <div class="number">{{userData['userRole'] + ' Page 2'}}</div>
         </div>
         <div class="dummy-doc__page">
@@ -93,7 +90,7 @@
         </div>
         <div class="dummy-doc__page">
           <div class="number">{{userData['userRole'] + ' Page 6'}}</div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>

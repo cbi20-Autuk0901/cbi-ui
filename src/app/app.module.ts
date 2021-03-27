@@ -53,6 +53,7 @@ import { PrimeComponentsModule } from './prime-components.module';
 import { CertificationsListComponent } from './components/shared/certifications-list/certifications-list.component';
 import { ReportsPageComponent } from './components/pages/reports-page/reports-page.component';
 import { BondRedemptionComponent } from './components/pages/bond-redemption/bond-redemption.component';
+import { PiAgreementComponent } from './components/shared/pi-agreement/pi-agreement.component';
 
 @NgModule({
   declarations: [
@@ -70,6 +71,7 @@ import { BondRedemptionComponent } from './components/pages/bond-redemption/bond
     CertificationsListComponent,
     ReportsPageComponent,
     BondRedemptionComponent,
+    PiAgreementComponent,
   ],
   imports: [
     BrowserModule,
