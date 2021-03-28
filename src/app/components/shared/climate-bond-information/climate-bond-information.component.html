@@ -73,7 +73,60 @@
                   <label for="underwriter" class="col-sm-4 col-form-label">Underwriter</label>
                   <div formArrayName="underwriter" class="col-sm-8">
                     <div [ngClass]="{'mb-3': underwriter.controls.length >1}" *ngFor="let _ of underwriter.controls; index as i">
-                      <input type="text" class="form-control" [formControlName]="i" />
+                      <select class="form-control" [formControlName]="i">
+                        <option value="">Select</option>
+                        <option value="AECLU">AECLU</option>
+                        <option value="bam">BAM</option>
+                        <option value="bzgfcl">Beijing Zhongcai Green Financing Consultants Ltd</option>
+                        <option value="blockc">BlockC</option>
+                        <option value="bsu">Blue Snow Consulting</option>
+                        <option value="bvBrazil">Bureau Veritas (Brazil)</option>
+                        <option value="bvUK">Bureau Veritas</option>
+                        <option value="cca">Carbon Care Asia Limited</option>
+                        <option value="ct">Carbon Trust</option>
+                        <option value="cecep">CECEP</option>
+                        <option value="ccx">China Chengxin Credit Management Co.</option>
+                        <option value="clEIA">China Lianhe EIA</option>
+                        <option value="cqc">China Quality Certification Centre</option>
+                        <option value="deloitte">Deloitte</option>
+                        <option value="dnv">DNV.GL</option>
+                        <option value="dqs">DQS CFS</option>
+                        <option value="evi">Emergent Ventures India</option>
+                        <option value="epicsustainability">EPIC Sustainability</option>
+                        <option value="eqa">EQA Spain</option>
+                        <option value="ermCvs">ERM CVS</option>
+                        <option value="ey">EY</option>
+                        <option value="fe">First Environment</option>
+                        <option value="gcs">Golden Credit Service Co. Ltd.</option>
+                        <option value="gs">Greensolver</option>
+                        <option value="hkqaa">HKQAA</option>
+                        <option value="hrRatings">HR Ratings</option>
+                        <option value="ibis">IBIS ESG Consulting</option>
+                        <option value="iGreenBank">iGreenBank</option>
+                        <option value="induforOy">Indufor Oy</option>
+                        <option value="iss">ISS ESG</option>
+                        <option value="jcr">Japan Credit Rating Agency, Ltd.</option>
+                        <option value="kestrelVerifiers">Kestrel Verifiers</option>
+                        <option value="KPMG">KPMG</option>
+                        <option value="multiconsultASA">Multiconsult ASA</option>
+                        <option value="NSFCertification">NSF Certification, LLC</option>
+                        <option value="pcr">Pacific Credit Rating</option>
+                        <option value="PwC">PwC</option>
+                        <option value="raisingCleantech">Raising Clean-tech Investment Consulting Co., Ltd.</option>
+                        <option value="ramSustainability">RAM Sustainability</option>
+                        <option value="rsmAustralia">RSM Australia</option>
+                        <option value="rubicola">Rubicola Consulting</option>
+                        <option value="scopeGroup">Scope Group</option>
+                        <option value="sgs">SGS Hong Kong</option>
+                        <option value="sinoCarbon">SinoCarbon</option>
+                        <option value="sitawi">SITAWI</option>
+                        <option value="sustainAdvisory">SustainAdvisory</option>
+                        <option value="sustainalytics">Sustainalytics</option>
+                        <option value="synTaoGreenFinance">SynTao Green Finance</option>
+                        <option value="trisRating">TRIS Rating</option>
+                        <option value="tuvNord">TÜV NORD CERT</option>
+                        <option value="vigeoEiris">Vigeo Eiris</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -82,7 +135,17 @@
                     Instrument Type
                   </label>
                   <div class="col-sm-8">
-                    <input type="text" class="form-control" id="daInstrumentType" formControlName="daInstrumentType" />
+                    <select class="form-control" id="daInstrumentType"  formControlName="daInstrumentType">
+                      <option value="">Select</option>
+                      <option value="proceedsBond">Use of Proceeds Bond</option>
+                      <option value="proceedsRevenueBond">Use of Proceeds Revenue Bond</option>
+                      <option value="projectBond">Project Bond</option>
+                      <option value="securitizedBond">Securitized Bond</option>
+                      <option value="privatePlacement">Private Placement</option>
+                      <option value="loan">Loan</option>
+                      <option value="depositProduct">Deposit Product</option>
+                      <option value="others">Others</option>
+                    </select>
                   </div>
                 </div>
                 <div class="form-group row">

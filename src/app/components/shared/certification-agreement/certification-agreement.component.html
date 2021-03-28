@@ -70,12 +70,12 @@
             <input type="file">
           </div>
 
-          <button class="btn btn-secondary">Download</button>
+          <button class="btn btn-secondary" (click)="generatePDF()">Download</button>
 
         </div>
       </div>
       <div class="doc-viewer">
-          <app-pi-agreement [userInput]="caForm.value"></app-pi-agreement>
+        <app-pi-agreement id="test" [userInput]="caForm.value"></app-pi-agreement>
       </div>
     </div>
   </div>

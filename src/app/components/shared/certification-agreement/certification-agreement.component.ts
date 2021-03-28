@@ -1,7 +1,9 @@
 import {
   Component,
   OnInit,
-  Input
+  Input,
+  ViewChild,
+  ElementRef
 } from '@angular/core';
 import {
   FormBuilder,
@@ -11,6 +13,8 @@ import {
 import { MessageService } from 'primeng/api';
 import { UtilsService } from './../../../services/utils/utils.service';
 import { DatastoreService } from './../../../services/data-store/data-store.service';
+
+import html2pdf from 'html2pdf.js';
 
 @Component({
   selector: 'app-certification-agreement',
@@ -35,13 +39,13 @@ export class CertificationAgreementComponent implements OnInit {
   ngOnInit (): void {
 
     this.caForm = this.fb.group({
-      applicationDate: this.fb.control('', [Validators.required]),
-      issuingEntityLegalName: this.fb.control('', [Validators.required]),
-      debtInstrumentsUniqueName: this.fb.control('', [Validators.required]),
-      address: this.fb.control('', [Validators.required]),
-      email: this.fb.control('', [Validators.required]),
-      issuerContactPerson: this.fb.control('', [Validators.required]),
-      signature: this.fb.control('', [Validators.required]),
+      applicationDate: [''],
+      issuingEntityLegalName: [''],
+      debtInstrumentsUniqueName: [''],
+      address: [''],
+      email: [''],
+      issuerContactPerson: [''],
+      signature: [''],
     });
 
     this.userData = this.utils.getStore('userData');
@@ -63,6 +67,21 @@ export class CertificationAgreementComponent implements OnInit {
       this.ds.updateValue('currentFormPage', 'cbiPage');
     }
   };
+
+  generatePDF () {
+
+    const element = document.getElementById('test');
+    const opt = {
+      pagebreak: { mode: 'avoid-all' },
+      margin: 1,
+      filename: 'Agreement.pdf',
+      image: { type: 'jpeg', quality: 1 },
+      html2canvas: { scale: 4 },
+      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+    };
+
+    html2pdf().set(opt).from(element).save();
+  }
 
   saveFormStatus = (form: string) => {
     const payload = {

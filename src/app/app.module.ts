@@ -54,6 +54,7 @@ import { CertificationsListComponent } from './components/shared/certifications-
 import { ReportsPageComponent } from './components/pages/reports-page/reports-page.component';
 import { BondRedemptionComponent } from './components/pages/bond-redemption/bond-redemption.component';
 import { PiAgreementComponent } from './components/shared/pi-agreement/pi-agreement.component';
+import { CommonModule } from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -74,6 +75,7 @@ import { PiAgreementComponent } from './components/shared/pi-agreement/pi-agreem
     PiAgreementComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
