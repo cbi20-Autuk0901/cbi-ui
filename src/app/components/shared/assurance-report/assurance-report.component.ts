@@ -56,7 +56,7 @@ export class AssuranceReportComponent implements OnInit {
       certificationType: this.mainData['certType'],
       certificationId: this.mainData['certId'] || '',
     };
-    this.ds.upload(payload)
+    this.ds.upload(payload, 'ar')
       .subscribe((data) => {
         this.messageService.add({
           key: 'bc',

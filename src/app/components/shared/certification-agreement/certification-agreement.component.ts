@@ -2,13 +2,10 @@ import {
   Component,
   OnInit,
   Input,
-  ViewChild,
-  ElementRef
 } from '@angular/core';
 import {
   FormBuilder,
   FormGroup,
-  Validators,
 } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { UtilsService } from './../../../services/utils/utils.service';
@@ -26,6 +23,7 @@ export class CertificationAgreementComponent implements OnInit {
 
   pageData: object;
   userData: object;
+  caSignedUploaded: boolean;
 
   caForm: FormGroup;
 
@@ -34,7 +32,9 @@ export class CertificationAgreementComponent implements OnInit {
     private ds: DatastoreService,
     private messageService: MessageService,
     private utils: UtilsService
-  ) { }
+  ) {
+    this.caSignedUploaded = false;
+  }
 
   ngOnInit (): void {
 
@@ -61,11 +61,17 @@ export class CertificationAgreementComponent implements OnInit {
 
   switchPage = (type: string) => {
     if (type === 'next') {
-      this.ds.updateValue('currentFormPage', this.mainData['userRole'] === 'singleIssuer' ? 'cbiPage' : 'arPage');
+      if (this.caSignedUploaded) {
+        this.ds.updateValue('currentFormPage', this.mainData['userRole'] === 'singleIssuer' ? 'cbiPage' : 'arPage');
+      } else {
+        this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Please upload Signed Certification Agreement' });
+      }
     }
     if (type === 'back') {
       this.ds.updateValue('currentFormPage', 'cbiPage');
     }
+
+
   };
 
   generatePDF () {
@@ -97,6 +103,24 @@ export class CertificationAgreementComponent implements OnInit {
       }, (error) => {
         this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Invalid Form Details' });
       });
+  };
+
+  uploadFile = (event) => {
+    if (event.target.files.length > 0) {
+      const payload = {
+        userEmail: this.mainData['userEmail'],
+        certificationType: this.mainData['certType'],
+        certificationId: this.mainData['certId'],
+        userRole: this.mainData['userRole'],
+        signedCertificationAgreement: event.target.files[0]
+      };
+
+      this.ds.upload(payload, 'ca').subscribe(() => {
+        this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'File uploaded successfully' });
+      }, (error) => {
+        this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'File upload failed' });
+      });
+    }
   };
 
 }

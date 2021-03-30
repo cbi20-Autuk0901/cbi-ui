@@ -67,7 +67,7 @@
         <div>
           <div class="btn btn-green upload-btn mr-3">
             Upload +
-            <input type="file">
+            <input type="file" (change)="uploadFile($event)">
           </div>
 
           <button class="btn btn-secondary" (click)="generatePDF()">Download</button>

@@ -75,9 +75,9 @@ export class DatastoreService {
     return this.http.post(url, payload);
   };
 
-  upload = (data: any): Observable<any> => {
+  upload = (data: any, page: string): Observable<any> => {
     const formData = new FormData();
-    const url = '/api/assuranceReport';
+    const url = page === 'ar' ? '/api/assuranceReport' : '/api/signedCertificationAgreement';
     Object.entries(data).forEach(([key, value]): any => {
       formData.append(key, data[key]);
     });
