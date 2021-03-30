@@ -117,6 +117,7 @@ export class CertificationAgreementComponent implements OnInit {
 
       this.ds.upload(payload, 'ca').subscribe(() => {
         this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'File uploaded successfully' });
+        this.caSignedUploaded = true;
       }, (error) => {
         this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'File upload failed' });
       });
