@@ -1,27 +1,29 @@
-import { DatastoreService } from './../../../services/data-store/data-store.service';
+import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { Component, OnInit } from '@angular/core';
 import { SortEvent } from 'primeng/api';
-import { UtilsService } from './../../../services/utils/utils.service';
+import { UtilsService } from '../../../services/utils/utils.service';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-certifications-list',
   templateUrl: './certifications-list.component.html',
-  styleUrls: ['./certifications-list.component.scss']
+  styleUrls: ['./certifications-list.component.scss'],
 })
 export class CertificationsListComponent implements OnInit {
-
   userData: object;
   certifications: Array<object>;
   loading: boolean = true;
   certType: string;
 
-  constructor (private ds: DatastoreService, private utils: UtilsService, private route: ActivatedRoute) {
+  constructor(
+    private ds: DatastoreService,
+    private utils: UtilsService,
+    private route: ActivatedRoute
+  ) {
     this.userData = this.utils.getStore('userData');
   }
 
-  ngOnInit (): void {
-
+  ngOnInit(): void {
     const payload = {
       userEmail: this.userData['userEmail'],
     };
@@ -33,8 +35,6 @@ export class CertificationsListComponent implements OnInit {
         this.loading = false;
       });
     });
-
-
   }
 
   modelData = (data) => {
@@ -49,12 +49,10 @@ export class CertificationsListComponent implements OnInit {
         certType: item.certificationType,
         date: this.utils.formatDate(item.applicationDate),
         instrType: item.instrumentType,
-        status: item.certificationStatus
+        status: item.certificationStatus,
       };
       processedData.push(temp);
     });
     return processedData;
-
   };
-
 }

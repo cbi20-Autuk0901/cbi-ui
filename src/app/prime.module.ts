@@ -10,8 +10,6 @@ import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { BadgeModule } from 'primeng/badge';
 
-
-
 @NgModule({
   declarations: [],
   imports: [
@@ -24,7 +22,6 @@ import { BadgeModule } from 'primeng/badge';
     PaginatorModule,
     DialogModule,
     BadgeModule,
-
   ],
   exports: [
     CalendarModule,
@@ -34,11 +31,8 @@ import { BadgeModule } from 'primeng/badge';
     TableModule,
     PaginatorModule,
     DialogModule,
-    BadgeModule
-
+    BadgeModule,
   ],
-  providers: [
-    MessageService
-  ]
+  providers: [MessageService],
 })
-export class PrimeComponentsModule { }
+export class PrimeModule {}

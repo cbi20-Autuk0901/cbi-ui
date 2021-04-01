@@ -2,7 +2,7 @@
   <h4 class="page-header">Certification Dashboard</h4>
   <div class="row">
     <div class="col-8">
-      <div class="d-flex justify-content-between" *ngIf="userData['userRole'] !== 'singleIssuer'">
+      <div class="d-flex justify-content-between" *ngIf="dashboardData['userRole'] !== 'singleIssuer'">
         <div class="card stat-card">
           <div class="card__ribbon"></div>
           <p class="title">In-Progress Certifications</p>
@@ -27,15 +27,14 @@
           <input class="btn btn-secondary" type="file">
         </div>
 
-        <a class="btn btn-primary" routerLink="/certifications-listing" 
-        [queryParams]="{ certType: 'bondRedemption' }">
+        <a class="btn btn-primary" routerLink="/certifications-listing" [queryParams]="{ certType: 'bondRedemption' }">
           Bond Redemption
         </a>
 
       </div>
     </div>
     <div class="col-4 pl-5">
-      <div class="recent-certifications" *ngIf="userData['userRole'] !== 'singleIssuer' && dashboardData['recentCertifications'].length>0">
+      <div class="recent-certifications" *ngIf="dashboardData['userRole'] !== 'singleIssuer' && dashboardData['recentCertifications'].length>0">
         <div class="recent-certifications__title">Recent Certifications</div>
         <div class="recent-certifications__list">
           <div class="recent-certifications__item" *ngFor="let list of dashboardData['recentCertifications']">
@@ -48,7 +47,7 @@
           </div>
         </div>
       </div>
-      <div class="recent-certifications" *ngIf="userData['userRole'] === 'singleIssuer'">
+      <div class="recent-certifications" *ngIf="dashboardData['userRole'] === 'singleIssuer'">
         <div class="recent-certifications__title">Certification Status</div>
         <div class="recent-certifications__list">
           <div class="recent-certifications__item">

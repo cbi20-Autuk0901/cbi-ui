@@ -1,15 +1,8 @@
-import {
-  Component,
-  OnInit,
-  Input,
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-} from '@angular/forms';
+import { Component, OnInit, Input } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
-import { UtilsService } from './../../../services/utils/utils.service';
-import { DatastoreService } from './../../../services/data-store/data-store.service';
+import { UtilsService } from '../../../services/utils/utils.service';
+import { DatastoreService } from '../../../services/data-store/data-store.service';
 
 import html2pdf from 'html2pdf.js';
 
@@ -27,7 +20,7 @@ export class CertificationAgreementComponent implements OnInit {
 
   caForm: FormGroup;
 
-  constructor (
+  constructor(
     private fb: FormBuilder,
     private ds: DatastoreService,
     private messageService: MessageService,
@@ -36,8 +29,7 @@ export class CertificationAgreementComponent implements OnInit {
     this.caSignedUploaded = false;
   }
 
-  ngOnInit (): void {
-
+  ngOnInit(): void {
     this.caForm = this.fb.group({
       applicationDate: [''],
       issuingEntityLegalName: [''],
@@ -51,31 +43,36 @@ export class CertificationAgreementComponent implements OnInit {
     this.userData = this.utils.getStore('userData');
 
     if (this.mainData['certId']) {
-      this.ds.formResume('caForm', this.mainData)
-        .subscribe((data) => {
-          if (data.applicationDate) data['applicationDate'] = new Date(data.applicationDate);
-          this.caForm.patchValue(data);
-        });
+      this.ds.formResume('caForm', this.mainData).subscribe((data) => {
+        if (data.applicationDate)
+          data['applicationDate'] = new Date(data.applicationDate);
+        this.caForm.patchValue(data);
+      });
     }
   }
 
   switchPage = (type: string) => {
     if (type === 'next') {
       if (this.caSignedUploaded) {
-        this.ds.updateValue('currentFormPage', this.mainData['userRole'] === 'singleIssuer' ? 'cbiPage' : 'arPage');
+        this.ds.updateValue(
+          'currentFormPage',
+          this.mainData['userRole'] === 'singleIssuer' ? 'cbiPage' : 'arPage'
+        );
       } else {
-        this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Please upload Signed Certification Agreement' });
+        this.messageService.add({
+          key: 'bc',
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Please upload Signed Certification Agreement',
+        });
       }
     }
     if (type === 'back') {
       this.ds.updateValue('currentFormPage', 'cbiPage');
     }
-
-
   };
 
-  generatePDF () {
-
+  generatePDF() {
     const element = document.getElementById('test');
     const opt = {
       pagebreak: { mode: 'avoid-all' },
@@ -83,7 +80,7 @@ export class CertificationAgreementComponent implements OnInit {
       filename: 'Agreement.pdf',
       image: { type: 'jpeg', quality: 1 },
       html2canvas: { scale: 4 },
-      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
+      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
     };
 
     html2pdf().set(opt).from(element).save();
@@ -97,12 +94,24 @@ export class CertificationAgreementComponent implements OnInit {
       certificationType: this.mainData['certType'],
       certificationId: this.mainData['certId'] || '',
     };
-    this.ds.formSave(payload, form)
-      .subscribe((data) => {
-        this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Data Saved' });
-      }, (error) => {
-        this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Invalid Form Details' });
-      });
+    this.ds.formSave(payload, form).subscribe(
+      (data) => {
+        this.messageService.add({
+          key: 'bc',
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Data Saved',
+        });
+      },
+      (error) => {
+        this.messageService.add({
+          key: 'bc',
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Invalid Form Details',
+        });
+      }
+    );
   };
 
   uploadFile = (event) => {
@@ -112,16 +121,28 @@ export class CertificationAgreementComponent implements OnInit {
         certificationType: this.mainData['certType'],
         certificationId: this.mainData['certId'],
         userRole: this.mainData['userRole'],
-        signedCertificationAgreement: event.target.files[0]
+        signedCertificationAgreement: event.target.files[0],
       };
 
-      this.ds.upload(payload, 'ca').subscribe(() => {
-        this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'File uploaded successfully' });
-        this.caSignedUploaded = true;
-      }, (error) => {
-        this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'File upload failed' });
-      });
+      this.ds.upload(payload, 'ca').subscribe(
+        () => {
+          this.messageService.add({
+            key: 'bc',
+            severity: 'success',
+            summary: 'Success',
+            detail: 'File uploaded successfully',
+          });
+          this.caSignedUploaded = true;
+        },
+        (error) => {
+          this.messageService.add({
+            key: 'bc',
+            severity: 'error',
+            summary: 'Error',
+            detail: 'File upload failed',
+          });
+        }
+      );
     }
   };
-
 }

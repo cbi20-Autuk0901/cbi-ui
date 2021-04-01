@@ -1,0 +1,103 @@
+.stat-card {
+  width: 30%;
+  max-width: 250px;
+  border-radius: 20px;
+  border: 2px solid #c8c8cb;
+  color: #565758;
+  text-align: center;
+  padding: 0 0 20px;
+
+  &__ribbon {
+    border-top: 4px solid #ffcc4f;
+    margin-top: 18px;
+  }
+  .title {
+    font-weight: 700;
+    font-size: 16px;
+    margin: 10px 0 0;
+  }
+  .count {
+    font-weight: 700;
+    font-size: 40px;
+    line-height: 40px;
+    margin: 5px 0 0;
+  }
+}
+
+.user-options {
+  margin-top: 30px;
+  border-radius: 20px;
+  border: 2px solid #c8c8cb;
+  padding: 25px 60px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.btn {
+  font-weight: 700;
+  font-size: 14px;
+  border-radius: 10px;
+  padding: 10px 20px;
+
+  &.btn-primary {
+    background: #fff;
+    color: #808085;
+    border: 2px solid #c8c8cb;
+  }
+
+  &.btn-secondary {
+    background: #ffcc4f;
+    border: 2px solid #ffcc4f;
+    color: #ffffff;
+  }
+
+  &.btn-secondary-sm {
+    background: #ffcc4f;
+    border: 2px solid #ffcc4f;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 300;
+    padding: 2px 15px;
+    border-radius: 8px;
+  }
+}
+
+.recent-certifications {
+  border: 1px solid #c8c8cb;
+  border-top: 8px solid #ffcc4f;
+  width: 95%;
+  padding: 0 10px 20px;
+
+  &__title {
+    color: #565758;
+    padding: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    border-bottom: 2px solid #c8c8cb;
+    margin: 0 -5px;
+  }
+
+  &__list {
+    padding: 0 5px 0;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 30px;
+
+    &__id {
+      font-size: 14px;
+      font-weight: 300;
+    }
+
+    .fa-check-circle {
+      font-size: 24px;
+      color: #c3c3c3;
+
+      &.active {
+        color: #8dc63f;
+      }
+    }
+  }
+}

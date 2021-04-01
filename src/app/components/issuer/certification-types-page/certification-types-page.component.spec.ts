@@ -1,19 +1,19 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { certTypesPageComponent } from './certification-types-page.component';
+import { CertTypesPageComponent } from './certification-types-page.component';
 
-describe('certTypesPageComponent', () => {
-  let component: certTypesPageComponent;
-  let fixture: ComponentFixture<certTypesPageComponent>;
+describe('CertTypesPageComponent', () => {
+  let component: CertTypesPageComponent;
+  let fixture: ComponentFixture<CertTypesPageComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [certTypesPageComponent],
+      declarations: [CertTypesPageComponent],
     }).compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(certTypesPageComponent);
+    fixture = TestBed.createComponent(CertTypesPageComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

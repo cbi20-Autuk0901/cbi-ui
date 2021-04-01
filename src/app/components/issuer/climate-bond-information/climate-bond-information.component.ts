@@ -1,10 +1,4 @@
-
-import {
-  Component,
-  Input,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, Input, OnInit, ViewChild } from '@angular/core';
 import {
   FormArray,
   FormBuilder,
@@ -13,10 +7,10 @@ import {
   Validators,
 } from '@angular/forms';
 
-import { UtilsService } from './../../../services/utils/utils.service';
+import { UtilsService } from '../../../services/utils/utils.service';
 
 import { MessageService } from 'primeng/api';
-import { DatastoreService } from './../../../services/data-store/data-store.service';
+import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
@@ -25,7 +19,6 @@ import { ActivatedRoute, Router } from '@angular/router';
   styleUrls: ['./climate-bond-information.component.scss'],
 })
 export class ClimateBondInformationComponent implements OnInit {
-
   @Input() mainData: object;
   @ViewChild('formTrigger') frmBtn;
 
@@ -40,12 +33,12 @@ export class ClimateBondInformationComponent implements OnInit {
 
   isLoading: boolean;
 
-  constructor (
+  constructor(
     private fb: FormBuilder,
     private ds: DatastoreService,
     private messageService: MessageService,
     private utils: UtilsService,
-    private router: Router,
+    private router: Router
   ) {
     this.isLoading = true;
     this.currentForm = 'cbiForm';
@@ -62,8 +55,12 @@ export class ClimateBondInformationComponent implements OnInit {
       daInstrumentType: [''],
       issueDate: [''],
       maturityDate: [''],
-      renewableEnergy: this.fb.array([this.fb.control('', Validators.required)]), //mandatory
-      renewableEnergyText: this.fb.array([this.fb.control('', Validators.required)]), //mandatory
+      renewableEnergy: this.fb.array([
+        this.fb.control('', Validators.required),
+      ]), //mandatory
+      renewableEnergyText: this.fb.array([
+        this.fb.control('', Validators.required),
+      ]), //mandatory
       financingAssets: ['', [Validators.required]],
       proceedsAllocation: ['', [Validators.required]],
       portfolioApproach: ['', [Validators.required]],
@@ -95,7 +92,7 @@ export class ClimateBondInformationComponent implements OnInit {
     });
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.instrType = this.mainData['instrType'];
     this.switchForm('cbiForm');
 
@@ -107,80 +104,93 @@ export class ClimateBondInformationComponent implements OnInit {
     });
   }
 
-  get localCurrency () {
+  get localCurrency() {
     return this.cbiForm.get('localCurrency') as FormArray;
   }
 
-  get underwriter () {
+  get underwriter() {
     return this.cbiForm.get('underwriter') as FormArray;
   }
 
-  get amountIssued () {
+  get amountIssued() {
     return this.cbiForm.get('amountIssued') as FormArray;
   }
-  get renewableEnergy () {
+  get renewableEnergy() {
     return this.cbiForm.get('renewableEnergy') as FormArray;
   }
-  get renewableEnergyText () {
+  get renewableEnergyText() {
     return this.cbiForm.get('renewableEnergyText') as FormArray;
   }
-  get issueDate () {
+  get issueDate() {
     return this.cbiForm.get('issueDate') as FormControl;
   }
-  get maturityDate () {
+  get maturityDate() {
     return this.cbiForm.get('maturityDate') as FormControl;
   }
 
-  addField (name: string, value: string, required?: boolean) {
-    if (this[name].controls.length < 5)
-      this[name].push(this.fb.control(value));
+  addField(name: string, value: string, required?: boolean) {
+    if (this[name].controls.length < 5) this[name].push(this.fb.control(value));
   }
 
   formGenerator = (formName, FormData?) => {
-
     if (FormData) {
-      Object.keys(FormData)
-        .forEach((name) => {
-          const val = FormData[name];
-          if (Array.isArray(val)) {
-            for (let i = this[name].length; i < val.length; i++) {
-              this[name].push(this.fb.control(''));
-            }
+      Object.keys(FormData).forEach((name) => {
+        const val = FormData[name];
+        if (Array.isArray(val)) {
+          for (let i = this[name].length; i < val.length; i++) {
+            this[name].push(this.fb.control(''));
           }
-          if (name === 'issueDate' && val) FormData['issueDate'] = new Date(val);
-          if (name === 'maturityDate' && val) FormData['maturityDate'] = new Date(val);
-        });
+        }
+        if (name === 'issueDate' && val) FormData['issueDate'] = new Date(val);
+        if (name === 'maturityDate' && val)
+          FormData['maturityDate'] = new Date(val);
+      });
 
       this[formName].patchValue(FormData);
     }
-
   };
 
   switchForm = (name: string) => {
     if (name === 'cbiFormContd' && !this.cbiFormSubmitted) {
-      this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Warning', detail: 'Please Save form before proceeding to next page' });
+      this.messageService.add({
+        key: 'bc',
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please Save form before proceeding to next page',
+      });
       return false;
     }
-    this.ds.formResume(name, this.mainData)
-      .subscribe((data) => {
+    this.ds.formResume(name, this.mainData).subscribe(
+      (data) => {
         this.formGenerator(name, data);
         this.currentForm = name;
         this.isLoading = false;
-      }, () => {
-        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
-          this.router.navigate(['/debt-instrument/pre/bond']);
-        });
-      });
-
+      },
+      () => {
+        this.router
+          .navigateByUrl('/', { skipLocationChange: true })
+          .then(() => {
+            this.router.navigate(['/debt-instrument/pre/bond']);
+          });
+      }
+    );
   };
 
   switchPage = (type: string) => {
     if (!this.cbiFormContdSubmitted) {
-      this.messageService.add({ key: 'bc', severity: 'warn', summary: 'Warning', detail: 'Please Save form before proceeding to next page' });
+      this.messageService.add({
+        key: 'bc',
+        severity: 'warn',
+        summary: 'Warning',
+        detail: 'Please Save form before proceeding to next page',
+      });
       return false;
     }
     if (type === 'next') {
-      this.ds.updateValue('currentFormPage', this.mainData['userRole'] !== 'singleIssuer' ? 'caPage' : 'arPage');
+      this.ds.updateValue(
+        'currentFormPage',
+        this.mainData['userRole'] !== 'singleIssuer' ? 'caPage' : 'arPage'
+      );
     }
 
     if (type === 'back') {
@@ -197,25 +207,40 @@ export class ClimateBondInformationComponent implements OnInit {
         certificationType: this.mainData['certType'],
         certificationId: this.mainData['certId'] || '',
       };
-      this.ds.formSave(payload, form)
-        .subscribe((data) => {
-          this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Data Saved' });
+      this.ds.formSave(payload, form).subscribe(
+        (data) => {
+          this.messageService.add({
+            key: 'bc',
+            severity: 'success',
+            summary: 'Success',
+            detail: 'Data Saved',
+          });
           this[form + 'Submitted'] = true;
-        }, (error) => {
-          this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Invalid Form Details' });
-        });
+        },
+        (error) => {
+          this.messageService.add({
+            key: 'bc',
+            severity: 'error',
+            summary: 'Error',
+            detail: 'Invalid Form Details',
+          });
+        }
+      );
     } else {
-      Object.keys(this[form].controls).forEach(field => {
+      Object.keys(this[form].controls).forEach((field) => {
         const control = this[form].get(field);
         control.markAsDirty({ onlySelf: true });
       });
-      this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Please fill all mandatory fields mentioned with "*" ' });
+      this.messageService.add({
+        key: 'bc',
+        severity: 'error',
+        summary: 'Error',
+        detail: 'Please fill all mandatory fields mentioned with "*" ',
+      });
     }
   };
 
   triggerFormSave = () => {
     this.frmBtn.nativeElement.click();
   };
-
-
 }
