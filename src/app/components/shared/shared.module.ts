@@ -10,6 +10,7 @@ import { RegistrationComponent } from './registration/registration.component';
 import { LoginPageComponent } from './login-page/login-page.component';
 import { DashboardPageComponent } from './dashboard-page/dashboard-page.component';
 import { IssuerModule } from '../issuer/issuer.module';
+import { ReviewerModule } from '../reviewer/reviewer.module';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { IssuerModule } from '../issuer/issuer.module';
     FormsModule,
     ReactiveFormsModule,
     IssuerModule,
+    ReviewerModule,
   ],
   exports: [HeaderComponent, SidebarComponent],
 })

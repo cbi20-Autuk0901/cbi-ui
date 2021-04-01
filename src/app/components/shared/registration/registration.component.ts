@@ -23,7 +23,10 @@ export class RegistrationComponent implements OnInit {
         lastName: ['', Validators.required],
         userEmail: [
           '',
-          [Validators.required, Validators.pattern('/^[^s@]+@[^s@]+$/')],
+          [
+            Validators.required,
+            Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+          ],
         ],
         password: [
           '',
@@ -40,7 +43,13 @@ export class RegistrationComponent implements OnInit {
         userRole: ['', Validators.required],
         invoiceCompanyName: ['', Validators.required],
         businessRegistrationNo: ['', Validators.required],
-        invoiceEmail: ['', Validators.required],
+        invoiceEmail: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
+          ],
+        ],
         phoneNumber: [
           '',
           [Validators.required, Validators.pattern('^[0-9]*$')],
@@ -64,7 +73,7 @@ export class RegistrationComponent implements OnInit {
 
   registerUser = () => {
     this.submitted = true;
-    if (!this.registerForm.valid) {
+    if (this.registerForm.valid) {
       const payload = this.registerForm.value;
       this.userS.registerUser(payload).subscribe((e) => {
         alert('Registered Successfully');

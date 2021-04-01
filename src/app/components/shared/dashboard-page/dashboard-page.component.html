@@ -1,1 +1,2 @@
-<app-issuer-dashboard [dashboardData]="dashboardData"></app-issuer-dashboard>
+<app-issuer-dashboard *ngIf="userRole !== 'reviewer'"></app-issuer-dashboard>
+<app-reviewer-dashboard *ngIf="userRole === 'reviewer'"></app-reviewer-dashboard>

@@ -10,6 +10,14 @@
 
   .form-group {
     margin-bottom: 24px;
+    .form-control {
+      box-shadow: none;
+
+      &.ng-invalid.ng-dirty {
+        border: none;
+        border-bottom: 1px solid #d00;
+      }
+    }
   }
 
   .header {
@@ -75,7 +83,6 @@
       outline: 0;
       box-shadow: none;
     }
-
   }
 
   .btn-register {

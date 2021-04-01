@@ -10,6 +10,7 @@ import { PrimeModule } from './prime.module';
 import { CommonModule } from '@angular/common';
 import { IssuerModule } from './components/issuer/issuer.module';
 import { SharedModule } from './components/shared/shared.module';
+import { ReviewerModule } from './components/reviewer/reviewer.module';
 
 @NgModule({
   declarations: [AppComponent],
@@ -22,6 +23,7 @@ import { SharedModule } from './components/shared/shared.module';
     PrimeModule,
     IssuerModule,
     SharedModule,
+    ReviewerModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

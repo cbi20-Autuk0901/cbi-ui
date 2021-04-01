@@ -1,4 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { DatastoreService } from '../../../services/data-store/data-store.service';
+import { UtilsService } from '../../../services/utils/utils.service';
 
 @Component({
   selector: 'app-issuer-dashboard',
@@ -6,9 +8,18 @@ import { Component, OnInit, Input } from '@angular/core';
   styleUrls: ['./issuer-dashboard.component.scss'],
 })
 export class IssuerDashboardComponent implements OnInit {
-  @Input() dashboardData: object;
+  dashboardData: object;
 
-  constructor() {}
+  constructor(private ds: DatastoreService, private utils: UtilsService) {
+    this.dashboardData = { ...this.utils.getStore('userData') };
+  }
+  ngOnInit(): void {
+    const payload = {
+      userEmail: this.dashboardData['userEmail'],
+    };
 
-  ngOnInit(): void {}
+    this.ds.getDashboard(payload).subscribe((data) => {
+      this.dashboardData = data;
+    });
+  }
 }
