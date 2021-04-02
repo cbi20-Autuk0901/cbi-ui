@@ -9,8 +9,10 @@ import { UtilsService } from '../../../services/utils/utils.service';
 })
 export class IssuerDashboardComponent implements OnInit {
   dashboardData: object;
+  isLoading: boolean;
 
   constructor(private ds: DatastoreService, private utils: UtilsService) {
+    this.isLoading = true;
     this.dashboardData = { ...this.utils.getStore('userData') };
   }
   ngOnInit(): void {
@@ -20,6 +22,7 @@ export class IssuerDashboardComponent implements OnInit {
 
     this.ds.getDashboard(payload).subscribe((data) => {
       this.dashboardData = data;
+      this.isLoading = false;
     });
   }
 }

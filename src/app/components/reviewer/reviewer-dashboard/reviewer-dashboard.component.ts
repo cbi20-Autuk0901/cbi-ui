@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import * as moment from 'moment';
 import { UtilsService } from './../../../services/utils/utils.service';
 
 @Component({
@@ -152,4 +153,10 @@ export class ReviewerDashboardComponent implements OnInit {
       },
     };
   }
+
+  filterDate = (event) => {
+    const now = moment();
+    const selRange = event.target.value.split(' ');
+    console.log(now.subtract(selRange[0], selRange[1]).format());
+  };
 }

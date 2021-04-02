@@ -5,21 +5,19 @@ import { UtilsService } from '../../../services/utils/utils.service';
 @Component({
   selector: 'app-reports-page',
   templateUrl: './reports-page.component.html',
-  styleUrls: ['./reports-page.component.scss']
+  styleUrls: ['./reports-page.component.scss'],
 })
 export class ReportsPageComponent implements OnInit {
-
   userData: object;
   certifications: Array<object>;
   loading: boolean = true;
   statuses: Array<object>;
 
-  constructor (private ds: DatastoreService, private utils: UtilsService) {
+  constructor(private ds: DatastoreService, private utils: UtilsService) {
     this.userData = this.utils.getStore('userData');
   }
 
-  ngOnInit (): void {
-
+  ngOnInit(): void {
     const payload = {
       userEmail: this.userData['userEmail'],
     };
@@ -28,13 +26,16 @@ export class ReportsPageComponent implements OnInit {
       this.loading = false;
     });
 
-
     this.statuses = [
       { name: 'Submitted', value: 'submitted', count: 0, severity: 'success' },
-      { name: 'Under-Review', value: 'underReview', count: 0, severity: 'warning' },
+      {
+        name: 'Under-Review',
+        value: 'underReview',
+        count: 0,
+        severity: 'warning',
+      },
       { name: 'Draft', value: 'draft', count: 0, severity: 'danger' },
     ];
-
   }
 
   modelData = (data) => {
@@ -45,9 +46,9 @@ export class ReportsPageComponent implements OnInit {
         certId: item.certificationId,
         name: item.uniqueName,
         certType: item.certificationType,
-        date: this.utils.formatDate(item.applicationDate),
+        date: item.applicationDate,
         instrType: item.instrumentType,
-        status: item.certificationStatus
+        status: item.certificationStatus,
       };
       processedData.push(temp);
     });
@@ -57,12 +58,12 @@ export class ReportsPageComponent implements OnInit {
     });
 
     return processedData;
-
   };
 
   getListCount = (list, key) => {
-    const filteredList = list.filter((item) => item.certificationStatus === key);
+    const filteredList = list.filter(
+      (item) => item.certificationStatus === key
+    );
     return filteredList.length || 0;
   };
-
 }

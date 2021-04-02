@@ -1,4 +1,4 @@
-<div *ngIf="dashboardData">
+<div *ngIf="!isLoading">
   <h4 class="page-header">Certification Dashboard</h4>
   <div class="row">
     <div class="col-8">
@@ -34,7 +34,7 @@
       </div>
     </div>
     <div class="col-4 pl-5">
-      <div class="recent-certifications" *ngIf="dashboardData['userRole'] !== 'singleIssuer' && dashboardData['recentCertifications'].length>0">
+      <div class="recent-certifications" *ngIf="dashboardData['userRole'] !== 'singleIssuer' && dashboardData['recentCertifications'].length > 0">
         <div class="recent-certifications__title">Recent Certifications</div>
         <div class="recent-certifications__list">
           <div class="recent-certifications__item" *ngFor="let list of dashboardData['recentCertifications']">

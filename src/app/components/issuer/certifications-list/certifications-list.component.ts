@@ -47,7 +47,7 @@ export class CertificationsListComponent implements OnInit {
         certId: item.certificationId,
         name: item.uniqueName,
         certType: item.certificationType,
-        date: this.utils.formatDate(item.applicationDate),
+        date: item.applicationDate,
         instrType: item.instrumentType,
         status: item.certificationStatus,
       };

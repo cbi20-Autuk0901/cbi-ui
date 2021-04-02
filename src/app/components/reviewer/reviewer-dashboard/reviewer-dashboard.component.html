@@ -115,13 +115,13 @@
   </div>
   <div class="col-6">
     <div class="charts-section">
-      <select class="filter-by form-control form-control-sm">
+      <select class="filter-by form-control form-control-sm" (change)="filterDate($event)">
         <option>Filter By</option>
-        <option>Last 24 hours</option>
-        <option>Last Month</option>
-        <option>Last 3 months</option>
-        <option>Last 6 months</option>
-        <option>Last 12 months</option>
+        <option value="1 days">Last 24 hours</option>
+        <option value="1 months">Last Month</option>
+        <option value="3 months">Last 3 months</option>
+        <option value="6 months">Last 6 months</option>
+        <option value="12 months">Last 12 months</option>
       </select>
       <div class="row no-gutters mt-5">
         <div class="col-5">

@@ -7,7 +7,7 @@
           <span class="pl-2 p-text-italic">{{status['count'] + ' ' +status['name']}}</span>
         </div>
       </div>
-   
+
       <p-columnFilter field="status" matchMode="equals">
         <ng-template pTemplate="filter" let-value let-filter="filterCallback">
           <p-dropdown [ngModel]="value" [options]="statuses" optionLabel="name" optionValue="value" (onChange)="filter($event.value)" placeholder="Select a Status" [showClear]="true">
@@ -16,7 +16,7 @@
       </p-columnFilter>
     </div>
     <div class="d-flex justify-content-around">
-     
+
     </div>
 
   </ng-template>
@@ -46,7 +46,7 @@
       <td>{{list.certId}}</td>
       <td>{{list.name | titlecase}}</td>
       <td>{{list.certType +  (list.certType === 'pre' || list.certType === 'post' ? '-issuance' : '') | titlecase}}</td>
-      <td>{{list.date}}</td>
+      <td>{{list.date | date: 'dd/MM/YYYY'}}</td>
       <td>{{list.instrType | titlecase}}</td>
       <td ngClass="{{list.status + ' status-text'}}">{{list.status | titlecase}}</td>
       <td> <a class="btn btn-green" *ngIf="false">Download</a>
