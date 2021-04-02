@@ -1,0 +1,103 @@
+.charts-section {
+  background-color: #f8f8f8;
+  padding: 40px 15px 30px;
+  min-height: 350px;
+  border-radius: 15% 0 0;
+
+  .filter-by {
+    margin-left: auto;
+    width: 100px;
+    display: block;
+  }
+
+  .chart-area {
+    background-color: #ffffff;
+    border-radius: 10%;
+    min-height: 150px;
+    padding: 5px 10px;
+
+    &__heading {
+      text-align: center;
+      font-weight: 700;
+      font-size: 14px;
+    }
+  }
+}
+
+.name-sticker {
+  background-color: #f5c548;
+  border-radius: 10px;
+  color: #ffffff;
+  padding: 15px 20px;
+  max-width: 75%;
+  font-weight: 600;
+
+  &__greeting {
+    font-size: 30px;
+  }
+
+  &__text {
+    font-size: 18px;
+  }
+}
+
+.stat-card {
+  width: 30%;
+  max-width: 250px;
+  border-radius: 20px;
+  border: 1px solid #c8c9cd;
+  color: #565758;
+  padding: 0 0 20px;
+
+  &__ribbon {
+    border-top: 7px solid #f3f3f3;
+    margin-top: 18px;
+  }
+  .title {
+    margin: 10px 0 0;
+  }
+  .count {
+    font-size: 30px;
+    line-height: 30px;
+    margin: 0;
+  }
+
+  .pi {
+    color: #f5c548;
+    font-size: 30px;
+    font-weight: 700;
+  }
+}
+
+.certifications {
+  &__row {
+    border: 2px solid #c8c9cd;
+    padding: 10px 15px 10px 0;
+    border-radius: 10px;
+    align-items: center;
+    display: flex;
+    font-weight: 700;
+    font-size: 16px;
+    margin-bottom: 15px;
+
+    .small {
+      line-height: 10px;
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .btn-gray {
+      background-color: #c8c9cd;
+      border: 1px solid #c8c9cd;
+      color: #000000;
+      font-weight: 300;
+      font-size: 14px;
+    }
+  }
+}
+
+.btn-yellow {
+  background-color: #f5c548;
+  border: 1px solid #f5c548;
+  color: #ffffff;
+}

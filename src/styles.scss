@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600;700&display=swap");
 
 @import "../node_modules/primeng/resources/themes/mdc-light-indigo/theme.css";
 @import "../node_modules/primeng/resources/primeng.min.css";
@@ -7,7 +7,7 @@
 
 body {
   font-size: 13px !important;
-  font-family: "Source Sans Pro", "sans-serif" !important;
+  font-family: "Source Sans Pro", sans-serif !important;
   margin: auto;
 }
 
@@ -38,7 +38,6 @@ body {
 }
 
 .btn {
-
   &:focus,
   &:active {
     box-shadow: none !important;
@@ -46,7 +45,6 @@ body {
   }
 
   &.btn-secondary {
-
     &:focus,
     &:active {
       background-color: #ffcc4f !important;
@@ -92,6 +90,13 @@ select {
   padding: 4px 20px;
 }
 
+.dot-badge-md {
+  min-width: 1.25rem !important;
+  height: 1.25rem !important;
+  line-height: 1.25rem !important;
+  margin-top: 5px !important;
+}
+
 .next-link {
   color: #8dc63f;
   font-size: 16px;
@@ -104,7 +109,6 @@ select {
     color: #8dc63f;
     text-decoration: none;
   }
-
 }
 
 .form-group {
@@ -114,18 +118,14 @@ select {
     &.ng-invalid.ng-dirty {
       border: 1px solid #d00;
     }
-
   }
 
-
-
   &.required {
-
     select,
     textarea {
       display: inline;
 
-      +label {
+      + label {
         position: absolute;
 
         &:after {
@@ -135,7 +135,7 @@ select {
           margin-left: 3px;
           font-size: 7px;
           margin-top: 2px;
-          font-family: 'FontAwesome';
+          font-family: "FontAwesome";
         }
       }
     }
@@ -147,9 +147,7 @@ select {
       margin-left: 3px;
       font-size: 7px;
       margin-top: 2px;
-      font-family: 'FontAwesome';
+      font-family: "FontAwesome";
     }
   }
-
-
 }

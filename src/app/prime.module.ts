@@ -9,6 +9,8 @@ import { PaginatorModule } from 'primeng/paginator';
 import { MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { BadgeModule } from 'primeng/badge';
+import { ChartModule } from 'primeng/chart';
+import { ScrollPanelModule } from 'primeng/scrollpanel';
 
 @NgModule({
   declarations: [],
@@ -22,6 +24,8 @@ import { BadgeModule } from 'primeng/badge';
     PaginatorModule,
     DialogModule,
     BadgeModule,
+    ChartModule,
+    ScrollPanelModule,
   ],
   exports: [
     CalendarModule,
@@ -32,6 +36,8 @@ import { BadgeModule } from 'primeng/badge';
     PaginatorModule,
     DialogModule,
     BadgeModule,
+    ChartModule,
+    ScrollPanelModule,
   ],
   providers: [MessageService],
 })
