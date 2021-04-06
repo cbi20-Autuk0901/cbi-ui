@@ -123,12 +123,15 @@ export class ReviewerDashboardComponent implements OnInit {
   }
 
   loadDashboard = () => {
-    const now = moment();
-    const selRange: any = this.filterBy.split(' ');
-    const filterValue = now.subtract(selRange[0], selRange[1]).format();
+    let filterValue = '';
+    if (this.filterBy) {
+      const now = moment();
+      const selRange: any = this.filterBy.split(' ');
+      filterValue = now.subtract(selRange[0], selRange[1]).format();
+    }
     const payload = {
       userEmail: this.userData['userEmail'],
-      filterBy: '',
+      filterBy: filterValue,
     };
     this.ds.getDashboard(payload, 'reviewerDashboard').subscribe((res) => {
       this.dStats = res.dashboardStats;
