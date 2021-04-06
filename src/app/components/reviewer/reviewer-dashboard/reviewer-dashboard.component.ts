@@ -28,36 +28,6 @@ export class ReviewerDashboardComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.uwData = {
-      labels: ['AECLU', 'BAM', 'Deloitte', 'Carbon Trust', 'EY', 'CECEP'],
-      datasets: [
-        {
-          label: 'Total',
-          backgroundColor: [
-            '#563666',
-            '#e7367d',
-            '#f7a931',
-            '#ec6927',
-            '#4eb4be',
-            '#92d050',
-          ],
-          data: [130, 60, 160, 40, 95, 99],
-        },
-      ],
-    };
-
-    this.diData = {
-      labels: ['A', 'B', 'C', 'D'],
-      datasets: [
-        {
-          borderWidth: 5,
-          data: [300, 50, 100, 150],
-          backgroundColor: ['#3f344c', '#e53f65', '#ec6929', '#f5c548'],
-          hoverBackgroundColor: ['#3f344c', '#e53f65', '#ec6929', '#f5c548'],
-        },
-      ],
-    };
-
     this.diOptions = {
       title: {
         display: true,
@@ -190,14 +160,68 @@ export class ReviewerDashboardComponent implements OnInit {
   };
 
   processCharts = (data: object) => {
-    const ctLabels = data['certificationType'].map((e) => {});
+    const ctLabels = data['certificationType'].map((e) => {
+      switch (e.name) {
+        case 'preIssuance':
+          return 'Pre-Issuance';
+        case 'postIssuance':
+          return 'Post-Issuance';
+        default:
+          return 'Bond Redemption';
+      }
+    });
+    const ctValues = data['certificationType'].map((e) => e.value);
     this.ctData = {
-      labels: ['Pre-Issuance', 'Post-Issuance', 'Bond Redemption'],
+      labels: ctLabels,
+      datasets: [
+        {
+          minBarLength: 2,
+          label: 'Total',
+          backgroundColor: ['#563666', '#e7367d', '#f7a931'],
+          data: ctValues,
+        },
+      ],
+    };
+
+    const diLabels = data['debtInstruments'].map((e) => e.name);
+    const diValues = data['debtInstruments'].map((e) => e.value);
+    this.diData = {
+      labels: diLabels,
+      datasets: [
+        {
+          minBarLength: 2,
+          borderWidth: 5,
+          data: diValues,
+          backgroundColor: ['#3f344c', '#e53f65', '#ec6929', '#f5c548'],
+          hoverBackgroundColor: ['#3f344c', '#e53f65', '#ec6929', '#f5c548'],
+        },
+      ],
+    };
+
+    let uwList = {
+      labels: [],
+      values: [],
+    };
+    data['underwriter'].forEach((e) => {
+      if (e.value > 0) {
+        uwList.labels.push(e.name);
+        uwList.values.push(e.value);
+      }
+    });
+    this.uwData = {
+      labels: uwList.labels,
       datasets: [
         {
           label: 'Total',
-          backgroundColor: ['#563666', '#e7367d', '#f7a931'],
-          data: [210, 130, 180],
+          backgroundColor: [
+            '#563666',
+            '#e7367d',
+            '#f7a931',
+            '#ec6927',
+            '#4eb4be',
+            '#92d050',
+          ],
+          data: uwList.values,
         },
       ],
     };
