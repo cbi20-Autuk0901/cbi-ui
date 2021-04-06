@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
+import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UtilsService } from './../../../services/utils/utils.service';
 
 @Component({
@@ -8,6 +9,7 @@ import { UtilsService } from './../../../services/utils/utils.service';
   styleUrls: ['./reviewer-dashboard.component.scss'],
 })
 export class ReviewerDashboardComponent implements OnInit {
+  isLoading: boolean;
   ctData: any;
   uwData: any;
   ctOptions: any;
@@ -15,23 +17,17 @@ export class ReviewerDashboardComponent implements OnInit {
   diData: any;
   diOptions: any;
   userData: any;
+  filterBy: string;
+  assignedCertifications: Array<object>;
+  dStats: object;
 
-  constructor(private utils: UtilsService) {
+  constructor(private utils: UtilsService, private ds: DatastoreService) {
+    this.isLoading = true;
     this.userData = this.utils.getStore('userData');
+    this.filterBy = '';
   }
 
   ngOnInit(): void {
-    this.ctData = {
-      labels: ['Pre-Issuance', 'Post-Issuance', 'Bond Redemption'],
-      datasets: [
-        {
-          label: 'Total',
-          backgroundColor: ['#563666', '#e7367d', '#f7a931'],
-          data: [210, 130, 180],
-        },
-      ],
-    };
-
     this.uwData = {
       labels: ['AECLU', 'BAM', 'Deloitte', 'Carbon Trust', 'EY', 'CECEP'],
       datasets: [
@@ -152,11 +148,58 @@ export class ReviewerDashboardComponent implements OnInit {
         ],
       },
     };
+
+    this.loadDashboard();
   }
 
-  filterDate = (event) => {
+  loadDashboard = () => {
     const now = moment();
-    const selRange = event.target.value.split(' ');
-    console.log(now.subtract(selRange[0], selRange[1]).format());
+    const selRange: any = this.filterBy.split(' ');
+    const filterValue = now.subtract(selRange[0], selRange[1]).format();
+    const payload = {
+      userEmail: this.userData['userEmail'],
+      filterBy: '',
+    };
+    this.ds.getDashboard(payload, 'reviewerDashboard').subscribe((res) => {
+      this.dStats = res.dashboardStats;
+      this.assignedCertifications = this.processCertData(
+        res.assignedCertifications
+      );
+      this.processCharts(res['chartData']);
+
+      this.isLoading = false;
+    });
+  };
+
+  processCertData = (data: Array<object>): Array<object> => {
+    const res = data.map((e) => {
+      const apDate = moment(e['applicationDate']);
+      const asDate = moment(e['assignedDate']);
+      const diffDays = moment.duration(asDate.diff(apDate)).asDays();
+      if (diffDays < 11) {
+        e['severity'] = 'success';
+      } else if (diffDays >= 11 && diffDays < 17) {
+        e['severity'] = 'warning';
+      } else if (diffDays >= 17) {
+        e['severity'] = 'danger';
+      }
+      return e;
+    });
+
+    return res;
+  };
+
+  processCharts = (data: object) => {
+    const ctLabels = data['certificationType'].map((e) => {});
+    this.ctData = {
+      labels: ['Pre-Issuance', 'Post-Issuance', 'Bond Redemption'],
+      datasets: [
+        {
+          label: 'Total',
+          backgroundColor: ['#563666', '#e7367d', '#f7a931'],
+          data: [210, 130, 180],
+        },
+      ],
+    };
   };
 }

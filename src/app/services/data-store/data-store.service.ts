@@ -6,18 +6,17 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
   providedIn: 'root',
 })
 export class DatastoreService {
-
   public currentPage: Subject<string> = new Subject<string>();
   public currentFormPage: Subject<string> = new Subject<string>();
 
-  constructor (private http: HttpClient) { }
+  constructor(private http: HttpClient) {}
 
-  updateValue (key: string, value: any) {
+  updateValue(key: string, value: any) {
     this[key].next(value);
   }
 
-  getDashboard = (payload: object): Observable<any> => {
-    const url = '/api/issuerDashboard';
+  getDashboard = (payload: object, name: string): Observable<any> => {
+    const url = '/api/' + name;
     return this.http.post(url, payload);
   };
 
@@ -25,15 +24,14 @@ export class DatastoreService {
     const url = '/api/generateCertificationId';
     const options = {
       headers: new HttpHeaders({
-        'userEmail': headers['userEmail'],
-        'certificationType': headers['certType'],
-        'instrumentType': headers['instrType'],
-        'certificationId': headers['certId']
-      })
+        userEmail: headers['userEmail'],
+        certificationType: headers['certType'],
+        instrumentType: headers['instrType'],
+        certificationId: headers['certId'],
+      }),
     };
     return this.http.get(url, options);
   };
-
 
   submitBondRedemption = (data: any): Observable<any> => {
     const formData = new FormData();
@@ -43,7 +41,6 @@ export class DatastoreService {
     });
     return this.http.post(url, formData);
   };
-
 
   getCertifications = (headers: object, type?: string): Observable<any> => {
     let url: string = '';
@@ -64,8 +61,8 @@ export class DatastoreService {
     }
     const options = {
       headers: new HttpHeaders({
-        'userEmail': headers['userEmail'],
-      })
+        userEmail: headers['userEmail'],
+      }),
     };
     return this.http.get(url, options);
   };
@@ -77,7 +74,10 @@ export class DatastoreService {
 
   upload = (data: any, page: string): Observable<any> => {
     const formData = new FormData();
-    const url = page === 'ar' ? '/api/assuranceReport' : '/api/signedCertificationAgreement';
+    const url =
+      page === 'ar'
+        ? '/api/assuranceReport'
+        : '/api/signedCertificationAgreement';
     Object.entries(data).forEach(([key, value]): any => {
       formData.append(key, data[key]);
     });
@@ -93,10 +93,10 @@ export class DatastoreService {
     const url = this.getPageUrl(page);
     const options = {
       headers: new HttpHeaders({
-        'userEmail': headers['userEmail'],
-        'certificationId': headers['certId'],
-        'certificationType': headers['certType']
-      })
+        userEmail: headers['userEmail'],
+        certificationId: headers['certId'],
+        certificationType: headers['certType'],
+      }),
     };
     return this.http.get(url, options);
   };

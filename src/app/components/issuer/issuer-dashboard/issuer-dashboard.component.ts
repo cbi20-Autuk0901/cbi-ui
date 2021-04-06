@@ -20,7 +20,7 @@ export class IssuerDashboardComponent implements OnInit {
       userEmail: this.dashboardData['userEmail'],
     };
 
-    this.ds.getDashboard(payload).subscribe((data) => {
+    this.ds.getDashboard(payload, 'issuerDashboard').subscribe((data) => {
       this.dashboardData = data;
       this.isLoading = false;
     });
