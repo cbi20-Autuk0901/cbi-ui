@@ -149,11 +149,11 @@ export class ReviewerDashboardComponent implements OnInit {
       const apDate = moment(e['applicationDate']);
       const asDate = moment(e['assignedDate']);
       const diffDays = moment.duration(asDate.diff(apDate)).asDays();
-      if (diffDays < 11) {
+      if (diffDays < 6) {
         e['severity'] = 'success';
-      } else if (diffDays >= 11 && diffDays < 17) {
+      } else if (diffDays >= 6 && diffDays < 10) {
         e['severity'] = 'warning';
-      } else if (diffDays >= 17) {
+      } else if (diffDays >= 10) {
         e['severity'] = 'danger';
       }
       return e;

@@ -12,6 +12,7 @@ import { BadgeModule } from 'primeng/badge';
 import { ChartModule } from 'primeng/chart';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { MessageModule } from 'primeng/message';
+import { InputTextModule } from 'primeng/inputtext';
 
 @NgModule({
   declarations: [],
@@ -28,6 +29,7 @@ import { MessageModule } from 'primeng/message';
     ChartModule,
     ScrollPanelModule,
     MessageModule,
+    InputTextModule,
   ],
   exports: [
     CalendarModule,
@@ -41,6 +43,7 @@ import { MessageModule } from 'primeng/message';
     ChartModule,
     ScrollPanelModule,
     MessageModule,
+    InputTextModule,
   ],
   providers: [MessageService],
 })

@@ -29,7 +29,8 @@
               "node_modules/jquery/dist/jquery.min.js",
               "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
               "node_modules/chart.js/dist/Chart.js"
-            ]
+            ],
+            "allowedCommonJsDependencies": ["chart.js", "html2pdf.js"]
           },
           "configurations": {
             "production": {
@@ -50,8 +51,8 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "2mb",
-                  "maximumError": "5mb"
+                  "maximumWarning": "5mb",
+                  "maximumError": "8mb"
                 },
                 {
                   "type": "anyComponentStyle",

@@ -20,6 +20,16 @@ export class DatastoreService {
     return this.http.post(url, payload);
   };
 
+  getCertQueue = (headers: object): Observable<any> => {
+    const url = '/api/assignCertification';
+    const options = {
+      headers: new HttpHeaders({
+        userEmail: headers['userEmail'],
+      }),
+    };
+    return this.http.get(url, options);
+  };
+
   generateCertification = (headers: object): Observable<any> => {
     const url = '/api/generateCertificationId';
     const options = {

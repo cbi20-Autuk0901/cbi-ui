@@ -10,6 +10,7 @@ import { DebtInstrumentPageComponent } from './components/issuer/debt-instrument
 import { RegistrationComponent } from './components/shared/registration/registration.component';
 import { ReportsPageComponent } from './components/issuer/reports-page/reports-page.component';
 import { BondRedemptionComponent } from './components/issuer/bond-redemption/bond-redemption.component';
+import { CertificationQueueComponent } from './components/reviewer/certification-queue/certification-queue.component';
 
 const routes: Routes = [
   {
@@ -26,6 +27,11 @@ const routes: Routes = [
     path: 'certification-types',
     canActivate: [AuthGuard],
     component: CertTypesPageComponent,
+  },
+  {
+    path: 'certification-queue',
+    canActivate: [AuthGuard],
+    component: CertificationQueueComponent,
   },
   {
     path: 'debt-instrument/:certType/:instrType',
