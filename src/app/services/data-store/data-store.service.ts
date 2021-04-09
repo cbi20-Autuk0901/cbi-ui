@@ -30,6 +30,11 @@ export class DatastoreService {
     return this.http.get(url, options);
   };
 
+  assignCertification = (payload): Observable<any> => {
+    const url = '/api/assignCertification';
+    return this.http.post(url, payload);
+  };
+
   generateCertification = (headers: object): Observable<any> => {
     const url = '/api/generateCertificationId';
     const options = {

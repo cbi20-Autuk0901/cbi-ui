@@ -40,7 +40,7 @@
             <td>{{list.underwriter[0] | titlecase}}</td>
             <td>{{list.applicationDate | date: 'dd/MM/YYYY'}}</td>
             <td>{{list.renewableEnergy && list.renewableEnergy[0] || '' | titlecase}}</td>
-            <td> <a class="btn btn-green">Assign</a>
+            <td> <a class="btn btn-green" (click)="assignCert(list)">Assign</a>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
@@ -60,7 +60,7 @@
               <h6 class="cId"> {{selectedCert.certificationId}}</h6>
               <div>{{selectedCert.underwriter[0]}}</div>
             </div>
-            <button class="btn btn-green">Review</button>
+            <button class="btn btn-green" (click)="assignCert(selectedCert)">Review</button>
           </div>
           <div class="reText">{{selectedCert.renewableEnergy[0] | titlecase}}</div>
           <div class="detail">

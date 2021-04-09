@@ -34,15 +34,23 @@ export class CertificationQueueComponent implements OnInit {
       userEmail: this.userData['userEmail'],
     };
     this.ds.getCertQueue(payload).subscribe((e) => {
-      this.certifications = e.data.map((e, index) => {
-        let fVal = { ...e };
-        fVal['no'] = index + 1;
-        return fVal;
-      });
+      this.certifications = this.addIndex(e.data);
       this.filteredCertifications = this.certifications;
       this.loading = false;
     });
   }
+
+  assignCert = (selCert) => {
+    const payload = {
+      userEmail: this.userData['userEmail'],
+      certificationId: selCert['certificationId'],
+      certificationType: selCert['certificationType'],
+    };
+    this.ds.assignCertification(payload).subscribe((e) => {
+      this.certifications = this.addIndex(e.data);
+      this.filteredCertifications = this.certifications;
+    });
+  };
 
   filter = (event) => {
     if (event) {
@@ -54,13 +62,17 @@ export class CertificationQueueComponent implements OnInit {
         return e['applicationDate'] && frtDate.isAfter(refDate);
       });
 
-      this.filteredCertifications = tempD.map((e, index) => {
-        let fVal = { ...e };
-        fVal['no'] = index + 1;
-        return fVal;
-      });
+      this.filteredCertifications = this.addIndex(tempD);
     } else {
       this.filteredCertifications = this.certifications;
     }
+  };
+
+  addIndex = (arr) => {
+    return arr.map((e, index) => {
+      let fVal = { ...e };
+      fVal['no'] = index + 1;
+      return fVal;
+    });
   };
 }
