@@ -11,6 +11,7 @@ import { RegistrationComponent } from './components/shared/registration/registra
 import { ReportsPageComponent } from './components/issuer/reports-page/reports-page.component';
 import { BondRedemptionComponent } from './components/issuer/bond-redemption/bond-redemption.component';
 import { CertificationQueueComponent } from './components/reviewer/certification-queue/certification-queue.component';
+import { WorkBoardComponent } from './components/reviewer/work-board/work-board.component';
 
 const routes: Routes = [
   {
@@ -32,6 +33,11 @@ const routes: Routes = [
     path: 'certification-queue',
     canActivate: [AuthGuard],
     component: CertificationQueueComponent,
+  },
+  {
+    path: 'work-board',
+    canActivate: [AuthGuard],
+    component: WorkBoardComponent,
   },
   {
     path: 'debt-instrument/:certType/:instrType',

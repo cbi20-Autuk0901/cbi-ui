@@ -1,0 +1,64 @@
+<div class="container">
+  <div class="row">
+    <div class="col-8">
+      <p-table #dt1 [value]="certifications" selectionMode="single" [loading]="loading" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true" [globalFilterFields]="['status']">
+        <ng-template pTemplate="caption">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <div class="w-50 d-flex">
+              <div *ngFor="let status of statuses" class="pr-3">
+                <p-badge styleClass="p-badge-dot" severity="{{status['severity']}}"></p-badge>
+                <span class="pl-2 p-text-italic">{{status['count'] + ' ' +status['name']}}</span>
+              </div>
+            </div>
+
+            <p-dropdown [options]="statuses" optionLabel="name" optionValue="value" placeholder="Select a Status" [showClear]="true" (onChange)="dt1.filterGlobal($event['value'], 'contains')">
+            </p-dropdown>
+          </div>
+          <div class="d-flex justify-content-around">
+
+          </div>
+
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>No.</th>
+            <th pSortableColumn="certId">Certification ID <p-sortIcon field="certId"></p-sortIcon>
+            </th>
+            <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon>
+            </th>
+            <th pSortableColumn="renewableEnergy">Sector <p-sortIcon field="renewableEnergy"></p-sortIcon>
+            </th>
+            <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon>
+            </th>
+            <th>
+              Certificates
+            </th>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="body" let-list>
+          <tr>
+            <td>{{list.no}}</td>
+            <td>{{list.certId}}</td>
+            <td>{{list.name | titlecase}}</td>
+            <td>{{list.date | date: 'dd/MM/YYYY'}}</td>
+            <td>{{list.renewableEnergy | titlecase}}</td>
+            <td ngClass="{{list.status + ' status-text'}}">{{list.status | titlecase}}</td>
+            <td> <a class="btn btn-green" *ngIf="false">Download</a>
+              <button type="button" *ngIf="true" disabled class="btn btn-secondary btn-sm">Not Available</button>
+          </tr>
+        </ng-template>
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td class="p-5 text-center" colspan="7">
+              No Certifications Found
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+
+    </div>
+    <div class="col-4"></div>
+  </div>
+</div>

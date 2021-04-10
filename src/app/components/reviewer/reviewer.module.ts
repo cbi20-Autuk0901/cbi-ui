@@ -5,9 +5,10 @@ import { ReviewerRoutingModule } from './reviewer-routing.module';
 import { ReviewerDashboardComponent } from './reviewer-dashboard/reviewer-dashboard.component';
 import { PrimeModule } from '../../prime.module';
 import { CertificationQueueComponent } from './certification-queue/certification-queue.component';
+import { WorkBoardComponent } from './work-board/work-board.component';
 
 @NgModule({
-  declarations: [ReviewerDashboardComponent, CertificationQueueComponent],
+  declarations: [ReviewerDashboardComponent, CertificationQueueComponent, WorkBoardComponent],
   imports: [CommonModule, ReviewerRoutingModule, PrimeModule],
   exports: [ReviewerDashboardComponent],
 })

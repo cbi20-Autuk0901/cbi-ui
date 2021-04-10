@@ -48,4 +48,12 @@ export class UtilsService {
       return yearsList;
     }
   };
+
+  addIndex = (list: Array<object>) => {
+    return list.map((e, index) => {
+      let fVal = { ...e };
+      fVal['no'] = index + 1;
+      return fVal;
+    });
+  };
 }

@@ -18,6 +18,11 @@
         </a>
       </li>
       <li class="nav-item">
+        <a class="nav-link" *ngIf="userData['userRole'] === 'reviewer'" routerLink="work-board" [ngClass]="{ active: currentPage !== '/dashboard' }" href="#">
+          <img src="../../../../assets/images/sidebar2.jpg">
+        </a>
+      </li>
+      <li class="nav-item">
         <a class="nav-link" href="/reports">
           <img src="../../../../assets/images/sidebar3.jpg">
         </a>
