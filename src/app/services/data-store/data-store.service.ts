@@ -35,6 +35,21 @@ export class DatastoreService {
     return this.http.post(url, payload);
   };
 
+  workBoard = (headers: object): Observable<any> => {
+    const url = '/api/workBoard';
+    const options = {
+      headers: new HttpHeaders({
+        userEmail: headers['userEmail'],
+      }),
+    };
+    return this.http.get(url, options);
+  };
+
+  savePWorkSpace = (data): Observable<any> => {
+    const url = '/api/workBoard';
+    return this.http.post(url, data);
+  };
+
   generateCertification = (headers: object): Observable<any> => {
     const url = '/api/generateCertificationId';
     const options = {

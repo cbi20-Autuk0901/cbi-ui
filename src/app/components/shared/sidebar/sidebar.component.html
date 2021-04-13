@@ -17,8 +17,8 @@
           <img src="../../../../assets/images/sidebar2.jpg">
         </a>
       </li>
-      <li class="nav-item">
-        <a class="nav-link" *ngIf="userData['userRole'] === 'reviewer'" routerLink="work-board" [ngClass]="{ active: currentPage !== '/dashboard' }" href="#">
+      <li class="nav-item" *ngIf="userData['userRole'] === 'reviewer'">
+        <a class="nav-link" routerLink="work-board" [ngClass]="{ active: currentPage !== '/dashboard' }" href="#">
           <img src="../../../../assets/images/sidebar2.jpg">
         </a>
       </li>

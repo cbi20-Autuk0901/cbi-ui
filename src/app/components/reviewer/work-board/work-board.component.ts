@@ -12,6 +12,7 @@ export class WorkBoardComponent implements OnInit {
   certifications: Array<object>;
   loading: boolean = true;
   statuses: Array<object>;
+  pworkSpace: string;
 
   constructor(private ds: DatastoreService, private utils: UtilsService) {
     this.userData = this.utils.getStore('userData');
@@ -19,11 +20,10 @@ export class WorkBoardComponent implements OnInit {
 
   ngOnInit(): void {
     const payload = {
-      // userEmail: this.userData['userEmail'],
-      userEmail: 'programmaticissuer@vigameq.com',
+      userEmail: this.userData['userEmail'],
     };
-    this.ds.getCertifications(payload).subscribe((e) => {
-      this.certifications = this.modelData(e.recentCertifications);
+    this.ds.workBoard(payload).subscribe((e) => {
+      this.certifications = this.modelData(e.assignedCertifications);
       this.loading = false;
     });
 
@@ -31,7 +31,7 @@ export class WorkBoardComponent implements OnInit {
       { name: 'Approved', value: 'submitted', count: 0, severity: 'success' },
       {
         name: 'Under-Review',
-        value: 'underReview',
+        value: 'in-review',
         count: 0,
         severity: 'warning',
       },
@@ -67,5 +67,15 @@ export class WorkBoardComponent implements OnInit {
       (item) => item.certificationStatus === key
     );
     return filteredList.length || 0;
+  };
+
+  savePSpace = () => {
+    const payload = {
+      workSpace: this.pworkSpace,
+      userEmail: this.userData['userEmail'],
+    };
+    this.ds.savePWorkSpace(payload).subscribe((e) => {
+      console.log(e);
+    });
   };
 }

@@ -45,9 +45,10 @@
       <td>{{list.certType +  (list.certType === 'pre' || list.certType === 'post' ? '-issuance' : '') | titlecase}}</td>
       <td>{{list.date | date: 'dd/MM/YYYY'}}</td>
       <td>{{list.instrType | titlecase}}</td>
-      <td ngClass="{{list.status + ' status-text'}}">{{list.status | titlecase}}</td>
+      <td ngClass="{{list.status + ' status-text'}}">{{list.status === 'in-review' ? 'Under-Review' : list.status | titlecase}}</td>
       <td> <a class="btn btn-green" *ngIf="false">Download</a>
         <button type="button" *ngIf="true" disabled class="btn btn-secondary btn-sm">Not Available</button>
+      </td>
     </tr>
   </ng-template>
   <ng-template pTemplate="emptymessage" let-columns>

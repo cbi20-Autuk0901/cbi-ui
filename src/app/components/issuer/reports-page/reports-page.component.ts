@@ -30,7 +30,7 @@ export class ReportsPageComponent implements OnInit {
       { name: 'Submitted', value: 'submitted', count: 0, severity: 'success' },
       {
         name: 'Under-Review',
-        value: 'underReview',
+        value: 'in-review',
         count: 0,
         severity: 'warning',
       },
