@@ -5,26 +5,21 @@
   <div class="sidebar-sticky__items">
     <ul class="nav flex-column align-content-center">
       <li class="nav-item">
-        <a class="nav-link" [ngClass]="{ active: currentPage === '/dashboard' }" routerLink="dashboard">
-          <img src="../../../../assets/images/sidebar1.jpg">
+        <a class="nav-link fa fa-bar-chart" routerLink="dashboard">
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" *ngIf="userData['userRole'] !== 'reviewer'" routerLink="certification-types" [ngClass]="{ active: currentPage !== '/dashboard' }" href="#">
-          <img src="../../../../assets/images/sidebar2.jpg">
+        <a class="nav-link fa fa-sitemap" *ngIf="userData['userRole'] !== 'reviewer'" routerLink="certification-types" href="#">
         </a>
-        <a class="nav-link" *ngIf="userData['userRole'] === 'reviewer'" routerLink="certification-queue" [ngClass]="{ active: currentPage !== '/dashboard' }" href="#">
-          <img src="../../../../assets/images/sidebar2.jpg">
+        <a class="nav-link fa fa-sitemap" *ngIf="userData['userRole'] === 'reviewer'" routerLink="certification-queue" href="#">
         </a>
       </li>
       <li class="nav-item" *ngIf="userData['userRole'] === 'reviewer'">
-        <a class="nav-link" routerLink="work-board" [ngClass]="{ active: currentPage !== '/dashboard' }" href="#">
-          <img src="../../../../assets/images/sidebar2.jpg">
+        <a class="nav-link fa fa-database" routerLink="work-board" href="#">
         </a>
       </li>
       <li class="nav-item">
-        <a class="nav-link" href="/reports">
-          <img src="../../../../assets/images/sidebar3.jpg">
+        <a class="nav-link fa fa-folder" href="/reports">
         </a>
       </li>
     </ul>

@@ -37,7 +37,7 @@
             <td>{{list.no}}</td>
             <td>{{list.certificationId}}</td>
             <td>{{list.uniqueName | titlecase}}</td>
-            <td>{{list.underwriter[0] | titlecase}}</td>
+            <td>{{list.verifierCompany | titlecase}}</td>
             <td>{{list.applicationDate | date: 'dd/MM/YYYY'}}</td>
             <td>{{list.renewableEnergy && list.renewableEnergy[0] || '' | titlecase}}</td>
             <td> <a class="btn btn-green" (click)="assignCert(list)">Assign</a>

@@ -1,20 +1,7 @@
-import {
-  Component,
-  OnInit,
-  Input,
-  ViewChild
-} from '@angular/core';
-import {
-  FormBuilder,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
-import {
-  MessageService
-} from 'primeng/api';
-import {
-  DatastoreService
-} from '../../../services/data-store/data-store.service';
+import { Component, OnInit, Input, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MessageService } from 'primeng/api';
+import { DatastoreService } from '../../../services/data-store/data-store.service';
 
 @Component({
   selector: 'app-assurance-report',
@@ -22,7 +9,6 @@ import {
   styleUrls: ['./assurance-report.component.scss'],
 })
 export class AssuranceReportComponent implements OnInit {
-
   @Input() mainData: object;
   @ViewChild('submitModal') modalBtn;
 
@@ -31,20 +17,25 @@ export class AssuranceReportComponent implements OnInit {
   gbName: string;
   certId: string;
 
-  constructor (private fb: FormBuilder, private ds: DatastoreService, private messageService: MessageService) { }
+  constructor(
+    private fb: FormBuilder,
+    private ds: DatastoreService,
+    private messageService: MessageService
+  ) {}
 
-  ngOnInit (): void {
-
+  ngOnInit(): void {
     this.arForm = this.fb.group({
       caAssuranceReport: this.fb.control(null, [Validators.required]),
       gbAssuranceReport: this.fb.control(null, [Validators.required]),
     });
-
   }
 
   switchPage = (type: string) => {
     if (type === 'back') {
-      this.ds.updateValue('currentFormPage', this.mainData['userRole'] !== 'singleIssuer' ? 'caPage' : 'cbiPage');
+      this.ds.updateValue(
+        'currentFormPage',
+        this.mainData['userRole'] !== 'singleIssuer' ? 'caPage' : 'cbiPage'
+      );
     }
   };
 
@@ -56,19 +47,31 @@ export class AssuranceReportComponent implements OnInit {
       certificationType: this.mainData['certType'],
       certificationId: this.mainData['certId'] || '',
     };
-    this.ds.upload(payload, 'ar')
-      .subscribe((data) => {
+    this.ds.upload(payload, 'ar').subscribe(
+      (data) => {
         this.messageService.add({
           key: 'bc',
           severity: 'success',
           summary: 'Success',
-          detail: 'Data Saved'
+          detail: 'Data Saved',
         });
 
-        this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Files Saved' });
-      }, (error) => {
-        this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: 'Invalid Files' });
-      });
+        this.messageService.add({
+          key: 'bc',
+          severity: 'success',
+          summary: 'Success',
+          detail: 'Files Saved',
+        });
+      },
+      (error) => {
+        this.messageService.add({
+          key: 'bc',
+          severity: 'error',
+          summary: 'Error',
+          detail: 'Invalid Files',
+        });
+      }
+    );
   };
 
   submitApplication = () => {
@@ -79,11 +82,10 @@ export class AssuranceReportComponent implements OnInit {
       certificationId: this.mainData['certId'] || '',
     };
 
-    this.ds.submitApplication(payload)
-      .subscribe((data) => {
-        this.certId = data.certificationId;
-        this.modalBtn.nativeElement.click();
-      });
+    this.ds.submitApplication(payload).subscribe((data) => {
+      this.certId = data.certificationId;
+      this.modalBtn.nativeElement.click();
+    });
   };
 
   onChange = (event, name) => {
@@ -93,7 +95,7 @@ export class AssuranceReportComponent implements OnInit {
       const currentControl =
         name === 'caName' ? 'caAssuranceReport' : 'gbAssuranceReport';
       this.arForm.patchValue({
-        [currentControl]: file
+        [currentControl]: file,
       });
     }
   };

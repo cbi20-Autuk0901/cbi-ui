@@ -6,10 +6,15 @@ import { ReviewerDashboardComponent } from './reviewer-dashboard/reviewer-dashbo
 import { PrimeModule } from '../../prime.module';
 import { CertificationQueueComponent } from './certification-queue/certification-queue.component';
 import { WorkBoardComponent } from './work-board/work-board.component';
+import { NgxWigModule } from 'ngx-wig';
 
 @NgModule({
-  declarations: [ReviewerDashboardComponent, CertificationQueueComponent, WorkBoardComponent],
-  imports: [CommonModule, ReviewerRoutingModule, PrimeModule],
+  declarations: [
+    ReviewerDashboardComponent,
+    CertificationQueueComponent,
+    WorkBoardComponent,
+  ],
+  imports: [CommonModule, ReviewerRoutingModule, PrimeModule, NgxWigModule],
   exports: [ReviewerDashboardComponent],
 })
 export class ReviewerModule {}

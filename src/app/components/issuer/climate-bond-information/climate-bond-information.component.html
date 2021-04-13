@@ -135,7 +135,7 @@
                     Instrument Type
                   </label>
                   <div class="col-sm-8">
-                    <select class="form-control" id="daInstrumentType"  formControlName="daInstrumentType">
+                    <select class="form-control" id="daInstrumentType" formControlName="daInstrumentType">
                       <option value="">Select</option>
                       <option value="proceedsBond">Use of Proceeds Bond</option>
                       <option value="proceedsRevenueBond">Use of Proceeds Revenue Bond</option>
@@ -172,18 +172,18 @@
                   <div formArrayName="renewableEnergy" class="col-sm-4">
                     <div [ngClass]="{'renewable-spacing': renewableEnergy.controls.length >1}" *ngFor="let _ of renewableEnergy.controls; index as i">
                       <select class="form-control" [formControlName]="i">
-                        <option value="">Renewable Energy</option>
-                        <option value="agriculture">Agriculture</option>
-                        <option value="bioenergy">Bioenergy</option>
-                        <option value="forestry">Forestry</option>
-                        <option value="lowCarbonTransport">Low carbon transport</option>
-                        <option value="marineRenewableEnergy">Marine Renewable Energy</option>
-                        <option value="protectedAgriculture">Protected Agriculture</option>
-                        <option value="shipping">Shipping</option>
-                        <option value="solar">Solar</option>
-                        <option value="waterInfrastructure">Water Infrastructure</option>
-                        <option value="wasteManagement">Waste Management</option>
-                        <option value="wind">Wind</option>
+                        <option value="Renewable Energy">Renewable Energy</option>
+                        <option value="Agriculture">Agriculture</option>
+                        <option value="Bioenergy">Bioenergy</option>
+                        <option value="Forestry">Forestry</option>
+                        <option value="Low Carbon Transport">Low carbon transport</option>
+                        <option value="Marine Renewable Energy">Marine Renewable Energy</option>
+                        <option value="Protected Agriculture">Protected Agriculture</option>
+                        <option value="Shipping">Shipping</option>
+                        <option value="Solar">Solar</option>
+                        <option value="Water Infrastructure">Water Infrastructure</option>
+                        <option value="Waste Management">Waste Management</option>
+                        <option value="Wind">Wind</option>
                       </select>
                       <label class="required"></label>
                     </div>

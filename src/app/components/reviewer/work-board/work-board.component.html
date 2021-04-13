@@ -1,6 +1,7 @@
-<div class="container">
-  <div class="row">
+<div class="container" *ngIf="!loading">
+  <div class="row" *ngIf="!selRevCertification">
     <div class="col-8">
+      <h4 class="page-header">Work Board</h4>
       <p-table #dt1 [value]="certifications" selectionMode="single" [loading]="loading" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true" [globalFilterFields]="['status']">
         <ng-template pTemplate="caption">
           <div class="d-flex justify-content-between align-items-center mb-3">
@@ -14,10 +15,6 @@
             <p-dropdown [options]="statuses" optionLabel="name" optionValue="value" placeholder="Select a Status" [showClear]="true" (onChange)="dt1.filterGlobal($event['value'], 'contains')">
             </p-dropdown>
           </div>
-          <div class="d-flex justify-content-around">
-
-          </div>
-
         </ng-template>
         <ng-template pTemplate="header">
           <tr>
@@ -41,7 +38,10 @@
             <td>{{list.name | titlecase}}</td>
             <td>{{list.date | date: 'dd/MM/YYYY'}}</td>
             <td>{{list.renewableEnergy | titlecase}}</td>
-            <td ngClass="{{list.status + ' status-text'}}">{{list.status === 'in-review' ? 'Under-Review' : list.status | titlecase}}</td>
+            <td ngClass="{{list.status + ' status-text'}}">
+              <span class="link" (click)="reviewCertification(list)">
+                {{list.status === 'in-review' ? 'Under-Review' : list.status | titlecase}}
+              </span> </td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>
@@ -55,8 +55,57 @@
 
     </div>
     <div class="col-4 side-info">
-      <h6>Personal Workspace</h6>
-      <textarea [(ngModel)]="pworkSpace" (focusout)="savePSpace()" class="personal-workspace"></textarea>
+      <div class="personal-workspace">
+        <h6>Personal Workspace <i class="pi pi-save" (click)="savePSpace()"></i></h6>
+        <ngx-wig [(ngModel)]="pworkSpace">
+        </ngx-wig>
+      </div>
+      <div class="recent-cases">
+        <h6>Recent Cases</h6>
+        <div *ngFor="let case of recentCases" class="case">
+          <div>
+            <div class="case__id"> {{case['certificationId']}}</div>
+            <div class="case__name">{{case['uniqueName']}}</div>
+          </div>
+          <div>{{case['approvedDate'] | date:'dd/MM/YYYY'}}</div>
+        </div>
+      </div>
     </div>
+  </div>
+  <div class="row" *ngIf="selRevCertification">
+    <div class="col-4">
+      <div class="doc-list">
+        <h6 class="heading">Pre-Issuance Documentation</h6>
+        <div class="doc-list__item">
+          <div class="d-flex">
+            <i class="fa fa-check-circle"></i>
+            <span class="doc-list__item__name">Assurance Report</span>
+          </div>
+          <button class="btn btn-wg" (click)="reviewReport(selRevCertification['caAssuranceReport'])">Review</button>
+        </div>
+        <div class="doc-list__item">
+          <div class="d-flex">
+            <i class="fa fa-check-circle"></i>
+            <span class="doc-list__item__name">Assurance Report</span>
+          </div>
+          <button class="btn btn-wg" (click)="reviewReport(selRevCertification['caAssuranceReport'])">Review</button>
+        </div>
+        <div class="doc-list__item">
+          <div class="d-flex">
+            <i class="fa fa-check-circle"></i>
+            <span class="doc-list__item__name">Assurance Report</span>
+          </div>
+          <button class="btn btn-wg" (click)="reviewReport(selRevCertification['caAssuranceReport'])">Review</button>
+        </div>
+        <div class="doc-list__item">
+          <div class="d-flex">
+            <i class="fa fa-check-circle"></i>
+            <span class="doc-list__item__name">Assurance Report</span>
+          </div>
+          <button class="btn btn-wg" (click)="reviewReport(selRevCertification['caAssuranceReport'])">Review</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-8"></div>
   </div>
 </div>

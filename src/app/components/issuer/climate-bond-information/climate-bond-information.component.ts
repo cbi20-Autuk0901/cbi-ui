@@ -57,10 +57,10 @@ export class ClimateBondInformationComponent implements OnInit {
       maturityDate: [''],
       renewableEnergy: this.fb.array([
         this.fb.control('', Validators.required),
-      ]), //mandatory
+      ]),
       renewableEnergyText: this.fb.array([
         this.fb.control('', Validators.required),
-      ]), //mandatory
+      ]),
       financingAssets: ['', [Validators.required]],
       proceedsAllocation: ['', [Validators.required]],
       portfolioApproach: ['', [Validators.required]],

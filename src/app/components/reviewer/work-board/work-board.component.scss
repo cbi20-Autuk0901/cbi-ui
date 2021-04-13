@@ -6,6 +6,11 @@
 
   &.in-review {
     color: #fbc02d;
+
+    .link {
+      text-decoration: underline;
+      cursor: pointer;
+    }
   }
 
   &.draft {
@@ -16,17 +21,91 @@
 .side-info {
   background-color: #f8f8f8;
   padding: 20px 15px;
+  margin: -30px 0 0;
 }
 
 .personal-workspace {
-  width: 100%;
-  height: 250px;
-  border: 3px solid #fbc02d;
-  resize: none;
-  overflow-y: auto;
-  padding: 10px;
+  position: relative;
+  margin-top: 10px;
 
-  &:focus {
-    outline: none;
+  ::ng-deep {
+    .nw-editor {
+      height: 200px;
+    }
+
+    .nw-toolbar {
+      border-top: 3px solid #fbc02d;
+      border-right: 3px solid #fbc02d;
+      border-left: 3px solid #fbc02d;
+    }
+
+    .nw-editor-container {
+      border-bottom: 3px solid #fbc02d;
+      border-right: 3px solid #fbc02d;
+      border-left: 3px solid #fbc02d;
+    }
+  }
+
+  .pi-save {
+    color: rgba(0, 0, 0, 0.4);
+    position: absolute;
+    right: 10px;
+    top: 36px;
+    cursor: pointer;
+  }
+}
+
+.recent-cases {
+  margin-top: 40px;
+
+  .case {
+    background-color: #fbc02d;
+    border-radius: 8px;
+    padding: 5px 20px;
+    margin-bottom: 10px;
+    color: #ffffff;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    &__id {
+      font-size: 16px;
+      font-weight: 600;
+    }
+
+    &__name {
+      font-size: 12px;
+    }
+  }
+}
+
+.doc-list {
+  .heading {
+    border-bottom: 1px solid #c8c8cb;
+    padding-bottom: 3px;
+  }
+
+  &__item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+
+    .fa-check-circle {
+      font-size: 28px;
+      color: #fbc02d;
+    }
+
+    &__name {
+      font-size: 16px;
+      padding-left: 10px;
+    }
+
+    .btn-wg {
+      border: 1px solid #8dc63f;
+      color: #8dc63f;
+      font-weight: 400;
+      padding: 0 20px;
+    }
   }
 }
