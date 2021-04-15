@@ -7,6 +7,7 @@ import { PrimeModule } from '../../prime.module';
 import { CertificationQueueComponent } from './certification-queue/certification-queue.component';
 import { WorkBoardComponent } from './work-board/work-board.component';
 import { NgxWigModule } from 'ngx-wig';
+import { PdfViewerModule } from 'ng2-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -14,7 +15,13 @@ import { NgxWigModule } from 'ngx-wig';
     CertificationQueueComponent,
     WorkBoardComponent,
   ],
-  imports: [CommonModule, ReviewerRoutingModule, PrimeModule, NgxWigModule],
+  imports: [
+    CommonModule,
+    ReviewerRoutingModule,
+    PrimeModule,
+    NgxWigModule,
+    PdfViewerModule,
+  ],
   exports: [ReviewerDashboardComponent],
 })
 export class ReviewerModule {}

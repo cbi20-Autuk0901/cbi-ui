@@ -11,11 +11,11 @@
       <li class="nav-item">
         <a class="nav-link fa fa-sitemap" *ngIf="userData['userRole'] !== 'reviewer'" routerLink="certification-types" href="#">
         </a>
-        <a class="nav-link fa fa-sitemap" *ngIf="userData['userRole'] === 'reviewer'" routerLink="certification-queue" href="#">
+        <a class="nav-link fa fa-sitemap" *ngIf="userData['userRole'] === 'reviewer'" routerLink="work-board" href="#">
         </a>
       </li>
       <li class="nav-item" *ngIf="userData['userRole'] === 'reviewer'">
-        <a class="nav-link fa fa-database" routerLink="work-board" href="#">
+        <a class="nav-link fa fa-database" routerLink="certification-queue" href="#">
         </a>
       </li>
       <li class="nav-item">

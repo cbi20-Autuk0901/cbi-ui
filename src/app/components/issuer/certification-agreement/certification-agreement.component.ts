@@ -80,7 +80,12 @@ export class CertificationAgreementComponent implements OnInit {
       filename: 'Agreement.pdf',
       image: { type: 'jpeg', quality: 1 },
       html2canvas: { scale: 4 },
-      jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' },
+      jsPDF: {
+        unit: 'in',
+        format: 'a4',
+        orientation: 'portrait',
+        compress: true,
+      },
     };
 
     html2pdf().set(opt).from(element).save();

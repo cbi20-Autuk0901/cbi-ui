@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UtilsService } from '../../../services/utils/utils.service';
 import { DatastoreService } from './../../../services/data-store/data-store.service';
 import * as moment from 'moment';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-certification-queue',
@@ -16,7 +17,11 @@ export class CertificationQueueComponent implements OnInit {
   filteredCertifications: Array<object>;
   selectedCert: any;
 
-  constructor(private ds: DatastoreService, private utils: UtilsService) {
+  constructor(
+    private ds: DatastoreService,
+    private utils: UtilsService,
+    private router: Router
+  ) {
     this.userData = this.utils.getStore('userData');
     this.filterOptions = [
       { name: 'All', value: '' },
@@ -40,16 +45,20 @@ export class CertificationQueueComponent implements OnInit {
     });
   }
 
-  assignCert = (selCert) => {
+  assignCert = (selCert, type) => {
     const payload = {
       userEmail: this.userData['userEmail'],
       certificationId: selCert['certificationId'],
       certificationType: selCert['certificationType'],
     };
     this.ds.assignCertification(payload).subscribe((e) => {
-      this.certifications = this.utils.addIndex(e.data);
-      this.filteredCertifications = this.certifications;
-      this.selectedCert = null;
+      if (type === 'asn') {
+        this.certifications = this.utils.addIndex(e.data);
+        this.filteredCertifications = this.certifications;
+        this.selectedCert = null;
+      } else {
+        this.router.navigateByUrl('work-board');
+      }
     });
   };
 

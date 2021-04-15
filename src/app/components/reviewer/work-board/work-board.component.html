@@ -1,8 +1,8 @@
-<div class="container" *ngIf="!loading">
-  <div class="row" *ngIf="!selRevCertification">
+<div class="container" *ngIf="!loading && !selRevCertification">
+  <div class="row">
     <div class="col-8">
-      <h4 class="page-header">Work Board</h4>
-      <p-table #dt1 [value]="certifications" selectionMode="single" [loading]="loading" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true" [globalFilterFields]="['status']">
+      <h4 class="page-header mb-2">Work Board</h4>
+      <p-table #dt1 [value]="certifications" selectionMode="single" [loading]="loading" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true" [globalFilterFields]="['certificationStatus']">
         <ng-template pTemplate="caption">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="w-50 d-flex">
@@ -19,28 +19,28 @@
         <ng-template pTemplate="header">
           <tr>
             <th>No.</th>
-            <th pSortableColumn="certId">Certification ID <p-sortIcon field="certId"></p-sortIcon>
+            <th pSortableColumn="certificationId">Certification ID <p-sortIcon field="certificationId"></p-sortIcon>
             </th>
-            <th pSortableColumn="name">Name <p-sortIcon field="name"></p-sortIcon>
+            <th pSortableColumn="uniqueName">Name <p-sortIcon field="uniqueName"></p-sortIcon>
             </th>
-            <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon>
+            <th pSortableColumn="applicationDate">Date <p-sortIcon field="applicationDate"></p-sortIcon>
             </th>
             <th pSortableColumn="renewableEnergy">Sector <p-sortIcon field="renewableEnergy"></p-sortIcon>
             </th>
-            <th pSortableColumn="status">Status <p-sortIcon field="status"></p-sortIcon>
+            <th pSortableColumn="certificationStatus">Status <p-sortIcon field="certificationStatus"></p-sortIcon>
             </th>
           </tr>
         </ng-template>
         <ng-template pTemplate="body" let-list>
           <tr>
             <td>{{list.no}}</td>
-            <td>{{list.certId}}</td>
-            <td>{{list.name | titlecase}}</td>
-            <td>{{list.date | date: 'dd/MM/YYYY'}}</td>
+            <td>{{list.certificationId}}</td>
+            <td>{{list.uniqueName | titlecase}}</td>
+            <td>{{list.applicationDate | date: 'dd/MM/YYYY'}}</td>
             <td>{{list.renewableEnergy | titlecase}}</td>
-            <td ngClass="{{list.status + ' status-text'}}">
+            <td ngClass="{{list.certificationStatus + ' status-text'}}">
               <span class="link" (click)="reviewCertification(list)">
-                {{list.status === 'in-review' ? 'Under-Review' : list.status | titlecase}}
+                {{list.certificationStatus === 'in-review' ? 'Under-Review' : list.certificationStatus | titlecase}}
               </span> </td>
           </tr>
         </ng-template>
@@ -72,40 +72,238 @@
       </div>
     </div>
   </div>
-  <div class="row" *ngIf="selRevCertification">
-    <div class="col-4">
-      <div class="doc-list">
-        <h6 class="heading">Pre-Issuance Documentation</h6>
-        <div class="doc-list__item">
-          <div class="d-flex">
-            <i class="fa fa-check-circle"></i>
-            <span class="doc-list__item__name">Assurance Report</span>
-          </div>
-          <button class="btn btn-wg" (click)="reviewReport(selRevCertification['caAssuranceReport'])">Review</button>
+</div>
+<div class="row no-gutters" *ngIf="!loading && selRevCertification">
+  <div class="col-5">
+    <div class="doc-list">
+      <h6 class="heading">Pre-Issuance Documentation</h6>
+      <div class="doc-list__item">
+        <div class="d-flex align-items-center">
+          <i class="fa fa-check-circle" [ngClass]="{'reviewed' : reportStatus['signedDocument']}"></i>
+          <span class="doc-list__item__name">Certification Agreement</span>
         </div>
-        <div class="doc-list__item">
-          <div class="d-flex">
-            <i class="fa fa-check-circle"></i>
-            <span class="doc-list__item__name">Assurance Report</span>
-          </div>
-          <button class="btn btn-wg" (click)="reviewReport(selRevCertification['caAssuranceReport'])">Review</button>
+        <button class="btn btn-wg" (click)="reviewReport('signedDocument')">Review</button>
+      </div>
+      <div class="doc-list__item">
+        <div class="d-flex">
+          <i class="fa fa-check-circle" [ngClass]="{'reviewed' : reportStatus['caAssuranceReport']}"></i>
+          <span class="doc-list__item__name">Assurance Report</span>
         </div>
-        <div class="doc-list__item">
-          <div class="d-flex">
-            <i class="fa fa-check-circle"></i>
-            <span class="doc-list__item__name">Assurance Report</span>
-          </div>
-          <button class="btn btn-wg" (click)="reviewReport(selRevCertification['caAssuranceReport'])">Review</button>
+        <button class="btn btn-wg" (click)="reviewReport('caAssuranceReport')">Review</button>
+      </div>
+      <div class="doc-list__item">
+        <div class="d-flex">
+          <i class="fa fa-check-circle" [ngClass]="{'reviewed' : reportStatus['gbAssuranceReport']}"></i>
+          <span class="doc-list__item__name">Green Bond Framework</span>
         </div>
-        <div class="doc-list__item">
-          <div class="d-flex">
-            <i class="fa fa-check-circle"></i>
-            <span class="doc-list__item__name">Assurance Report</span>
-          </div>
-          <button class="btn btn-wg" (click)="reviewReport(selRevCertification['caAssuranceReport'])">Review</button>
+        <button class="btn btn-wg" (click)="reviewReport('gbAssuranceReport')">Review</button>
+      </div>
+      <div class="doc-list__item">
+        <div class="d-flex">
+          <i class="fa fa-check-circle" [ngClass]="{'reviewed' : reportStatus['cbi']}"></i>
+          <span class="doc-list__item__name">Climate Bonds Information Form</span>
         </div>
+        <button class="btn btn-wg" (click)="reviewReport('cbi')">Review</button>
       </div>
     </div>
-    <div class="col-8"></div>
+  </div>
+  <p-divider layout="vertical"></p-divider>
+  <div class="col-6">
+    <div class="doc-viewer">
+      <a class="back" (click)="loadWorkBoard()"><i class="fa fa-angle-double-left"></i><span> Back</span></a>
+      <div class="doc-viewer__header">
+        <div>
+          <div class="cId">{{selRevCertification['certificationId']}}</div>
+          <div class="uName">{{selRevCertification['uniqueName']}}</div>
+        </div>
+        <div class="date">
+          Date of Application: {{selRevCertification['applicationDate'] | date:'dd/MM/YYYY'}}
+        </div>
+      </div>
+      <div class="doc-viewer__body" *ngIf="reportStatus['currentReport'] !== 'cbi'">
+        <p-progressBar [style]="{'height': '30px','margin-top': '50px'}" [value]="pdfProgress" *ngIf="pdfProgress > 0 && pdfProgress < 100"></p-progressBar>
+
+        <p-scrollPanel [style]="{width: '100%', height: '350px'}">
+          <pdf-viewer [src]="pdfSrc" [render-text]="true" [show-all]="true" [autoresize]="true" [fit-to-page]="true" [stick-to-page]="true" class="d-block" (on-progress)="pdfLoading($event)" (after-load-complete)="showApproveBtn(true)"></pdf-viewer>
+        </p-scrollPanel>
+      </div>
+      <div class="doc-viewer__body py-3" *ngIf="reportStatus['currentReport'] === 'cbi'">
+        <p-scrollPanel [style]="{width: '100%', height: '350px', paddingBottom: '20px'}">
+          <div>
+            <label>Name of {{selRevCertification['instrumentType'] | titlecase}}:</label><span class="pl-1">{{selRevCertification['uniqueName']}}</span>
+          </div>
+          <div>
+            <label>Country of Issuance:</label><span class="pl-1">{{selRevCertification['issuanceCountry']}}</span>
+          </div>
+          <div>
+            <label>CUSIP:</label><span class="pl-1">{{selRevCertification['cusip']}}</span>
+          </div>
+          <div>
+            <label>Local Currency:</label><span class="pl-1">{{selRevCertification['localCurrency']}}</span>
+          </div>
+          <div>
+            <label>ISIN:</label><span class="pl-1">{{selRevCertification['isin']}}</span>
+          </div>
+          <div>
+            <label>Amount Issued In Local Currency:</label><span class="pl-1">
+              {{selRevCertification['amountIssued']}}</span>
+          </div>
+          <div>
+            <label>Coupon:</label><span class="pl-1">
+              {{selRevCertification['coupon']}}</span>
+          </div>
+          <div>
+            <label>Underwriter:</label><span class="pl-1">
+              {{selRevCertification['underwriter']}}</span>
+          </div>
+          <div>
+            <label> Instrument Type:</label><span class="pl-1">
+              {{selRevCertification['daInstrumentType']}}</span>
+          </div>
+          <div>
+            <label>Issue Date:</label><span class="pl-1">
+              {{selRevCertification['issueDate'] | date:'dd/MM/YYYY'}}</span>
+          </div>
+          <div>
+            <label>Maturity Date:</label><span class="pl-1">
+              {{selRevCertification['maturityDate'] | date:'dd/MM/YYYY'}}</span>
+          </div>
+          <div>
+            <label>Sector:</label><span class="pl-1">
+              {{selRevCertification['renewableEnergy']}}</span>
+          </div>
+          <div>
+            <label>Sector Description:</label><span class="pl-1">
+              {{selRevCertification['renewableEnergyText']}}</span>
+          </div>
+          <div>
+            <label>Sector Description:</label><span class="pl-1">
+              {{selRevCertification['renewableEnergyText']}}</span>
+          </div>
+          <div>
+            <label>Refinancing of existing assets or financing new assets?:</label><span class="pl-1">
+              {{selRevCertification['financingAssets']}}</span>
+          </div>
+          <div>
+            <label>Proceeds allocation across different project categories?:</label><span class="pl-1">
+              {{selRevCertification['proceedsAllocation']}}</span>
+          </div>
+          <div>
+            <label>Is there to be a portfolio(framework) approach?:</label><span class="pl-1">
+              {{selRevCertification['portfolioApproach']}}</span>
+          </div>
+          <div>
+            <label>Describe the decision procedure/policy for assessment of assets:</label><span class="pl-1">
+              {{selRevCertification['decisionProcedure']}}</span>
+          </div>
+          <div>
+            <label>Proceeds are to be either earmarked OR ringfenced?:</label><span class="pl-1">
+              {{selRevCertification['proceedsType']}}</span>
+          </div>
+          <div>
+            <label>Provide detail on either earmarking or ringference process:</label><span class="pl-1">
+              {{selRevCertification['proceedsProcessDetail']}}</span>
+          </div>
+          <div>
+            <label>Timing for allocation of {{selRevCertification['instrumentType'] | titlecase}} proceeds:</label><span class="pl-1">
+              {{selRevCertification['proceedsAllocationTiming']}}</span>
+          </div>
+          <div>
+            <label>Use of proceeds before allocation to Certified assets/projects:</label><span class="pl-1">
+              {{selRevCertification['proceedsUse']}}</span>
+          </div>
+          <h6 class="pt-2">Allocation Report</h6>
+          <div>
+            <label>How often will there be a report?:</label><span class="pl-1">
+              {{selRevCertification['allocationReportFreq']}}</span>
+          </div>
+          <div>
+            <label>In what format (newsletter, part of CSR report, website disclosure / EMMA report):</label><span class="pl-1">
+              {{selRevCertification['allocationReportFormat']}}</span>
+          </div>
+          <div>
+            <label> Will the report be public or bondholder/lender only?:</label><span class="pl-1">
+              {{selRevCertification['allocationReportAccess']}}</span>
+          </div>
+          <div>
+            <label> If report will be on issuer website, please give website address:</label><span class="pl-1">
+              {{selRevCertification['allocationReportAddressLink']}}</span>
+          </div>
+          <div>
+            <label>Will it include a breakdown of proceed allocations by individual project?:</label><span class="pl-1">
+              {{selRevCertification['breakdownInclusion']}}</span>
+          </div>
+          <h6 class="pt-2">Impact Reporting (environmental impacts/outcomes)</h6>
+          <div>
+            <label>How often will there be a report?:</label><span class="pl-1">
+              {{selRevCertification['impactReportFreq']}}</span>
+          </div>
+          <div>
+            <label>In what format (newsletter, part of CSR report, website disclosure / EMMA report):</label><span class="pl-1">
+              {{selRevCertification['impactReportFormat']}}</span>
+          </div>
+          <div>
+            <label> Will the report be public or bondholder/lender only?:</label><span class="pl-1">
+              {{selRevCertification['impactReportAccess']}}</span>
+          </div>
+          <div>
+            <label> If report will be on issuer website, please give website address:</label><span class="pl-1">
+              {{selRevCertification['impactReportAddressLink']}}</span>
+          </div>
+          <div>
+            <label>Will there be quantitative impact indicators disclosed for each project category?:</label><span class="pl-1">
+              {{selRevCertification['quantitativeImpact']}}</span>
+          </div>
+          <div>
+            <label>Address of Head Office:</label><span class="pl-1">
+              {{selRevCertification['headOfficeAddress']}}</span>
+          </div>
+          <div>
+            <label>VAT Number (EU Countries):</label><span class="pl-1">
+              {{selRevCertification['vatNumber']}}</span>
+          </div>
+          <div>
+            <label>Business Registration No.:</label><span class="pl-1">
+              {{selRevCertification['businessRegistration']}}</span>
+          </div>
+          <div>
+            <label>Name:</label><span class="pl-1">
+              {{selRevCertification['contactName']}}</span>
+          </div>
+          <div>
+            <label>Position:</label><span class="pl-1">
+              {{selRevCertification['position']}}</span>
+          </div>
+          <div>
+            <label>Company:</label><span class="pl-1">
+              {{selRevCertification['company']}}</span>
+          </div>
+          <div>
+            <label>Contact number:</label><span class="pl-1">
+              {{selRevCertification['contactNumber']}}</span>
+          </div>
+          <div>
+            <label>Invoice Details:</label><span class="pl-1">
+              {{selRevCertification['invoiceName']}}</span>
+          </div>
+          <div class="py-2">
+          </div>
+        </p-scrollPanel>
+      </div>
+      <div class="doc-viewer__footer" *ngIf="reportStatus['showApprove']">
+        <div class="dropdown">
+          <button class="btn btn-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Other Actions
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" role="button" (click)="reviewerInput(false, reportStatus['currentReport'])">Reject</a>
+            <a class="dropdown-item" role="button" href="mailto:test@gmail.com;test1@gmail.com">Contact Issuer</a>
+          </div>
+        </div>
+        <button class="btn btn-green" (click)="reviewerInput(true, reportStatus['currentReport'])">Approve</button>
+      </div>
+
+    </div>
+
   </div>
 </div>

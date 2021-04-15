@@ -17,9 +17,22 @@ export class WorkBoardComponent implements OnInit {
   pworkSpace: string;
   recentCases: Array<object>;
   selRevCertification: object;
+  pdfSrc: string;
+  pdfProgress: number;
+  reportStatus: object;
 
   constructor(private ds: DatastoreService, private utils: UtilsService) {
+    this.pdfSrc = '';
+    this.pdfProgress = 0;
     this.userData = this.utils.getStore('userData');
+    this.reportStatus = {
+      caAssuranceReport: false,
+      signedDocument: false,
+      gbAssuranceReport: false,
+      cbi: false,
+      currentReport: '',
+      showApprove: false,
+    };
   }
 
   ngOnInit(): void {
@@ -36,40 +49,30 @@ export class WorkBoardComponent implements OnInit {
     ];
   }
 
-  modelData = (data) => {
-    let processedData = [];
-    data.forEach((item, index) => {
-      const temp = {
-        no: index + 1,
-        certId: item.certificationId,
-        name: item.uniqueName,
-        certType: item.certificationType,
-        date: item.applicationDate,
-        instrType: item.instrumentType,
-        status: item.certificationStatus,
-        renewableEnergy:
-          (item.renewableEnergy && item.renewableEnergy[0]) || '',
-        caAssuranceReport: item.caAssuranceReport,
-        gbAssuranceReport: item.gbAssuranceReport,
-      };
-      processedData.push(temp);
-    });
-
-    this.statuses.forEach((st) => {
-      st['count'] = this.getListCount(data, st['value']);
-    });
-
-    return processedData;
-  };
-
   loadWorkBoard = () => {
     const payload = {
       userEmail: this.userData['userEmail'],
     };
-    this.ds.workBoard(payload).subscribe((e) => {
-      this.certifications = this.modelData(e.assignedCertifications);
-      this.pworkSpace = decode(e.workSpace.notes);
-      this.recentCases = this.getRecentApproved(e.assignedCertifications);
+    this.ds.workBoard(payload).subscribe((res) => {
+      this.certifications = res.assignedCertifications.map((e, i) => {
+        e['renewableEnergy'] =
+          (e['renewableEnergy'] && e['renewableEnergy'][0]) || '';
+        e['amountIssued'] = (e['amountIssued'] && e['amountIssued'][0]) || '';
+        e['localCurrency'] =
+          (e['localCurrency'] && e['localCurrency'][0]) || '';
+        e['underwriter'] = (e['underwriter'] && e['underwriter'][0]) || '';
+        e['renewableEnergyText'] =
+          (e['renewableEnergyText'] && e['renewableEnergyText'][0]) || '';
+        e['no'] = i + 1;
+        return e;
+      });
+
+      this.statuses.forEach((st) => {
+        st['count'] = this.getListCount(this.certifications, st['value']);
+      });
+      this.pworkSpace = decode(res.workSpace.notes);
+      this.recentCases = this.getRecentApproved(res.assignedCertifications);
+      this.reviewCertification();
 
       this.loading = false;
     });
@@ -110,13 +113,32 @@ export class WorkBoardComponent implements OnInit {
     });
   };
 
-  reviewCertification = (cert) => {
+  reviewCertification = (cert?) => {
     this.selRevCertification = cert;
+    this.reportStatus['currentReport'] = '';
+    this.pdfSrc = '';
   };
 
-  reviewReport = (path) => {
-    this.ds.fetchReport(path).subscribe((e) => {
-      console.log(e);
-    });
+  reviewReport = (name) => {
+    this.reportStatus['currentReport'] = name;
+    const isCbi = !!(name === 'cbi');
+    this.showApproveBtn(isCbi);
+    if (name) {
+      this.pdfSrc = isCbi
+        ? ''
+        : 'http://143.110.213.22:8883/file/' + this.selRevCertification[name];
+    }
+  };
+
+  reviewerInput = (input, name) => {
+    this.reportStatus[name] = input;
+  };
+
+  pdfLoading = (event) => {
+    this.pdfProgress = Math.floor((event.loaded / event.total) * 100);
+  };
+
+  showApproveBtn = (flag) => {
+    this.reportStatus['showApprove'] = flag;
   };
 }

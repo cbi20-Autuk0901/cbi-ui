@@ -13,6 +13,8 @@ import { ChartModule } from 'primeng/chart';
 import { ScrollPanelModule } from 'primeng/scrollpanel';
 import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
+import { DividerModule } from 'primeng/divider';
+import { ProgressBarModule } from 'primeng/progressbar';
 
 @NgModule({
   declarations: [],
@@ -30,6 +32,8 @@ import { InputTextModule } from 'primeng/inputtext';
     ScrollPanelModule,
     MessageModule,
     InputTextModule,
+    DividerModule,
+    ProgressBarModule,
   ],
   exports: [
     CalendarModule,
@@ -44,6 +48,8 @@ import { InputTextModule } from 'primeng/inputtext';
     ScrollPanelModule,
     MessageModule,
     InputTextModule,
+    DividerModule,
+    ProgressBarModule,
   ],
   providers: [MessageService],
 })

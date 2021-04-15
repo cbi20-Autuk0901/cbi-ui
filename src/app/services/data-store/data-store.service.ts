@@ -72,13 +72,6 @@ export class DatastoreService {
     return this.http.post(url, formData);
   };
 
-  fetchReport = (path) => {
-    let headers = new HttpHeaders();
-    const url = '/file/' + path;
-    headers = headers.set('Accept', 'application/pdf');
-    return this.http.get(url, { headers: headers, responseType: 'blob' });
-  };
-
   getCertifications = (headers: object, type?: string): Observable<any> => {
     let url: string = '';
 
