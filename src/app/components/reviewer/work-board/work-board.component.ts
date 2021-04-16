@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnChanges, OnInit } from '@angular/core';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UtilsService } from '../../../services/utils/utils.service';
 import { encode, decode } from 'html-entities';
@@ -9,7 +9,7 @@ import * as moment from 'moment';
   templateUrl: './work-board.component.html',
   styleUrls: ['./work-board.component.scss'],
 })
-export class WorkBoardComponent implements OnInit {
+export class WorkBoardComponent implements OnInit, OnChanges {
   userData: object;
   certifications: Array<object>;
   loading: boolean = true;
@@ -20,6 +20,8 @@ export class WorkBoardComponent implements OnInit {
   pdfSrc: string;
   pdfProgress: number;
   reportStatus: object;
+  showSubmit: boolean;
+  showSuccess: boolean;
 
   constructor(private ds: DatastoreService, private utils: UtilsService) {
     this.pdfSrc = '';
@@ -33,6 +35,12 @@ export class WorkBoardComponent implements OnInit {
       currentReport: '',
       showApprove: false,
     };
+    this.showSubmit = false;
+    this.showSuccess = false;
+  }
+
+  ngOnChanges(changes) {
+    console.log(changes);
   }
 
   ngOnInit(): void {
@@ -132,6 +140,11 @@ export class WorkBoardComponent implements OnInit {
 
   reviewerInput = (input, name) => {
     this.reportStatus[name] = input;
+    this.showSubmit =
+      this.reportStatus['caAssuranceReport'] &&
+      this.reportStatus['signedDocument'] &&
+      this.reportStatus['gbAssuranceReport'] &&
+      this.reportStatus['cbi'];
   };
 
   pdfLoading = (event) => {
