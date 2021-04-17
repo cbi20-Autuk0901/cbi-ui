@@ -8,10 +8,11 @@ import { AuthGuard } from './guards/auth/auth.guard';
 import { CertTypesPageComponent } from './components/issuer/certification-types-page/certification-types-page.component';
 import { DebtInstrumentPageComponent } from './components/issuer/debt-instrument-page/debt-instrument-page.component';
 import { RegistrationComponent } from './components/shared/registration/registration.component';
-import { ReportsPageComponent } from './components/issuer/reports-page/reports-page.component';
 import { BondRedemptionComponent } from './components/issuer/bond-redemption/bond-redemption.component';
 import { CertificationQueueComponent } from './components/reviewer/certification-queue/certification-queue.component';
 import { WorkBoardComponent } from './components/reviewer/work-board/work-board.component';
+import { IssuerReportsComponent } from './components/issuer/issuer-reports/issuer-reports.component';
+import { ReviewerReportsComponent } from './components/reviewer/reviewer-reports/reviewer-reports.component';
 
 const routes: Routes = [
   {
@@ -55,9 +56,14 @@ const routes: Routes = [
     component: BondRedemptionComponent,
   },
   {
-    path: 'reports',
+    path: 'issuer-reports',
     canActivate: [AuthGuard],
-    component: ReportsPageComponent,
+    component: IssuerReportsComponent,
+  },
+  {
+    path: 'reviewer-reports',
+    canActivate: [AuthGuard],
+    component: ReviewerReportsComponent,
   },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/dashboard' },

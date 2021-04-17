@@ -96,6 +96,19 @@ export class DatastoreService {
     };
     return this.http.get(url, options);
   };
+  getApprovedCertifications = (
+    headers: object,
+    type?: string
+  ): Observable<any> => {
+    let url: string = '/api/getApprovedCertifications';
+
+    const options = {
+      headers: new HttpHeaders({
+        userEmail: headers['userEmail'],
+      }),
+    };
+    return this.http.get(url, options);
+  };
 
   forgotPassword = (payload): Observable<any> => {
     const url = '/api/forgotPassword';

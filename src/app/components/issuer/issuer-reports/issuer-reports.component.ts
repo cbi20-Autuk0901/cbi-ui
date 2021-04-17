@@ -3,11 +3,11 @@ import { DatastoreService } from '../../../services/data-store/data-store.servic
 import { UtilsService } from '../../../services/utils/utils.service';
 
 @Component({
-  selector: 'app-reports-page',
-  templateUrl: './reports-page.component.html',
-  styleUrls: ['./reports-page.component.scss'],
+  selector: 'app-issuer-reports',
+  templateUrl: './issuer-reports.component.html',
+  styleUrls: ['./issuer-reports.component.scss'],
 })
-export class ReportsPageComponent implements OnInit {
+export class IssuerReportsComponent implements OnInit {
   userData: object;
   certifications: Array<object>;
   loading: boolean = true;

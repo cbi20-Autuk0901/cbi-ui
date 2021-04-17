@@ -8,12 +8,14 @@ import { CertificationQueueComponent } from './certification-queue/certification
 import { WorkBoardComponent } from './work-board/work-board.component';
 import { NgxWigModule } from 'ngx-wig';
 import { PdfViewerModule } from 'ng2-pdf-viewer';
+import { ReviewerReportsComponent } from './reviewer-reports/reviewer-reports.component';
 
 @NgModule({
   declarations: [
     ReviewerDashboardComponent,
     CertificationQueueComponent,
     WorkBoardComponent,
+    ReviewerReportsComponent,
   ],
   imports: [
     CommonModule,

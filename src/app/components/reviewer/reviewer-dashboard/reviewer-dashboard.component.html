@@ -61,12 +61,12 @@
               </div>
               <div class="col-3">{{row['applicationDate'] | date: 'dd/MM/YYYY'}}</div>
               <div class="col-3">{{row['certificationCompany'] || '-'}}</div>
-              <div class="col-2"><button class="btn btn-sm btn-gray">View</button></div>
+              <div class="col-2"><button class="btn btn-sm btn-gray" routerLink="/work-board">View</button></div>
             </div>
           </div>
         </p-scrollPanel>
         <div class="text-right mt-3 pr-3">
-          <button class="btn btn-sm btn-yellow">Show More</button>
+          <button class="btn btn-sm btn-yellow" routerLink="/work-board">Show More</button>
         </div>
       </div>
 
