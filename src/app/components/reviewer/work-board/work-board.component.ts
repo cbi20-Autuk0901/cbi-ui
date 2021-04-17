@@ -47,7 +47,7 @@ export class WorkBoardComponent implements OnInit, OnChanges {
     this.loadWorkBoard();
 
     this.statuses = [
-      { name: 'Approved', value: 'submitted', count: 0, severity: 'success' },
+      { name: 'Approved', value: 'approved', count: 0, severity: 'success' },
       {
         name: 'Under-Review',
         value: 'in-review',
@@ -58,6 +58,14 @@ export class WorkBoardComponent implements OnInit, OnChanges {
   }
 
   loadWorkBoard = () => {
+    this.reportStatus = {
+      caAssuranceReport: false,
+      signedDocument: false,
+      gbAssuranceReport: false,
+      cbi: false,
+      currentReport: '',
+      showApprove: false,
+    };
     const payload = {
       userEmail: this.userData['userEmail'],
     };
@@ -75,6 +83,7 @@ export class WorkBoardComponent implements OnInit, OnChanges {
         return e;
       });
 
+      this.pdfSrc = '';
       this.statuses.forEach((st) => {
         st['count'] = this.getListCount(this.certifications, st['value']);
       });
@@ -153,5 +162,17 @@ export class WorkBoardComponent implements OnInit, OnChanges {
 
   showApproveBtn = (flag) => {
     this.reportStatus['showApprove'] = flag;
+  };
+
+  submitApproval = () => {
+    const payload = {
+      userEmail: this.userData['userEmail'],
+      certificationType: this.selRevCertification['certificationType'],
+      certificationId: this.selRevCertification['certificationId'],
+    };
+
+    this.ds.approveCertification(payload).subscribe((e) => {
+      this.showSuccess = true;
+    });
   };
 }

@@ -155,4 +155,9 @@ export class DatastoreService {
     const url = '/api/submitApplication';
     return this.http.post(url, payload);
   };
+
+  approveCertification = (payload: object): Observable<any> => {
+    const url = '/api/approveCertification';
+    return this.http.post(url, payload);
+  };
 }

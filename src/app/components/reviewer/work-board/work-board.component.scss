@@ -33,8 +33,7 @@
 }
 
 .status-text {
-  &.submitted,
-  &.redeemed {
+  &.approved {
     color: #689f38;
   }
 
@@ -175,15 +174,17 @@
 
   &__body {
     .info {
-      font-size: 13px;
+      font-size: 14px;
       display: flex;
       justify-content: space-between;
-      border-bottom: 1px solid;
-      padding: 15px 5px 5px;
+      padding: 0 5px 5px;
 
-      label {
+      &__items {
+        &:first-child {
+          width: 65%;
+        }
+        padding: 3px 15px;
         width: 50%;
-        font-weight: 600;
       }
     }
   }

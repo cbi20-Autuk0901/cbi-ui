@@ -82,28 +82,28 @@
           <i class="fa fa-check-circle" [ngClass]="{'reviewed' : reportStatus['signedDocument']}"></i>
           <span class="doc-list__item__name">Certification Agreement</span>
         </div>
-        <button class="btn btn-wg" (click)="reviewReport('signedDocument')">Review</button>
+        <button class="btn btn-wg" *ngIf="!showSuccess" (click)="reviewReport('signedDocument')">Review</button>
       </div>
       <div class="doc-list__item">
         <div class="d-flex">
           <i class="fa fa-check-circle" [ngClass]="{'reviewed' : reportStatus['caAssuranceReport']}"></i>
           <span class="doc-list__item__name">Assurance Report</span>
         </div>
-        <button class="btn btn-wg" (click)="reviewReport('caAssuranceReport')">Review</button>
+        <button class="btn btn-wg" *ngIf="!showSuccess" (click)="reviewReport('caAssuranceReport')">Review</button>
       </div>
       <div class="doc-list__item">
         <div class="d-flex">
           <i class="fa fa-check-circle" [ngClass]="{'reviewed' : reportStatus['gbAssuranceReport']}"></i>
           <span class="doc-list__item__name">Green Bond Framework</span>
         </div>
-        <button class="btn btn-wg" (click)="reviewReport('gbAssuranceReport')">Review</button>
+        <button class="btn btn-wg" *ngIf="!showSuccess" (click)="reviewReport('gbAssuranceReport')">Review</button>
       </div>
       <div class="doc-list__item">
         <div class="d-flex">
           <i class="fa fa-check-circle" [ngClass]="{'reviewed' : reportStatus['cbi']}"></i>
           <span class="doc-list__item__name">Climate Bonds Information Form</span>
         </div>
-        <button class="btn btn-wg" (click)="reviewReport('cbi')">Review</button>
+        <button class="btn btn-wg" *ngIf="!showSuccess" (click)="reviewReport('cbi')">Review</button>
       </div>
     </div>
   </div>
@@ -120,7 +120,7 @@
           Date of Application: {{selRevCertification['applicationDate'] | date:'dd/MM/YYYY'}}
         </div>
       </div>
-      <div class="doc-viewer__body" *ngIf="reportStatus['currentReport'] !== 'cbi'">
+      <div class="doc-viewer__body" *ngIf="reportStatus['currentReport'] !== 'cbi' && pdfSrc">
         <p-progressBar [style]="{'height': '30px','margin-top': '50px'}" [value]="pdfProgress" *ngIf="pdfProgress > 0 && pdfProgress < 100"></p-progressBar>
 
         <p-scrollPanel [style]="{width: '100%', height: '300px'}">
@@ -130,161 +130,241 @@
       <div class="doc-viewer__body py-3" *ngIf="reportStatus['currentReport'] === 'cbi'">
         <p-scrollPanel [style]="{width: '100%', height: '250px'}">
           <div class="info">
-            <label>Name of {{selRevCertification['instrumentType'] | titlecase}}:</label><span class="pl-1">{{selRevCertification['uniqueName']}}</span>
+            <div class="info__items"><label>Name of {{selRevCertification['instrumentType'] | titlecase}}:</label></div>
+            <div class="info__items"><span>{{selRevCertification['uniqueName']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Country of Issuance:</label><span class="pl-1">{{selRevCertification['issuanceCountry']}}</span>
+            <div class="info__items"><label>Country of Issuance:</label></div>
+            <div class="info__items"><span>{{selRevCertification['issuanceCountry']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>CUSIP:</label><span class="pl-1">{{selRevCertification['cusip']}}</span>
+            <div class="info__items"><label>CUSIP:</label></div>
+            <div class="info__items"><span>{{selRevCertification['cusip']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Local Currency:</label><span class="pl-1">{{selRevCertification['localCurrency']}}</span>
+            <div class="info__items"><label>Local Currency:</label></div>
+            <div class="info__items"><span>{{selRevCertification['localCurrency']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>ISIN:</label><span class="pl-1">{{selRevCertification['isin']}}</span>
+            <div class="info__items"><label>ISIN:</label></div>
+            <div class="info__items"><span>{{selRevCertification['isin']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Amount Issued In Local Currency:</label><span class="pl-1">
-              {{selRevCertification['amountIssued']}}</span>
+            <div class="info__items"><label>Amount Issued In Local Currency:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['amountIssued']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Coupon:</label><span class="pl-1">
-              {{selRevCertification['coupon']}}</span>
+            <div class="info__items"><label>Coupon:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['coupon']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Underwriter:</label><span class="pl-1">
-              {{selRevCertification['underwriter']}}</span>
+            <div class="info__items"><label>Underwriter:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['underwriter']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label> Instrument Type:</label><span class="pl-1">
-              {{selRevCertification['daInstrumentType']}}</span>
+            <div class="info__items"><label> Instrument Type:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['daInstrumentType']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Issue Date:</label><span class="pl-1">
-              {{selRevCertification['issueDate'] | date:'dd/MM/YYYY'}}</span>
+            <div class="info__items"><label>Issue Date:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['issueDate'] | date:'dd/MM/YYYY'}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Maturity Date:</label><span class="pl-1">
-              {{selRevCertification['maturityDate'] | date:'dd/MM/YYYY'}}</span>
+            <div class="info__items"><label>Maturity Date:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['maturityDate'] | date:'dd/MM/YYYY'}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Sector:</label><span class="pl-1">
-              {{selRevCertification['renewableEnergy']}}</span>
+            <div class="info__items"><label>Sector:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['renewableEnergy']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Sector Description:</label><span class="pl-1">
-              {{selRevCertification['renewableEnergyText']}}</span>
+            <div class="info__items"><label>Sector Description:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['renewableEnergyText']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Sector Description:</label><span class="pl-1">
-              {{selRevCertification['renewableEnergyText']}}</span>
+            <div class="info__items"><label>Sector Description:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['renewableEnergyText']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Refinancing of existing assets or financing new assets?:</label><span class="pl-1">
-              {{selRevCertification['financingAssets']}}</span>
+            <div class="info__items"><label>Refinancing of existing assets or financing new assets?:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['financingAssets']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Proceeds allocation across different project categories?:</label><span class="pl-1">
-              {{selRevCertification['proceedsAllocation']}}</span>
+            <div class="info__items"><label>Proceeds allocation across different project categories?:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['proceedsAllocation']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Is there to be a portfolio(framework) approach?:</label><span class="pl-1">
-              {{selRevCertification['portfolioApproach']}}</span>
+            <div class="info__items"><label>Is there to be a portfolio(framework) approach?:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['portfolioApproach']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Describe the decision procedure/policy for assessment of assets:</label><span class="pl-1">
-              {{selRevCertification['decisionProcedure']}}</span>
+            <div class="info__items"><label>Describe the decision procedure/policy for assessment of assets:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['decisionProcedure']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Proceeds are to be either earmarked OR ringfenced?:</label><span class="pl-1">
-              {{selRevCertification['proceedsType']}}</span>
+            <div class="info__items"><label>Proceeds are to be either earmarked OR ringfenced?:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['proceedsType']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Provide detail on either earmarking or ringference process:</label><span class="pl-1">
-              {{selRevCertification['proceedsProcessDetail']}}</span>
+            <div class="info__items"><label>Provide detail on either earmarking or ringference process:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['proceedsProcessDetail']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Timing for allocation of {{selRevCertification['instrumentType'] | titlecase}} proceeds:</label><span class="pl-1">
-              {{selRevCertification['proceedsAllocationTiming']}}</span>
+            <div class="info__items"><label>Timing for allocation of {{selRevCertification['instrumentType'] | titlecase}} proceeds:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['proceedsAllocationTiming']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Use of proceeds before allocation to Certified assets/projects:</label><span class="pl-1">
-              {{selRevCertification['proceedsUse']}}</span>
+            <div class="info__items"><label>Use of proceeds before allocation to Certified assets/projects:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['proceedsUse']}}</span>
+            </div>
           </div>
           <h5 class="mt-5">Allocation Report</h5>
           <div class="info">
-            <label>How often will there be a report?:</label><span class="pl-1">
-              {{selRevCertification['allocationReportFreq']}}</span>
+            <div class="info__items"><label>How often will there be a report?:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['allocationReportFreq']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>In what format (newsletter, part of CSR report, website disclosure / EMMA report):</label><span class="pl-1">
-              {{selRevCertification['allocationReportFormat']}}</span>
+            <div class="info__items"><label>In what format (newsletter, part of CSR report, website disclosure / EMMA report):</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['allocationReportFormat']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label> Will the report be public or bondholder/lender only?:</label><span class="pl-1">
-              {{selRevCertification['allocationReportAccess']}}</span>
+            <div class="info__items"><label> Will the report be public or bondholder/lender only?:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['allocationReportAccess']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label> If report will be on issuer website, please give website address:</label><span class="pl-1">
-              {{selRevCertification['allocationReportAddressLink']}}</span>
+            <div class="info__items"><label> If report will be on issuer website, please give website address:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['allocationReportAddressLink']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Will it include a breakdown of proceed allocations by individual project?:</label><span class="pl-1">
-              {{selRevCertification['breakdownInclusion']}}</span>
+            <div class="info__items"><label>Will it include a breakdown of proceed allocations by individual project?:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['breakdownInclusion']}}</span>
+            </div>
           </div>
           <h5 class="mt-5">Impact Reporting (environmental impacts/outcomes)</h5>
           <div class="info">
-            <label>How often will there be a report?:</label><span class="pl-1">
-              {{selRevCertification['impactReportFreq']}}</span>
+            <div class="info__items"><label>How often will there be a report?:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['impactReportFreq']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>In what format (newsletter, part of CSR report, website disclosure / EMMA report):</label><span class="pl-1">
-              {{selRevCertification['impactReportFormat']}}</span>
+            <div class="info__items"><label>In what format (newsletter, part of CSR report, website disclosure / EMMA report):</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['impactReportFormat']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label> Will the report be public or bondholder/lender only?:</label><span class="pl-1">
-              {{selRevCertification['impactReportAccess']}}</span>
+            <div class="info__items"><label> Will the report be public or bondholder/lender only?:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['impactReportAccess']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label> If report will be on issuer website, please give website address:</label><span class="pl-1">
-              {{selRevCertification['impactReportAddressLink']}}</span>
+            <div class="info__items"><label> If report will be on issuer website, please give website address:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['impactReportAddressLink']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Will there be quantitative impact indicators disclosed for each project category?:</label><span class="pl-1">
-              {{selRevCertification['quantitativeImpact']}}</span>
+            <div class="info__items"><label>Will there be quantitative impact indicators disclosed for each project category?:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['quantitativeImpact']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Address of Head Office:</label><span class="pl-1">
-              {{selRevCertification['headOfficeAddress']}}</span>
+            <div class="info__items"><label>Address of Head Office:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['headOfficeAddress']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>VAT Number (EU Countries):</label><span class="pl-1">
-              {{selRevCertification['vatNumber']}}</span>
+            <div class="info__items"><label>VAT Number (EU Countries):</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['vatNumber']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Business Registration No.:</label><span class="pl-1">
-              {{selRevCertification['businessRegistration']}}</span>
+            <div class="info__items"><label>Business Registration No.:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['businessRegistration']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Name:</label><span class="pl-1">
-              {{selRevCertification['contactName']}}</span>
+            <div class="info__items"><label>Name:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['contactName']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Position:</label><span class="pl-1">
-              {{selRevCertification['position']}}</span>
+            <div class="info__items"><label>Position:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['position']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Company:</label><span class="pl-1">
-              {{selRevCertification['company']}}</span>
+            <div class="info__items"><label>Company:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['company']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Contact number:</label><span class="pl-1">
-              {{selRevCertification['contactNumber']}}</span>
+            <div class="info__items"><label>Contact number:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['contactNumber']}}</span>
+            </div>
           </div>
           <div class="info">
-            <label>Invoice Details:</label><span class="pl-1">
-              {{selRevCertification['invoiceName']}}</span>
+            <div class="info__items"><label>Invoice Details:</label></div>
+            <div class="info__items"><span>
+                {{selRevCertification['invoiceName']}}</span>
+            </div>
           </div>
           <div class="py-2">
           </div>
@@ -319,7 +399,7 @@
         <h6 class="text-center">Are you sure ?</h6>
         <div class="d-flex justify-content-between mt-4">
           <button class="btn btn-red" data-dismiss="modal">No</button>
-          <button class="btn btn-green" (click)="showSuccess = true">Yes</button>
+          <button class="btn btn-green" (click)="submitApproval()">Yes</button>
         </div>
       </div>
       <div *ngIf="showSuccess">
