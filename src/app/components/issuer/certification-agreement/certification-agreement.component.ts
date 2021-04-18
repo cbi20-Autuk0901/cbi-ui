@@ -38,8 +38,6 @@ export class CertificationAgreementComponent implements OnInit {
       Pragma: 'no-cache',
       Expires: '0',
     };
-
-    pdfDefaultOptions.assetsFolder = 'assets';
   }
 
   ngOnInit(): void {
@@ -97,6 +95,14 @@ export class CertificationAgreementComponent implements OnInit {
       certificationType: this.mainData['certType'],
       certificationId: this.mainData['certId'] || '',
     };
+
+    payload.applicationDate = new Date(
+      Date.UTC(
+        payload.applicationDate.getFullYear(),
+        payload.applicationDate.getMonth(),
+        payload.applicationDate.getDate()
+      )
+    );
 
     this.ds.formSave(payload, form).subscribe(
       (data) => {

@@ -2,7 +2,6 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UtilsService } from '../../../services/utils/utils.service';
 import * as moment from 'moment';
-import { pdfDefaultOptions } from 'ngx-extended-pdf-viewer';
 import { MessageService } from 'primeng/api';
 
 @Component({
@@ -29,7 +28,6 @@ export class WorkBoardComponent implements OnInit, OnChanges {
     private utils: UtilsService,
     private ms: MessageService
   ) {
-    pdfDefaultOptions.assetsFolder = 'assets';
     this.pdfHeaders = {
       'Cache-Control':
         'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
