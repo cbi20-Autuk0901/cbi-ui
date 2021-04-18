@@ -2,6 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
+import { UtilsService } from '../../../services/utils/utils.service';
 
 @Component({
   selector: 'app-assurance-report',
@@ -20,7 +21,8 @@ export class AssuranceReportComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ds: DatastoreService,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private utils: UtilsService
   ) {}
 
   ngOnInit(): void {
@@ -49,27 +51,10 @@ export class AssuranceReportComponent implements OnInit {
     };
     this.ds.upload(payload, 'ar').subscribe(
       (data) => {
-        this.messageService.add({
-          key: 'bc',
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Data Saved',
-        });
-
-        this.messageService.add({
-          key: 'bc',
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Files Saved',
-        });
+        this.utils.showMessage('success', 'Success', 'Files Uploaded');
       },
       (error) => {
-        this.messageService.add({
-          key: 'bc',
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Invalid Files',
-        });
+        this.utils.showMessage('error', 'Error', 'Invalid Files');
       }
     );
   };

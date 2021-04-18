@@ -7,8 +7,8 @@ import { PrimeModule } from '../../prime.module';
 import { CertificationQueueComponent } from './certification-queue/certification-queue.component';
 import { WorkBoardComponent } from './work-board/work-board.component';
 import { NgxWigModule } from 'ngx-wig';
-import { PdfViewerModule } from 'ng2-pdf-viewer';
 import { ReviewerReportsComponent } from './reviewer-reports/reviewer-reports.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -22,7 +22,7 @@ import { ReviewerReportsComponent } from './reviewer-reports/reviewer-reports.co
     ReviewerRoutingModule,
     PrimeModule,
     NgxWigModule,
-    PdfViewerModule,
+    NgxExtendedPdfViewerModule,
   ],
   exports: [ReviewerDashboardComponent],
 })

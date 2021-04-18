@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { MessageService } from 'primeng/api';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilsService {
-  constructor() {}
+  constructor(private ms: MessageService) {}
 
   setStore = (key, value) => {
     const lsData = JSON.stringify(value);
@@ -54,6 +55,15 @@ export class UtilsService {
       let fVal = { ...e };
       fVal['no'] = index + 1;
       return fVal;
+    });
+  };
+
+  showMessage = (severity, title, msg) => {
+    this.ms.add({
+      key: 'bc',
+      severity: severity,
+      summary: title,
+      detail: msg,
     });
   };
 }

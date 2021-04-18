@@ -8,34 +8,30 @@ import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-bond-redemption',
   templateUrl: './bond-redemption.component.html',
-  styleUrls: ['./bond-redemption.component.scss']
+  styleUrls: ['./bond-redemption.component.scss'],
 })
 export class BondRedemptionComponent implements OnInit {
-
   brForm: FormGroup;
   mainData: object;
   uploadedNames: Array<string> = [];
 
-  constructor (
+  constructor(
     private fb: FormBuilder,
     private ds: DatastoreService,
     private messageService: MessageService,
     private utils: UtilsService,
-    private route: ActivatedRoute) {
-
+    private route: ActivatedRoute
+  ) {
     this.mainData = {
       ...this.utils.getStore('userData'),
       instrType: this.route.snapshot.paramMap.get('instrType'),
-      certId: this.route.snapshot.queryParamMap.get('certId')
+      certId: this.route.snapshot.queryParamMap.get('certId'),
     };
 
     console.log(this.mainData);
-
-
   }
 
-  ngOnInit (): void {
-
+  ngOnInit(): void {
     this.brForm = this.fb.group({
       file1: this.fb.control(null, [Validators.required]),
       file2: this.fb.control(null),
@@ -48,7 +44,6 @@ export class BondRedemptionComponent implements OnInit {
       fileName4: this.fb.control(null),
       fileName5: this.fb.control(null),
     });
-
   }
 
   saveFormStatus = (form: string) => {
@@ -59,13 +54,18 @@ export class BondRedemptionComponent implements OnInit {
       certificationType: this.mainData['certType'],
       certificationId: this.mainData['certId'] || '',
     };
-    this.ds.submitBondRedemption(payload)
-      .subscribe((data) => {
-
-        this.messageService.add({ key: 'bc', severity: 'success', summary: 'Success', detail: 'Application Submitted Successfully' });
-      }, (res) => {
-        this.messageService.add({ key: 'bc', severity: 'error', summary: 'Error', detail: res.error.error });
-      });
+    this.ds.submitBondRedemption(payload).subscribe(
+      (data) => {
+        this.utils.showMessage(
+          'success',
+          'Success',
+          'Application Submitted Successfully'
+        );
+      },
+      (res) => {
+        this.utils.showMessage('error', 'Error', res.error.error);
+      }
+    );
   };
 
   submitApplication = () => {
@@ -75,7 +75,6 @@ export class BondRedemptionComponent implements OnInit {
       certificationType: this.mainData['certType'],
       certificationId: this.mainData['certId'] || '',
     };
-
   };
 
   onChange = (event, index) => {
@@ -84,7 +83,7 @@ export class BondRedemptionComponent implements OnInit {
       const file = event.target.files[0];
       const currentControl = 'file' + index;
       this.brForm.patchValue({
-        [currentControl]: file
+        [currentControl]: file,
       });
     }
   };

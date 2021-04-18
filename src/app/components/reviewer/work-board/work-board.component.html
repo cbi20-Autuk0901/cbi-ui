@@ -73,7 +73,7 @@
     </div>
   </div>
 </div>
-<div class="row no-gutters" *ngIf="!loading && selRevCertification">
+<div class="row" *ngIf="!loading && selRevCertification">
   <div class="col-5">
     <div class="doc-list">
       <h6 class="heading">Pre-Issuance Documentation</h6>
@@ -107,8 +107,7 @@
       </div>
     </div>
   </div>
-  <p-divider layout="vertical"></p-divider>
-  <div class="col-6">
+  <div class="col-7">
     <div class="doc-viewer">
       <a class="back" (click)="loadWorkBoard()"><i class="fa fa-angle-double-left"></i><span> Back</span></a>
       <div class="doc-viewer__header">
@@ -121,11 +120,7 @@
         </div>
       </div>
       <div class="doc-viewer__body" *ngIf="reportStatus['currentReport'] !== 'cbi' && pdfSrc">
-        <p-progressBar [style]="{'height': '30px','margin-top': '50px'}" [value]="pdfProgress" *ngIf="pdfProgress > 0 && pdfProgress < 100"></p-progressBar>
-
-        <p-scrollPanel [style]="{width: '100%', height: '300px'}">
-          <pdf-viewer [src]="pdfSrc" [render-text]="true" [show-all]="true" [autoresize]="true" [fit-to-page]="true" [stick-to-page]="true" class="d-block" (on-progress)="pdfLoading($event)" (after-load-complete)="showApproveBtn(true)"></pdf-viewer>
-        </p-scrollPanel>
+        <ngx-extended-pdf-viewer [src]="pdfSrc" [showSidebarButton]="false" [minifiedJSLibraries]="true" [useBrowserLocale]="true" [httpHeaders]="pdfHeaders" [showOpenFileButton]="false" (pdfLoaded)="showApproveBtn(true)" [zoom]="'page-width'" (pdfLoadingFailed)="showError('error', 'Error', 'Unable to load PDF')" [showBookmarkButton]="false" [showPresentationModeButton]="true"></ngx-extended-pdf-viewer>
       </div>
       <div class="doc-viewer__body py-3" *ngIf="reportStatus['currentReport'] === 'cbi'">
         <p-scrollPanel [style]="{width: '100%', height: '250px'}">

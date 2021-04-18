@@ -3,8 +3,8 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { MessageService } from 'primeng/api';
 import { UtilsService } from '../../../services/utils/utils.service';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
-
-import html2pdf from 'html2pdf.js';
+import * as moment from 'moment';
+import { pdfDefaultOptions } from 'ngx-extended-pdf-viewer';
 
 @Component({
   selector: 'app-certification-agreement',
@@ -19,6 +19,9 @@ export class CertificationAgreementComponent implements OnInit {
   caSignedUploaded: boolean;
 
   caForm: FormGroup;
+  reportSrc: string;
+  reportName: string;
+  reportHeaders: object;
 
   constructor(
     private fb: FormBuilder,
@@ -27,6 +30,16 @@ export class CertificationAgreementComponent implements OnInit {
     private utils: UtilsService
   ) {
     this.caSignedUploaded = false;
+    this.reportSrc = '';
+    this.reportName = '';
+    this.reportHeaders = {
+      'Cache-Control':
+        'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      Pragma: 'no-cache',
+      Expires: '0',
+    };
+
+    pdfDefaultOptions.assetsFolder = 'assets';
   }
 
   ngOnInit(): void {
@@ -59,12 +72,11 @@ export class CertificationAgreementComponent implements OnInit {
           this.mainData['userRole'] === 'singleIssuer' ? 'cbiPage' : 'arPage'
         );
       } else {
-        this.messageService.add({
-          key: 'bc',
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Please upload Signed Certification Agreement',
-        });
+        this.utils.showMessage(
+          'error',
+          'Error',
+          'Please upload Signed Certification Agreement'
+        );
       }
     }
     if (type === 'back') {
@@ -72,26 +84,12 @@ export class CertificationAgreementComponent implements OnInit {
     }
   };
 
-  generatePDF() {
-    const element = document.getElementById('test');
-    const opt = {
-      pagebreak: { mode: 'avoid-all' },
-      margin: 1,
-      filename: 'Agreement.pdf',
-      image: { type: 'jpeg', quality: 1 },
-      html2canvas: { scale: 4 },
-      jsPDF: {
-        unit: 'in',
-        format: 'a4',
-        orientation: 'portrait',
-        compress: true,
-      },
-    };
-
-    html2pdf().set(opt).from(element).save();
+  downloadPDF() {
+    document.getElementById('download').click();
   }
 
   saveFormStatus = (form: string) => {
+    this.reportSrc = '';
     const payload = {
       ...this[form].value,
       userEmail: this.mainData['userEmail'],
@@ -99,22 +97,15 @@ export class CertificationAgreementComponent implements OnInit {
       certificationType: this.mainData['certType'],
       certificationId: this.mainData['certId'] || '',
     };
+
     this.ds.formSave(payload, form).subscribe(
       (data) => {
-        this.messageService.add({
-          key: 'bc',
-          severity: 'success',
-          summary: 'Success',
-          detail: 'Data Saved',
-        });
+        this.reportName = data.agreement;
+        this.reportSrc = 'http://143.110.213.22:8883/file/' + data.agreement;
+        this.utils.showMessage('success', 'Success', 'Data Saved');
       },
       (error) => {
-        this.messageService.add({
-          key: 'bc',
-          severity: 'error',
-          summary: 'Error',
-          detail: 'Invalid Form Details',
-        });
+        this.utils.showMessage('error', 'Error', 'Invalid Form Details');
       }
     );
   };
@@ -131,21 +122,15 @@ export class CertificationAgreementComponent implements OnInit {
 
       this.ds.upload(payload, 'ca').subscribe(
         () => {
-          this.messageService.add({
-            key: 'bc',
-            severity: 'success',
-            summary: 'Success',
-            detail: 'File uploaded successfully',
-          });
+          this.utils.showMessage(
+            'success',
+            'Success',
+            'File uploaded successfully'
+          );
           this.caSignedUploaded = true;
         },
         (error) => {
-          this.messageService.add({
-            key: 'bc',
-            severity: 'error',
-            summary: 'Error',
-            detail: 'File upload failed',
-          });
+          this.utils.showMessage('error', 'Error', 'File upload failed');
         }
       );
     }

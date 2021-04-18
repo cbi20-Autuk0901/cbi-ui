@@ -152,12 +152,11 @@ export class ClimateBondInformationComponent implements OnInit {
 
   switchForm = (name: string) => {
     if (name === 'cbiFormContd' && !this.cbiFormSubmitted) {
-      this.messageService.add({
-        key: 'bc',
-        severity: 'warn',
-        summary: 'Warning',
-        detail: 'Please Save form before proceeding to next page',
-      });
+      this.utils.showMessage(
+        'warn',
+        'Warning',
+        'Please Save form before proceeding to next page'
+      );
       return false;
     }
     this.ds.formResume(name, this.mainData).subscribe(
@@ -178,12 +177,11 @@ export class ClimateBondInformationComponent implements OnInit {
 
   switchPage = (type: string) => {
     if (!this.cbiFormContdSubmitted) {
-      this.messageService.add({
-        key: 'bc',
-        severity: 'warn',
-        summary: 'Warning',
-        detail: 'Please Save form before proceeding to next page',
-      });
+      this.utils.showMessage(
+        'warn',
+        'Warning',
+        'Please Save form before proceeding to next page'
+      );
       return false;
     }
     if (type === 'next') {
@@ -209,21 +207,11 @@ export class ClimateBondInformationComponent implements OnInit {
       };
       this.ds.formSave(payload, form).subscribe(
         (data) => {
-          this.messageService.add({
-            key: 'bc',
-            severity: 'success',
-            summary: 'Success',
-            detail: 'Data Saved',
-          });
+          this.utils.showMessage('success', 'Success', 'Data Saved');
           this[form + 'Submitted'] = true;
         },
         (error) => {
-          this.messageService.add({
-            key: 'bc',
-            severity: 'error',
-            summary: 'Error',
-            detail: 'Invalid Form Details',
-          });
+          this.utils.showMessage('error', 'Error', 'Invalid Form Details');
         }
       );
     } else {
@@ -231,12 +219,11 @@ export class ClimateBondInformationComponent implements OnInit {
         const control = this[form].get(field);
         control.markAsDirty({ onlySelf: true });
       });
-      this.messageService.add({
-        key: 'bc',
-        severity: 'error',
-        summary: 'Error',
-        detail: 'Please fill all mandatory fields mentioned with "*" ',
-      });
+      this.utils.showMessage(
+        'error',
+        'Error',
+        'Please fill all mandatory fields mentioned with "*" '
+      );
     }
   };
 

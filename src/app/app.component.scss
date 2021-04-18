@@ -5,7 +5,14 @@
     }
   }
 
-  .p-progressbar-label {
-    top: 45%;
+  ngx-extended-pdf-viewer {
+    .toolbarField {
+      padding: 0px 6px;
+      margin: 6px 0;
+    }
+
+    .toolbarButton {
+      border: 0;
+    }
   }
 }

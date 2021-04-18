@@ -1,8 +1,9 @@
 import { Component, OnChanges, OnInit } from '@angular/core';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UtilsService } from '../../../services/utils/utils.service';
-import { encode, decode } from 'html-entities';
 import * as moment from 'moment';
+import { pdfDefaultOptions } from 'ngx-extended-pdf-viewer';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-work-board',
@@ -18,14 +19,24 @@ export class WorkBoardComponent implements OnInit, OnChanges {
   recentCases: Array<object>;
   selRevCertification: object;
   pdfSrc: string;
-  pdfProgress: number;
+  pdfHeaders: object;
   reportStatus: object;
   showSubmit: boolean;
   showSuccess: boolean;
 
-  constructor(private ds: DatastoreService, private utils: UtilsService) {
+  constructor(
+    private ds: DatastoreService,
+    private utils: UtilsService,
+    private ms: MessageService
+  ) {
+    pdfDefaultOptions.assetsFolder = 'assets';
+    this.pdfHeaders = {
+      'Cache-Control':
+        'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      Pragma: 'no-cache',
+      Expires: '0',
+    };
     this.pdfSrc = '';
-    this.pdfProgress = 0;
     this.userData = this.utils.getStore('userData');
     this.reportStatus = {
       caAssuranceReport: false,
@@ -87,7 +98,7 @@ export class WorkBoardComponent implements OnInit, OnChanges {
       this.statuses.forEach((st) => {
         st['count'] = this.getListCount(this.certifications, st['value']);
       });
-      this.pworkSpace = decode(res.workSpace.notes);
+      this.pworkSpace = window.atob(res.workSpace.notes);
       this.recentCases = this.getRecentApproved(res.assignedCertifications);
       this.reviewCertification();
 
@@ -119,10 +130,7 @@ export class WorkBoardComponent implements OnInit, OnChanges {
 
   savePSpace = () => {
     const payload = {
-      workSpace: encode(this.pworkSpace, {
-        mode: 'nonAsciiPrintable',
-        level: 'xml',
-      }),
+      workSpace: window.btoa(this.pworkSpace),
       userEmail: this.userData['userEmail'],
     };
     this.ds.savePWorkSpace(payload).subscribe((e) => {
@@ -156,10 +164,6 @@ export class WorkBoardComponent implements OnInit, OnChanges {
       this.reportStatus['cbi'];
   };
 
-  pdfLoading = (event) => {
-    this.pdfProgress = Math.floor((event.loaded / event.total) * 100);
-  };
-
   showApproveBtn = (flag) => {
     this.reportStatus['showApprove'] = flag;
   };
@@ -174,5 +178,9 @@ export class WorkBoardComponent implements OnInit, OnChanges {
     this.ds.approveCertification(payload).subscribe((e) => {
       this.showSuccess = true;
     });
+  };
+
+  showError = (severity, title, msg) => {
+    this.utils.showMessage(severity, title, msg);
   };
 }

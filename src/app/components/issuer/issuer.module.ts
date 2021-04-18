@@ -11,10 +11,10 @@ import { ClimateBondInformationComponent } from './climate-bond-information/clim
 import { CertificationAgreementComponent } from './certification-agreement/certification-agreement.component';
 import { AssuranceReportComponent } from './assurance-report/assurance-report.component';
 import { CertificationsListComponent } from './certifications-list/certifications-list.component';
-import { PiAgreementComponent } from './pi-agreement/pi-agreement.component';
 import { SharedModule } from 'primeng/api';
 import { IssuerDashboardComponent } from './issuer-dashboard/issuer-dashboard.component';
 import { IssuerReportsComponent } from './issuer-reports/issuer-reports.component';
+import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
 
 @NgModule({
   declarations: [
@@ -26,7 +26,6 @@ import { IssuerReportsComponent } from './issuer-reports/issuer-reports.componen
     CertificationAgreementComponent,
     AssuranceReportComponent,
     CertificationsListComponent,
-    PiAgreementComponent,
     IssuerDashboardComponent,
   ],
   imports: [
@@ -36,6 +35,7 @@ import { IssuerReportsComponent } from './issuer-reports/issuer-reports.componen
     FormsModule,
     ReactiveFormsModule,
     SharedModule,
+    NgxExtendedPdfViewerModule,
   ],
   exports: [IssuerDashboardComponent],
 })
