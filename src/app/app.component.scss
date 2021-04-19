@@ -1,5 +1,8 @@
 :host ::ng-deep {
   p-table {
+    table {
+      font-size: 14px;
+    }
     .p-paginator-bottom {
       justify-content: flex-end !important;
     }

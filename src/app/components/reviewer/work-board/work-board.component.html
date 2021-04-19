@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-8">
       <h4 class="page-header mb-2">Work Board</h4>
-      <p-table #dt1 [value]="certifications" selectionMode="single" [loading]="loading" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true" [globalFilterFields]="['certificationStatus']">
+      <p-table #dt1 [value]="certifications" selectionMode="single" [loading]="loading" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [globalFilterFields]="['certificationStatus']" [responsive]="true">
         <ng-template pTemplate="caption">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="w-50 d-flex">
@@ -52,7 +52,6 @@
           </tr>
         </ng-template>
       </p-table>
-
     </div>
     <div class="col-4 side-info">
       <div class="personal-workspace">

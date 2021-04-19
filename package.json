@@ -28,7 +28,7 @@
     "ngx-extended-pdf-viewer": "^9.0.0-alpha.3",
     "ngx-wig": "^11.0.0",
     "primeicons": "^4.1.0",
-    "primeng": "^11.3.1",
+    "primeng": "^11.3.2",
     "rxjs": "~6.5.3",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
