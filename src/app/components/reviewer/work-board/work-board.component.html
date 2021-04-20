@@ -1,8 +1,8 @@
-<div class="container" *ngIf="!loading && !selRevCertification">
+<div *ngIf="!loading && !selRevCertification">
   <div class="row">
     <div class="col-8">
-      <h4 class="page-header mb-2">Work Board</h4>
-      <p-table #dt1 [value]="certifications" selectionMode="single" [loading]="loading" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [globalFilterFields]="['certificationStatus']" [responsive]="true">
+      <h4 class="page-header">Work Board</h4>
+      <p-table #dt1 [value]="certifications" selectionMode="single" [loading]="loading" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true" [globalFilterFields]="['certificationStatus']">
         <ng-template pTemplate="caption">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="w-50 d-flex">
@@ -52,6 +52,7 @@
           </tr>
         </ng-template>
       </p-table>
+
     </div>
     <div class="col-4 side-info">
       <div class="personal-workspace">
@@ -375,7 +376,7 @@
           </div>
         </div>
         <button class="btn btn-green" *ngIf="!showSubmit" (click)="reviewerInput(true, reportStatus['currentReport'])">Approve</button>
-        <button data-toggle="modal" data-target="#submitModal" class="btn btn-green" *ngIf="showSubmit && !showSuccess">Submit</button>
+        <button data-toggle="modal" data-target="#approveCertModal" class="btn btn-green" *ngIf="showSubmit && !showSuccess">Submit</button>
       </div>
 
     </div>
@@ -383,7 +384,8 @@
   </div>
 </div>
 
-<div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+<div class="modal fade" id="approveCertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
   <div class="modal-dialog modal-dialog-centered" [ngClass]="{'modal-sm': !showSuccess}" role="document">
     <div class="modal-content px-3 pb-4">
       <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
