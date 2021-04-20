@@ -3,6 +3,7 @@ import { DatastoreService } from '../../../services/data-store/data-store.servic
 import { UtilsService } from '../../../services/utils/utils.service';
 import * as moment from 'moment';
 import { MessageService } from 'primeng/api';
+import { BlockerService } from '../../../services/blocker/blocker.service';
 
 @Component({
   selector: 'app-work-board',
@@ -26,7 +27,8 @@ export class WorkBoardComponent implements OnInit, OnChanges {
   constructor(
     private ds: DatastoreService,
     private utils: UtilsService,
-    private ms: MessageService
+    private ms: MessageService,
+    private blocker: BlockerService
   ) {
     this.pdfHeaders = {
       'Cache-Control':
@@ -42,7 +44,7 @@ export class WorkBoardComponent implements OnInit, OnChanges {
       gbAssuranceReport: false,
       cbi: false,
       currentReport: '',
-      showApprove: false,
+      pdfLoaded: false,
     };
     this.showSubmit = false;
     this.showSuccess = false;
@@ -66,6 +68,9 @@ export class WorkBoardComponent implements OnInit, OnChanges {
     ];
   }
 
+  test = () => {
+    console.log('wewe');
+  };
   loadWorkBoard = () => {
     this.reportStatus = {
       caAssuranceReport: false,
@@ -73,7 +78,7 @@ export class WorkBoardComponent implements OnInit, OnChanges {
       gbAssuranceReport: false,
       cbi: false,
       currentReport: '',
-      showApprove: false,
+      pdfLoaded: false,
     };
     const payload = {
       userEmail: this.userData['userEmail'],
@@ -163,7 +168,7 @@ export class WorkBoardComponent implements OnInit, OnChanges {
   };
 
   showApproveBtn = (flag) => {
-    this.reportStatus['showApprove'] = flag;
+    this.reportStatus['pdfLoaded'] = flag;
   };
 
   submitApproval = () => {

@@ -4,13 +4,14 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrimeModule } from './prime.module';
 import { CommonModule } from '@angular/common';
 import { IssuerModule } from './components/issuer/issuer.module';
 import { SharedModule } from './components/shared/shared.module';
 import { ReviewerModule } from './components/reviewer/reviewer.module';
+import { LoaderInterceptor } from './interceptors/loader.interceptor';
 
 @NgModule({
   declarations: [AppComponent],
@@ -25,7 +26,13 @@ import { ReviewerModule } from './components/reviewer/reviewer.module';
     SharedModule,
     ReviewerModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: LoaderInterceptor,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

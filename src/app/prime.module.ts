@@ -15,6 +15,7 @@ import { MessageModule } from 'primeng/message';
 import { InputTextModule } from 'primeng/inputtext';
 import { DividerModule } from 'primeng/divider';
 import { ProgressBarModule } from 'primeng/progressbar';
+import { BlockUIModule } from 'primeng/blockui';
 
 @NgModule({
   declarations: [],
@@ -34,6 +35,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
     InputTextModule,
     DividerModule,
     ProgressBarModule,
+    BlockUIModule,
   ],
   exports: [
     CalendarModule,
@@ -50,6 +52,7 @@ import { ProgressBarModule } from 'primeng/progressbar';
     InputTextModule,
     DividerModule,
     ProgressBarModule,
+    BlockUIModule,
   ],
   providers: [MessageService],
 })

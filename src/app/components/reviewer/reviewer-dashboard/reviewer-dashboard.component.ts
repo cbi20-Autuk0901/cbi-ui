@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import * as moment from 'moment';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UtilsService } from './../../../services/utils/utils.service';
+import { BlockerService } from './../../../services/blocker/blocker.service';
 
 @Component({
   selector: 'app-reviewer-dashboard',

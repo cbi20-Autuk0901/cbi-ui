@@ -2,7 +2,7 @@
   <div class="row">
     <div class="col-8">
       <h4 class="page-header">Work Board</h4>
-      <p-table #dt1 [value]="certifications" selectionMode="single" [loading]="loading" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true" [globalFilterFields]="['certificationStatus']">
+      <p-table #dt1 [value]="certifications" selectionMode="single" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true" [globalFilterFields]="['certificationStatus']">
         <ng-template pTemplate="caption">
           <div class="d-flex justify-content-between align-items-center mb-3">
             <div class="w-50 d-flex">
@@ -120,7 +120,7 @@
         </div>
       </div>
       <div class="doc-viewer__body" *ngIf="reportStatus['currentReport'] !== 'cbi' && pdfSrc">
-        <ngx-extended-pdf-viewer [src]="pdfSrc" [showSidebarButton]="false" [minifiedJSLibraries]="true" [useBrowserLocale]="true" [httpHeaders]="pdfHeaders" [showOpenFileButton]="false" (pdfLoaded)="showApproveBtn(true)" [zoom]="'page-width'" (pdfLoadingFailed)="showError('error', 'Error', 'Unable to load PDF')" [language]="'en-US'" [showBookmarkButton]="false" [showPresentationModeButton]="true"></ngx-extended-pdf-viewer>
+        <ngx-extended-pdf-viewer [src]="pdfSrc" [showSidebarButton]="false" [minifiedJSLibraries]="true" [useBrowserLocale]="false" [httpHeaders]="pdfHeaders" [showOpenFileButton]="false" [zoom]="'page-width'" (pdfLoadingFailed)="showError('error', 'Error', 'Unable to load PDF')" language="en-US" [showBookmarkButton]="false" [showPresentationModeButton]="true" (pagesLoaded)="showApproveBtn(true)"></ngx-extended-pdf-viewer>
       </div>
       <div class="doc-viewer__body py-3" *ngIf="reportStatus['currentReport'] === 'cbi'">
         <p-scrollPanel [style]="{width: '100%', height: '250px'}">
@@ -365,7 +365,7 @@
           </div>
         </p-scrollPanel>
       </div>
-      <div class="doc-viewer__footer" *ngIf="reportStatus['showApprove']">
+      <div class="doc-viewer__footer" *ngIf="reportStatus['pdfLoaded']">
         <div class="dropdown">
           <button class="btn btn-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Other Actions
