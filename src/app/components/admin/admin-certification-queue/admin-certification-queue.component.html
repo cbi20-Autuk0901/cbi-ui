@@ -1,0 +1,100 @@
+<div class="row">
+  <div class="col-8">
+    <h4 class="page-header">All Cases</h4>
+    <p-table #dt1 [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [value]="filteredCertifications" selectionMode="single" [(selection)]="selectedCert" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true" [globalFilterFields]="['certificationId']">
+      <ng-template pTemplate="caption">
+        <div class="d-flex justify-content-between mb-3">
+
+          <span class="p-input-icon-right">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt1.filterGlobal($event.target['value'], 'contains')" placeholder="Search Certification ID" />
+          </span>
+          <p-dropdown [options]="filterOptions" optionLabel="name" optionValue="value" (onChange)="filter($event.value)">
+          </p-dropdown>
+
+        </div>
+
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>No.</th>
+          <th pSortableColumn="certificationId">Certification ID <p-sortIcon field="certificationId"></p-sortIcon>
+          </th>
+          <th pSortableColumn="uniqueName">Issuer Name <p-sortIcon field="uniqueName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="verifierCompany">Verifier Name <p-sortIcon field="verifierCompany"></p-sortIcon>
+          </th>
+          <th pSortableColumn="applicationDate">Date <p-sortIcon field="applicationDate"></p-sortIcon>
+          </th>
+          <th pSortableColumn="sector">Sector <p-sortIcon field="sector"></p-sortIcon>
+          </th>
+          <th style="width: 200px;">Assign To</th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-list>
+        <tr [pSelectableRow]="list">
+          <td>{{list.no}}</td>
+          <td>{{list.certificationId}}</td>
+          <td>{{list.uniqueName | titlecase}}</td>
+          <td>{{list.verifierCompany | titlecase}}</td>
+          <td>{{list.applicationDate | date: 'dd/MM/YYYY'}}</td>
+          <td>{{list.renewableEnergy && list.renewableEnergy[0] || '' | titlecase}}</td>
+          <td>
+            <p-autoComplete [style]="{'height': '35px'}" [inputStyle]="{'width': '200px'}" inputStyleClass="form-control" [delay]="1000" [(ngModel)]="list['reviewer']" [suggestions]="dummyRev" [dropdown]="true" [emptyMessage]="'Assign'" (completeMethod)="filterRev($event)" [forceSelection]="true" [baseZIndex]="0" [autoZIndex]="true"></p-autoComplete>
+          </td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td class="p-5 text-center" colspan="7">
+            No Certifications Found
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+  </div>
+  <div class="col-4">
+    <div class="cert-info-section">
+      <div *ngIf="selectedCert">
+        <div>
+          <h6 class="cId"> {{selectedCert.certificationId}}</h6>
+          <div>{{selectedCert.uniqueName}}</div>
+        </div>
+
+        <div class="reText">{{selectedCert.renewableEnergy[0] | titlecase}}</div>
+        <div class="detail">
+          <span class="title">Date of Application:</span>
+          <span class="data">{{selectedCert.applicationDate | date: 'dd/MM/YYYY'}}</span>
+        </div>
+        <div class="detail">
+          <span class="title">Country of Issuance:</span>
+          <span class="data">{{selectedCert.issuanceCountry}}</span>
+        </div>
+        <div class="detail">
+          <span class="title">Underwriter:</span>
+          <span class="data">{{selectedCert.underwriter[0]}}</span>
+        </div>
+        <div class="detail">
+          <span class="title">Instrument Type:</span>
+          <span class="data">{{selectedCert.instrumentType | titlecase}}</span>
+        </div>
+        <div class="detail mt-3">
+          <span class="title">Contact Person:</span>
+          <span class="data">{{selectedCert.contactName | titlecase}}</span>
+        </div>
+        <div class="detail">
+          <span class="title">Position:</span>
+          <span class="data">{{selectedCert.position | titlecase}}</span>
+        </div>
+        <div class="detail">
+          <span class="title">Company:</span>
+          <span class="data">{{selectedCert.company | titlecase}}</span>
+        </div>
+        <div class="detail">
+          <span class="title">Contact Number:</span>
+          <span class="data">{{selectedCert.contactNumber}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

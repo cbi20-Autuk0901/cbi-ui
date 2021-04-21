@@ -21,34 +21,8 @@ export class ReviewerReportsComponent implements OnInit {
       userEmail: this.userData['userEmail'],
     };
     this.ds.getApprovedCertifications(payload).subscribe((e) => {
-      this.certifications = this.utils.addIndex(
-        e.assignedCertifications.filter(
-          (e) => e.certificationStatus === 'approved'
-        )
-      );
+      this.certifications = this.utils.addIndex(e.assignedCertifications);
       this.loading = false;
     });
   }
-
-  modelData = (data) => {
-    let processedData = [];
-    let index = 0;
-    data.forEach((item) => {
-      if (item['certificationStatus'] === 'approved') {
-        const temp = {
-          no: ++index,
-          certId: item.certificationId,
-          name: item.uniqueName,
-          certType: item.certificationType,
-          date: item.applicationDate,
-          instrType: item.instrumentType,
-          status: item.certificationStatus,
-        };
-
-        processedData.push(temp);
-      }
-    });
-
-    return processedData;
-  };
 }

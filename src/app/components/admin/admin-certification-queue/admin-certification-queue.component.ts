@@ -1,21 +1,22 @@
 import { Component, OnInit } from '@angular/core';
-import { UtilsService } from '../../../services/utils/utils.service';
-import { DatastoreService } from './../../../services/data-store/data-store.service';
-import * as moment from 'moment';
 import { Router } from '@angular/router';
+import * as moment from 'moment';
+import { DatastoreService } from '../../../services/data-store/data-store.service';
+import { UtilsService } from '../../../services/utils/utils.service';
 
 @Component({
-  selector: 'app-certification-queue',
-  templateUrl: './certification-queue.component.html',
-  styleUrls: ['./certification-queue.component.scss'],
+  selector: 'app-admin-certification-queue',
+  templateUrl: './admin-certification-queue.component.html',
+  styleUrls: ['./admin-certification-queue.component.scss'],
 })
-export class CertificationQueueComponent implements OnInit {
+export class AdminCertificationQueueComponent implements OnInit {
   userData: object;
   certifications: Array<object>;
   loading: boolean = true;
   filterOptions: Array<object>;
   filteredCertifications: Array<object>;
   selectedCert: any;
+  dummyRev: Array<string>;
 
   constructor(
     private ds: DatastoreService,
@@ -32,18 +33,36 @@ export class CertificationQueueComponent implements OnInit {
       },
       { name: 'Last Week', value: '7 Days' },
     ];
+    this.dummyRev = [
+      'Naveen@vigameq.com',
+      'Naveen@gmail.com',
+      'Naveen@outlook.com',
+    ];
   }
 
   ngOnInit(): void {
     const payload = {
       userEmail: this.userData['userEmail'],
     };
-    this.ds.getCertQueue(payload).subscribe((e) => {
+    this.ds.getAdminCertQueue(payload).subscribe((e) => {
       this.certifications = this.utils.addIndex(e.data);
       this.filteredCertifications = this.certifications;
       this.loading = false;
     });
   }
+
+  filterRev = (event) => {
+    let filtered: any[] = [];
+    let query = event.query;
+    for (let i = 0; i < this.dummyRev.length; i++) {
+      let rev = this.dummyRev[i];
+      if (rev.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+        filtered.push(rev);
+      }
+    }
+
+    this.dummyRev = filtered;
+  };
 
   assignCert = (selCert, type) => {
     const payload = {

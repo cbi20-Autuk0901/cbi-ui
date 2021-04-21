@@ -39,7 +39,7 @@
             <td>{{list.verifierCompany | titlecase}}</td>
             <td>{{list.applicationDate | date: 'dd/MM/YYYY'}}</td>
             <td>{{list.renewableEnergy && list.renewableEnergy[0] || '' | titlecase}}</td>
-            <td> <a class="btn btn-green" (click)="assignCert(list, 'asn')">Assign</a>
+            <td> <a class="btn btn-green" (click)="assignCert(list, 'asn')">Assign</a></td>
           </tr>
         </ng-template>
         <ng-template pTemplate="emptymessage" let-columns>

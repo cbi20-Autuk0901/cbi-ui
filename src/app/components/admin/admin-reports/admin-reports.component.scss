@@ -1,0 +1,29 @@
+.btn {
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 2px 0;
+  min-width: 120px;
+  font-weight: 300;
+
+  &.btn-green {
+    background-color: #8dc63f;
+    border: 2px solid #8dc63f;
+    color: #ffffff;
+  }
+}
+
+.status-text {
+  &.submitted,
+  &.redeemed,
+  &.approved {
+    color: #689f38;
+  }
+
+  &.in-review {
+    color: #fbc02d;
+  }
+
+  &.draft {
+    color: #d32f2f;
+  }
+}

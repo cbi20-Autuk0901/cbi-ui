@@ -9,12 +9,12 @@ import { CertTypesPageComponent } from './components/issuer/certification-types-
 import { DebtInstrumentPageComponent } from './components/issuer/debt-instrument-page/debt-instrument-page.component';
 import { RegistrationComponent } from './components/shared/registration/registration.component';
 import { BondRedemptionComponent } from './components/issuer/bond-redemption/bond-redemption.component';
-import { CertificationQueueComponent } from './components/reviewer/certification-queue/certification-queue.component';
 import { WorkBoardComponent } from './components/reviewer/work-board/work-board.component';
 import { IssuerReportsComponent } from './components/issuer/issuer-reports/issuer-reports.component';
 import { ReviewerReportsComponent } from './components/reviewer/reviewer-reports/reviewer-reports.component';
-import { IssuerDashboardComponent } from './components/issuer/issuer-dashboard/issuer-dashboard.component';
-import { ReviewerDashboardComponent } from './components/reviewer/reviewer-dashboard/reviewer-dashboard.component';
+import { AdminReportsComponent } from './components/admin/admin-reports/admin-reports.component';
+import { ReviewerCertificationQueueComponent } from './components/reviewer/reviewer-certification-queue/reviewer-certification-queue.component';
+import { AdminCertificationQueueComponent } from './components/admin/admin-certification-queue/admin-certification-queue.component';
 
 const routes: Routes = [
   {
@@ -33,9 +33,14 @@ const routes: Routes = [
     component: CertTypesPageComponent,
   },
   {
-    path: 'certification-queue',
+    path: 'reviewer-certification-queue',
     canActivate: [AuthGuard],
-    component: CertificationQueueComponent,
+    component: ReviewerCertificationQueueComponent,
+  },
+  {
+    path: 'admin-certification-queue',
+    canActivate: [AuthGuard],
+    component: AdminCertificationQueueComponent,
   },
   {
     path: 'work-board',
@@ -66,6 +71,11 @@ const routes: Routes = [
     path: 'reviewer-reports',
     canActivate: [AuthGuard],
     component: ReviewerReportsComponent,
+  },
+  {
+    path: 'admin-reports',
+    canActivate: [AuthGuard],
+    component: AdminReportsComponent,
   },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/dashboard' },

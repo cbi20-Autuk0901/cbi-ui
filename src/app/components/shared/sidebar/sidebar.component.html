@@ -4,4 +4,5 @@
   </div>
   <app-issuer-sidebar [page]="currentPage | async" *ngIf="userData['userRole'] !== 'reviewer' && userData['userRole'] !== 'admin'"></app-issuer-sidebar>
   <app-reviewer-sidebar [page]="currentPage | async" *ngIf="userData['userRole'] === 'reviewer'"></app-reviewer-sidebar>
+  <app-admin-sidebar [page]="currentPage | async" *ngIf="userData['userRole'] === 'admin'"></app-admin-sidebar>
 </nav>

@@ -30,6 +30,16 @@ export class DatastoreService {
     return this.http.get(url, options);
   };
 
+  getAdminCertQueue = (headers: object): Observable<any> => {
+    const url = '/api/adminCertificationQueue';
+    const options = {
+      headers: new HttpHeaders({
+        userEmail: headers['userEmail'],
+      }),
+    };
+    return this.http.get(url, options);
+  };
+
   assignCertification = (payload): Observable<any> => {
     const url = '/api/assignCertification';
     return this.http.post(url, payload);
@@ -70,6 +80,16 @@ export class DatastoreService {
       formData.append(key, data[key]);
     });
     return this.http.post(url, formData);
+  };
+
+  getAdminReports = (headers: object): Observable<any> => {
+    const url = '/api/getAdminReports';
+    const options = {
+      headers: new HttpHeaders({
+        userEmail: headers['userEmail'],
+      }),
+    };
+    return this.http.get(url, options);
   };
 
   getCertifications = (headers: object, type?: string): Observable<any> => {

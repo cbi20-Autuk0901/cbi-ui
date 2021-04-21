@@ -1,0 +1,43 @@
+.btn {
+  font-size: 14px;
+  border-radius: 4px;
+  padding: 2px 0;
+  min-width: 80px;
+  font-weight: 400;
+
+  &.btn-green {
+    background-color: #8dc63f;
+    border: 2px solid #8dc63f;
+    color: #ffffff;
+  }
+}
+
+.cert-info-section {
+  border: 10px solid #fafafa;
+  padding: 15px;
+  height: 100%;
+
+  .cId {
+    font-size: 18px;
+    font-weight: 700;
+    color: #ffcc4f;
+  }
+
+  .reText {
+    color: #525257;
+    font-weight: 700;
+    font-size: 20px;
+  }
+
+  .detail {
+    padding-bottom: 3px;
+    color: #525257;
+    .title {
+      font-weight: 700;
+    }
+
+    .data {
+      padding-left: 5px;
+    }
+  }
+}
