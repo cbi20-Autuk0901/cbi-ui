@@ -1,10 +1,9 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { MessageService } from 'primeng/api';
 import { UtilsService } from '../../../services/utils/utils.service';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 import * as moment from 'moment';
-import { pdfDefaultOptions } from 'ngx-extended-pdf-viewer';
+import { BlockerService } from '../../../services/blocker/blocker.service';
 
 @Component({
   selector: 'app-certification-agreement',
@@ -26,8 +25,8 @@ export class CertificationAgreementComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ds: DatastoreService,
-    private messageService: MessageService,
-    private utils: UtilsService
+    private utils: UtilsService,
+    private blocker: BlockerService
   ) {
     this.caSignedUploaded = false;
     this.reportSrc = '';
@@ -62,6 +61,10 @@ export class CertificationAgreementComponent implements OnInit {
     }
   }
 
+  test = () => {
+    this.blocker.off();
+  };
+
   switchPage = (type: string) => {
     if (type === 'next') {
       if (this.caSignedUploaded) {
@@ -95,6 +98,7 @@ export class CertificationAgreementComponent implements OnInit {
       certificationType: this.mainData['certType'],
       certificationId: this.mainData['certId'] || '',
     };
+    this.blocker.on();
 
     payload.applicationDate = new Date(
       Date.UTC(

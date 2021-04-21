@@ -1,39 +1,41 @@
-.sidebar-sticky {
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  width: 100px;
-  z-index: 1031;
+::ng-deep {
+  .sidebar-sticky {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    width: 100px;
+    z-index: 1031;
 
-  .comp-logo {
-    .main-logo {
-      width: 60px;
-      display: block;
-      margin: auto;
-    }
-    margin: 20px auto 150px;
-  }
-
-  &__items {
-    overflow-x: hidden;
-    overflow-y: auto;
-    height: calc(100vh - 250px);
-
-    .nav {
-      .nav-item {
-        padding-bottom: 50px;
-
-        img {
-          width: 50px;
-        }
+    .comp-logo {
+      .main-logo {
+        width: 60px;
+        display: block;
+        margin: auto;
       }
-      .nav-link {
-        color: #9595a2;
-        font-size: 30px;
-        text-align: center;
+      margin: 20px auto 150px;
+    }
 
-        &.active {
-          color: #ffcc4f;
+    &__items {
+      overflow-x: hidden;
+      overflow-y: auto;
+      height: calc(100vh - 250px);
+
+      .nav {
+        .nav-item {
+          padding-bottom: 50px;
+
+          img {
+            width: 50px;
+          }
+        }
+        .nav-link {
+          color: #9595a2;
+          font-size: 30px;
+          text-align: center;
+
+          &.active {
+            color: #ffcc4f;
+          }
         }
       }
     }

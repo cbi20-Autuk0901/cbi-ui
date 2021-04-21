@@ -9,6 +9,7 @@ import { WorkBoardComponent } from './work-board/work-board.component';
 import { NgxWigModule } from 'ngx-wig';
 import { ReviewerReportsComponent } from './reviewer-reports/reviewer-reports.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { ReviewerSidebarComponent } from './reviewer-sidebar/reviewer-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     CertificationQueueComponent,
     WorkBoardComponent,
     ReviewerReportsComponent,
+    ReviewerSidebarComponent,
   ],
   imports: [
     CommonModule,
@@ -24,6 +26,6 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     NgxWigModule,
     NgxExtendedPdfViewerModule,
   ],
-  exports: [ReviewerDashboardComponent],
+  exports: [ReviewerDashboardComponent, ReviewerSidebarComponent],
 })
 export class ReviewerModule {}

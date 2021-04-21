@@ -2,28 +2,6 @@
   <div class="comp-logo">
     <img class="main-logo" src="../../../../assets/images/main-logo.png" />
   </div>
-  <div class="sidebar-sticky__items">
-    <ul class="nav flex-column align-content-center">
-      <li class="nav-item">
-        <a class="nav-link fa fa-bar-chart" routerLink="dashboard">
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link fa fa-sitemap" *ngIf="userData['userRole'] !== 'reviewer'" routerLink="certification-types">
-        </a>
-        <a class="nav-link fa fa-sitemap" *ngIf="userData['userRole'] === 'reviewer'" routerLink="work-board">
-        </a>
-      </li>
-      <li class="nav-item" *ngIf="userData['userRole'] === 'reviewer'">
-        <a class="nav-link fa fa-database" routerLink="certification-queue">
-        </a>
-      </li>
-      <li class="nav-item">
-        <a class="nav-link fa fa-folder" *ngIf="userData['userRole'] !== 'reviewer'" href="/issuer-reports">
-        </a>
-        <a class="nav-link fa fa-folder" *ngIf="userData['userRole'] === 'reviewer'" href="/reviewer-reports">
-        </a>
-      </li>
-    </ul>
-  </div>
+  <app-issuer-sidebar [page]="currentPage | async" *ngIf="userData['userRole'] !== 'reviewer' && userData['userRole'] !== 'admin'"></app-issuer-sidebar>
+  <app-reviewer-sidebar [page]="currentPage | async" *ngIf="userData['userRole'] === 'reviewer'"></app-reviewer-sidebar>
 </nav>

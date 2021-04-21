@@ -15,6 +15,7 @@ import { SharedModule } from 'primeng/api';
 import { IssuerDashboardComponent } from './issuer-dashboard/issuer-dashboard.component';
 import { IssuerReportsComponent } from './issuer-reports/issuer-reports.component';
 import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
+import { IssuerSidebarComponent } from './issuer-sidebar/issuer-sidebar.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     AssuranceReportComponent,
     CertificationsListComponent,
     IssuerDashboardComponent,
+    IssuerSidebarComponent,
   ],
   imports: [
     CommonModule,
@@ -37,6 +39,6 @@ import { NgxExtendedPdfViewerModule } from 'ngx-extended-pdf-viewer';
     SharedModule,
     NgxExtendedPdfViewerModule,
   ],
-  exports: [IssuerDashboardComponent],
+  exports: [IssuerDashboardComponent, IssuerSidebarComponent],
 })
 export class IssuerModule {}

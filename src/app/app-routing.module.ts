@@ -13,6 +13,8 @@ import { CertificationQueueComponent } from './components/reviewer/certification
 import { WorkBoardComponent } from './components/reviewer/work-board/work-board.component';
 import { IssuerReportsComponent } from './components/issuer/issuer-reports/issuer-reports.component';
 import { ReviewerReportsComponent } from './components/reviewer/reviewer-reports/reviewer-reports.component';
+import { IssuerDashboardComponent } from './components/issuer/issuer-dashboard/issuer-dashboard.component';
+import { ReviewerDashboardComponent } from './components/reviewer/reviewer-dashboard/reviewer-dashboard.component';
 
 const routes: Routes = [
   {

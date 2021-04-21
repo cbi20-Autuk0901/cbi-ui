@@ -1,16 +1,6 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
-import {
-  FormControl,
-  FormGroup,
-  Validators
-} from '@angular/forms';
-import {
-  Router,
-  RouterModule
-} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router, RouterModule } from '@angular/router';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UserService } from '../../../services/user/user.service';
 import { UtilsService } from '../../../services/utils/utils.service';
@@ -28,7 +18,7 @@ export class LoginPageComponent implements OnInit {
 
   submitted: boolean;
 
-  constructor (
+  constructor(
     private userService: UserService,
     private router: Router,
     private ds: DatastoreService,
@@ -37,27 +27,26 @@ export class LoginPageComponent implements OnInit {
     this.submitted = false;
   }
 
-  ngOnInit (): void { }
+  ngOnInit(): void {}
 
-  loginUser () {
+  loginUser() {
     this.submitted = true;
     if (this.loginForm.valid) {
-      this.userService.authenticateUser(this.loginForm.value)
-        .subscribe(
-          (data) => {
-            this.utils.setStore('isLoggedin', true);
-            this.utils.setStore('userData', data);
-            this.router.navigate(['/dashboard']);
-          },
-          (err) => {
-            if (err.status === 403) {
-              alert('Invalid Credentials');
-            }
-            if (err.status === 401) {
-              alert("User doesn't exist");
-            }
+      this.userService.authenticateUser(this.loginForm.value).subscribe(
+        (data) => {
+          this.utils.setStore('isLoggedin', true);
+          this.utils.setStore('userData', data);
+          this.router.navigate(['/dashboard']);
+        },
+        (err) => {
+          if (err.status === 403) {
+            alert('Invalid Credentials');
           }
-        );
+          if (err.status === 401) {
+            alert("User doesn't exist");
+          }
+        }
+      );
     }
   }
 
@@ -66,12 +55,11 @@ export class LoginPageComponent implements OnInit {
     if (email) {
       this.ds.forgotPassword({ userEmail: email }).subscribe((res) => {
         console.log(res);
-
       });
     }
   };
 
-  get controls () {
+  get controls() {
     return this.loginForm.controls;
   }
 }

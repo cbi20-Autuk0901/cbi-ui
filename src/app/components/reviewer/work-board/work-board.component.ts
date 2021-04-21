@@ -2,8 +2,8 @@ import { Component, OnChanges, OnInit } from '@angular/core';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UtilsService } from '../../../services/utils/utils.service';
 import * as moment from 'moment';
-import { MessageService } from 'primeng/api';
 import { BlockerService } from '../../../services/blocker/blocker.service';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-work-board',
@@ -152,6 +152,7 @@ export class WorkBoardComponent implements OnInit, OnChanges {
     const isCbi = !!(name === 'cbi');
     this.showApproveBtn(isCbi);
     if (name) {
+      if (!isCbi) this.blocker.on();
       this.pdfSrc = isCbi
         ? ''
         : 'http://143.110.213.22:8883/file/' + this.selRevCertification[name];
@@ -168,6 +169,7 @@ export class WorkBoardComponent implements OnInit, OnChanges {
   };
 
   showApproveBtn = (flag) => {
+    this.blocker.off();
     this.reportStatus['pdfLoaded'] = flag;
   };
 
