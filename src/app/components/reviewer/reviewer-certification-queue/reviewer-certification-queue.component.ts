@@ -41,6 +41,7 @@ export class ReviewerCertificationQueueComponent implements OnInit {
     this.ds.getCertQueue(payload).subscribe((e) => {
       this.certifications = this.utils.addIndex(e.data);
       this.filteredCertifications = this.certifications;
+      this.selectedCert = this.filteredCertifications[0] || null;
       this.loading = false;
     });
   }

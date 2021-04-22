@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import * as moment from 'moment';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UtilsService } from '../../../services/utils/utils.service';
@@ -12,17 +11,13 @@ import { UtilsService } from '../../../services/utils/utils.service';
 export class AdminCertificationQueueComponent implements OnInit {
   userData: object;
   certifications: Array<object>;
-  loading: boolean = true;
   filterOptions: Array<object>;
   filteredCertifications: Array<object>;
   selectedCert: any;
-  dummyRev: Array<string>;
+  reviewerList: Array<string>;
+  apiData: object;
 
-  constructor(
-    private ds: DatastoreService,
-    private utils: UtilsService,
-    private router: Router
-  ) {
+  constructor(private ds: DatastoreService, private utils: UtilsService) {
     this.userData = this.utils.getStore('userData');
     this.filterOptions = [
       { name: 'All', value: '' },
@@ -33,55 +28,47 @@ export class AdminCertificationQueueComponent implements OnInit {
       },
       { name: 'Last Week', value: '7 Days' },
     ];
-    this.dummyRev = [
-      'Naveen@vigameq.com',
-      'Naveen@gmail.com',
-      'Naveen@outlook.com',
-    ];
   }
 
   ngOnInit(): void {
     const payload = {
       userEmail: this.userData['userEmail'],
     };
-    this.ds.getAdminCertQueue(payload).subscribe((e) => {
-      this.certifications = this.utils.addIndex(e.data);
+    this.ds.getAdminCertQueue(payload).subscribe((response) => {
+      this.apiData = response;
+      this.certifications = this.utils.addIndex(this.apiData['data']);
       this.filteredCertifications = this.certifications;
-      this.loading = false;
     });
   }
 
   filterRev = (event) => {
     let filtered: any[] = [];
     let query = event.query;
-    for (let i = 0; i < this.dummyRev.length; i++) {
-      let rev = this.dummyRev[i];
-      if (rev.toLowerCase().indexOf(query.toLowerCase()) == 0) {
+    for (let i = 0; i < this.apiData['reviewerEmail'].length; i++) {
+      let rev = this.apiData['reviewerEmail'][i];
+      if (rev.toLowerCase().indexOf(query.toLowerCase()) > -1) {
         filtered.push(rev);
       }
     }
 
-    this.dummyRev = filtered;
+    this.reviewerList = filtered;
   };
 
-  assignCert = (selCert, type) => {
+  assignCert = (selCert, reviewer) => {
     const payload = {
       userEmail: this.userData['userEmail'],
       certificationId: selCert['certificationId'],
       certificationType: selCert['certificationType'],
+      reviewerEmail: reviewer,
     };
-    this.ds.assignCertification(payload).subscribe((e) => {
-      if (type === 'asn') {
-        this.certifications = this.utils.addIndex(e.data);
-        this.filteredCertifications = this.certifications;
-        this.selectedCert = null;
-      } else {
-        this.router.navigateByUrl('work-board');
-      }
+    this.ds.adminAssign(payload).subscribe((response) => {
+      this.apiData = response;
+      this.certifications = this.utils.addIndex(this.apiData['data']);
+      this.filteredCertifications = this.certifications;
     });
   };
 
-  filter = (event) => {
+  filterbyDate = (event) => {
     if (event) {
       const mOpt = event.split(' ');
       const refDate = moment().subtract(mOpt[0], mOpt[1]);

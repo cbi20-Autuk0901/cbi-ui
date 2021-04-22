@@ -45,6 +45,11 @@ export class DatastoreService {
     return this.http.post(url, payload);
   };
 
+  adminAssign = (payload): Observable<any> => {
+    const url = '/api/adminCertificationQueue';
+    return this.http.post(url, payload);
+  };
+
   workBoard = (headers: object): Observable<any> => {
     const url = '/api/workBoard';
     const options = {

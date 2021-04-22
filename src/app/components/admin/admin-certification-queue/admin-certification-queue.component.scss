@@ -12,6 +12,31 @@
   }
 }
 
+.reviewer-sel {
+  position: relative;
+  .fa-pencil {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+    color: #525257;
+  }
+
+  ::ng-deep {
+    .form-control:focus::-webkit-input-placeholder {
+      color: transparent;
+    }
+    .form-control:focus:-moz-placeholder {
+      color: transparent;
+    }
+    .form-control:focus::-moz-placeholder {
+      color: transparent;
+    }
+    .form-control:focus:-ms-input-placeholder {
+      color: transparent;
+    }
+  }
+}
+
 .cert-info-section {
   border: 10px solid #fafafa;
   padding: 15px;

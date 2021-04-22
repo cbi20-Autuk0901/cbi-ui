@@ -1,6 +1,6 @@
 <div class="row">
   <div class="col-8">
-    <h4 class="page-header">All Cases</h4>
+    <h4 class="page-header">All Certifications</h4>
     <p-table #dt1 [showCurrentPageReport]="true" currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries" [value]="filteredCertifications" selectionMode="single" [(selection)]="selectedCert" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true" [globalFilterFields]="['certificationId']">
       <ng-template pTemplate="caption">
         <div class="d-flex justify-content-between mb-3">
@@ -9,7 +9,7 @@
             <i class="pi pi-search"></i>
             <input pInputText type="text" (input)="dt1.filterGlobal($event.target['value'], 'contains')" placeholder="Search Certification ID" />
           </span>
-          <p-dropdown [options]="filterOptions" optionLabel="name" optionValue="value" (onChange)="filter($event.value)">
+          <p-dropdown [options]="filterOptions" optionLabel="name" optionValue="value" (onChange)="filterbyDate($event.value)">
           </p-dropdown>
 
         </div>
@@ -40,7 +40,10 @@
           <td>{{list.applicationDate | date: 'dd/MM/YYYY'}}</td>
           <td>{{list.renewableEnergy && list.renewableEnergy[0] || '' | titlecase}}</td>
           <td>
-            <p-autoComplete [style]="{'height': '35px'}" [inputStyle]="{'width': '200px'}" inputStyleClass="form-control" [delay]="1000" [(ngModel)]="list['reviewer']" [suggestions]="dummyRev" [dropdown]="true" [emptyMessage]="'Assign'" (completeMethod)="filterRev($event)" [forceSelection]="true" [baseZIndex]="0" [autoZIndex]="true"></p-autoComplete>
+            <div class="reviewer-sel">
+              <p-autoComplete [inputStyle]="{'width': '200px'}" inputStyleClass="form-control " [delay]="300" [suggestions]="reviewerList" (completeMethod)="filterRev($event)" [forceSelection]="true" [completeOnFocus]="true" placeholder="Unassigned" (onSelect)="assignCert(list, $event)" appendTo="body"></p-autoComplete>
+              <i class="fa fa-pencil"></i>
+            </div>
           </td>
         </tr>
       </ng-template>
