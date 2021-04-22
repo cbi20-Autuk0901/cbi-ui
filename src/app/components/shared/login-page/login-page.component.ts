@@ -40,10 +40,10 @@ export class LoginPageComponent implements OnInit {
         },
         (err) => {
           if (err.status === 403) {
-            alert('Invalid Credentials');
+            this.utils.showMessage('error', 'Error', 'Invalid Credentials');
           }
           if (err.status === 401) {
-            alert("User doesn't exist");
+            this.utils.showMessage('error', 'Error', "User doesn't exist");
           }
         }
       );

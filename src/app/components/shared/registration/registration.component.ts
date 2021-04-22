@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidationService } from '../../../services/custom-validation/custom-validation.service';
 import { UserService } from '../../../services/user/user.service';
+import { UtilsService } from '../../../services/utils/utils.service';
 
 @Component({
   selector: 'app-registration',
@@ -15,7 +16,8 @@ export class RegistrationComponent implements OnInit {
   constructor(
     private userS: UserService,
     private fb: FormBuilder,
-    private customValidator: CustomValidationService
+    private customValidator: CustomValidationService,
+    private utils: UtilsService
   ) {
     this.registerForm = this.fb.group(
       {
@@ -76,7 +78,7 @@ export class RegistrationComponent implements OnInit {
     if (this.registerForm.valid) {
       const payload = this.registerForm.value;
       this.userS.registerUser(payload).subscribe((e) => {
-        alert('Registered Successfully');
+        this.utils.showMessage('success', 'Success', 'Registered Successfully');
       });
     }
   };
