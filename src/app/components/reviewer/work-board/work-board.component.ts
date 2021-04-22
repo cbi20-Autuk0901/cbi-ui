@@ -150,12 +150,21 @@ export class WorkBoardComponent implements OnInit, OnChanges {
   reviewReport = (name) => {
     this.reportStatus['currentReport'] = name;
     const isCbi = !!(name === 'cbi');
+    const fileName = this.selRevCertification[name];
+
     this.showApproveBtn(isCbi);
-    if (name) {
-      if (!isCbi) this.blocker.on();
-      this.pdfSrc = isCbi
-        ? ''
-        : 'http://143.110.213.22:8883/file/' + this.selRevCertification[name];
+    if (fileName) {
+      this.blocker.on();
+      this.pdfSrc =
+        'http://143.110.213.22:8883/file/' + this.selRevCertification[name];
+    } else {
+      this.pdfSrc = '';
+      if (!isCbi)
+        this.utils.showMessage(
+          'warn',
+          'Warning',
+          'No File uploaded under this name'
+        );
     }
   };
 
@@ -169,7 +178,7 @@ export class WorkBoardComponent implements OnInit, OnChanges {
   };
 
   showApproveBtn = (flag) => {
-    this.blocker.off();
+    if (flag) this.blocker.off();
     this.reportStatus['pdfLoaded'] = flag;
   };
 
@@ -187,5 +196,6 @@ export class WorkBoardComponent implements OnInit, OnChanges {
 
   showError = (severity, title, msg) => {
     this.utils.showMessage(severity, title, msg);
+    this.blocker.off();
   };
 }
