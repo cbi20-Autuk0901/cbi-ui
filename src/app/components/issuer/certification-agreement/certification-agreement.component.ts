@@ -61,8 +61,8 @@ export class CertificationAgreementComponent implements OnInit {
     }
   }
 
-  test = () => {
-    this.blocker.off();
+  loader = (val) => {
+    val ? this.blocker.on() : this.blocker.off();
   };
 
   switchPage = (type: string) => {
@@ -98,7 +98,6 @@ export class CertificationAgreementComponent implements OnInit {
       certificationType: this.mainData['certType'],
       certificationId: this.mainData['certId'] || '',
     };
-    this.blocker.on();
 
     payload.applicationDate = new Date(
       Date.UTC(
@@ -113,6 +112,7 @@ export class CertificationAgreementComponent implements OnInit {
         this.reportName = data.agreement;
         this.reportSrc = 'http://143.110.213.22:8883/file/' + data.agreement;
         this.utils.showMessage('success', 'Success', 'Data Saved');
+        this.blocker.on();
       },
       (error) => {
         this.utils.showMessage('error', 'Error', 'Invalid Form Details');

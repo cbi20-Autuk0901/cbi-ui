@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { MessageService } from 'primeng/api';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UtilsService } from '../../../services/utils/utils.service';
 
@@ -17,13 +16,15 @@ export class AssuranceReportComponent implements OnInit {
   caName: string;
   gbName: string;
   certId: string;
+  isSubmitted: boolean;
 
   constructor(
     private fb: FormBuilder,
     private ds: DatastoreService,
-    private messageService: MessageService,
     private utils: UtilsService
-  ) {}
+  ) {
+    this.isSubmitted = false;
+  }
 
   ngOnInit(): void {
     this.arForm = this.fb.group({
@@ -41,36 +42,40 @@ export class AssuranceReportComponent implements OnInit {
     }
   };
 
-  saveFormStatus = (form: string) => {
-    const payload = {
-      ...this[form].value,
-      userEmail: this.mainData['userEmail'],
-      instrumentType: this.mainData['instrType'],
-      certificationType: this.mainData['certType'],
-      certificationId: this.mainData['certId'] || '',
-    };
-    this.ds.upload(payload, 'ar').subscribe(
-      (data) => {
-        this.utils.showMessage('success', 'Success', 'Files Uploaded');
-      },
-      (error) => {
-        this.utils.showMessage('error', 'Error', 'Invalid Files');
-      }
-    );
-  };
-
-  submitApplication = () => {
-    const payload = {
-      userEmail: this.mainData['userEmail'],
-      instrumentType: this.mainData['instrType'],
-      certificationType: this.mainData['certType'],
-      certificationId: this.mainData['certId'] || '',
-    };
-
-    this.ds.submitApplication(payload).subscribe((data) => {
-      this.certId = data.certificationId;
-      this.modalBtn.nativeElement.click();
-    });
+  submitApplication = (form: string) => {
+    if (this.arForm.valid) {
+      const payload = {
+        ...this[form].value,
+        userEmail: this.mainData['userEmail'],
+        instrumentType: this.mainData['instrType'],
+        certificationType: this.mainData['certType'],
+        certificationId: this.mainData['certId'] || '',
+      };
+      this.ds.upload(payload, 'ar').subscribe(
+        (data) => {
+          delete payload['caAssuranceReport'];
+          delete payload['gbAssuranceReport'];
+          this.ds.submitApplication(payload).subscribe((data) => {
+            this.certId = data.certificationId;
+            this.modalBtn.nativeElement.click();
+            this.isSubmitted = true;
+          });
+        },
+        (error) => {
+          this.utils.showMessage(
+            'error',
+            'Error',
+            'Unable to Upload files. Please try again !'
+          );
+        }
+      );
+    } else {
+      this.utils.showMessage(
+        'error',
+        'Error',
+        'Please Upload Files to Submit Application'
+      );
+    }
   };
 
   onChange = (event, name) => {

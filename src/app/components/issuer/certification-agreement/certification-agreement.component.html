@@ -76,7 +76,7 @@
       </div>
       <div class="doc-viewer">
         <div *ngIf="reportSrc">
-          <ngx-extended-pdf-viewer [src]="reportSrc" [showSidebarButton]="false" [minZoom]="1" [useBrowserLocale]="true" [language]="'en-US'" [showDownloadButton]="false" [filenameForDownload]="reportName" [showOpenFileButton]="false" [showBookmarkButton]="false" [httpHeaders]="reportHeaders" [showPresentationModeButton]="true" [zoom]="'page-width'" (pagesLoaded)="test()"></ngx-extended-pdf-viewer>
+          <ngx-extended-pdf-viewer [src]="reportSrc" [showSidebarButton]="false" [minifiedJSLibraries]="true" [useBrowserLocale]="true" [language]="'en-US'" [showDownloadButton]="false" [filenameForDownload]="reportName" [showOpenFileButton]="false" [showBookmarkButton]="false" [httpHeaders]="reportHeaders" [showPresentationModeButton]="true" [zoom]="'page-width'" (pdfLoaded)="loader(true)" (pagesLoaded)="loader(false)"></ngx-extended-pdf-viewer>
         </div>
       </div>
     </div>

@@ -4,7 +4,7 @@
     <span class="px-1">-</span>
     <span>Assurance Report Produced by Verifier</span>
   </div>
-  <a class="back-link" (click)="switchPage('back')"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</a>
+  <a class="back-link" *ngIf="!isSubmitted" (click)="switchPage('back')"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</a>
 </div>
 <form [formGroup]="arForm">
   <div class="row">
@@ -13,7 +13,7 @@
         <div class="form-card__title">
         </div>
         <div class="d-flex justify-content-between">
-          <div class="btn btn-secondary upload-btn">
+          <div class="btn btn-secondary upload-btn" *ngIf="!isSubmitted">
             Upload +
             <input type="file" name="caAssuranceReport" (change)="onChange($event, 'caName')">
           </div>
@@ -35,7 +35,7 @@
         <div class="form-card__title">
         </div>
         <div class="d-flex justify-content-between">
-          <div class="btn btn-secondary upload-btn">
+          <div class="btn btn-secondary upload-btn" *ngIf="!isSubmitted">
             Upload +
             <input type="file" name="gbAssuranceReport" (change)="onChange($event, 'gbName')">
           </div>
@@ -46,11 +46,8 @@
   </div>
 </form>
 <div class="row mt-3">
-  <div class="col-6">
-    <a class="btn btn-green" (click)="saveFormStatus('arForm')">Save</a>
-  </div>
-  <div class="col-6 text-right">
-    <a class="btn btn-green py-2" (click)="submitApplication()">
+  <div class="col-6 offset-6 text-right">
+    <a class="btn btn-green py-2" *ngIf="!isSubmitted" (click)="submitApplication('arForm')">
       Submit Application
     </a>
     <button #submitModal class="d-none" data-toggle="modal" data-target="#submitModal"></button>
