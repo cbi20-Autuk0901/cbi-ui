@@ -1,1 +1,104 @@
-<p>admin-dashboard works!</p>
+<div class="row">
+  <div class="col-3">
+    <div class="stat-card d-flex align-items-center">
+      <i class="fa fa-bar-chart"></i>
+      <div class="px-3">
+        <div class="stat-card__count">{{dData['total']}}</div>
+        <div class="stat-card__name">Total</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="stat-card d-flex align-items-center">
+      <i class="fa fa-check-circle-o"></i>
+      <div class="px-3">
+        <div class="stat-card__count">{{dData['completed']}}</div>
+        <div class="stat-card__name">Completed</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="stat-card d-flex align-items-center">
+      <i class="fa fa-search"></i>
+      <div class="px-3">
+        <div class="stat-card__count">{{dData['in-review']}}</div>
+        <div class="stat-card__name">Under Review</div>
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="stat-card d-flex align-items-center">
+      <i class="fa fa-minus-circle"></i>
+      <div class="px-3">
+        <div class="stat-card__count">{{dData['unassigned']}}</div>
+        <div class="stat-card__name">Unassigned</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row mt-4">
+  <div class="col-9">
+    <div class="row">
+      <div class="col">
+        <div class="stat-card">
+          <div class="stat-card__title d-flex justify-content-between align-items-end">
+            <div> Incoming Certifications</div>
+            <select class="form-control col-2" [(ngModel)]="filterSel" (change)="filterMonths()">
+              <option *ngFor="let d of monFilterOpt" [value]="d['code']">{{d['name']}}</option>
+            </select>
+
+          </div>
+          <div class="row">
+            <div class="col-8">
+              <div class="chart-area">
+                <p-chart type="bar" [data]="icData" [options]="icOptions"></p-chart>
+              </div>
+            </div>
+            <div class="col-4">
+              <div class="chart-area position-relative">
+                <p-chart type="doughnut" [data]="ficData" [options]=" ficOptions"></p-chart>
+                <div class="doughnut-stats">
+                  <div>
+                    <span class="manual">302</span><span class="px-2">/</span>
+                    <span class="auto">158</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+    <div class="row mt-4">
+      <div class="col-7">
+        <div class="stat-card">
+          <div class="stat-card__title">
+            Debt Information
+          </div>
+          <div class="chart-area">
+            <p-chart height="200" type="bar" [responsive]="true" [data]="diData" [options]="diOptions"></p-chart>
+          </div>
+        </div>
+      </div>
+      <div class="col-5">
+        <div class="stat-card">
+          <div class="stat-card__title">
+            Certification Status
+          </div>
+          <div class="chart-area">
+            <p-chart type="pie" width="200" height="200" [responsive]="true" [data]="csData" [options]="csOptions"></p-chart>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="col-3">
+    <div class="reviewer-stats">
+      <div class="reviewer-stats__title">Reviewer Statistics</div>
+      <div class="chart-area">
+        <p-chart type="horizontalBar" [responsive]="true" [plugins]="[plugin]" [data]="rsData" [options]="rsOptions"></p-chart>
+      </div>
+    </div>
+  </div>
+</div>
