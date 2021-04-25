@@ -31,6 +31,7 @@
       </th>
       <th pSortableColumn="certificationStatus">Status <p-sortIcon field="certificationStatus"></p-sortIcon>
       </th>
+      <th></th>
     </tr>
   </ng-template>
   <ng-template pTemplate="body" let-list>
@@ -43,8 +44,8 @@
 
       <td>{{list.renewableEnergy | titlecase}}</td>
       <td ngClass="{{list.certificationStatus + ' status-text'}}">{{list.certificationStatus === 'in-review' ? 'Under-Review' : list.certificationStatus | titlecase}}</td>
-      <td> <a class="btn btn-green" *ngIf="false">Download</a>
-        <button type="button" *ngIf="true" disabled class="btn btn-secondary btn-sm">Not Available</button>
+      <td> <a class="btn btn-green" target="_blank" href="{{'http://143.110.213.22:8883/file/'+list.certificate}}" *ngIf="list.certificationStatus === 'approved'">Download</a>
+        <button type="button" *ngIf="list.certificationStatus !== 'approved'" disabled class="btn btn-secondary btn-sm">Not Available</button>
       </td>
     </tr>
   </ng-template>

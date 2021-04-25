@@ -97,6 +97,16 @@ export class DatastoreService {
     return this.http.get(url, options);
   };
 
+  getAdminManagement = (headers: object): Observable<any> => {
+    const url = '/api/userManagement';
+    const options = {
+      headers: new HttpHeaders({
+        userEmail: headers['userEmail'],
+      }),
+    };
+    return this.http.get(url, options);
+  };
+
   getCertifications = (headers: object, type?: string): Observable<any> => {
     let url: string = '';
 
@@ -121,6 +131,7 @@ export class DatastoreService {
     };
     return this.http.get(url, options);
   };
+
   getApprovedCertifications = (
     headers: object,
     type?: string

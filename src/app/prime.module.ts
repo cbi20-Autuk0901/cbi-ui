@@ -17,6 +17,7 @@ import { DividerModule } from 'primeng/divider';
 import { ProgressBarModule } from 'primeng/progressbar';
 import { BlockUIModule } from 'primeng/blockui';
 import { AutoCompleteModule } from 'primeng/autocomplete';
+import { ButtonModule } from 'primeng/button';
 
 @NgModule({
   declarations: [],
@@ -38,6 +39,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     ProgressBarModule,
     BlockUIModule,
     AutoCompleteModule,
+    ButtonModule,
   ],
   exports: [
     CalendarModule,
@@ -56,6 +58,7 @@ import { AutoCompleteModule } from 'primeng/autocomplete';
     ProgressBarModule,
     BlockUIModule,
     AutoCompleteModule,
+    ButtonModule,
   ],
   providers: [MessageService],
 })

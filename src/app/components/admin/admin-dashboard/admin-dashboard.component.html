@@ -43,7 +43,7 @@
         <div class="stat-card">
           <div class="stat-card__title d-flex justify-content-between align-items-end">
             <div> Incoming Certifications</div>
-            <select class="form-control col-2" [(ngModel)]="filterSel" (change)="filterMonths()">
+            <select class="cursor-pointer form-control col-2" [(ngModel)]="filterSel" (change)="loadIncomingCertifications()">
               <option *ngFor="let d of monFilterOpt" [value]="d['code']">{{d['name']}}</option>
             </select>
 
@@ -59,8 +59,8 @@
                 <p-chart type="doughnut" [data]="ficData" [options]=" ficOptions"></p-chart>
                 <div class="doughnut-stats">
                   <div>
-                    <span class="manual">302</span><span class="px-2">/</span>
-                    <span class="auto">158</span>
+                    <span class="manual">{{ dData['mApprovedTotal']}}</span><span class="px-2">/</span>
+                    <span class="auto">{{ this.dData['aApprovedTotal']}}</span>
                   </div>
                 </div>
               </div>
@@ -94,10 +94,36 @@
     </div>
   </div>
   <div class="col-3">
-    <div class="reviewer-stats">
+    <!--  <div class="reviewer-stats">
       <div class="reviewer-stats__title">Reviewer Statistics</div>
       <div class="chart-area">
         <p-chart type="horizontalBar" [responsive]="true" [plugins]="[plugin]" [data]="rsData" [options]="rsOptions"></p-chart>
+      </div>
+    </div> -->
+    <div class="stat-card p-3">
+      <div class="stat-card__title mb-4">
+        Reviewer Statistics
+      </div>
+      <div class="rs-card">
+        <div class="d-flex justify-content-between">
+          <div class="rs-card__name">Naveen</div>
+          <div class="rs-card__count">358</div>
+        </div>
+        <div class="rs-card__email">naveen@vigameq.com</div>
+      </div>
+      <div class="rs-card">
+        <div class="d-flex justify-content-between">
+          <div class="rs-card__name">Naveen</div>
+          <div class="rs-card__count">358</div>
+        </div>
+        <div class="rs-card__email">naveen@vigameq.com</div>
+      </div>
+      <div class="rs-card">
+        <div class="d-flex justify-content-between">
+          <div class="rs-card__name">Naveen</div>
+          <div class="rs-card__count">358</div>
+        </div>
+        <div class="rs-card__email">naveen@vigameq.com</div>
       </div>
     </div>
   </div>

@@ -1,0 +1,51 @@
+.user-stats {
+  background-color: #f8f8f8;
+  padding: 8px 25px;
+  border-radius: 25px;
+
+  .card {
+    padding: 15px 30px;
+    border-radius: 25px;
+    border: none;
+    cursor: pointer;
+
+    &.active {
+      background-color: #fbc02d;
+      color: #ffffff;
+    }
+
+    &__title {
+      display: flex;
+      justify-content: space-between;
+      font-size: 16px;
+      font-weight: 600;
+
+      .pi-plus {
+        padding: 5px;
+        font-size: 14px;
+        font-weight: 700;
+        border-radius: 4px;
+        box-shadow: 0px 0px 5px 1px rgb(0 0 0 / 30%);
+        width: 28px;
+        text-align: center;
+        background-color: #ffffff;
+        color: #222222;
+      }
+    }
+
+    &__data {
+      display: flex;
+      padding: 0 10px;
+      align-items: baseline;
+      font-size: 16px;
+      font-weight: 600;
+
+      .count {
+        font-size: 50px;
+        line-height: 60px;
+        font-weight: 400;
+        padding-right: 5px;
+      }
+    }
+  }
+}

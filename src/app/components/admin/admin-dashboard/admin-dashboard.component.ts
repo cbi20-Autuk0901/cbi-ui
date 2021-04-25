@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UtilsService } from '../../../services/utils/utils.service';
-import ChartDataLabels from 'chartjs-plugin-datalabels';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -14,8 +13,6 @@ export class AdminDashboardComponent implements OnInit {
   isLoading: boolean;
   csData: any;
   csOptions: any;
-  rsData: any;
-  rsOptions: any;
   diData: any;
   diOptions: any;
   icData: any;
@@ -29,8 +26,8 @@ export class AdminDashboardComponent implements OnInit {
   constructor(private ds: DatastoreService, private utils: UtilsService) {
     this.isLoading = true;
     this.dData = { ...this.utils.getStore('userData') };
-    this.plugin = ChartDataLabels;
     this.monFilterOpt = [
+      { name: '1 Month', code: '1' },
       { name: '3 Months', code: '3' },
       { name: '6 Months', code: '6' },
       { name: '9 Months', code: '9' },
@@ -45,7 +42,7 @@ export class AdminDashboardComponent implements OnInit {
 
     this.ds.getDashboard(headers, 'adminDashboard').subscribe((data) => {
       this.pageData = data;
-      this.dData = data['dashboardStats'][0];
+      this.dData = data['dashboardStats'];
       this.processCharts(data);
       this.isLoading = false;
     });
@@ -86,61 +83,6 @@ export class AdminDashboardComponent implements OnInit {
             },
           },
         ],
-      },
-    };
-
-    this.rsOptions = {
-      legend: {
-        display: false,
-      },
-      scales: {
-        xAxes: [
-          {
-            display: false,
-            ticks: {
-              fontColor: '#ffffff',
-              fontSize: 10,
-              fontStyle: 'bold',
-            },
-            gridLines: {
-              color: 'rgba(0,0,0,0)',
-              display: false,
-            },
-          },
-        ],
-        yAxes: [
-          {
-            ticks: {
-              fontColor: '#ffffff',
-              fontSize: 12,
-              fontStyle: 'bold',
-              mirror: true,
-              labelOffset: -11,
-              z: 50,
-            },
-            gridLines: {
-              display: false,
-              color: 'rgba(0,0,0,0)',
-            },
-          },
-        ],
-      },
-      plugins: {
-        datalabels: {
-          formatter: function (value, context) {
-            return context.dataset.data[context.dataIndex];
-          },
-          borderRadius: 30,
-          color: '#000000',
-          align: 'end',
-          anchor: 'end',
-          offset: -20,
-          clip: true,
-          font: {
-            size: '10',
-            weight: '600',
-          },
-        },
       },
     };
 
@@ -188,7 +130,7 @@ export class AdminDashboardComponent implements OnInit {
   }
 
   processCharts = (data) => {
-    const statData = data['dashboardStats'][0];
+    const statData = data['dashboardStats'];
     const diLabels = ['Bonds', 'Loans', 'Deposit', 'Others'];
     const diValues = [
       statData['bond'],
@@ -223,49 +165,24 @@ export class AdminDashboardComponent implements OnInit {
       ],
     };
 
-    const rsLabels = [];
-    const rsValues = [];
-
-    data['reviewerStats'].forEach((el) => {
-      rsLabels.push(Object.keys(el)[0]);
-      rsValues.push(Object.values(el)[0]);
-    });
-
-    this.rsData = {
-      labels: rsLabels,
-      datasets: [
-        {
-          minBarLength: 25,
-          maxBarThickness: 13,
-          backgroundColor: '#ffffff',
-          data: rsValues,
-          borderRadius: 50,
-        },
-      ],
-    };
-
-    this.filterMonths();
-
-    this.ficData = {
-      labels: ['Manual', 'Auto'],
-      datasets: [
-        {
-          data: [300, 50],
-          backgroundColor: ['#563666', '#f7a931'],
-          hoverBackgroundColor: ['#563666', '#f7a931'],
-        },
-      ],
-    };
+    this.loadIncomingCertifications();
   };
 
-  filterMonths = () => {
+  loadIncomingCertifications = () => {
     let icLabel = [];
     let icData1 = [];
     let icData2 = [];
+    this.dData['mApprovedTotal'] = 0;
+    this.dData['aApprovedTotal'] = 0;
+
     const sortMon = this.pageData['monthlyStats'].sort(
       (x, y) => x.index - y.index
     );
     for (let i = 0; i < this.filterSel; i++) {
+      this.dData['mApprovedTotal'] =
+        this.dData['mApprovedTotal'] + sortMon[i].manualApproval;
+      this.dData['aApprovedTotal'] =
+        this.dData['aApprovedTotal'] + sortMon[i].autoApproval;
       icLabel.push(sortMon[i].label);
       icData1.push(sortMon[i].manualApproval);
       icData2.push(sortMon[i].autoApproval);
@@ -284,6 +201,16 @@ export class AdminDashboardComponent implements OnInit {
           backgroundColor: '#f7a931',
           data: icData2,
           minBarLength: 2,
+        },
+      ],
+    };
+    this.ficData = {
+      labels: ['Manual', 'Auto'],
+      datasets: [
+        {
+          data: [this.dData['mApprovedTotal'], this.dData['aApprovedTotal']],
+          backgroundColor: ['#689F38', '#D32F2F'],
+          hoverBackgroundColor: ['#689F38', '#D32F2F'],
         },
       ],
     };

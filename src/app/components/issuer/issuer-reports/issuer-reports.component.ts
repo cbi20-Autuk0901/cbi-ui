@@ -49,6 +49,7 @@ export class IssuerReportsComponent implements OnInit {
         date: item.applicationDate,
         instrType: item.instrumentType,
         status: item.certificationStatus,
+        certificate: item.certificate,
       };
       processedData.push(temp);
     });

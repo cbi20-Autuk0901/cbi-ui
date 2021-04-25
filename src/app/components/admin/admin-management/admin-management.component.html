@@ -1,0 +1,101 @@
+<div class="row" *ngIf="!isLoading">
+  <div class="col-8 offset-4">
+    <div class="user-stats">
+      <div class="row">
+        <div class="col-4">
+          <div class="card" (click)="changeView('issuer')" [ngClass]="{'active' : currentView === 'issuer'}">
+            <div class="card__title">
+              <span>Issuers</span>
+              <i class="pi pi-plus"></i>
+            </div>
+            <div class="card__data">
+              <div class="count">{{usrStats['issuerCount']}}</div>
+              <div>Users</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card" (click)="changeView('reviewer')" [ngClass]="{'active' : currentView === 'reviewer'}">
+            <div class="card__title">
+              <span>Reviewers</span>
+              <i class="pi pi-plus"></i>
+            </div>
+            <div class="card__data">
+              <div class="count">{{usrStats['reviewerCount']}}</div>
+              <div>Users</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-4">
+          <div class="card" (click)="changeView('admin')" [ngClass]="{'active' : currentView === 'admin'}">
+            <div class="card__title">
+              <span>Administrators</span>
+              <i class="pi pi-plus"></i>
+            </div>
+            <div class="card__data">
+              <div class="count">{{usrStats['adminCount']}}</div>
+              <div>Users</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+<div class="row">
+  <div class="col">
+    <p-table #dt1 [value]="usrList" selectionMode="single" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [globalFilterFields]="['firstName', 'lastName']">
+      <ng-template pTemplate="caption">
+        <div class="mb-3">
+
+          <span class="p-input-icon-right">
+            <i class="pi pi-search"></i>
+            <input pInputText type="text" (input)="dt1.filterGlobal($event.target['value'], 'contains')" placeholder="Search" />
+          </span>
+        </div>
+
+      </ng-template>
+      <ng-template pTemplate="header">
+        <tr>
+          <th>No.</th>
+          <th pSortableColumn="firstName">First Name <p-sortIcon field="firstName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="lastName">Last Name <p-sortIcon field="lastName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="userEmail">Email Address <p-sortIcon field="userEmail"></p-sortIcon>
+          </th>
+          <th pSortableColumn="userRole" *ngIf="currentView !== 'issuer'">Job Title <p-sortIcon field="userRole"></p-sortIcon>
+          </th>
+          <th pSortableColumn="userRole" *ngIf="currentView === 'issuer'">Issuer Type <p-sortIcon field="userRole"></p-sortIcon>
+          </th>
+          <th pSortableColumn="companyName" *ngIf="currentView === 'issuer'">Company Name <p-sortIcon field="companyName"></p-sortIcon>
+          </th>
+          <th pSortableColumn="location">Location <p-sortIcon field="location"></p-sortIcon>
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-list>
+        <tr>
+          <td>{{list.no}}</td>
+          <td>{{list.firstName | titlecase}}</td>
+          <td>{{list.lastName | titlecase}}</td>
+          <td>{{list.userEmail }}</td>
+          <td *ngIf="currentView !== 'issuer'">{{list.userRole | titlecase}}</td>
+          <td *ngIf="currentView === 'issuer'">{{list.userRole | titlecase}}</td>
+          <td *ngIf="currentView === 'issuer'">{{list.companyName | titlecase}}</td>
+          <td>{{list.location | titlecase}}</td>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="emptymessage" let-columns>
+        <tr>
+          <td class="p-5 text-center" colspan="7">
+            No Certifications Found
+          </td>
+        </tr>
+      </ng-template>
+    </p-table>
+
+  </div>
+</div>

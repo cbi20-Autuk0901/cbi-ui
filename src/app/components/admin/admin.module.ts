@@ -7,6 +7,7 @@ import { AdminSidebarComponent } from './admin-sidebar/admin-sidebar.component';
 import { AdminReportsComponent } from './admin-reports/admin-reports.component';
 import { PrimeModule } from '../../prime.module';
 import { AdminCertificationQueueComponent } from './admin-certification-queue/admin-certification-queue.component';
+import { AdminManagementComponent } from './admin-management/admin-management.component';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { AdminCertificationQueueComponent } from './admin-certification-queue/ad
     AdminSidebarComponent,
     AdminReportsComponent,
     AdminCertificationQueueComponent,
+    AdminManagementComponent,
   ],
   imports: [CommonModule, AdminRoutingModule, PrimeModule],
   exports: [AdminSidebarComponent, AdminDashboardComponent],
