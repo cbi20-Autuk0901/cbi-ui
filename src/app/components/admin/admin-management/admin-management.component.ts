@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UtilsService } from '../../../services/utils/utils.service';
 import { startCase } from 'lodash-es';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-admin-management',
@@ -14,9 +15,36 @@ export class AdminManagementComponent implements OnInit {
   isLoading: boolean;
   currentView: string;
   usrList: Array<object>;
+  userEntry: object;
+  userAddForm: FormGroup;
+  enableAddUsr: boolean;
+  clonedUsrs: { [s: string]: any } = {};
 
-  constructor(private ds: DatastoreService, private utils: UtilsService) {
+  constructor(
+    private ds: DatastoreService,
+    private utils: UtilsService,
+    private fb: FormBuilder
+  ) {
     this.isLoading = true;
+    this.userEntry = {
+      firstName: '',
+      lasName: '',
+      userEmail: '',
+      jobTitle: '',
+      location: '',
+      userRole: '',
+      companyName: '',
+    };
+    /* this.userAddForm = this.fb.group({
+      firstName: ['', [Validators.required]],
+      lastName: ['', [Validators.required]],
+      userEmail: ['', [Validators.required]],
+      jobTitle: ['', [Validators.required]],
+      location: ['', [Validators.required]],
+      userRole: ['', [Validators.required]],
+      companyName: ['', [Validators.required]],
+    }); */
+    this.enableAddUsr = false;
   }
 
   ngOnInit(): void {
@@ -43,5 +71,26 @@ export class AdminManagementComponent implements OnInit {
     }
 
     this.usrList = this.utils.addIndex(tempList);
+  };
+
+  onRowEditInit(tmpUsr: any) {
+    this.clonedUsrs[tmpUsr.id] = { ...tmpUsr };
+  }
+
+  onRowEditSave(tmpUsr: any) {
+    delete this.clonedUsrs[tmpUsr.id];
+  }
+
+  onRowEditCancel(tmpUsr: any, index: number) {
+    this.usrList[index] = this.clonedUsrs[tmpUsr.id];
+    delete this.clonedUsrs[tmpUsr.id];
+  }
+
+  addUser = (form) => {
+    if (form.valid) {
+      console.log(form.value);
+    } else {
+      this.utils.showMessage('error', 'Error', 'All fields are mandatory');
+    }
   };
 }

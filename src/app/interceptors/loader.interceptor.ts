@@ -20,7 +20,6 @@ export class LoaderInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     setTimeout(() => {
       this.blocker.on();
-      console.log('on');
     }, 0);
     return next.handle(request).pipe(
       tap(

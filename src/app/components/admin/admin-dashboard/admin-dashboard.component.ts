@@ -19,6 +19,7 @@ export class AdminDashboardComponent implements OnInit {
   icOptions: any;
   ficData: any;
   ficOptions: any;
+  rsData: Array<object>;
   plugin: any;
   monFilterOpt: Array<object>;
   filterSel: number;
@@ -164,6 +165,8 @@ export class AdminDashboardComponent implements OnInit {
         },
       ],
     };
+
+    this.rsData = data['reviewerStats'];
 
     this.loadIncomingCertifications();
   };

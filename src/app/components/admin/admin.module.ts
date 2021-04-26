@@ -8,6 +8,7 @@ import { AdminReportsComponent } from './admin-reports/admin-reports.component';
 import { PrimeModule } from '../../prime.module';
 import { AdminCertificationQueueComponent } from './admin-certification-queue/admin-certification-queue.component';
 import { AdminManagementComponent } from './admin-management/admin-management.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,7 @@ import { AdminManagementComponent } from './admin-management/admin-management.co
     AdminCertificationQueueComponent,
     AdminManagementComponent,
   ],
-  imports: [CommonModule, AdminRoutingModule, PrimeModule],
+  imports: [CommonModule, AdminRoutingModule, PrimeModule, ReactiveFormsModule],
   exports: [AdminSidebarComponent, AdminDashboardComponent],
 })
 export class AdminModule {}

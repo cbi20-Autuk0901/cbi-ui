@@ -6,7 +6,7 @@
           <div class="card" (click)="changeView('issuer')" [ngClass]="{'active' : currentView === 'issuer'}">
             <div class="card__title">
               <span>Issuers</span>
-              <i class="pi pi-plus"></i>
+              <i class="pi pi-plus icon-btn"></i>
             </div>
             <div class="card__data">
               <div class="count">{{usrStats['issuerCount']}}</div>
@@ -18,7 +18,7 @@
           <div class="card" (click)="changeView('reviewer')" [ngClass]="{'active' : currentView === 'reviewer'}">
             <div class="card__title">
               <span>Reviewers</span>
-              <i class="pi pi-plus"></i>
+              <i class="pi pi-plus icon-btn" (click)="enableAddUsr = true"></i>
             </div>
             <div class="card__data">
               <div class="count">{{usrStats['reviewerCount']}}</div>
@@ -30,7 +30,7 @@
           <div class="card" (click)="changeView('admin')" [ngClass]="{'active' : currentView === 'admin'}">
             <div class="card__title">
               <span>Administrators</span>
-              <i class="pi pi-plus"></i>
+              <i class="pi pi-plus icon-btn" (click)="enableAddUsr = true"></i>
             </div>
             <div class="card__data">
               <div class="count">{{usrStats['adminCount']}}</div>
@@ -46,56 +46,170 @@
 </div>
 <div class="row">
   <div class="col">
-    <p-table #dt1 [value]="usrList" selectionMode="single" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [globalFilterFields]="['firstName', 'lastName']">
-      <ng-template pTemplate="caption">
-        <div class="mb-3">
+    <form #userForm="ngForm" (ngSubmit)="userForm.form.valid && addUser(userForm)">
+      <p-table #dt1 dataKey="no" editMode="row" [value]="usrList" selectionMode="single" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [globalFilterFields]="['firstName', 'lastName']">
+        <ng-template pTemplate="caption">
+          <div class="mb-3">
 
-          <span class="p-input-icon-right">
-            <i class="pi pi-search"></i>
-            <input pInputText type="text" (input)="dt1.filterGlobal($event.target['value'], 'contains')" placeholder="Search" />
-          </span>
-        </div>
+            <span class="p-input-icon-right">
+              <i class="pi pi-search"></i>
+              <input pInputText type="text" (input)="dt1.filterGlobal($event.target['value'], 'contains')" placeholder="Search" />
+            </span>
+          </div>
 
-      </ng-template>
-      <ng-template pTemplate="header">
-        <tr>
-          <th>No.</th>
-          <th pSortableColumn="firstName">First Name <p-sortIcon field="firstName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="lastName">Last Name <p-sortIcon field="lastName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="userEmail">Email Address <p-sortIcon field="userEmail"></p-sortIcon>
-          </th>
-          <th pSortableColumn="userRole" *ngIf="currentView !== 'issuer'">Job Title <p-sortIcon field="userRole"></p-sortIcon>
-          </th>
-          <th pSortableColumn="userRole" *ngIf="currentView === 'issuer'">Issuer Type <p-sortIcon field="userRole"></p-sortIcon>
-          </th>
-          <th pSortableColumn="companyName" *ngIf="currentView === 'issuer'">Company Name <p-sortIcon field="companyName"></p-sortIcon>
-          </th>
-          <th pSortableColumn="location">Location <p-sortIcon field="location"></p-sortIcon>
-          </th>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="body" let-list>
-        <tr>
-          <td>{{list.no}}</td>
-          <td>{{list.firstName | titlecase}}</td>
-          <td>{{list.lastName | titlecase}}</td>
-          <td>{{list.userEmail }}</td>
-          <td *ngIf="currentView !== 'issuer'">{{list.userRole | titlecase}}</td>
-          <td *ngIf="currentView === 'issuer'">{{list.userRole | titlecase}}</td>
-          <td *ngIf="currentView === 'issuer'">{{list.companyName | titlecase}}</td>
-          <td>{{list.location | titlecase}}</td>
-        </tr>
-      </ng-template>
-      <ng-template pTemplate="emptymessage" let-columns>
-        <tr>
-          <td class="p-5 text-center" colspan="7">
-            No Certifications Found
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
+        </ng-template>
+        <ng-template pTemplate="header">
+          <tr>
+            <th>No.</th>
+            <th pSortableColumn="firstName">First Name <p-sortIcon field="firstName"></p-sortIcon>
+            </th>
+            <th pSortableColumn="lastName">Last Name <p-sortIcon field="lastName"></p-sortIcon>
+            </th>
+            <th pSortableColumn="userEmail">Email Address <p-sortIcon field="userEmail"></p-sortIcon>
+            </th>
+            <th pSortableColumn="userRole" *ngIf="currentView !== 'issuer'">Job Title <p-sortIcon field="userRole"></p-sortIcon>
+            </th>
+            <th pSortableColumn="userRole" *ngIf="currentView === 'issuer'">Issuer Type <p-sortIcon field="userRole"></p-sortIcon>
+            </th>
+            <th pSortableColumn="companyName" *ngIf="currentView === 'issuer'">Company Name <p-sortIcon field="companyName"></p-sortIcon>
+            </th>
+            <th pSortableColumn="location">Location <p-sortIcon field="location"></p-sortIcon>
+            </th>
+            <th>
+            </th>
+          </tr>
+          <tr *ngIf="enableAddUsr">
+            <th><i class="pi pi-times icon-btn" (click)="enableAddUsr = false"></i></th>
+            <th>
+              <div class="py-4">
+                <input class="form-control" name="firstName" ngModel #firstName="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && firstName.invalid }" required>
+              </div>
+            </th>
+            <th>
+              <div class="py-4">
+                <input class="form-control" name="lastName" required ngModel #lastName="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && lastName.invalid }">
+              </div>
+            </th>
+            <th>
+              <div class="py-4">
+                <input class="form-control" name="userEmail" required ngModel #userEmail="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && userEmail.invalid }">
+              </div>
+            </th>
+            <th>
+              <div class="py-4">
+                <input class="form-control" name="jobTitle" required ngModel #jobTitle="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && jobTitle.invalid }">
+              </div>
+            </th>
+            <th>
+              <div class="py-4">
+                <input class="form-control" name="location" required ngModel #location="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && location.invalid }">
+              </div>
+            </th>
+            <th> <button class="btn btn-green" type="submit">Add</button></th>
 
+          </tr>
+
+        </ng-template>
+        <ng-template pTemplate="body" let-list let-editing="editing" let-ri="rowIndex">
+          <tr [pEditableRow]="list">
+            <td>{{list.no}}</td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input class="form-control" type="text" name="firstName" [(ngModel)]="list['firstName']">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{list.firstName}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input class="form-control" type="text" name="lastName" [(ngModel)]="list['lastName']">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{list.lastName | titlecase}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input class="form-control" type="text" name="userEmail" [(ngModel)]="list['userEmail']">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{list.userEmail }}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td *ngIf="currentView !== 'issuer'">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input class="form-control" type="text" name="userRole" [(ngModel)]="list['userRole']">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{list.userRole | titlecase}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td *ngIf="currentView === 'issuer'">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input class="form-control" type="text" name="userRole" [(ngModel)]="list['userRole']">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{list.userRole | titlecase}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td *ngIf="currentView === 'issuer'">
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input class="form-control" type="text" name="companyName" [(ngModel)]="list['companyName']">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{list.companyName | titlecase}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <p-cellEditor>
+                <ng-template pTemplate="input">
+                  <input class="form-control" type="text" name="location" [(ngModel)]="list['location']">
+                </ng-template>
+                <ng-template pTemplate="output">
+                  {{list.location | titlecase}}
+                </ng-template>
+              </p-cellEditor>
+            </td>
+            <td>
+              <!--  <div class="dropdown show" appendTo="body">
+                <a class="btn btn-green dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                  Actions
+                </a>
+
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                  <a class="dropdown-item" href="#">Edit</a>
+                  <a class="dropdown-item" href="#">Delete</a>
+                </div>
+              </div> -->
+              <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(list)" class="p-button-rounded p-button-text"></button>
+              <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text"></button>
+              <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(list)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
+              <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(list, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+            </td>
+          </tr>
+        </ng-template>
+
+        <ng-template pTemplate="emptymessage" let-columns>
+          <tr>
+            <td class="p-5 text-center" colspan="7">
+              No Users Found
+            </td>
+          </tr>
+        </ng-template>
+      </p-table>
+    </form>
   </div>
 </div>

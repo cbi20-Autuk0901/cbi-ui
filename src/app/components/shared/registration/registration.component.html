@@ -11,7 +11,7 @@
       </div>
       <form (ngSubmit)="registerUser()" [formGroup]="registerForm" novalidate>
         <hr />
-
+        <input type="hidden" formControlName="jobTitle">
         <div class="row no-gutters">
           <div class="col-6">
             <div class="pr-5">

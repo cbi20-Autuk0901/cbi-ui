@@ -104,26 +104,12 @@
       <div class="stat-card__title mb-4">
         Reviewer Statistics
       </div>
-      <div class="rs-card">
+      <div class="rs-card" *ngFor="let card of rsData">
         <div class="d-flex justify-content-between">
-          <div class="rs-card__name">Naveen</div>
-          <div class="rs-card__count">358</div>
+          <div class="rs-card__name">{{card['firstName'] + ' ' + card['lastName'].charAt(0)}}</div>
+          <div class="rs-card__count">{{card['count']}}</div>
         </div>
-        <div class="rs-card__email">naveen@vigameq.com</div>
-      </div>
-      <div class="rs-card">
-        <div class="d-flex justify-content-between">
-          <div class="rs-card__name">Naveen</div>
-          <div class="rs-card__count">358</div>
-        </div>
-        <div class="rs-card__email">naveen@vigameq.com</div>
-      </div>
-      <div class="rs-card">
-        <div class="d-flex justify-content-between">
-          <div class="rs-card__name">Naveen</div>
-          <div class="rs-card__count">358</div>
-        </div>
-        <div class="rs-card__email">naveen@vigameq.com</div>
+        <div class="rs-card__email">{{card['email']}}</div>
       </div>
     </div>
   </div>
