@@ -1,16 +1,17 @@
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UtilsService } from '../../../services/utils/utils.service';
 import * as moment from 'moment';
 import { BlockerService } from '../../../services/blocker/blocker.service';
-import { MessageService } from 'primeng/api';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-work-board',
   templateUrl: './work-board.component.html',
   styleUrls: ['./work-board.component.scss'],
 })
-export class WorkBoardComponent implements OnInit, OnChanges {
+export class WorkBoardComponent implements OnInit {
   userData: object;
   certifications: Array<object>;
   loading: boolean = true;
@@ -27,8 +28,9 @@ export class WorkBoardComponent implements OnInit, OnChanges {
   constructor(
     private ds: DatastoreService,
     private utils: UtilsService,
-    private ms: MessageService,
-    private blocker: BlockerService
+    private blocker: BlockerService,
+    private route: ActivatedRoute,
+    private location: Location
   ) {
     this.pdfHeaders = {
       'Cache-Control':
@@ -48,15 +50,6 @@ export class WorkBoardComponent implements OnInit, OnChanges {
     };
     this.showSubmit = false;
     this.showSuccess = false;
-  }
-
-  ngOnChanges(changes) {
-    console.log(changes);
-  }
-
-  ngOnInit(): void {
-    this.loadWorkBoard();
-
     this.statuses = [
       { name: 'Approved', value: 'approved', count: 0, severity: 'success' },
       {
@@ -68,10 +61,16 @@ export class WorkBoardComponent implements OnInit, OnChanges {
     ];
   }
 
-  test = () => {
-    console.log('wewe');
-  };
-  loadWorkBoard = () => {
+  ngOnInit(): void {
+    let cID: string = '';
+    this.route.paramMap.subscribe((param) => {
+      cID = param.get('cID');
+      this.loadWorkBoard(cID);
+    });
+  }
+
+  loadWorkBoard = (cID?: string) => {
+    console.log(cID);
     this.reportStatus = {
       caAssuranceReport: false,
       signedDocument: false,
@@ -84,26 +83,34 @@ export class WorkBoardComponent implements OnInit, OnChanges {
       userEmail: this.userData['userEmail'],
     };
     this.ds.workBoard(payload).subscribe((res) => {
-      this.certifications = res.assignedCertifications.map((e, i) => {
-        e['renewableEnergy'] =
-          (e['renewableEnergy'] && e['renewableEnergy'][0]) || '';
-        e['amountIssued'] = (e['amountIssued'] && e['amountIssued'][0]) || '';
-        e['localCurrency'] =
-          (e['localCurrency'] && e['localCurrency'][0]) || '';
-        e['underwriter'] = (e['underwriter'] && e['underwriter'][0]) || '';
-        e['renewableEnergyText'] =
-          (e['renewableEnergyText'] && e['renewableEnergyText'][0]) || '';
-        e['no'] = i + 1;
-        return e;
-      });
+      const selCert = res.assignedCertifications.find(
+        (cert) => cert['certificationId'] === cID
+      );
 
-      this.pdfSrc = '';
-      this.statuses.forEach((st) => {
-        st['count'] = this.getListCount(this.certifications, st['value']);
-      });
-      this.pworkSpace = window.atob(res.workSpace.notes);
-      this.recentCases = this.getRecentApproved(res.assignedCertifications);
-      this.reviewCertification();
+      if (selCert && selCert['certificationStatus'] !== 'approved') {
+        this.reviewCertification(selCert);
+      } else {
+        this.location.go('/work-board');
+        this.certifications = res.assignedCertifications.map((e, i) => {
+          e['renewableEnergy'] =
+            (e['renewableEnergy'] && e['renewableEnergy'][0]) || '';
+          e['amountIssued'] = (e['amountIssued'] && e['amountIssued'][0]) || '';
+          e['localCurrency'] =
+            (e['localCurrency'] && e['localCurrency'][0]) || '';
+          e['underwriter'] = (e['underwriter'] && e['underwriter'][0]) || '';
+          e['renewableEnergyText'] =
+            (e['renewableEnergyText'] && e['renewableEnergyText'][0]) || '';
+          e['no'] = i + 1;
+          return e;
+        });
+        this.pdfSrc = '';
+        this.statuses.forEach((st) => {
+          st['count'] = this.getListCount(this.certifications, st['value']);
+        });
+        this.pworkSpace = window.atob(res.workSpace.notes);
+        this.recentCases = this.getRecentApproved(res.assignedCertifications);
+        this.reviewCertification();
+      }
 
       this.loading = false;
     });

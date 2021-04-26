@@ -49,6 +49,11 @@ const routes: Routes = [
     component: WorkBoardComponent,
   },
   {
+    path: 'work-board/:cID',
+    canActivate: [AuthGuard],
+    component: WorkBoardComponent,
+  },
+  {
     path: 'debt-instrument/:certType/:instrType',
     canActivate: [AuthGuard],
     component: DebtInstrumentPageComponent,

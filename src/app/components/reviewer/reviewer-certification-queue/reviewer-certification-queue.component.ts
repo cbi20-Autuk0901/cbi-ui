@@ -58,7 +58,7 @@ export class ReviewerCertificationQueueComponent implements OnInit {
         this.filteredCertifications = this.certifications;
         this.selectedCert = null;
       } else {
-        this.router.navigateByUrl('work-board');
+        this.router.navigate(['work-board'], selCert['certificationId']);
       }
     });
   };

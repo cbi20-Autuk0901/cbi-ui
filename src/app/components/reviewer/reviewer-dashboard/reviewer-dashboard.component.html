@@ -61,7 +61,7 @@
               </div>
               <div class="col-3">{{row['applicationDate'] | date: 'dd/MM/YYYY'}}</div>
               <div class="col-3">{{row['certificationCompany'] || '-'}}</div>
-              <div class="col-2"><button class="btn btn-sm btn-gray" routerLink="/work-board">View</button></div>
+              <div class="col-2"><button class="btn btn-sm btn-gray" [routerLink]="['/work-board', row['certificationId']]">View</button></div>
             </div>
           </div>
         </p-scrollPanel>
