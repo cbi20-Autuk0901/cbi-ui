@@ -97,6 +97,12 @@
                       <label class="form-check-label" for="programmaticIssuer">Programmatic Issuer</label>
                     </div>
                   </div>
+                  <div class="col-md-6 mt-1">
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" formControlName="userRole" id="verifier" value="verifier" />
+                      <label class="form-check-label" for="verifier">Verifier</label>
+                    </div>
+                  </div>
                 </div>
                 <span class="text-danger error" *ngIf="(controls.firstName.touched || submitted) && controls.firstName.errors?.required">
                   User Role is required

@@ -6,7 +6,7 @@
           <div class="card" (click)="changeView('issuer')" [ngClass]="{'active' : currentView === 'issuer'}">
             <div class="card__title">
               <span>Issuers</span>
-              <i class="pi pi-plus icon-btn"></i>
+              <i class="pi pi-plus icon-btn" data-backdrop="static" data-toggle="modal" data-target="#submitModal"></i>
             </div>
             <div class="card__data">
               <div class="count">{{usrStats['issuerCount']}}</div>
@@ -46,7 +46,8 @@
 </div>
 <div class="row">
   <div class="col">
-    <form #userForm="ngForm" (ngSubmit)="userForm.form.valid && addUser(userForm)">
+    <form #userForm="ngForm" (ngSubmit)="userForm.form.valid && addUser(userForm, currentView)">
+
       <p-table #dt1 dataKey="no" editMode="row" [value]="usrList" selectionMode="single" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [globalFilterFields]="['firstName', 'lastName']">
         <ng-template pTemplate="caption">
           <div class="mb-3">
@@ -92,7 +93,7 @@
             </th>
             <th>
               <div class="py-4">
-                <input class="form-control" name="userEmail" required ngModel #userEmail="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && userEmail.invalid }">
+                <input class="form-control" name="userEmail" required ngModel #userEmail="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [ngClass]="{ 'is-invalid': userForm.submitted && userEmail.invalid }">
               </div>
             </th>
             <th>
@@ -134,22 +135,15 @@
               </p-cellEditor>
             </td>
             <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input class="form-control" type="text" name="userEmail" [(ngModel)]="list['userEmail']">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{list.userEmail }}
-                </ng-template>
-              </p-cellEditor>
+              {{list.userEmail }}
             </td>
             <td *ngIf="currentView !== 'issuer'">
               <p-cellEditor>
                 <ng-template pTemplate="input">
-                  <input class="form-control" type="text" name="userRole" [(ngModel)]="list['userRole']">
+                  <input class="form-control" type="text" name="jobTitle" [(ngModel)]="list['jobTitle']">
                 </ng-template>
                 <ng-template pTemplate="output">
-                  {{list.userRole | titlecase}}
+                  {{list.jobTitle | titlecase}}
                 </ng-template>
               </p-cellEditor>
             </td>
@@ -183,21 +177,12 @@
                 </ng-template>
               </p-cellEditor>
             </td>
-            <td>
-              <!--  <div class="dropdown show" appendTo="body">
-                <a class="btn btn-green dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                  Actions
-                </a>
-
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                  <a class="dropdown-item" href="#">Edit</a>
-                  <a class="dropdown-item" href="#">Delete</a>
-                </div>
-              </div> -->
-              <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(list)" class="p-button-rounded p-button-text"></button>
-              <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-text"></button>
-              <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="onRowEditSave(list)" class="p-button-rounded p-button-text p-button-success p-mr-2"></button>
-              <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(list, ri)" class="p-button-rounded p-button-text p-button-danger"></button>
+            <td class="actions">
+              <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(list)" class="p-button-rounded p- p-button-success p-button-text" pTooltip="Edit User" tooltipPosition="top"></button>
+              <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-success p-button-text" pTooltip="Remove User" tooltipPosition="top" (click)="removeUser(list)"></button>
+              <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-key" class="p-button-rounded p-button-success p-button-text" pTooltip="Reset Password" tooltipPosition="top" (click)="resetPassword(list.userEmail)"></button>
+              <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="updateUser(list, ri)" class="p-button-rounded p-button-text p-button-success p-mr-2" pTooltip="Save" tooltipPosition="top"></button>
+              <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(list, ri)" class="p-button-rounded p-button-text p-button-danger cancelEdit" pTooltip="Cancel" tooltipPosition="top"></button>
             </td>
           </tr>
         </ng-template>
@@ -211,5 +196,27 @@
         </ng-template>
       </p-table>
     </form>
+  </div>
+</div>
+<div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+    <div class="modal-content">
+      <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeModal>
+        <span aria-hidden="true"><i class="pi pi-times"></i></span>
+      </button>
+      <h6 class="mt-2 mb-3">Issuer Registration Invitation</h6>
+      <form #isrInviteForm="ngForm" (ngSubmit)="isrInviteForm.form.valid && inviteIssuer(isrInviteForm)">
+        <div class="row">
+          <div class="col">
+            <input class="form-control" name="inviteeEmail" required ngModel #inviteeEmail="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [ngClass]="{ 'is-invalid': isrInviteForm.submitted && inviteeEmail.invalid }" placeholder="Invitee Email">
+          </div>
+        </div>
+        <div class="d-flex justify-content-around mt-5">
+          <button class="btn btn-gray" data-dismiss="modal">Cancel</button>
+          <button class="btn btn-yellow" type="submit">Send</button>
+        </div>
+      </form>
+
+    </div>
   </div>
 </div>

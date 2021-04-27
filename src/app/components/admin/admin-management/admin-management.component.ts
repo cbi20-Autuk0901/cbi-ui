@@ -1,8 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UtilsService } from '../../../services/utils/utils.service';
-import { startCase } from 'lodash-es';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { startCase, camelCase } from 'lodash-es';
 
 @Component({
   selector: 'app-admin-management',
@@ -10,45 +9,25 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./admin-management.component.scss'],
 })
 export class AdminManagementComponent implements OnInit {
+  @ViewChild('closeModal') closeModal: ElementRef;
+
   pgData: object;
+  userData: object;
   usrStats: object;
   isLoading: boolean;
   currentView: string;
   usrList: Array<object>;
-  userEntry: object;
-  userAddForm: FormGroup;
   enableAddUsr: boolean;
   clonedUsrs: { [s: string]: any } = {};
 
-  constructor(
-    private ds: DatastoreService,
-    private utils: UtilsService,
-    private fb: FormBuilder
-  ) {
+  constructor(private ds: DatastoreService, private utils: UtilsService) {
     this.isLoading = true;
-    this.userEntry = {
-      firstName: '',
-      lasName: '',
-      userEmail: '',
-      jobTitle: '',
-      location: '',
-      userRole: '',
-      companyName: '',
-    };
-    /* this.userAddForm = this.fb.group({
-      firstName: ['', [Validators.required]],
-      lastName: ['', [Validators.required]],
-      userEmail: ['', [Validators.required]],
-      jobTitle: ['', [Validators.required]],
-      location: ['', [Validators.required]],
-      userRole: ['', [Validators.required]],
-      companyName: ['', [Validators.required]],
-    }); */
     this.enableAddUsr = false;
+    this.userData = this.utils.getStore('userData');
   }
 
   ngOnInit(): void {
-    const headers: object = this.utils.getStore('userData');
+    const headers: object = { userEmail: this.userData['userEmail'] };
     this.ds.getAdminManagement(headers).subscribe((res) => {
       this.pgData = res;
       this.usrStats = res['userStats'];
@@ -70,27 +49,185 @@ export class AdminManagementComponent implements OnInit {
       });
     }
 
+    document
+      .querySelectorAll<HTMLElement>('.cancelEdit')
+      .forEach((node) => node.click());
+
     this.usrList = this.utils.addIndex(tempList);
   };
 
   onRowEditInit(tmpUsr: any) {
-    this.clonedUsrs[tmpUsr.id] = { ...tmpUsr };
+    this.clonedUsrs[tmpUsr.no] = { ...tmpUsr };
   }
 
-  onRowEditSave(tmpUsr: any) {
-    delete this.clonedUsrs[tmpUsr.id];
+  onRowEditSave(tmpUsr: any, index: number) {
+    this.usrList[index] = this.clonedUsrs[tmpUsr.no];
+    delete this.clonedUsrs[tmpUsr.no];
   }
 
   onRowEditCancel(tmpUsr: any, index: number) {
-    this.usrList[index] = this.clonedUsrs[tmpUsr.id];
-    delete this.clonedUsrs[tmpUsr.id];
+    this.usrList[index] = this.clonedUsrs[tmpUsr.no];
+    delete this.clonedUsrs[tmpUsr.no];
   }
 
-  addUser = (form) => {
+  addUser = (form, role) => {
+    const formData = form.value;
     if (form.valid) {
-      console.log(form.value);
+      const payload = {
+        ...formData,
+        adminEmail: this.userData['userEmail'],
+        companyName: '',
+        userRole: role,
+        invoiceCompanyName: '',
+        businessRegistrationNo: '',
+        businessAddress: '',
+        invoiceEmail: '',
+        phoneNumber: '',
+        password: '',
+      };
+
+      this.ds.adminAddUser(payload).subscribe(
+        (res) => {
+          this.utils.showMessage(
+            'success',
+            'Success',
+            'User Added Successfully'
+          );
+          this.pgData = res;
+          this.usrStats = res['userStats'];
+          this.enableAddUsr = false;
+          this.changeView(this.currentView);
+          form.reset();
+        },
+        (error) => {
+          this.utils.showMessage(
+            'error',
+            'Error',
+            'Unable to Add User. Please try again'
+          );
+        }
+      );
     } else {
       this.utils.showMessage('error', 'Error', 'All fields are mandatory');
     }
+  };
+
+  updateUser = (usrData: any, index: number) => {
+    usrData['userRole'] = camelCase(usrData['userRole']);
+
+    const payload = {
+      ...usrData,
+      adminEmail: this.userData['userEmail'],
+    };
+
+    this.ds.adminUpdateUser(payload).subscribe(
+      (res) => {
+        this.utils.showMessage(
+          'success',
+          'Success',
+          'User Updated Successfully'
+        );
+        this.pgData = res;
+        this.usrStats = res['userStats'];
+        this.enableAddUsr = false;
+        this.changeView(this.currentView);
+      },
+      (error) => {
+        this.utils.showMessage(
+          'error',
+          'Error',
+          'Unable to Update User. Please try again'
+        );
+      }
+    );
+  };
+
+  removeUser = (usr) => {
+    const payload = {
+      adminEmail: this.userData['userEmail'],
+      userEmail: usr.userEmail,
+    };
+
+    this.ds.adminRemoveUser(payload).subscribe(
+      (res) => {
+        this.utils.showMessage(
+          'success',
+          'Success',
+          'User Removed Successfully'
+        );
+        this.pgData = res;
+        this.usrStats = res['userStats'];
+        this.enableAddUsr = false;
+        this.changeView(this.currentView);
+      },
+      (error) => {
+        this.utils.showMessage(
+          'error',
+          'Error',
+          'Unable to Remove User. Please try again'
+        );
+      }
+    );
+  };
+
+  resetPassword = (email) => {
+    const payload = {
+      userEmail: email,
+    };
+    if (email) {
+      this.ds.forgotPassword(payload).subscribe(
+        (res) => {
+          this.utils.showMessage(
+            'success',
+            'Success',
+            'Password Reset successful. New password sent to User Mail'
+          );
+        },
+        (error) => {
+          this.utils.showMessage(
+            'error',
+            'Error',
+            'Unable to Reset Password. Please try again'
+          );
+        }
+      );
+    }
+  };
+
+  inviteIssuer = (form) => {
+    const formData = form.value;
+    const payload = {
+      adminEmail: this.userData['userEmail'],
+      userEmail: formData.inviteeEmail,
+    };
+
+    this.closeModal.nativeElement.click();
+
+    this.ds.adminInviteIssuer(payload).subscribe(
+      (res) => {
+        this.utils.showMessage(
+          'success',
+          'Success',
+          'Registration Link is Successfully Sent'
+        );
+
+        form.reset();
+      },
+      (error) => {
+        if (error.status === 409) {
+          this.utils.showMessage(
+            'error',
+            'Error',
+            'Registration Link is Already sent to this Email'
+          );
+        } else {
+          this.utils.showMessage(
+            'error',
+            'Error',
+            'Unable to Send Registration Link. Please try again'
+          );
+        }
+      }
+    );
   };
 }

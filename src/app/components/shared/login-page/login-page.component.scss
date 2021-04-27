@@ -1,8 +1,10 @@
 .login-page {
   background: rgb(84, 182, 191);
-  background: linear-gradient(90deg,
-      rgba(84, 182, 191, 0.9) 44%,
-      rgba(197, 230, 228, 1) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(84, 182, 191, 0.9) 44%,
+    rgba(197, 230, 228, 1) 100%
+  );
   position: fixed;
   right: 0;
   left: 0;
@@ -78,19 +80,6 @@
         margin-top: 30px;
         border: 0;
       }
-
-      .register-now {
-        margin-top: 15px;
-        color: #ffffff;
-
-        .link {
-          font-size: 16px;
-          font-weight: 700;
-          text-decoration: underline;
-          color: #ffffff;
-          cursor: pointer;
-        }
-      }
     }
 
     .image-section {
@@ -153,5 +142,6 @@
   }
 
   .left-section,
-  .right-section {}
+  .right-section {
+  }
 }

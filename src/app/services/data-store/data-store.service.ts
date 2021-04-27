@@ -209,4 +209,24 @@ export class DatastoreService {
     const url = '/api/approveCertification';
     return this.http.post(url, payload);
   };
+
+  adminAddUser = (payload: object): Observable<any> => {
+    const url = '/api/addUser';
+    return this.http.post(url, payload);
+  };
+
+  adminUpdateUser = (payload: object): Observable<any> => {
+    const url = '/api/updateUser';
+    return this.http.post(url, payload);
+  };
+
+  adminRemoveUser = (payload: object): Observable<any> => {
+    const url = '/api/removeUser';
+    return this.http.post(url, payload);
+  };
+
+  adminInviteIssuer = (payload: object): Observable<any> => {
+    const url = '/api/inviteIssuer';
+    return this.http.post(url, payload);
+  };
 }

@@ -7,8 +7,46 @@
 
   &.btn-green {
     background-color: #8dc63f;
-    border: 2px solid #8dc63f;
+    border: 1px solid #8dc63f;
     color: #ffffff;
+  }
+
+  &.btn-yellow {
+    background-color: #f7a931;
+    border: 1px solid #f7a931;
+    color: #ffffff;
+  }
+
+  &.btn-gray {
+    background: #ffffff;
+    color: #808085;
+    border: 1px solid #c8c8cb;
+  }
+}
+
+.modal {
+  .modal-content {
+    height: 250px;
+    position: relative;
+    padding: 60px 40px;
+
+    .close {
+      display: block;
+      width: 15px;
+      position: absolute;
+      top: 20px;
+      right: 30px;
+      font-size: 40px;
+      font-weight: 300;
+    }
+  }
+}
+
+.actions {
+  width: 115px;
+  .p-button-rounded {
+    width: 30px;
+    padding: 5px;
   }
 }
 

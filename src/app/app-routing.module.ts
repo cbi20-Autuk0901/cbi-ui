@@ -29,6 +29,10 @@ const routes: Routes = [
     component: RegistrationComponent,
   },
   {
+    path: 'registration/:token',
+    component: RegistrationComponent,
+  },
+  {
     path: 'certification-types',
     canActivate: [AuthGuard],
     component: CertTypesPageComponent,
