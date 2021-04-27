@@ -1,9 +1,9 @@
 <div class="container-fluid p-0">
-  <div *ngIf="currentPage !== '/login' && currentPage !== '/registration'">
+  <div *ngIf="isLoggedin">
     <app-sidebar></app-sidebar>
     <app-header></app-header>
   </div>
-  <div [ngClass]="{ 'main-content': currentPage !== '/login' && currentPage !== '/registration' }">
+  <div [ngClass]="{ 'main-content': isLoggedin }">
 
     <router-outlet></router-outlet>
 
