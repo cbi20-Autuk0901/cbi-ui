@@ -9,15 +9,16 @@ import { UtilsService } from '../../../services/utils/utils.service';
 })
 export class IssuerDashboardComponent implements OnInit {
   dashboardData: object;
+  userData: object;
   isLoading: boolean;
 
   constructor(private ds: DatastoreService, private utils: UtilsService) {
     this.isLoading = true;
-    this.dashboardData = { ...this.utils.getStore('userData') };
+    this.userData = this.utils.getStore('userData');
   }
   ngOnInit(): void {
     const payload = {
-      userEmail: this.dashboardData['userEmail'],
+      userEmail: this.userData['userEmail'],
     };
 
     this.ds.getDashboard(payload, 'issuerDashboard').subscribe((data) => {

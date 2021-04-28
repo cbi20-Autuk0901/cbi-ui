@@ -50,6 +50,7 @@ export class IssuerReportsComponent implements OnInit {
         instrType: item.instrumentType,
         status: item.certificationStatus,
         certificate: item.certificate,
+        approval: item.approval,
       };
       processedData.push(temp);
     });

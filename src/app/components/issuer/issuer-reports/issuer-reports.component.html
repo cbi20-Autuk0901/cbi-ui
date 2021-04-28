@@ -46,7 +46,17 @@
         <td>{{list.date | date: 'dd/MM/YYYY'}}</td>
         <td>{{list.instrType | titlecase}}</td>
         <td ngClass="{{list.status + ' status-text'}}">{{list.status === 'in-review' ? 'Under-Review' : list.status | titlecase}}</td>
-        <td> <a class="btn btn-green" target="_blank" href="{{'http://143.110.213.22:8883/file/'+list.certificate}}" *ngIf="list.status === 'approved'">Download</a>
+        <td>
+          <div class="dropdown" *ngIf="list.status === 'approved'">
+            <button class="btn btn-green dropdown-toggle" data-boundary="window" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Download
+            </button>
+            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" target="_blank" href="{{'http://143.110.213.22:8883/file/'+list.certificate}}">Certificate</a>
+              <a class="dropdown-item" target="_blank" href="{{'http://143.110.213.22:8883/file/'+list.approval}}">Approval</a>
+            </div>
+          </div>
+
           <button type="button" *ngIf="list.status !== 'approved'" disabled class="btn btn-secondary btn-sm">Not Available</button>
         </td>
       </tr>

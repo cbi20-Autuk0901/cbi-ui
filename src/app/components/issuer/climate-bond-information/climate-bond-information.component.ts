@@ -129,7 +129,9 @@ export class ClimateBondInformationComponent implements OnInit {
   }
 
   addField(name: string, value: string, required?: boolean) {
-    if (this[name].controls.length < 5) this[name].push(this.fb.control(value));
+    if (this[name].controls.length < 5) {
+      this[name].push(this.fb.control(value));
+    }
   }
 
   formGenerator = (formName, FormData?) => {

@@ -29,7 +29,7 @@ export class AppComponent implements OnChanges {
         this.isLoggedin =
           !!this.utils.getStore('userData') &&
           this.utils.getStore('userData')['userEmail'];
-        this.currentPage = this.router.url;
+        this.currentPage = event.url;
         this.ds.updateValue('currentPage', this.currentPage);
       }
     });
