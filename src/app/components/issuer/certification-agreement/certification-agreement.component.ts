@@ -57,6 +57,14 @@ export class CertificationAgreementComponent implements OnInit {
         if (data.applicationDate)
           data['applicationDate'] = new Date(data.applicationDate);
         this.caForm.patchValue(data);
+        if (
+          this.mainData['certType'] === 'post' &&
+          (this.userData['userRole'] === 'programmaticIssuer' ||
+            this.userData['userRole'] === 'verifier')
+        ) {
+          this.caSignedUploaded = true;
+          this.reportSrc = 'http://143.110.213.22:8883/file/' + data.agreement;
+        }
       });
     }
   }

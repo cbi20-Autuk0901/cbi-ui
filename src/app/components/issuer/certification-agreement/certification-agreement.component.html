@@ -1,95 +1,109 @@
 <div class="form-title">
-  <div>
-    <span class="step"> Step {{mainData['userRole'] === 'singleIssuer' ? '1' : '2'}}/4 </span>
-    <span class="px-1">-</span>
-    <span>Certification Agreement</span>
-  </div>
-  <a class="back-link" *ngIf="mainData['userRole'] !== 'singleIssuer'" (click)="switchPage('back')"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</a>
+ <div>
+  <span class="step"> Step {{mainData['userRole'] === 'singleIssuer' ? '1' : '2'}}/4 </span>
+  <span class="px-1">-</span>
+  <span>Certification Agreement</span>
+ </div>
+ <a class="back-link" *ngIf="mainData['userRole'] !== 'singleIssuer'" (click)="switchPage('back')"><i
+     class="fa fa-angle-double-left" aria-hidden="true"></i> Back</a>
 </div>
 <div class="row">
-  <div class="col-5">
-    <div class="form-card h-100">
-      <div class="form-card__title">
-        <div>User Information</div>
-      </div>
-      <form [formGroup]="caForm">
-        <div class="form-group row">
-          <label for="applicationDate" class="col-sm-6 col-form-label">Date of application</label>
-          <div class="col-sm-6">
-            <p-calendar styleClass="form-control p-0" [showIcon]="true" icon="fa fa-calendar" formControlName="applicationDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2099" inputId="applicationDate" dateFormat="dd-mm-yy"></p-calendar>
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="issuingEntityLegalName" class="col-sm-6 col-form-label">Legal Name of Issuing Entity</label>
-          <div class="col-sm-6">
-            <input type="text" class="form-control" id="issuingEntityLegalName" formControlName="issuingEntityLegalName" />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="debtInstrumentsUniqueName" class="col-sm-6 col-form-label">
-            Unique Name of Debt Instruments to be certified
-          </label>
-          <div class="col-sm-6">
-            <input type="text" class="form-control" id="debtInstrumentsUniqueName" formControlName="debtInstrumentsUniqueName" />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="address" class="col-sm-6 col-form-label">Address</label>
-          <div class="col-sm-6">
-            <input type="text" class="form-control" id="address" formControlName="address" />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="email" class="col-sm-6 col-form-label">Email Address</label>
-          <div class="col-sm-6">
-            <input type="text" class="form-control" id="email" formControlName="email" />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="issuerContactPerson" class="col-sm-6 col-form-label">Contact person of Issuer</label>
-          <div class="col-sm-6">
-            <input type="text" class="form-control" id="issuerContactPerson" formControlName="issuerContactPerson" />
-          </div>
-        </div>
-        <div class="form-group row">
-          <label for="signature" class="col-sm-6 col-form-label">Signature</label>
-          <div class="col-sm-6">
-            <input type="text" class="form-control" id="signature" formControlName="signature" />
-          </div>
-        </div>
-      </form>
+ <div class="col-5"
+      *ngIf="!(mainData['certType'] === 'post' && (userData['userRole'] === 'programmaticIssuer' || userData['userRole'] === 'verifier'))">
+  <div class="form-card h-100">
+   <div class="form-card__title">
+    <div>User Information</div>
+   </div>
+   <form [formGroup]="caForm">
+    <div class="form-group row">
+     <label for="applicationDate" class="col-sm-6 col-form-label">Date of application</label>
+     <div class="col-sm-6">
+      <p-calendar styleClass="form-control p-0" [showIcon]="true" icon="fa fa-calendar"
+                  formControlName="applicationDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2099"
+                  inputId="applicationDate" dateFormat="dd-mm-yy"></p-calendar>
+     </div>
     </div>
-  </div>
-  <div class="col-7">
-    <div class="form-card h-100">
-      <div class="form-card__title">
-        <div>Agreement Document</div>
-        <div>
-          <div class="btn btn-green upload-btn mr-3">
-            Upload +
-            <input type="file" (change)="uploadFile($event)">
-          </div>
-
-          <button class="btn btn-secondary" (click)="downloadPDF()">Download</button>
-
-        </div>
-      </div>
-      <div class="doc-viewer">
-        <div *ngIf="reportSrc">
-          <ngx-extended-pdf-viewer [src]="reportSrc" [showSidebarButton]="false" [minifiedJSLibraries]="true" [useBrowserLocale]="true" [language]="'en-US'" [showDownloadButton]="false" [filenameForDownload]="reportName" [showOpenFileButton]="false" [showBookmarkButton]="false" [httpHeaders]="reportHeaders" [showPresentationModeButton]="true" [zoom]="'page-width'" (pdfLoaded)="loader(true)" (pagesLoaded)="loader(false)"></ngx-extended-pdf-viewer>
-        </div>
-      </div>
+    <div class="form-group row">
+     <label for="issuingEntityLegalName" class="col-sm-6 col-form-label">Legal Name of Issuing Entity</label>
+     <div class="col-sm-6">
+      <input type="text" class="form-control" id="issuingEntityLegalName" formControlName="issuingEntityLegalName" />
+     </div>
     </div>
+    <div class="form-group row">
+     <label for="debtInstrumentsUniqueName" class="col-sm-6 col-form-label">
+      Unique Name of Debt Instruments to be certified
+     </label>
+     <div class="col-sm-6">
+      <input type="text" class="form-control" id="debtInstrumentsUniqueName"
+             formControlName="debtInstrumentsUniqueName" />
+     </div>
+    </div>
+    <div class="form-group row">
+     <label for="address" class="col-sm-6 col-form-label">Address</label>
+     <div class="col-sm-6">
+      <input type="text" class="form-control" id="address" formControlName="address" />
+     </div>
+    </div>
+    <div class="form-group row">
+     <label for="email" class="col-sm-6 col-form-label">Email Address</label>
+     <div class="col-sm-6">
+      <input type="text" class="form-control" id="email" formControlName="email" />
+     </div>
+    </div>
+    <div class="form-group row">
+     <label for="issuerContactPerson" class="col-sm-6 col-form-label">Contact person of Issuer</label>
+     <div class="col-sm-6">
+      <input type="text" class="form-control" id="issuerContactPerson" formControlName="issuerContactPerson" />
+     </div>
+    </div>
+    <div class="form-group row">
+     <label for="signature" class="col-sm-6 col-form-label">Signature</label>
+     <div class="col-sm-6">
+      <input type="text" class="form-control" id="signature" formControlName="signature" />
+     </div>
+    </div>
+   </form>
   </div>
+ </div>
+ <div
+      [ngClass]="(mainData['certType'] === 'post' && (userData['userRole'] === 'programmaticIssuer' || userData['userRole'] === 'verifier')) ? 'col-12' : 'col-7'">
+  <div class="form-card h-100">
+   <div class="form-card__title">
+    <div>Agreement Document</div>
+    <div
+         *ngIf="!(mainData['certType'] === 'post' && (userData['userRole'] === 'programmaticIssuer' || userData['userRole'] === 'verifier'))">
+     <div class="btn btn-green upload-btn mr-3">
+      Upload +
+      <input type="file" (change)="uploadFile($event)">
+     </div>
+
+     <button class="btn btn-secondary" (click)="downloadPDF()">Download</button>
+
+    </div>
+   </div>
+   <div class="doc-viewer">
+    <div *ngIf="reportSrc">
+     <ngx-extended-pdf-viewer [src]="reportSrc" [showSidebarButton]="false" [minifiedJSLibraries]="true"
+                              [useBrowserLocale]="true" [language]="'en-US'" [showDownloadButton]="false"
+                              [filenameForDownload]="reportName" [showOpenFileButton]="false"
+                              [showBookmarkButton]="false" [httpHeaders]="reportHeaders"
+                              [showPresentationModeButton]="true" [zoom]="'page-width'" (pdfLoaded)="loader(true)"
+                              (pagesLoaded)="loader(false)"></ngx-extended-pdf-viewer>
+    </div>
+   </div>
+  </div>
+ </div>
 </div>
 <div class="row mt-3">
-  <div class="col-6">
-    <a class="btn btn-green" (click)="saveFormStatus('caForm')">Save</a>
-  </div>
-  <div class="col-6 text-right">
-    <a class="next-link" (click)="switchPage('next')">
-      Next <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-    </a>
-  </div>
-  <div class="offset-1"></div>
+ <div class="col-6">
+  <a class="btn btn-green"
+     *ngIf="!(mainData['certType'] === 'post' && (userData['userRole'] === 'programmaticIssuer' || userData['userRole'] === 'verifier'))"
+     (click)="saveFormStatus('caForm')">Save</a>
+ </div>
+ <div class="col-6 text-right">
+  <a class="next-link" (click)="switchPage('next')">
+   Next <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+  </a>
+ </div>
+ <div class="offset-1"></div>
 </div>

@@ -40,7 +40,10 @@ export class ReviewerCertificationQueueComponent implements OnInit {
     };
     this.ds.getCertQueue(payload).subscribe((e) => {
       this.certifications = this.utils.addIndex(e.data);
-      this.filteredCertifications = this.certifications;
+      this.filteredCertifications = this.certifications.map((e) => {
+        e['applicationDate'] = Date.parse(e['applicationDate']);
+        return e;
+      });
       this.selectedCert = this.filteredCertifications[0] || null;
       this.loading = false;
     });
@@ -54,11 +57,14 @@ export class ReviewerCertificationQueueComponent implements OnInit {
     };
     this.ds.assignCertification(payload).subscribe((e) => {
       if (type === 'asn') {
-        this.certifications = this.utils.addIndex(e.data);
+        this.certifications = this.utils.addIndex(e.data).map((e) => {
+          e['applicationDate'] = Date.parse(e['applicationDate']);
+          return e;
+        });
         this.filteredCertifications = this.certifications;
         this.selectedCert = null;
       } else {
-        this.router.navigate(['work-board'], selCert['certificationId']);
+        this.router.navigate(['/work-board', selCert['certificationId']]);
       }
     });
   };

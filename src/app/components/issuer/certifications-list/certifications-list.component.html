@@ -1,39 +1,45 @@
-  <p-table [value]="certifications" selectionMode="single" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [resizableColumns]="true">
-    <ng-template pTemplate="caption">
-      <h4 class="page-header"> Approved Certifications </h4>
-    </ng-template>
-    <ng-template pTemplate="header">
-      <tr>
-        <th>No.</th>
-        <th>Certification ID</th>
-        <th>Name</th>
-        <th>Certification Type</th>
-        <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon>
-        </th>
-        <th pSortableColumn="instrType">Instrument Type <p-sortIcon field="instrType"></p-sortIcon>
-        </th>
-        <th></th>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="body" let-list>
-      <tr>
-        <td>{{list.no}}</td>
-        <td>{{list.certId}}</td>
-        <td>{{list.name | titlecase}}</td>
-        <td>{{(list.certType | titlecase) + '-issuance'}}</td>
-        <td>{{list.date | date: 'dd/MM/YYYY'}}</td>
-        <td>{{list.instrType | titlecase}}</td>
-        <td>
-          <a class="btn btn-green" *ngIf="certType === 'post'" [routerLink]="['/debt-instrument', certType, list.instrType]" [queryParams]="{certId:list.certId}">Apply</a>
-          <a class="btn btn-green" *ngIf="certType === 'bondRedemption'" [routerLink]="['/bond-redemption', list.instrType]" [queryParams]="{certId:list.certId}">Apply</a>
-        </td>
-      </tr>
-    </ng-template>
-    <ng-template pTemplate="emptymessage" let-columns>
-      <tr>
-        <td class="p-5 text-center" colspan="7">
-          No Certifications Found
-        </td>
-      </tr>
-    </ng-template>
-  </p-table>
+<p-table [value]="certifications" selectionMode="single" [rows]="10" [autoLayout]="true" [paginator]="true"
+         [pageLinks]="5" [resizableColumns]="true">
+ <ng-template pTemplate="caption">
+  <h4 class="page-header"> Approved Certifications </h4>
+ </ng-template>
+ <ng-template pTemplate="header">
+  <tr>
+   <th>No.</th>
+   <th>Certification ID</th>
+   <th>Name</th>
+   <th>Certification Type</th>
+   <th pSortableColumn="date">Date <p-sortIcon field="date"></p-sortIcon>
+   </th>
+   <th pSortableColumn="instrType">Instrument Type <p-sortIcon field="instrType"></p-sortIcon>
+   </th>
+   <th></th>
+  </tr>
+ </ng-template>
+ <ng-template pTemplate="body" let-list>
+  <tr>
+   <td>{{list.no}}</td>
+   <td>{{list.certId}}</td>
+   <td>{{list.name | titlecase}}</td>
+   <td>{{(list.certType | titlecase) + '-issuance'}}</td>
+   <td>{{list.date | date: 'dd/MM/YYYY'}}</td>
+   <td>{{list.instrType | titlecase}}</td>
+   <td>
+    <a class="btn btn-green" *ngIf="certType === 'post'" [routerLink]="['/debt-instrument', certType, list.instrType]"
+       [queryParams]="{certId:list.certId}">Apply</a>
+    <a class="btn btn-green" *ngIf="certType === 'bondRedemption'" [routerLink]="['/bond-redemption', list.instrType]"
+       [queryParams]="{certId:list.certId}">Apply</a>
+    <a class="btn btn-green upload-btn" *ngIf="certType === 'annualReport'">Upload
+     <input type="file" name="annualReport" (change)="onChange($event, list)">
+    </a>
+   </td>
+  </tr>
+ </ng-template>
+ <ng-template pTemplate="emptymessage" let-columns>
+  <tr>
+   <td class="p-5 text-center" colspan="7">
+    No Certifications Found
+   </td>
+  </tr>
+ </ng-template>
+</p-table>

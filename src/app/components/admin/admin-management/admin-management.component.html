@@ -1,222 +1,245 @@
 <div class="row" *ngIf="!isLoading">
-  <div class="col-8 offset-4">
-    <div class="user-stats">
-      <div class="row">
-        <div class="col-4">
-          <div class="card" (click)="changeView('issuer')" [ngClass]="{'active' : currentView === 'issuer'}">
-            <div class="card__title">
-              <span>Issuers</span>
-              <i class="pi pi-plus icon-btn" data-backdrop="static" data-toggle="modal" data-target="#submitModal"></i>
-            </div>
-            <div class="card__data">
-              <div class="count">{{usrStats['issuerCount']}}</div>
-              <div>Users</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="card" (click)="changeView('reviewer')" [ngClass]="{'active' : currentView === 'reviewer'}">
-            <div class="card__title">
-              <span>Reviewers</span>
-              <i class="pi pi-plus icon-btn" (click)="enableAddUsr = true"></i>
-            </div>
-            <div class="card__data">
-              <div class="count">{{usrStats['reviewerCount']}}</div>
-              <div>Users</div>
-            </div>
-          </div>
-        </div>
-        <div class="col-4">
-          <div class="card" (click)="changeView('admin')" [ngClass]="{'active' : currentView === 'admin'}">
-            <div class="card__title">
-              <span>Administrators</span>
-              <i class="pi pi-plus icon-btn" (click)="enableAddUsr = true"></i>
-            </div>
-            <div class="card__data">
-              <div class="count">{{usrStats['adminCount']}}</div>
-              <div>Users</div>
-            </div>
-          </div>
-        </div>
+ <div class="col-8 offset-4">
+  <div class="user-stats">
+   <div class="row">
+    <div class="col-4">
+     <div class="card" (click)="changeView('issuer')" [ngClass]="{'active' : currentView === 'issuer'}">
+      <div class="card__title">
+       <span>Issuers</span>
+       <i class="pi pi-plus icon-btn" data-backdrop="static" data-toggle="modal" data-target="#submitModal"></i>
       </div>
-
+      <div class="card__data">
+       <div class="count">{{usrStats['issuerCount']}}</div>
+       <div>Users</div>
+      </div>
+     </div>
     </div>
+    <div class="col-4">
+     <div class="card" (click)="changeView('reviewer')" [ngClass]="{'active' : currentView === 'reviewer'}">
+      <div class="card__title">
+       <span>Reviewers</span>
+       <i class="pi pi-plus icon-btn" (click)="toggleEnableAdd()"></i>
+      </div>
+      <div class="card__data">
+       <div class="count">{{usrStats['reviewerCount']}}</div>
+       <div>Users</div>
+      </div>
+     </div>
+    </div>
+    <div class="col-4">
+     <div class="card" (click)="changeView('admin')" [ngClass]="{'active' : currentView === 'admin'}">
+      <div class="card__title">
+       <span>Administrators</span>
+       <i class="pi pi-plus icon-btn" (click)="toggleEnableAdd()"></i>
+      </div>
+      <div class="card__data">
+       <div class="count">{{usrStats['adminCount']}}</div>
+       <div>Users</div>
+      </div>
+     </div>
+    </div>
+   </div>
+
   </div>
+ </div>
 
 </div>
 <div class="row">
-  <div class="col">
-    <form #userForm="ngForm" (ngSubmit)="userForm.form.valid && addUser(userForm, currentView)">
+ <div class="col">
+  <form #userForm="ngForm" (ngSubmit)="userForm.form.valid && addUser(userForm, currentView)">
 
-      <p-table #dt1 dataKey="no" editMode="row" [value]="usrList" selectionMode="single" [rows]="10" [autoLayout]="true" [paginator]="true" [pageLinks]="5" [globalFilterFields]="['firstName', 'lastName']">
-        <ng-template pTemplate="caption">
-          <div class="mb-3">
+   <p-table #dt1 dataKey="no" editMode="row" [value]="usrList" selectionMode="single" [rows]="10" [autoLayout]="true"
+            [paginator]="true" [pageLinks]="5" [globalFilterFields]="['firstName', 'lastName']">
+    <ng-template pTemplate="caption">
+     <div class="mb-3">
 
-            <span class="p-input-icon-right">
-              <i class="pi pi-search"></i>
-              <input pInputText type="text" (input)="dt1.filterGlobal($event.target['value'], 'contains')" placeholder="Search" />
-            </span>
-          </div>
+      <span class="p-input-icon-right">
+       <i class="pi pi-search"></i>
+       <input pInputText type="text" (input)="dt1.filterGlobal($event.target['value'], 'contains')"
+              placeholder="Search" />
+      </span>
+     </div>
 
+    </ng-template>
+    <ng-template pTemplate="header">
+     <tr>
+      <th>No.</th>
+      <th pSortableColumn="firstName">First Name <p-sortIcon field="firstName"></p-sortIcon>
+      </th>
+      <th pSortableColumn="lastName">Last Name <p-sortIcon field="lastName"></p-sortIcon>
+      </th>
+      <th pSortableColumn="userEmail">Email Address <p-sortIcon field="userEmail"></p-sortIcon>
+      </th>
+      <th pSortableColumn="userRole" *ngIf="currentView !== 'issuer'">Job Title <p-sortIcon field="userRole">
+       </p-sortIcon>
+      </th>
+      <th pSortableColumn="userRole" *ngIf="currentView === 'issuer'">Issuer Type <p-sortIcon field="userRole">
+       </p-sortIcon>
+      </th>
+      <th pSortableColumn="companyName" *ngIf="currentView === 'issuer'">Company Name <p-sortIcon field="companyName">
+       </p-sortIcon>
+      </th>
+      <th pSortableColumn="location">Location <p-sortIcon field="location"></p-sortIcon>
+      </th>
+      <th>
+      </th>
+     </tr>
+     <tr *ngIf="enableAddUsr">
+      <th><i class="pi pi-times icon-btn" (click)="enableAddUsr = false"></i></th>
+      <th>
+       <div class="py-4">
+        <input class="form-control" name="firstName" ngModel #firstName="ngModel"
+               [ngClass]="{ 'is-invalid': userForm.submitted && firstName.invalid }" required>
+       </div>
+      </th>
+      <th>
+       <div class="py-4">
+        <input class="form-control" name="lastName" required ngModel #lastName="ngModel"
+               [ngClass]="{ 'is-invalid': userForm.submitted && lastName.invalid }">
+       </div>
+      </th>
+      <th>
+       <div class="py-4">
+        <input class="form-control" name="userEmail" required ngModel #userEmail="ngModel"
+               pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$"
+               [ngClass]="{ 'is-invalid': userForm.submitted && userEmail.invalid }">
+       </div>
+      </th>
+      <th>
+       <div class="py-4">
+        <input class="form-control" name="jobTitle" required ngModel #jobTitle="ngModel"
+               [ngClass]="{ 'is-invalid': userForm.submitted && jobTitle.invalid }">
+       </div>
+      </th>
+      <th>
+       <div class="py-4">
+        <input class="form-control" name="location" required ngModel #location="ngModel"
+               [ngClass]="{ 'is-invalid': userForm.submitted && location.invalid }">
+       </div>
+      </th>
+      <th> <button class="btn btn-green" type="submit">Add</button></th>
+
+     </tr>
+
+    </ng-template>
+    <ng-template pTemplate="body" let-list let-editing="editing" let-ri="rowIndex">
+     <tr [pEditableRow]="list">
+      <td>{{list.no}}</td>
+      <td>
+       <p-cellEditor>
+        <ng-template pTemplate="input">
+         <input class="form-control" type="text" name="firstName" [(ngModel)]="list['firstName']">
         </ng-template>
-        <ng-template pTemplate="header">
-          <tr>
-            <th>No.</th>
-            <th pSortableColumn="firstName">First Name <p-sortIcon field="firstName"></p-sortIcon>
-            </th>
-            <th pSortableColumn="lastName">Last Name <p-sortIcon field="lastName"></p-sortIcon>
-            </th>
-            <th pSortableColumn="userEmail">Email Address <p-sortIcon field="userEmail"></p-sortIcon>
-            </th>
-            <th pSortableColumn="userRole" *ngIf="currentView !== 'issuer'">Job Title <p-sortIcon field="userRole"></p-sortIcon>
-            </th>
-            <th pSortableColumn="userRole" *ngIf="currentView === 'issuer'">Issuer Type <p-sortIcon field="userRole"></p-sortIcon>
-            </th>
-            <th pSortableColumn="companyName" *ngIf="currentView === 'issuer'">Company Name <p-sortIcon field="companyName"></p-sortIcon>
-            </th>
-            <th pSortableColumn="location">Location <p-sortIcon field="location"></p-sortIcon>
-            </th>
-            <th>
-            </th>
-          </tr>
-          <tr *ngIf="enableAddUsr">
-            <th><i class="pi pi-times icon-btn" (click)="enableAddUsr = false"></i></th>
-            <th>
-              <div class="py-4">
-                <input class="form-control" name="firstName" ngModel #firstName="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && firstName.invalid }" required>
-              </div>
-            </th>
-            <th>
-              <div class="py-4">
-                <input class="form-control" name="lastName" required ngModel #lastName="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && lastName.invalid }">
-              </div>
-            </th>
-            <th>
-              <div class="py-4">
-                <input class="form-control" name="userEmail" required ngModel #userEmail="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [ngClass]="{ 'is-invalid': userForm.submitted && userEmail.invalid }">
-              </div>
-            </th>
-            <th>
-              <div class="py-4">
-                <input class="form-control" name="jobTitle" required ngModel #jobTitle="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && jobTitle.invalid }">
-              </div>
-            </th>
-            <th>
-              <div class="py-4">
-                <input class="form-control" name="location" required ngModel #location="ngModel" [ngClass]="{ 'is-invalid': userForm.submitted && location.invalid }">
-              </div>
-            </th>
-            <th> <button class="btn btn-green" type="submit">Add</button></th>
-
-          </tr>
-
+        <ng-template pTemplate="output">
+         {{list.firstName}}
         </ng-template>
-        <ng-template pTemplate="body" let-list let-editing="editing" let-ri="rowIndex">
-          <tr [pEditableRow]="list">
-            <td>{{list.no}}</td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input class="form-control" type="text" name="firstName" [(ngModel)]="list['firstName']">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{list.firstName}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input class="form-control" type="text" name="lastName" [(ngModel)]="list['lastName']">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{list.lastName | titlecase}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              {{list.userEmail }}
-            </td>
-            <td *ngIf="currentView !== 'issuer'">
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input class="form-control" type="text" name="jobTitle" [(ngModel)]="list['jobTitle']">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{list.jobTitle | titlecase}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td *ngIf="currentView === 'issuer'">
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input class="form-control" type="text" name="userRole" [(ngModel)]="list['userRole']">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{list.userRole | titlecase}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td *ngIf="currentView === 'issuer'">
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input class="form-control" type="text" name="companyName" [(ngModel)]="list['companyName']">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{list.companyName | titlecase}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td>
-              <p-cellEditor>
-                <ng-template pTemplate="input">
-                  <input class="form-control" type="text" name="location" [(ngModel)]="list['location']">
-                </ng-template>
-                <ng-template pTemplate="output">
-                  {{list.location | titlecase}}
-                </ng-template>
-              </p-cellEditor>
-            </td>
-            <td class="actions">
-              <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil" (click)="onRowEditInit(list)" class="p-button-rounded p- p-button-success p-button-text" pTooltip="Edit User" tooltipPosition="top"></button>
-              <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash" class="p-button-rounded p-button-success p-button-text" pTooltip="Remove User" tooltipPosition="top" (click)="removeUser(list)"></button>
-              <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-key" class="p-button-rounded p-button-success p-button-text" pTooltip="Reset Password" tooltipPosition="top" (click)="resetPassword(list.userEmail)"></button>
-              <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check" (click)="updateUser(list, ri)" class="p-button-rounded p-button-text p-button-success p-mr-2" pTooltip="Save" tooltipPosition="top"></button>
-              <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times" (click)="onRowEditCancel(list, ri)" class="p-button-rounded p-button-text p-button-danger cancelEdit" pTooltip="Cancel" tooltipPosition="top"></button>
-            </td>
-          </tr>
+       </p-cellEditor>
+      </td>
+      <td>
+       <p-cellEditor>
+        <ng-template pTemplate="input">
+         <input class="form-control" type="text" name="lastName" [(ngModel)]="list['lastName']">
         </ng-template>
+        <ng-template pTemplate="output">
+         {{list.lastName | titlecase}}
+        </ng-template>
+       </p-cellEditor>
+      </td>
+      <td>
+       {{list.userEmail }}
+      </td>
+      <td *ngIf="currentView !== 'issuer'">
+       <p-cellEditor>
+        <ng-template pTemplate="input">
+         <input class="form-control" type="text" name="jobTitle" [(ngModel)]="list['jobTitle']">
+        </ng-template>
+        <ng-template pTemplate="output">
+         {{list.jobTitle | titlecase}}
+        </ng-template>
+       </p-cellEditor>
+      </td>
+      <td *ngIf="currentView === 'issuer'">
+       <p-cellEditor>
+        <ng-template pTemplate="input">
+         <input class="form-control" type="text" name="userRole" [(ngModel)]="list['userRole']">
+        </ng-template>
+        <ng-template pTemplate="output">
+         {{list.userRole | titlecase}}
+        </ng-template>
+       </p-cellEditor>
+      </td>
+      <td *ngIf="currentView === 'issuer'">
+       <p-cellEditor>
+        <ng-template pTemplate="input">
+         <input class="form-control" type="text" name="companyName" [(ngModel)]="list['companyName']">
+        </ng-template>
+        <ng-template pTemplate="output">
+         {{list.companyName | titlecase}}
+        </ng-template>
+       </p-cellEditor>
+      </td>
+      <td>
+       <p-cellEditor>
+        <ng-template pTemplate="input">
+         <input class="form-control" type="text" name="location" [(ngModel)]="list['location']">
+        </ng-template>
+        <ng-template pTemplate="output">
+         {{list.location | titlecase}}
+        </ng-template>
+       </p-cellEditor>
+      </td>
+      <td class="actions">
+       <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+               (click)="onRowEditInit(list)" class="p-button-rounded p- p-button-success p-button-text"
+               pTooltip="Edit User" tooltipPosition="top"></button>
+       <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
+               class="p-button-rounded p-button-success p-button-text" pTooltip="Remove User" tooltipPosition="top"
+               (click)="removeUser(list)"></button>
+       <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-key"
+               class="p-button-rounded p-button-success p-button-text" pTooltip="Reset Password" tooltipPosition="top"
+               (click)="resetPassword(list.userEmail)"></button>
+       <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+               (click)="updateUser(list, ri)" class="p-button-rounded p-button-text p-button-success p-mr-2"
+               pTooltip="Save" tooltipPosition="top"></button>
+       <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+               (click)="onRowEditCancel(list, ri)" class="p-button-rounded p-button-text p-button-danger cancelEdit"
+               pTooltip="Cancel" tooltipPosition="top"></button>
+      </td>
+     </tr>
+    </ng-template>
 
-        <ng-template pTemplate="emptymessage" let-columns>
-          <tr>
-            <td class="p-5 text-center" colspan="7">
-              No Users Found
-            </td>
-          </tr>
-        </ng-template>
-      </p-table>
-    </form>
-  </div>
+    <ng-template pTemplate="emptymessage" let-columns>
+     <tr>
+      <td class="p-5 text-center" colspan="7">
+       No Users Found
+      </td>
+     </tr>
+    </ng-template>
+   </p-table>
+  </form>
+ </div>
 </div>
 <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
-    <div class="modal-content">
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeModal>
-        <span aria-hidden="true"><i class="pi pi-times"></i></span>
-      </button>
-      <h6 class="mt-2 mb-3">Issuer Registration Invitation</h6>
-      <form #isrInviteForm="ngForm" (ngSubmit)="isrInviteForm.form.valid && inviteIssuer(isrInviteForm)">
-        <div class="row">
-          <div class="col">
-            <input class="form-control" name="inviteeEmail" required ngModel #inviteeEmail="ngModel" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" [ngClass]="{ 'is-invalid': isrInviteForm.submitted && inviteeEmail.invalid }" placeholder="Invitee Email">
-          </div>
-        </div>
-        <div class="d-flex justify-content-around mt-5">
-          <button class="btn btn-gray" data-dismiss="modal">Cancel</button>
-          <button class="btn btn-yellow" type="submit">Send</button>
-        </div>
-      </form>
-
+ <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+  <div class="modal-content">
+   <button type="button" class="close" data-dismiss="modal" aria-label="Close" #closeModal>
+    <span aria-hidden="true"><i class="pi pi-times"></i></span>
+   </button>
+   <h6 class="mt-2 mb-3">Issuer Registration Invitation</h6>
+   <form #isrInviteForm="ngForm" (ngSubmit)="isrInviteForm.form.valid && inviteIssuer(isrInviteForm)">
+    <div class="row">
+     <div class="col">
+      <input class="form-control" name="inviteeEmail" required ngModel #inviteeEmail="ngModel"
+             pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$"
+             [ngClass]="{ 'is-invalid': isrInviteForm.submitted && inviteeEmail.invalid }" placeholder="Invitee Email">
+     </div>
     </div>
+    <div class="d-flex justify-content-around mt-5">
+     <button class="btn btn-gray" data-dismiss="modal">Cancel</button>
+     <button class="btn btn-yellow" type="submit">Send</button>
+    </div>
+   </form>
+
   </div>
+ </div>
 </div>

@@ -1,75 +1,84 @@
 <div *ngIf="!isLoading">
-  <h4 class="page-header">Certification Dashboard</h4>
-  <div class="row">
-    <div class="col-8">
-      <div class="d-flex justify-content-between" *ngIf="userData['userRole'] !== 'singleIssuer'">
-        <div class="card stat-card">
-          <div class="card__ribbon"></div>
-          <p class="title">In-Progress Certifications</p>
-          <p class="count">{{dashboardData['stats'].inprogress}}</p>
-        </div>
-        <div class="card stat-card">
-          <div class="card__ribbon"></div>
-          <p class="title">Approved Certifications</p>
-          <p class="count">{{dashboardData['stats'].approved}}</p>
-        </div>
-        <div class="card stat-card">
-          <div class="card__ribbon"></div>
-          <p class="title">Total Certifications</p>
-          <p class="count">{{dashboardData['stats'].total}}</p>
-        </div>
-      </div>
-      <div class="user-options">
-        <a class="btn btn-primary" routerLink="/certification-types">
-          Apply For Certification
-        </a>
-        <div class="btn btn-secondary upload-btn"> Submit Annual Report
-          <input class="btn btn-secondary" type="file">
-        </div>
-
-        <a class="btn btn-primary" routerLink="/certifications-listing" [queryParams]="{ certType: 'bondRedemption' }">
-          Bond Redemption
-        </a>
-
-      </div>
+ <h4 class="page-header">Certification Dashboard</h4>
+ <div class="row">
+  <div class="col-8">
+   <div class="d-flex justify-content-between" *ngIf="userData['userRole'] !== 'singleIssuer'">
+    <div class="card stat-card">
+     <div class="card__ribbon"></div>
+     <p class="title">In-Progress Certifications</p>
+     <p class="count">{{dashboardData['stats'].inprogress}}</p>
     </div>
-    <div class="col-4 pl-5">
-      <div class="recent-certifications" *ngIf="userData['userRole'] !== 'singleIssuer' && dashboardData['recentCertifications'].length > 0">
-        <div class="recent-certifications__title">Recent Certifications</div>
-        <div class="recent-certifications__list">
-          <div class="recent-certifications__item" *ngFor="let list of dashboardData['recentCertifications']">
-            <div class="recent-certifications__item__id">{{list.certificationId}}</div>
-            <div>
-              <button class="btn btn-secondary-sm" [routerLink]="['/debt-instrument', list.certificationType, list.instrumentType]" [queryParams]="{certId:list.certificationId}" type="button">
-                Submit Now
-              </button>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="recent-certifications" *ngIf="userData['userRole'] === 'singleIssuer'">
-        <div class="recent-certifications__title">Certification Status</div>
-        <div class="recent-certifications__list">
-          <div class="recent-certifications__item">
-            <div class="recent-certifications__item__id">Pre-Issuance Certification</div>
-            <div>
-              <i class="fa fa-check-circle" [ngClass]="{'active': dashboardData['recentCertificationStatus'] && (dashboardData['recentCertificationStatus']['pre'] === 'approved')}" aria-hidden="true"></i>
-            </div>
-          </div>
-          <div class="recent-certifications__item">
-            <div class="recent-certifications__item__id">Post-Issuance Certification</div>
-            <div>
-              <i class="fa fa-check-circle" [ngClass]="{'active': dashboardData['recentCertificationStatus'] && (dashboardData['recentCertificationStatus']['post'] === 'approved')}" aria-hidden="true"></i>
-            </div>
-          </div>
-          <div class="recent-certifications__item">
-            <div class="recent-certifications__item__id">Bond Redemption</div>
-            <div>
-              <i class="fa fa-check-circle" [ngClass]="{'active': dashboardData['recentCertificationStatus'] && (dashboardData['recentCertificationStatus']['bondRedemption'] === 'approved')}" aria-hidden="true"></i>
-            </div>
-          </div>
-        </div>
-      </div>
+    <div class="card stat-card">
+     <div class="card__ribbon"></div>
+     <p class="title">Approved Certifications</p>
+     <p class="count">{{dashboardData['stats'].approved}}</p>
     </div>
+    <div class="card stat-card">
+     <div class="card__ribbon"></div>
+     <p class="title">Total Certifications</p>
+     <p class="count">{{dashboardData['stats'].total}}</p>
+    </div>
+   </div>
+   <div class="user-options">
+    <a class="btn btn-primary" routerLink="/certification-types">
+     Apply For Certification
+    </a>
+    <a class="btn btn-secondary" routerLink="/certifications-listing" [queryParams]="{ certType: 'annualReport' }">
+     Submit Annual Report
+    </a>
+
+    <a class="btn btn-primary" routerLink="/certifications-listing" [queryParams]="{ certType: 'bondRedemption' }">
+     Bond Redemption
+    </a>
+
+   </div>
   </div>
+  <div class="col-4 pl-5">
+   <div class="recent-certifications"
+        *ngIf="userData['userRole'] !== 'singleIssuer' && dashboardData['recentCertifications'].length > 0">
+    <div class="recent-certifications__title">Recent Certifications</div>
+    <div class="recent-certifications__list">
+     <div class="recent-certifications__item" *ngFor="let list of dashboardData['recentCertifications']">
+      <div class="recent-certifications__item__id">{{list.certificationId}}</div>
+      <div>
+       <button class="btn btn-secondary-sm"
+               [routerLink]="['/debt-instrument', list.certificationType, list.instrumentType]"
+               [queryParams]="{certId:list.certificationId}" type="button">
+        Submit Now
+       </button>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="recent-certifications" *ngIf="userData['userRole'] === 'singleIssuer'">
+    <div class="recent-certifications__title">Certification Status</div>
+    <div class="recent-certifications__list">
+     <div class="recent-certifications__item">
+      <div class="recent-certifications__item__id">Pre-Issuance Certification</div>
+      <div>
+       <i class="fa fa-check-circle"
+          [ngClass]="{'active': dashboardData['recentCertificationStatus'] && (dashboardData['recentCertificationStatus']['pre'] === 'approved')}"
+          aria-hidden="true"></i>
+      </div>
+     </div>
+     <div class="recent-certifications__item">
+      <div class="recent-certifications__item__id">Post-Issuance Certification</div>
+      <div>
+       <i class="fa fa-check-circle"
+          [ngClass]="{'active': dashboardData['recentCertificationStatus'] && (dashboardData['recentCertificationStatus']['post'] === 'approved')}"
+          aria-hidden="true"></i>
+      </div>
+     </div>
+     <div class="recent-certifications__item">
+      <div class="recent-certifications__item__id">Bond Redemption</div>
+      <div>
+       <i class="fa fa-check-circle"
+          [ngClass]="{'active': dashboardData['recentCertificationStatus'] && (dashboardData['recentCertificationStatus']['bondRedemption'] === 'approved')}"
+          aria-hidden="true"></i>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
 </div>

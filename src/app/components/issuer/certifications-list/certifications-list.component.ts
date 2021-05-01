@@ -55,4 +55,32 @@ export class CertificationsListComponent implements OnInit {
     });
     return processedData;
   };
+
+  onChange = (event, data) => {
+    if (event.target.files.length > 0) {
+      const file = event.target.files[0];
+      const payload = {
+        annualReport: file,
+        certificationId: data['certId'],
+        certificationType: data['certType'],
+      };
+
+      this.ds.submitAnnualReport(payload).subscribe(
+        (res) => {
+          this.utils.showMessage(
+            'success',
+            'Success',
+            'Report Uploaded Successfully'
+          );
+        },
+        (error) => {
+          this.utils.showMessage(
+            'error',
+            'Error',
+            'Unable to Upload Report. Please try again.'
+          );
+        }
+      );
+    }
+  };
 }

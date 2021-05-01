@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CustomValidationService } from '../../../services/custom-validation/custom-validation.service';
 import { UserService } from '../../../services/user/user.service';
 import { UtilsService } from '../../../services/utils/utils.service';
@@ -22,7 +22,8 @@ export class RegistrationComponent implements OnInit {
     private fb: FormBuilder,
     private customValidator: CustomValidationService,
     private utils: UtilsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.isLoading = true;
     this.route.params.subscribe((rt) => {
@@ -41,7 +42,7 @@ export class RegistrationComponent implements OnInit {
                 [
                   Validators.required,
                   Validators.pattern(
-                    '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
+                    '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'
                   ),
                 ],
               ],
@@ -65,7 +66,7 @@ export class RegistrationComponent implements OnInit {
                 [
                   Validators.required,
                   Validators.pattern(
-                    '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'
+                    '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'
                   ),
                 ],
               ],
@@ -105,6 +106,9 @@ export class RegistrationComponent implements OnInit {
       const payload = this.registerForm.value;
       this.userS.registerUser(payload).subscribe((e) => {
         this.utils.showMessage('success', 'Success', 'Registered Successfully');
+        setTimeout(() => {
+          this.router.navigate(['/login']);
+        }, 1000);
       });
     }
   };

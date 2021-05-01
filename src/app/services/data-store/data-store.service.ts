@@ -119,6 +119,10 @@ export class DatastoreService {
         url = '/api/getPostCertifications';
         break;
       }
+      case 'annualReport': {
+        url = '/api/getPostCertifications';
+        break;
+      }
       default: {
         url = '/api/getCertifications';
         break;
@@ -160,6 +164,17 @@ export class DatastoreService {
     Object.entries(data).forEach(([key, value]): any => {
       formData.append(key, data[key]);
     });
+    return this.http.post(url, formData);
+  };
+
+  submitAnnualReport = (payload: any): Observable<any> => {
+    const formData = new FormData();
+    const url = '/api/submitAnnualReport';
+
+    formData.append('annualReport', payload['annualReport']);
+    formData.append('certificationId', payload['certificationId']);
+    formData.append('certificationType', payload['certificationType']);
+
     return this.http.post(url, formData);
   };
 

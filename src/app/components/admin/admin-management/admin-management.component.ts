@@ -36,9 +36,16 @@ export class AdminManagementComponent implements OnInit {
     });
   }
 
+  toggleEnableAdd = () => {
+    setTimeout(() => {
+      this.enableAddUsr = true;
+    });
+  };
+
   changeView = (name) => {
     let tempList = [];
     this.currentView = name;
+    this.enableAddUsr = false;
 
     if (name === 'admin') tempList = this.pgData['admins'];
     if (name === 'reviewer') tempList = this.pgData['reviewers'];
