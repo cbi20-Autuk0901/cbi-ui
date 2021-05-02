@@ -1,465 +1,494 @@
-  <div *ngIf="!isLoading">
+<div *ngIf="!isLoading">
 
-    <div class="form-title">
-      <div>
-        <span class="step"> Step {{mainData['userRole'] === 'singleIssuer' ? '2' : '1'}}/4 </span>
-        <span class="px-1">-</span>
-        <span>Climate Bond Information</span>
-      </div>
-      <a class="back-link" *ngIf="mainData['userRole'] === 'singleIssuer'" (click)="switchPage('back')"><i class="fa fa-angle-double-left" aria-hidden="true"></i> Back</a>
-    </div>
-
-    <form [formGroup]="cbiForm" novalidate (ngSubmit)="saveFormStatus(currentForm)" *ngIf="currentForm === 'cbiForm'">
-      <div class="row">
-        <div class="col">
-          <div class="form-card">
-            <div class="form-card__section">
-              <div class="form-card__title">
-                <div>Description of {{instrType | titlecase}} Details and Assets</div>
-                <div class="dropdown">
-                  <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Add +
-                  </button>
-                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" role="button" (click)="addField('localCurrency', '')">Local Currency</a>
-                    <a class="dropdown-item" role="button" (click)="addField('amountIssued', '')">Amount Issued</a>
-                    <a class="dropdown-item" role="button" (click)="addField('underwriter', '')">Underwriter</a>
-                  </div>
-                </div>
-              </div>
-              <div class="form-card__body">
-                <div class="form-group row required">
-                  <label for="uniqueName" class="col-sm-4 col-form-label">
-                    Name of {{instrType | titlecase}}</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="uniqueName" formControlName="uniqueName" />
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="issuanceCountry" class="col-sm-4 col-form-label">Country of Issuance</label>
-                  <div class="col">
-                    <input type="text" class="form-control" id="issuanceCountry" formControlName="issuanceCountry" />
-                  </div>
-                  <label for="cusip" class="col-sm-2 col-form-label">CUSIP</label>
-                  <div class="col">
-                    <input type="text" class="form-control" id="cusip" formControlName="cusip" />
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="lc" class="col-sm-4 col-form-label">Local Currency</label>
-                  <div formArrayName="localCurrency" class="col">
-                    <div [ngClass]="{'mb-3': localCurrency.controls.length >1}" *ngFor="let _ of localCurrency.controls; index as i">
-                      <input type="text" class="form-control" [formControlName]="i" />
-                    </div>
-                  </div>
-                  <label for="isin" class="col-sm-2 col-form-label">ISIN</label>
-                  <div class="col">
-                    <input type="text" class="form-control" id="isin" formControlName="isin" />
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="amountIssued" class="col-sm-4 col-form-label">Amount Issued In Local Currency</label>
-                  <div formArrayName="amountIssued" class="col">
-                    <div [ngClass]="{'mb-3': amountIssued.controls.length >1}" *ngFor="let _ of amountIssued.controls; index as i">
-                      <input type="text" class="form-control" [formControlName]="i" />
-                    </div>
-                  </div>
-                  <label for="coupon" class="col-sm-2 col-form-label">Coupon</label>
-                  <div class="col">
-                    <input type="text" class="form-control" id="coupon" formControlName="coupon" />
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="underwriter" class="col-sm-4 col-form-label">Underwriter</label>
-                  <div formArrayName="underwriter" class="col-sm-8">
-                    <div [ngClass]="{'mb-3': underwriter.controls.length >1}" *ngFor="let _ of underwriter.controls; index as i">
-                      <select class="form-control" [formControlName]="i">
-                        <option value="">Select</option>
-                        <option value="AECLU">AECLU</option>
-                        <option value="bam">BAM</option>
-                        <option value="bzgfcl">Beijing Zhongcai Green Financing Consultants Ltd</option>
-                        <option value="blockc">BlockC</option>
-                        <option value="bsu">Blue Snow Consulting</option>
-                        <option value="bvBrazil">Bureau Veritas (Brazil)</option>
-                        <option value="bvUK">Bureau Veritas</option>
-                        <option value="cca">Carbon Care Asia Limited</option>
-                        <option value="ct">Carbon Trust</option>
-                        <option value="cecep">CECEP</option>
-                        <option value="ccx">China Chengxin Credit Management Co.</option>
-                        <option value="clEIA">China Lianhe EIA</option>
-                        <option value="cqc">China Quality Certification Centre</option>
-                        <option value="deloitte">Deloitte</option>
-                        <option value="dnv">DNV.GL</option>
-                        <option value="dqs">DQS CFS</option>
-                        <option value="evi">Emergent Ventures India</option>
-                        <option value="epicsustainability">EPIC Sustainability</option>
-                        <option value="eqa">EQA Spain</option>
-                        <option value="ermCvs">ERM CVS</option>
-                        <option value="ey">EY</option>
-                        <option value="fe">First Environment</option>
-                        <option value="gcs">Golden Credit Service Co. Ltd.</option>
-                        <option value="gs">Greensolver</option>
-                        <option value="hkqaa">HKQAA</option>
-                        <option value="hrRatings">HR Ratings</option>
-                        <option value="ibis">IBIS ESG Consulting</option>
-                        <option value="iGreenBank">iGreenBank</option>
-                        <option value="induforOy">Indufor Oy</option>
-                        <option value="iss">ISS ESG</option>
-                        <option value="jcr">Japan Credit Rating Agency, Ltd.</option>
-                        <option value="kestrelVerifiers">Kestrel Verifiers</option>
-                        <option value="KPMG">KPMG</option>
-                        <option value="multiconsultASA">Multiconsult ASA</option>
-                        <option value="NSFCertification">NSF Certification, LLC</option>
-                        <option value="pcr">Pacific Credit Rating</option>
-                        <option value="PwC">PwC</option>
-                        <option value="raisingCleantech">Raising Clean-tech Investment Consulting Co., Ltd.</option>
-                        <option value="ramSustainability">RAM Sustainability</option>
-                        <option value="rsmAustralia">RSM Australia</option>
-                        <option value="rubicola">Rubicola Consulting</option>
-                        <option value="scopeGroup">Scope Group</option>
-                        <option value="sgs">SGS Hong Kong</option>
-                        <option value="sinoCarbon">SinoCarbon</option>
-                        <option value="sitawi">SITAWI</option>
-                        <option value="sustainAdvisory">SustainAdvisory</option>
-                        <option value="sustainalytics">Sustainalytics</option>
-                        <option value="synTaoGreenFinance">SynTao Green Finance</option>
-                        <option value="trisRating">TRIS Rating</option>
-                        <option value="tuvNord">TÜV NORD CERT</option>
-                        <option value="vigeoEiris">Vigeo Eiris</option>
-                      </select>
-                    </div>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="daInstrumentType" class="col-sm-4 col-form-label">
-                    Instrument Type
-                  </label>
-                  <div class="col-sm-8">
-                    <select class="form-control" id="daInstrumentType" formControlName="daInstrumentType">
-                      <option value="">Select</option>
-                      <option value="proceedsBond">Use of Proceeds Bond</option>
-                      <option value="proceedsRevenueBond">Use of Proceeds Revenue Bond</option>
-                      <option value="projectBond">Project Bond</option>
-                      <option value="securitizedBond">Securitized Bond</option>
-                      <option value="privatePlacement">Private Placement</option>
-                      <option value="loan">Loan</option>
-                      <option value="depositProduct">Deposit Product</option>
-                      <option value="others">Others</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="issueDate" class="col-sm-4 col-form-label">Issue Date</label>
-                  <div class="col-6">
-                    <p-calendar styleClass="form-control p-0" [showIcon]="true" icon="fa fa-calendar" formControlName="issueDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2099" inputId="issueDate" dateFormat="dd-mm-yy"></p-calendar>
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="maturityDate" class="col-sm-4 col-form-label">Maturity Date</label>
-                  <div class="col-6">
-                    <p-calendar styleClass="form-control p-0" [showIcon]="true" icon="fa fa-calendar" formControlName="maturityDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2099" inputId="maturityDate" dateFormat="dd-mm-yy"></p-calendar>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-card__section">
-              <div class="form-card__title">
-                <div>{{instrType | titlecase}} Details</div>
-                <a class="btn btn-secondary" (click)="addField('renewableEnergy', ''); addField('renewableEnergyText', ''); ">Add +</a>
-              </div>
-              <div class="form-card__body">
-                <div class="form-group row required">
-                  <div formArrayName="renewableEnergy" class="col-sm-4">
-                    <div [ngClass]="{'renewable-spacing': renewableEnergy.controls.length >1}" *ngFor="let _ of renewableEnergy.controls; index as i">
-                      <select class="form-control" [formControlName]="i">
-                        <option value="Renewable Energy">Renewable Energy</option>
-                        <option value="Agriculture">Agriculture</option>
-                        <option value="Bioenergy">Bioenergy</option>
-                        <option value="Forestry">Forestry</option>
-                        <option value="Low Carbon Transport">Low carbon transport</option>
-                        <option value="Marine Renewable Energy">Marine Renewable Energy</option>
-                        <option value="Protected Agriculture">Protected Agriculture</option>
-                        <option value="Shipping">Shipping</option>
-                        <option value="Solar">Solar</option>
-                        <option value="Water Infrastructure">Water Infrastructure</option>
-                        <option value="Waste Management">Waste Management</option>
-                        <option value="Wind">Wind</option>
-                      </select>
-                      <label class="required"></label>
-                    </div>
-                  </div>
-                  <div formArrayName="renewableEnergyText" class="col-sm-8">
-                    <div [ngClass]="{'mb-3': renewableEnergyText.controls.length >1}" *ngFor="let _ of renewableEnergyText.controls; index as i">
-                      <textarea class="form-control" [formControlName]="i"></textarea>
-                      <label class="required"></label>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="form-card">
-            <div class="form-card__section">
-              <div class="form-card__title">
-                <div>Use of proceeds/Set up of assets to be funded</div>
-              </div>
-              <div class="form-card__body">
-                <div class="form-group row required">
-                  <label for="financingAssets" class="col-sm-6 col-form-label">Refinancing of existing assets or financing new assets?</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="financingAssets" formControlName="financingAssets" />
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="proceedsAllocation" class="col-sm-6 col-form-label">Proceeds allocation across different project categories?</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="proceedsAllocation" formControlName="proceedsAllocation" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-card__section">
-              <div class="form-card__title">
-                <div>Project Selection and Evaluation</div>
-              </div>
-              <div class="form-card__body">
-                <div class="form-group row required">
-                  <label for="portfolioApproach" class="col-sm-6 col-form-label">Is there to be a portfolio(framework) approach?</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="portfolioApproach" formControlName="portfolioApproach" />
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="decisionProcedure" class="col-sm-6 col-form-label">Describe the decision procedure/policy for assessment of assets</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="decisionProcedure" formControlName="decisionProcedure" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-card__section">
-              <div class="form-card__title">
-                <div>Management of Proceeds</div>
-              </div>
-              <div class="form-card__body">
-                <div class="form-group row required">
-                  <label for="proceedsType" class="col-sm-6 col-form-label">Proceeds are to be either earmarked OR ringfenced?</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="proceedsType" formControlName="proceedsType" />
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="proceedsProcessDetail" class="col-sm-6 col-form-label">Provide detail on either earmarking or ringference process</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="proceedsProcessDetail" formControlName="proceedsProcessDetail" />
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="proceedsAllocationTiming" class="col-sm-6 col-form-label">Timing for allocation of {{instrType | titlecase}} proceeds</label>
-                  <div class="col-sm-6">
-                    <select class="form-control" formControlName="proceedsAllocationTiming">
-                      <option value="">Select</option>
-                      <option *ngFor="let year of calendarYears" [ngValue]="year['value']">{{year['name']}}</option>
-                    </select>
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="proceedsUse" class="col-sm-6 col-form-label">Use of proceeds before allocation to Certified assets/projects</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="proceedsUse" formControlName="proceedsUse" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col-1 align-self-center">
-          <i class="fa fa-chevron-circle-right form-button" aria-hidden="true" (click)="switchForm('cbiFormContd')"></i>
-        </div>
-      </div>
-      <button type="submit" #formTrigger class="d-none"></button>
-    </form>
-    <form [formGroup]="cbiFormContd" novalidate (ngSubmit)="saveFormStatus(currentForm)" *ngIf="currentForm === 'cbiFormContd'">
-      <div class="row">
-        <div class="col-1 align-self-center">
-          <i class="fa fa-chevron-circle-left form-button" aria-hidden="true" (click)="switchForm('cbiForm')"></i>
-        </div>
-        <div class="col">
-          <div class="form-card">
-            <div class="form-card__section">
-              <div class="form-card__title">Allocation Report</div>
-              <div class="form-card__body">
-                <div class="form-group row required">
-                  <label for="allocationReportFreq" class="col-sm-6 col-form-label">How often will there be a report? <br>(require one year at minimum)</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="allocationReportFreq" formControlName="allocationReportFreq" />
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="allocationReportFormat" class="col-sm-6 col-form-label">
-                    In what format (newsletter, part of CSR report, website disclosure / EMMA report)</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="allocationReportFormat" formControlName="allocationReportFormat" />
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="allocationReportAccess" class="col-sm-6 col-form-label">
-                    Will the report be public or bondholder/lender only?
-                  </label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="allocationReportAccess" formControlName="allocationReportAccess" />
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="allocationReportAddressLink" class="col-sm-6 col-form-label">
-                    If report will be on issuer website, please give website address
-                  </label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="allocationReportAddressLink" formControlName="allocationReportAddressLink" />
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="breakdownInclusion" class="col-sm-6 col-form-label">
-                    Will it include a breakdown of proceed allocations by individual project?
-                  </label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="breakdownInclusion" formControlName="breakdownInclusion" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-card__section">
-              <div class="form-card__title">Impact Reporting (environmental impacts/outcomes)</div>
-              <div class="form-card__body">
-                <div class="form-group row required">
-                  <label for="impactReportFreq" class="col-sm-6 col-form-label">How often will there be a report? <br>(require one year at minimum)</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="impactReportFreq" formControlName="impactReportFreq" />
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="impactReportFormat" class="col-sm-6 col-form-label">
-                    In what format (newsletter, part of CSR report, website disclosure / EMMA report)</label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="impactReportFormat" formControlName="impactReportFormat" />
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="impactReportAccess" class="col-sm-6 col-form-label">
-                    Will the report be public or bondholder/lender only?
-                  </label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="impactReportAccess" formControlName="impactReportAccess" />
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="impactReportAddressLink" class="col-sm-6 col-form-label">
-                    If report will be on issuer website, please give website address
-                  </label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="impactReportAddressLink" formControlName="impactReportAddressLink" />
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="quantitativeImpact" class="col-sm-6 col-form-label">
-                    Will there be quantitative impact indicators disclosed for each project category?
-                  </label>
-                  <div class="col-sm-6">
-                    <input type="text" class="form-control" id="quantitativeImpact" formControlName="quantitativeImpact" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="col">
-          <div class="form-card">
-            <div class="form-card__section">
-              <div class="form-card__title">
-                <div>Company Information</div>
-              </div>
-              <div class="form-card__body">
-                <div class="form-group row required">
-                  <label for="headOfficeAddress" class="col-sm-4 col-form-label">Address of Head Office</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="headOfficeAddress" formControlName="headOfficeAddress" />
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="vatNumber" class="col-sm-4 col-form-label">VAT Number (EU Countries)</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="vatNumber" formControlName="vatNumber" />
-                  </div>
-                </div>
-                <div class="form-group row required">
-                  <label for="businessRegistration" class="col-sm-4 col-form-label">Business Registration No.</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="businessRegistration" formControlName="businessRegistration" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-card__section">
-              <div class="form-card__title">
-                <div>Contact Person</div>
-              </div>
-              <div class="form-card__body">
-                <div class="form-group row">
-                  <label for="contactName" class="col-sm-4 col-form-label">Name</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="contactName" formControlName="contactName" />
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="position" class="col-sm-4 col-form-label">Position</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="position" formControlName="position" />
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="company" class="col-sm-4 col-form-label">Company</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="company" formControlName="company" />
-                  </div>
-                </div>
-                <div class="form-group row">
-                  <label for="contactNumber" class="col-sm-4 col-form-label">Contact number</label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="contactNumber" formControlName="contactNumber" />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="form-card__section">
-              <div class="form-card__title">Invoice Details</div>
-              <div class="form-card__body">
-                <div class="form-group row">
-                  <label for="invoiceName" class="col-sm-4 col-form-label">
-                    Invoice name
-                  </label>
-                  <div class="col-sm-8">
-                    <input type="text" class="form-control" id="invoiceName" formControlName="invoiceName" />
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <button type="submit" #formTrigger class="d-none"></button>
-    </form>
-    <div class="row mt-3">
-      <div class="col-6">
-        <a class="btn btn-green" (click)="triggerFormSave()">Save</a>
-      </div>
-      <div class="col-6 text-right">
-        <a class="next-link" (click)="switchPage('next')" *ngIf="currentForm === 'cbiFormContd'">
-          Next <i class="fa fa-angle-double-right" aria-hidden="true"></i>
-        </a>
-      </div>
-      <div class="offset-1"></div>
-    </div>
-
+ <div class="form-title">
+  <div>
+   <span class="step"> Step {{mainData['userRole'] === 'singleIssuer' ? '2' : '1'}}/4 </span>
+   <span class="px-1">-</span>
+   <span>Climate Bond Information</span>
   </div>
+  <a class="back-link" *ngIf="mainData['userRole'] === 'singleIssuer'" (click)="switchPage('back')"><i
+      class="fa fa-angle-double-left" aria-hidden="true"></i> Back</a>
+ </div>
+
+ <form [formGroup]="cbiForm" novalidate (ngSubmit)="saveFormStatus(currentForm)" *ngIf="currentForm === 'cbiForm'">
+  <div class="row">
+   <div class="col">
+    <div class="form-card">
+     <div class="form-card__section">
+      <div class="form-card__title">
+       <div>Description of {{instrType | titlecase}} Details and Assets</div>
+       <div class="dropdown">
+        <button class="btn btn-secondary" type="button" id="dropdownMenuButton" data-toggle="dropdown"
+                aria-haspopup="true" aria-expanded="false">
+         Add +
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+         <a class="dropdown-item" role="button" (click)="addField('localCurrency', '')">Local Currency</a>
+         <a class="dropdown-item" role="button" (click)="addField('amountIssued', '')">Amount Issued</a>
+         <a class="dropdown-item" role="button" (click)="addField('underwriter', '')">Underwriter</a>
+        </div>
+       </div>
+      </div>
+      <div class="form-card__body">
+       <div class="form-group row required">
+        <label for="uniqueName" class="col-sm-4 col-form-label">
+         Name of {{instrType | titlecase}}</label>
+        <div class="col-sm-8">
+         <input type="text" class="form-control" id="uniqueName" formControlName="uniqueName" />
+        </div>
+       </div>
+       <div class="form-group row">
+        <label for="issuanceCountry" class="col-sm-4 col-form-label">Country of Issuance</label>
+        <div class="col">
+         <input type="text" class="form-control" id="issuanceCountry" formControlName="issuanceCountry" />
+        </div>
+        <label for="cusip" class="col-sm-2 col-form-label">CUSIP</label>
+        <div class="col">
+         <input type="text" class="form-control" id="cusip" formControlName="cusip" />
+        </div>
+       </div>
+       <div class="form-group row">
+        <label for="lc" class="col-sm-4 col-form-label">Local Currency</label>
+        <div formArrayName="localCurrency" class="col">
+         <div [ngClass]="{'mb-3 position-relative': localCurrency.controls.length >1}"
+              *ngFor="let _ of localCurrency.controls; index as i">
+          <i class="pi pi-times close-field" (click)="removeField('localCurrency', i)" *ngIf="i !== 0 "></i>
+          <input type="text" class="form-control" [formControlName]="i" />
+         </div>
+        </div>
+        <label for="isin" class="col-sm-2 col-form-label">ISIN</label>
+        <div class="col">
+         <input type="text" class="form-control" id="isin" formControlName="isin" />
+        </div>
+       </div>
+       <div class="form-group row">
+        <label for="amountIssued" class="col-sm-4 col-form-label">Amount Issued In Local Currency</label>
+        <div formArrayName="amountIssued" class="col">
+         <div [ngClass]="{'mb-3 position-relative': amountIssued.controls.length >1}"
+              *ngFor="let _ of amountIssued.controls; index as i">
+          <i class="pi pi-times close-field" (click)="removeField('amountIssued', i)" *ngIf="i !== 0 "></i>
+          <input type="text" class="form-control" [formControlName]="i" />
+         </div>
+        </div>
+        <label for="coupon" class="col-sm-2 col-form-label">Coupon</label>
+        <div class="col">
+         <input type="text" class="form-control" id="coupon" formControlName="coupon" />
+        </div>
+       </div>
+       <div class="form-group row">
+        <label for="underwriter" class="col-sm-4 col-form-label">Underwriter</label>
+        <div formArrayName="underwriter" class="col-sm-8">
+         <div [ngClass]="{'mb-3 position-relative': underwriter.controls.length >1}"
+              *ngFor="let _ of underwriter.controls; index as i">
+          <i class="pi pi-times close-field" (click)="removeField('underwriter', i)" *ngIf="i !== 0 "></i>
+          <select class="form-control" [formControlName]="i">
+           <option value="">Select</option>
+           <option value="AECLU">AECLU</option>
+           <option value="bam">BAM</option>
+           <option value="bzgfcl">Beijing Zhongcai Green Financing Consultants Ltd</option>
+           <option value="blockc">BlockC</option>
+           <option value="bsu">Blue Snow Consulting</option>
+           <option value="bvBrazil">Bureau Veritas (Brazil)</option>
+           <option value="bvUK">Bureau Veritas</option>
+           <option value="cca">Carbon Care Asia Limited</option>
+           <option value="ct">Carbon Trust</option>
+           <option value="cecep">CECEP</option>
+           <option value="ccx">China Chengxin Credit Management Co.</option>
+           <option value="clEIA">China Lianhe EIA</option>
+           <option value="cqc">China Quality Certification Centre</option>
+           <option value="deloitte">Deloitte</option>
+           <option value="dnv">DNV.GL</option>
+           <option value="dqs">DQS CFS</option>
+           <option value="evi">Emergent Ventures India</option>
+           <option value="epicsustainability">EPIC Sustainability</option>
+           <option value="eqa">EQA Spain</option>
+           <option value="ermCvs">ERM CVS</option>
+           <option value="ey">EY</option>
+           <option value="fe">First Environment</option>
+           <option value="gcs">Golden Credit Service Co. Ltd.</option>
+           <option value="gs">Greensolver</option>
+           <option value="hkqaa">HKQAA</option>
+           <option value="hrRatings">HR Ratings</option>
+           <option value="ibis">IBIS ESG Consulting</option>
+           <option value="iGreenBank">iGreenBank</option>
+           <option value="induforOy">Indufor Oy</option>
+           <option value="iss">ISS ESG</option>
+           <option value="jcr">Japan Credit Rating Agency, Ltd.</option>
+           <option value="kestrelVerifiers">Kestrel Verifiers</option>
+           <option value="KPMG">KPMG</option>
+           <option value="multiconsultASA">Multiconsult ASA</option>
+           <option value="NSFCertification">NSF Certification, LLC</option>
+           <option value="pcr">Pacific Credit Rating</option>
+           <option value="PwC">PwC</option>
+           <option value="raisingCleantech">Raising Clean-tech Investment Consulting Co., Ltd.</option>
+           <option value="ramSustainability">RAM Sustainability</option>
+           <option value="rsmAustralia">RSM Australia</option>
+           <option value="rubicola">Rubicola Consulting</option>
+           <option value="scopeGroup">Scope Group</option>
+           <option value="sgs">SGS Hong Kong</option>
+           <option value="sinoCarbon">SinoCarbon</option>
+           <option value="sitawi">SITAWI</option>
+           <option value="sustainAdvisory">SustainAdvisory</option>
+           <option value="sustainalytics">Sustainalytics</option>
+           <option value="synTaoGreenFinance">SynTao Green Finance</option>
+           <option value="trisRating">TRIS Rating</option>
+           <option value="tuvNord">TÜV NORD CERT</option>
+           <option value="vigeoEiris">Vigeo Eiris</option>
+          </select>
+         </div>
+        </div>
+       </div>
+       <div class="form-group row">
+        <label for="daInstrumentType" class="col-sm-4 col-form-label">
+         Instrument Type
+        </label>
+        <div class="col-sm-8">
+         <select class="form-control" id="daInstrumentType" formControlName="daInstrumentType">
+          <option value="">Select</option>
+          <option value="proceedsBond">Use of Proceeds Bond</option>
+          <option value="proceedsRevenueBond">Use of Proceeds Revenue Bond</option>
+          <option value="projectBond">Project Bond</option>
+          <option value="securitizedBond">Securitized Bond</option>
+          <option value="privatePlacement">Private Placement</option>
+          <option value="loan">Loan</option>
+          <option value="depositProduct">Deposit Product</option>
+          <option value="others">Others</option>
+         </select>
+        </div>
+       </div>
+       <div class="form-group row">
+        <label for="issueDate" class="col-sm-4 col-form-label">Issue Date</label>
+        <div class="col-6">
+         <p-calendar styleClass="form-control p-0" [showIcon]="true" icon="fa fa-calendar" formControlName="issueDate"
+                     [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2099" inputId="issueDate"
+                     dateFormat="dd-mm-yy"></p-calendar>
+        </div>
+       </div>
+       <div class="form-group row">
+        <label for="maturityDate" class="col-sm-4 col-form-label">Maturity Date</label>
+        <div class="col-6">
+         <p-calendar styleClass="form-control p-0" [showIcon]="true" icon="fa fa-calendar"
+                     formControlName="maturityDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2099"
+                     inputId="maturityDate" dateFormat="dd-mm-yy"></p-calendar>
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="form-card__section">
+      <div class="form-card__title">
+       <div>{{instrType | titlecase}} Details</div>
+       <a class="btn btn-secondary" (click)="addField('renewableEnergy', ''); addField('renewableEnergyText', ''); ">Add
+        +</a>
+      </div>
+      <div class="form-card__body">
+       <div class="form-group row required">
+        <div formArrayName="renewableEnergy" class="col-sm-4">
+         <div [ngClass]="{'renewable-spacing position-relative': renewableEnergy.controls.length >1}"
+              *ngFor="let _ of renewableEnergy.controls; index as i">
+          <i class="pi pi-times close-field"
+             (click)="removeField('renewableEnergy', i); removeField('renewableEnergyText', i);" *ngIf="i !== 0 "></i>
+          <select class="form-control" [formControlName]="i">
+           <option value="Renewable Energy">Renewable Energy</option>
+           <option value="Agriculture">Agriculture</option>
+           <option value="Bioenergy">Bioenergy</option>
+           <option value="Forestry">Forestry</option>
+           <option value="Low Carbon Transport">Low carbon transport</option>
+           <option value="Marine Renewable Energy">Marine Renewable Energy</option>
+           <option value="Protected Agriculture">Protected Agriculture</option>
+           <option value="Shipping">Shipping</option>
+           <option value="Solar">Solar</option>
+           <option value="Water Infrastructure">Water Infrastructure</option>
+           <option value="Waste Management">Waste Management</option>
+           <option value="Wind">Wind</option>
+          </select>
+          <label class="required"></label>
+         </div>
+        </div>
+        <div formArrayName="renewableEnergyText" class="col-sm-8">
+         <div [ngClass]="{'mb-3': renewableEnergyText.controls.length >1}"
+              *ngFor="let _ of renewableEnergyText.controls; index as i">
+          <textarea class="form-control" [formControlName]="i"></textarea>
+          <label class="required"></label>
+         </div>
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="col">
+    <div class="form-card">
+     <div class="form-card__section">
+      <div class="form-card__title">
+       <div>Use of proceeds/Set up of assets to be funded</div>
+      </div>
+      <div class="form-card__body">
+       <div class="form-group row required">
+        <label for="financingAssets" class="col-sm-6 col-form-label">Refinancing of existing assets or financing new
+         assets?</label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="financingAssets" formControlName="financingAssets" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="proceedsAllocation" class="col-sm-6 col-form-label">Proceeds allocation across different project
+         categories?</label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="proceedsAllocation" formControlName="proceedsAllocation" />
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="form-card__section">
+      <div class="form-card__title">
+       <div>Project Selection and Evaluation</div>
+      </div>
+      <div class="form-card__body">
+       <div class="form-group row required">
+        <label for="portfolioApproach" class="col-sm-6 col-form-label">Is there to be a portfolio(framework)
+         approach?</label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="portfolioApproach" formControlName="portfolioApproach" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="decisionProcedure" class="col-sm-6 col-form-label">Describe the decision procedure/policy for
+         assessment of assets</label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="decisionProcedure" formControlName="decisionProcedure" />
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="form-card__section">
+      <div class="form-card__title">
+       <div>Management of Proceeds</div>
+      </div>
+      <div class="form-card__body">
+       <div class="form-group row required">
+        <label for="proceedsType" class="col-sm-6 col-form-label">Proceeds are to be either earmarked OR
+         ringfenced?</label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="proceedsType" formControlName="proceedsType" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="proceedsProcessDetail" class="col-sm-6 col-form-label">Provide detail on either earmarking or
+         ringference process</label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="proceedsProcessDetail" formControlName="proceedsProcessDetail" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="proceedsAllocationTiming" class="col-sm-6 col-form-label">Timing for allocation of
+         {{instrType | titlecase}} proceeds</label>
+        <div class="col-sm-6">
+         <select class="form-control" formControlName="proceedsAllocationTiming">
+          <option value="">Select</option>
+          <option *ngFor="let year of calendarYears" [ngValue]="year['value']">{{year['name']}}</option>
+         </select>
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="proceedsUse" class="col-sm-6 col-form-label">Use of proceeds before allocation to Certified
+         assets/projects</label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="proceedsUse" formControlName="proceedsUse" />
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="col-1 align-self-center">
+    <i class="fa fa-chevron-circle-right form-button" aria-hidden="true" (click)="switchForm('cbiFormContd')"></i>
+   </div>
+  </div>
+  <button type="submit" #formTrigger class="d-none"></button>
+ </form>
+ <form [formGroup]="cbiFormContd" novalidate (ngSubmit)="saveFormStatus(currentForm)"
+       *ngIf="currentForm === 'cbiFormContd'">
+  <div class="row">
+   <div class="col-1 align-self-center">
+    <i class="fa fa-chevron-circle-left form-button" aria-hidden="true" (click)="switchForm('cbiForm')"></i>
+   </div>
+   <div class="col">
+    <div class="form-card">
+     <div class="form-card__section">
+      <div class="form-card__title">Allocation Report</div>
+      <div class="form-card__body">
+       <div class="form-group row required">
+        <label for="allocationReportFreq" class="col-sm-6 col-form-label">How often will there be a report? <br>(require
+         one year at minimum)</label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="allocationReportFreq" formControlName="allocationReportFreq" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="allocationReportFormat" class="col-sm-6 col-form-label">
+         In what format (newsletter, part of CSR report, website disclosure / EMMA report)</label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="allocationReportFormat" formControlName="allocationReportFormat" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="allocationReportAccess" class="col-sm-6 col-form-label">
+         Will the report be public or bondholder/lender only?
+        </label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="allocationReportAccess" formControlName="allocationReportAccess" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="allocationReportAddressLink" class="col-sm-6 col-form-label">
+         If report will be on issuer website, please give website address
+        </label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="allocationReportAddressLink"
+                formControlName="allocationReportAddressLink" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="breakdownInclusion" class="col-sm-6 col-form-label">
+         Will it include a breakdown of proceed allocations by individual project?
+        </label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="breakdownInclusion" formControlName="breakdownInclusion" />
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="form-card__section">
+      <div class="form-card__title">Impact Reporting (environmental impacts/outcomes)</div>
+      <div class="form-card__body">
+       <div class="form-group row required">
+        <label for="impactReportFreq" class="col-sm-6 col-form-label">How often will there be a report? <br>(require one
+         year at minimum)</label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="impactReportFreq" formControlName="impactReportFreq" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="impactReportFormat" class="col-sm-6 col-form-label">
+         In what format (newsletter, part of CSR report, website disclosure / EMMA report)</label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="impactReportFormat" formControlName="impactReportFormat" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="impactReportAccess" class="col-sm-6 col-form-label">
+         Will the report be public or bondholder/lender only?
+        </label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="impactReportAccess" formControlName="impactReportAccess" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="impactReportAddressLink" class="col-sm-6 col-form-label">
+         If report will be on issuer website, please give website address
+        </label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="impactReportAddressLink"
+                formControlName="impactReportAddressLink" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="quantitativeImpact" class="col-sm-6 col-form-label">
+         Will there be quantitative impact indicators disclosed for each project category?
+        </label>
+        <div class="col-sm-6">
+         <input type="text" class="form-control" id="quantitativeImpact" formControlName="quantitativeImpact" />
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+   <div class="col">
+    <div class="form-card">
+     <div class="form-card__section">
+      <div class="form-card__title">
+       <div>Company Information</div>
+      </div>
+      <div class="form-card__body">
+       <div class="form-group row required">
+        <label for="headOfficeAddress" class="col-sm-4 col-form-label">Address of Head Office</label>
+        <div class="col-sm-8">
+         <input type="text" class="form-control" id="headOfficeAddress" formControlName="headOfficeAddress" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="vatNumber" class="col-sm-4 col-form-label">VAT Number (EU Countries)</label>
+        <div class="col-sm-8">
+         <input type="text" class="form-control" id="vatNumber" formControlName="vatNumber" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="businessRegistration" class="col-sm-4 col-form-label">Business Registration No.</label>
+        <div class="col-sm-8">
+         <input type="text" class="form-control" id="businessRegistration" formControlName="businessRegistration" />
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="form-card__section">
+      <div class="form-card__title">
+       <div>Contact Person</div>
+      </div>
+      <div class="form-card__body">
+       <div class="form-group row">
+        <label for="contactName" class="col-sm-4 col-form-label">Name</label>
+        <div class="col-sm-8">
+         <input type="text" class="form-control" id="contactName" formControlName="contactName" />
+        </div>
+       </div>
+       <div class="form-group row">
+        <label for="position" class="col-sm-4 col-form-label">Position</label>
+        <div class="col-sm-8">
+         <input type="text" class="form-control" id="position" formControlName="position" />
+        </div>
+       </div>
+       <div class="form-group row">
+        <label for="company" class="col-sm-4 col-form-label">Company</label>
+        <div class="col-sm-8">
+         <input type="text" class="form-control" id="company" formControlName="company" />
+        </div>
+       </div>
+       <div class="form-group row">
+        <label for="contactNumber" class="col-sm-4 col-form-label">Contact number</label>
+        <div class="col-sm-8">
+         <input type="text" class="form-control" id="contactNumber" formControlName="contactNumber" />
+        </div>
+       </div>
+      </div>
+     </div>
+     <div class="form-card__section">
+      <div class="form-card__title">Invoice Details</div>
+      <div class="form-card__body">
+       <div class="form-group row">
+        <label for="invoiceName" class="col-sm-4 col-form-label">
+         Invoice name
+        </label>
+        <div class="col-sm-8">
+         <input type="text" class="form-control" id="invoiceName" formControlName="invoiceName" />
+        </div>
+       </div>
+      </div>
+     </div>
+    </div>
+   </div>
+  </div>
+  <button type="submit" #formTrigger class="d-none"></button>
+ </form>
+ <div class="row mt-3">
+  <div [ngClass]="currentForm === 'cbiForm' ? 'col-6' : 'col-5 offset-1'">
+   <a class="btn btn-green" (click)="triggerFormSave()">Save</a>
+  </div>
+  <div class="col-6 text-right">
+   <a class="next-link" (click)="switchPage('next')" *ngIf="currentForm === 'cbiFormContd'">
+    Next <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+   </a>
+  </div>
+ </div>
+
+</div>

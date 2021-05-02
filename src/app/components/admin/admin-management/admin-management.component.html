@@ -49,7 +49,8 @@
   <form #userForm="ngForm" (ngSubmit)="userForm.form.valid && addUser(userForm, currentView)">
 
    <p-table #dt1 dataKey="no" editMode="row" [value]="usrList" selectionMode="single" [rows]="10" [autoLayout]="true"
-            [paginator]="true" [pageLinks]="5" [globalFilterFields]="['firstName', 'lastName']">
+            [paginator]="true"
+            [alwaysShowPaginator]="false" [pageLinks]="5" [globalFilterFields]="['firstName', 'lastName']">
     <ng-template pTemplate="caption">
      <div class="mb-3">
 
@@ -189,21 +190,23 @@
        </p-cellEditor>
       </td>
       <td class="actions">
-       <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
-               (click)="onRowEditInit(list)" class="p-button-rounded p- p-button-success p-button-text"
-               pTooltip="Edit User" tooltipPosition="top"></button>
-       <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
-               class="p-button-rounded p-button-success p-button-text" pTooltip="Remove User" tooltipPosition="top"
-               (click)="removeUser(list)"></button>
-       <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-key"
-               class="p-button-rounded p-button-success p-button-text" pTooltip="Reset Password" tooltipPosition="top"
-               (click)="resetPassword(list.userEmail)"></button>
-       <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
-               (click)="updateUser(list, ri)" class="p-button-rounded p-button-text p-button-success p-mr-2"
-               pTooltip="Save" tooltipPosition="top"></button>
-       <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
-               (click)="onRowEditCancel(list, ri)" class="p-button-rounded p-button-text p-button-danger cancelEdit"
-               pTooltip="Cancel" tooltipPosition="top"></button>
+       <div *ngIf="list.userEmail !== userData['userEmail']">
+        <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
+                (click)="onRowEditInit(list)" class="p-button-rounded p- p-button-success p-button-text"
+                pTooltip="Edit User" tooltipPosition="top"></button>
+        <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
+                class="p-button-rounded p-button-success p-button-text" pTooltip="Remove User" tooltipPosition="top"
+                (click)="removeUser(list)"></button>
+        <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-key"
+                class="p-button-rounded p-button-success p-button-text" pTooltip="Reset Password" tooltipPosition="top"
+                (click)="resetPassword(list.userEmail)"></button>
+        <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
+                (click)="updateUser(list, ri)" class="p-button-rounded p-button-text p-button-success p-mr-2"
+                pTooltip="Save" tooltipPosition="top"></button>
+        <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
+                (click)="onRowEditCancel(list, ri)" class="p-button-rounded p-button-text p-button-danger cancelEdit"
+                pTooltip="Cancel" tooltipPosition="top"></button>
+       </div>
       </td>
      </tr>
     </ng-template>

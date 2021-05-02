@@ -88,6 +88,9 @@ export class AdminDashboardComponent implements OnInit {
     };
 
     this.icOptions = {
+      legend: {
+        display: false,
+      },
       responsive: true,
       tooltips: {
         mode: 'index',
@@ -124,7 +127,7 @@ export class AdminDashboardComponent implements OnInit {
       aspectRatio: 1,
       animation: { animateRotate: true, animateScale: true },
       legend: {
-        display: true,
+        display: false,
         position: 'bottom',
       },
     };
@@ -194,24 +197,26 @@ export class AdminDashboardComponent implements OnInit {
       labels: icLabel,
       datasets: [
         {
-          label: 'Manual Approved',
+          label: 'Approved',
           backgroundColor: '#563666',
           data: icData1,
           minBarLength: 2,
         },
-        {
+        /* {
           label: 'Auto Approved',
           backgroundColor: '#f7a931',
           data: icData2,
           minBarLength: 2,
-        },
+        }, */
       ],
     };
     this.ficData = {
-      labels: ['Manual', 'Auto'],
+      labels: ['Approved' /* , 'Auto' */],
       datasets: [
         {
-          data: [this.dData['mApprovedTotal'], this.dData['aApprovedTotal']],
+          data: [
+            this.dData['mApprovedTotal'] /* , this.dData['aApprovedTotal'] */,
+          ],
           backgroundColor: ['#689F38', '#D32F2F'],
           hoverBackgroundColor: ['#689F38', '#D32F2F'],
         },

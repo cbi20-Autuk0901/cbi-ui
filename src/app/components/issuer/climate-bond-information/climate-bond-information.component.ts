@@ -134,6 +134,10 @@ export class ClimateBondInformationComponent implements OnInit {
     }
   }
 
+  removeField(name: string, index: number) {
+    this[name].removeAt(index);
+  }
+
   formGenerator = (formName, FormData?) => {
     if (FormData) {
       Object.keys(FormData).forEach((name) => {

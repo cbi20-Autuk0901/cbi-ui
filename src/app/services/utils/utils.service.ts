@@ -61,7 +61,7 @@ export class UtilsService {
 
   showMessage = (severity, title, msg) => {
     this.ms.add({
-      key: 'bc',
+      key: 'c',
       severity: severity,
       summary: title,
       detail: msg,
