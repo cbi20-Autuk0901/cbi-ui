@@ -1,11 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor,
-  HttpResponse,
-} from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor, HttpResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { BlockerService } from './../services/blocker/blocker.service';
 import { tap } from 'rxjs/operators';
@@ -14,10 +8,7 @@ import { tap } from 'rxjs/operators';
 export class LoaderInterceptor implements HttpInterceptor {
   constructor(private blocker: BlockerService) {}
 
-  intercept(
-    request: HttpRequest<any>,
-    next: HttpHandler
-  ): Observable<HttpEvent<any>> {
+  intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     setTimeout(() => {
       this.blocker.on();
     }, 0);

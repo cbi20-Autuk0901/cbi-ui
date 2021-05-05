@@ -17,11 +17,7 @@ export class ReviewerCertificationQueueComponent implements OnInit {
   filteredCertifications: Array<object>;
   selectedCert: any;
 
-  constructor(
-    private ds: DatastoreService,
-    private utils: UtilsService,
-    private router: Router
-  ) {
+  constructor(private ds: DatastoreService, private utils: UtilsService, private router: Router) {
     this.userData = this.utils.getStore('userData');
     this.filterOptions = [
       { name: 'All', value: '' },

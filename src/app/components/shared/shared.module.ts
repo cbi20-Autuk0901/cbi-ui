@@ -14,13 +14,7 @@ import { ReviewerModule } from '../reviewer/reviewer.module';
 import { AdminModule } from '../admin/admin.module';
 
 @NgModule({
-  declarations: [
-    HeaderComponent,
-    SidebarComponent,
-    LoginPageComponent,
-    RegistrationComponent,
-    DashboardPageComponent,
-  ],
+  declarations: [HeaderComponent, SidebarComponent, LoginPageComponent, RegistrationComponent, DashboardPageComponent],
   imports: [
     CommonModule,
     SharedRoutingModule,

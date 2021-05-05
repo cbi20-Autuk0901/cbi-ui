@@ -1,115 +1,116 @@
 <div class="row" *ngIf="!isLoading">
-  <div class="col-6">
-    <div class="name-sticker">
-      <div class="name-sticker__greeting">
-        <span>Hello,</span>
-        <span class="pl-3">{{userData['firstName'] + ' ' + userData['lastName']}}</span>
-      </div>
-      <div class="name-sticker__text">
-        Everything that is created begins in the mind.
-      </div>
-    </div>
-    <div class="certification-stats mt-5">
-      <h6 class="mb-3">Certification Dashboard</h6>
-      <div class="d-flex justify-content-between">
-        <div class="stat-card">
-          <div class="stat-card__ribbon"></div>
-          <div class="px-3">
-            <p class="title">Under Review</p>
-
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="count">{{dStats['in-review']}}</div>
-              <i class="pi pi-search"></i>
-            </div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card__ribbon"></div>
-          <div class="px-3">
-            <p class="title">Completed</p>
-
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="count">{{dStats['completed']}}</div>
-              <i class="pi pi-check"></i>
-            </div>
-          </div>
-        </div>
-        <div class="stat-card">
-          <div class="stat-card__ribbon"></div>
-          <div class="px-3">
-            <p class="title">Total</p>
-
-            <div class="d-flex justify-content-between align-items-center">
-              <div class="count">{{dStats['total']}}</div>
-              <i class="pi pi-chart-bar"></i>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="assigned-certifications mt-5">
-      <h6 class="mb-3">Assigned Certifications for Review</h6>
-      <div *ngIf="assignedCertifications.length > 0">
-        <p-scrollPanel [style]="{width: '100%', height: '280px'}">
-          <div class="certifications">
-            <div class="certifications__row" *ngFor="let row of assignedCertifications">
-              <div class="col-1">
-                <p-badge styleClass="p-badge-dot" styleClass="dot-badge-md" [severity]="row['severity']"></p-badge>
-              </div>
-              <div class="col-3">{{row['userCompany']}}
-                <div class="small">{{row['certificationId']}}</div>
-              </div>
-              <div class="col-3">{{row['applicationDate'] | date: 'dd/MM/YYYY'}}</div>
-              <div class="col-3">{{row['certificationCompany'] || '-'}}</div>
-              <div class="col-2"><button class="btn btn-sm btn-gray" [routerLink]="['/work-board', row['certificationId']]">View</button></div>
-            </div>
-          </div>
-        </p-scrollPanel>
-        <div class="text-right mt-3 pr-3">
-          <button class="btn btn-sm btn-yellow" routerLink="/work-board">Show More</button>
-        </div>
-      </div>
-
-      <p-message *ngIf="assignedCertifications.length === 0" severity="info" text="No Certifications Assigned"></p-message>
-
-    </div>
+ <div class="col-6">
+  <div class="name-sticker">
+   <div class="name-sticker__greeting">
+    <span>Hello,</span>
+    <span class="pl-3">{{userData['firstName'] + ' ' + userData['lastName']}}</span>
+   </div>
+   <div class="name-sticker__text">
+    Everything that is created begins in the mind.
+   </div>
   </div>
-  <div class="col-6">
-    <div class="charts-section">
-      <select class="filter-by form-control form-control-sm" [(ngModel)]="filterBy" (change)="loadDashboard()">
-        <option value="">Filter By</option>
-        <option value="1 days">Last 24 hours</option>
-        <option value="1 months">Last Month</option>
-        <option value="3 months">Last 3 months</option>
-        <option value="6 months">Last 6 months</option>
-        <option value="12 months">Last 12 months</option>
-      </select>
-      <div class="row no-gutters mt-5">
-        <div class="col-5">
-          <div class="chart-area mr-2">
-            <p-chart type="pie" width="200" height="200" [responsive]="true" [data]="diData" [options]="diOptions"></p-chart>
-          </div>
-        </div>
-        <div class="col-7">
-          <div class="chart-area">
-            <p-chart height="200" type="bar" [responsive]="true" [data]="ctData" [options]="ctOptions"></p-chart>
-          </div>
-        </div>
+  <div class="certification-stats mt-5">
+   <h6 class="mb-3">Certification Dashboard</h6>
+   <div class="d-flex justify-content-between">
+    <div class="stat-card">
+     <div class="stat-card__ribbon"></div>
+     <div class="px-3">
+      <p class="title">Under Review</p>
+
+      <div class="d-flex justify-content-between align-items-center">
+       <div class="count">{{dStats['in-review']}}</div>
+       <i class="pi pi-search"></i>
       </div>
-      <div class="row mt-2">
-        <div class="col-12">
-          <div class="chart-area">
-            <p-chart height="200" type="bar" [responsive]="true" [data]="uwData" [options]="uwOptions"></p-chart>
-          </div>
-        </div>
-      </div>
-      <div class="row mt-2">
-        <div class="col-12">
-          <div class="chart-area">
-            <div class="chart-area__heading">Loan Details</div>
-          </div>
-        </div>
-      </div>
+     </div>
     </div>
+    <div class="stat-card">
+     <div class="stat-card__ribbon"></div>
+     <div class="px-3">
+      <p class="title">Completed</p>
+
+      <div class="d-flex justify-content-between align-items-center">
+       <div class="count">{{dStats['completed']}}</div>
+       <i class="pi pi-check"></i>
+      </div>
+     </div>
+    </div>
+    <div class="stat-card">
+     <div class="stat-card__ribbon"></div>
+     <div class="px-3">
+      <p class="title">Total</p>
+
+      <div class="d-flex justify-content-between align-items-center">
+       <div class="count">{{dStats['total']}}</div>
+       <i class="pi pi-chart-bar"></i>
+      </div>
+     </div>
+    </div>
+   </div>
   </div>
+  <div class="assigned-certifications mt-5">
+   <h6 class="mb-3">Assigned Certifications for Review</h6>
+   <div *ngIf="assignedCertifications.length > 0">
+    <p-scrollPanel [style]="{width: '100%', height: '280px'}">
+     <div class="certifications">
+      <div class="certifications__row" *ngFor="let row of assignedCertifications">
+       <div class="col-1">
+        <p-badge styleClass="p-badge-dot" styleClass="dot-badge-md" [severity]="row['severity']"></p-badge>
+       </div>
+       <div class="col-3">{{row['userCompany']}}
+        <div class="small">{{row['certificationId']}}</div>
+       </div>
+       <div class="col-3">{{row['applicationDate'] | date: 'dd/MM/YYYY'}}</div>
+       <div class="col-3">{{row['certificationCompany'] || '-'}}</div>
+       <div class="col-2"><button class="btn btn-sm btn-gray"
+                [routerLink]="['/work-board', row['certificationId']]">View</button></div>
+      </div>
+     </div>
+    </p-scrollPanel>
+    <div class="text-right mt-3 pr-3">
+     <button class="btn btn-sm btn-yellow" routerLink="/work-board">Show More</button>
+    </div>
+   </div>
+
+   <p-message *ngIf="assignedCertifications.length === 0" severity="info" text="No Certifications Assigned"></p-message>
+
+  </div>
+ </div>
+ <div class="col-6">
+  <div class="charts-section">
+   <select class="filter-by form-control form-control-sm" [(ngModel)]="filterBy" (change)="loadDashboard()">
+    <option value="">Filter By</option>
+    <option value="1 days">Last 24 hours</option>
+    <option value="1 months">Last Month</option>
+    <option value="3 months">Last 3 months</option>
+    <option value="6 months">Last 6 months</option>
+    <option value="12 months">Last 12 months</option>
+   </select>
+   <div class="row no-gutters mt-5">
+    <div class="col-5">
+     <div class="chart-area mr-2">
+      <p-chart type="pie" width="200" height="200" [responsive]="true" [data]="diData" [options]="diOptions"></p-chart>
+     </div>
+    </div>
+    <div class="col-7">
+     <div class="chart-area">
+      <p-chart height="200" type="bar" [responsive]="true" [data]="ctData" [options]="ctOptions"></p-chart>
+     </div>
+    </div>
+   </div>
+   <div class="row mt-2">
+    <div class="col-12">
+     <div class="chart-area">
+      <p-chart height="200" type="bar" [responsive]="true" [data]="uwData" [options]="uwOptions"></p-chart>
+     </div>
+    </div>
+   </div>
+   <div class="row mt-2">
+    <div class="col-12">
+     <div class="chart-area">
+      <div class="chart-area__heading">Loan Details</div>
+     </div>
+    </div>
+   </div>
+  </div>
+ </div>
 </div>

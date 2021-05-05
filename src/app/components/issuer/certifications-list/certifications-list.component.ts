@@ -15,11 +15,7 @@ export class CertificationsListComponent implements OnInit {
   loading: boolean = true;
   certType: string;
 
-  constructor(
-    private ds: DatastoreService,
-    private utils: UtilsService,
-    private route: ActivatedRoute
-  ) {
+  constructor(private ds: DatastoreService, private utils: UtilsService, private route: ActivatedRoute) {
     this.userData = this.utils.getStore('userData');
   }
 
@@ -67,18 +63,10 @@ export class CertificationsListComponent implements OnInit {
 
       this.ds.submitAnnualReport(payload).subscribe(
         (res) => {
-          this.utils.showMessage(
-            'success',
-            'Success',
-            'Report Uploaded Successfully'
-          );
+          this.utils.showMessage('success', 'Success', 'Report Uploaded Successfully');
         },
         (error) => {
-          this.utils.showMessage(
-            'error',
-            'Error',
-            'Unable to Upload Report. Please try again.'
-          );
+          this.utils.showMessage('error', 'Error', 'Unable to Upload Report. Please try again.');
         }
       );
     }

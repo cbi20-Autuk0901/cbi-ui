@@ -39,20 +39,13 @@ export class RegistrationComponent implements OnInit {
               lastName: ['', Validators.required],
               userEmail: [
                 res['userEmail'],
-                [
-                  Validators.required,
-                  Validators.pattern(
-                    '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'
-                  ),
-                ],
+                [Validators.required, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')],
               ],
               password: [
                 '',
                 [
                   Validators.required,
-                  Validators.pattern(
-                    '^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'
-                  ),
+                  Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'),
                 ],
               ],
               confirmPassword: ['', Validators.required],
@@ -63,25 +56,14 @@ export class RegistrationComponent implements OnInit {
               businessRegistrationNo: ['', Validators.required],
               invoiceEmail: [
                 '',
-                [
-                  Validators.required,
-                  Validators.pattern(
-                    '^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$'
-                  ),
-                ],
+                [Validators.required, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')],
               ],
-              phoneNumber: [
-                '',
-                [Validators.required, Validators.pattern('^[0-9]*$')],
-              ],
+              phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
               businessAddress: ['', Validators.required],
               jobTitle: '',
             },
             {
-              validator: this.customValidator.MatchPassword(
-                'password',
-                'confirmPassword'
-              ),
+              validator: this.customValidator.MatchPassword('password', 'confirmPassword'),
             }
           );
           this.isValidSession = true;

@@ -6,13 +6,10 @@
 */
 {
   "compilerOptions": {
-    "experimentalDecorators": true,
+    "experimentalDecorators": true
   },
   "files": [],
-  "include": [
-    "src/**/*.d.ts",
-    "src/**/*.ts"
-  ],
+  "include": ["src/**/*.d.ts", "src/**/*.ts"],
   "references": [
     {
       "path": "./tsconfig.app.json"

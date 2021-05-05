@@ -32,14 +32,11 @@ export class AdminReportsComponent implements OnInit {
     };
     this.ds.getAdminReports(payload).subscribe((res) => {
       this.certifications = res.recentCertifications.map((e, i) => {
-        e['renewableEnergy'] =
-          (e['renewableEnergy'] && e['renewableEnergy'][0]) || '';
+        e['renewableEnergy'] = (e['renewableEnergy'] && e['renewableEnergy'][0]) || '';
         e['amountIssued'] = (e['amountIssued'] && e['amountIssued'][0]) || '';
-        e['localCurrency'] =
-          (e['localCurrency'] && e['localCurrency'][0]) || '';
+        e['localCurrency'] = (e['localCurrency'] && e['localCurrency'][0]) || '';
         e['underwriter'] = (e['underwriter'] && e['underwriter'][0]) || '';
-        e['renewableEnergyText'] =
-          (e['renewableEnergyText'] && e['renewableEnergyText'][0]) || '';
+        e['renewableEnergyText'] = (e['renewableEnergyText'] && e['renewableEnergyText'][0]) || '';
         e['no'] = i + 1;
         return e;
       });
@@ -51,9 +48,7 @@ export class AdminReportsComponent implements OnInit {
   }
 
   getListCount = (list, key) => {
-    const filteredList = list.filter(
-      (item) => item.certificationStatus === key
-    );
+    const filteredList = list.filter((item) => item.certificationStatus === key);
     return filteredList.length || 0;
   };
 

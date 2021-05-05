@@ -21,12 +21,10 @@ export class ReviewerReportsComponent implements OnInit {
       userEmail: this.userData['userEmail'],
     };
     this.ds.getApprovedCertifications(payload).subscribe((e) => {
-      this.certifications = this.utils
-        .addIndex(e.assignedCertifications)
-        .map((e) => {
-          e['applicationDate'] = Date.parse(e['applicationDate']);
-          return e;
-        });
+      this.certifications = this.utils.addIndex(e.assignedCertifications).map((e) => {
+        e['applicationDate'] = Date.parse(e['applicationDate']);
+        return e;
+      });
       this.loading = false;
     });
   }

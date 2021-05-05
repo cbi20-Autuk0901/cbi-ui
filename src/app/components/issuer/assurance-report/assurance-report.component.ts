@@ -18,11 +18,7 @@ export class AssuranceReportComponent implements OnInit {
   certId: string;
   isSubmitted: boolean;
 
-  constructor(
-    private fb: FormBuilder,
-    private ds: DatastoreService,
-    private utils: UtilsService
-  ) {
+  constructor(private fb: FormBuilder, private ds: DatastoreService, private utils: UtilsService) {
     this.isSubmitted = false;
   }
 
@@ -35,10 +31,7 @@ export class AssuranceReportComponent implements OnInit {
 
   switchPage = (type: string) => {
     if (type === 'back') {
-      this.ds.updateValue(
-        'currentFormPage',
-        this.mainData['userRole'] !== 'singleIssuer' ? 'caPage' : 'cbiPage'
-      );
+      this.ds.updateValue('currentFormPage', this.mainData['userRole'] !== 'singleIssuer' ? 'caPage' : 'cbiPage');
     }
   };
 
@@ -62,19 +55,11 @@ export class AssuranceReportComponent implements OnInit {
           });
         },
         (error) => {
-          this.utils.showMessage(
-            'error',
-            'Error',
-            'Unable to Upload files. Please try again !'
-          );
+          this.utils.showMessage('error', 'Error', 'Unable to Upload files. Please try again !');
         }
       );
     } else {
-      this.utils.showMessage(
-        'error',
-        'Error',
-        'Please Upload Files to Submit Application'
-      );
+      this.utils.showMessage('error', 'Error', 'Please Upload Files to Submit Application');
     }
   };
 
@@ -82,8 +67,7 @@ export class AssuranceReportComponent implements OnInit {
     this[name] = event.target.files[0].name;
     if (event.target.files.length > 0) {
       const file = event.target.files[0];
-      const currentControl =
-        name === 'caName' ? 'caAssuranceReport' : 'gbAssuranceReport';
+      const currentControl = name === 'caName' ? 'caAssuranceReport' : 'gbAssuranceReport';
       this.arForm.patchValue({
         [currentControl]: file,
       });

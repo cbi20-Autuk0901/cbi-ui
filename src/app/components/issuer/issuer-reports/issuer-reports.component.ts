@@ -63,9 +63,7 @@ export class IssuerReportsComponent implements OnInit {
   };
 
   getListCount = (list, key) => {
-    const filteredList = list.filter(
-      (item) => item.certificationStatus === key
-    );
+    const filteredList = list.filter((item) => item.certificationStatus === key);
     return filteredList.length || 0;
   };
 }

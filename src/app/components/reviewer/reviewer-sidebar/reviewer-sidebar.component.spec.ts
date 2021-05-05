@@ -8,9 +8,8 @@ describe('ReviewerSidebarComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ReviewerSidebarComponent ]
-    })
-    .compileComponents();
+      declarations: [ReviewerSidebarComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

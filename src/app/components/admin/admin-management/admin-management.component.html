@@ -49,8 +49,8 @@
   <form #userForm="ngForm" (ngSubmit)="userForm.form.valid && addUser(userForm, currentView)">
 
    <p-table #dt1 dataKey="no" editMode="row" [value]="usrList" selectionMode="single" [rows]="10" [autoLayout]="true"
-            [paginator]="true"
-            [alwaysShowPaginator]="false" [pageLinks]="5" [globalFilterFields]="['firstName', 'lastName']">
+            [paginator]="true" [alwaysShowPaginator]="false" [pageLinks]="5"
+            [globalFilterFields]="['firstName', 'lastName']">
     <ng-template pTemplate="caption">
      <div class="mb-3">
 

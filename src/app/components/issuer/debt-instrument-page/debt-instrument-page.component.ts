@@ -1,18 +1,9 @@
-import {
-  Component,
-  OnInit
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import {
-  ActivatedRoute, Router
-} from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
-import {
-  DatastoreService
-} from './../../../services/data-store/data-store.service';
-import {
-  UtilsService
-} from './../../../services/utils/utils.service';
+import { DatastoreService } from './../../../services/data-store/data-store.service';
+import { UtilsService } from './../../../services/utils/utils.service';
 
 @Component({
   selector: 'app-debt-instrument-page',
@@ -29,7 +20,7 @@ export class DebtInstrumentPageComponent implements OnInit {
   isLoading: boolean;
   headers: object;
 
-  constructor (
+  constructor(
     private ds: DatastoreService,
     private route: ActivatedRoute,
     private router: Router,
@@ -48,24 +39,24 @@ export class DebtInstrumentPageComponent implements OnInit {
     };
   }
 
-  ngOnInit (): void {
+  ngOnInit(): void {
     this.ds.currentFormPage.subscribe((data) => {
       this.currentFormPage = data;
     });
 
     if (this.certId) {
       const formToCheck = this.userData['userRole'] === 'singleIssuer' ? 'caForm' : 'cbiForm';
-      this.ds.formResume(formToCheck, this.headers)
-        .subscribe((data) => {
+      this.ds.formResume(formToCheck, this.headers).subscribe(
+        (data) => {
           this.loadPage();
-        }, () => {
+        },
+        () => {
           this.generateId();
-        });
-
+        }
+      );
     } else {
       this.generateId();
     }
-
   }
 
   generateId = () => {
@@ -74,7 +65,7 @@ export class DebtInstrumentPageComponent implements OnInit {
       this.router.navigate([], {
         relativeTo: this.route,
         queryParams: {
-          certId: data.certificationId
+          certId: data.certificationId,
         },
       });
       this.certId = data.certificationId;
@@ -88,11 +79,9 @@ export class DebtInstrumentPageComponent implements OnInit {
       certType: this.certType,
       certId: this.certId,
       userEmail: this.userData['userEmail'],
-      userRole: this.userData['userRole']
+      userRole: this.userData['userRole'],
     };
-    this.ds.updateValue('currentFormPage', (this.userData['userRole'] === 'singleIssuer' ? 'caPage' : 'cbiPage'));
+    this.ds.updateValue('currentFormPage', this.userData['userRole'] === 'singleIssuer' ? 'caPage' : 'cbiPage');
     this.isLoading = false;
   };
-
-
 }

@@ -136,9 +136,7 @@ export class ReviewerDashboardComponent implements OnInit {
     };
     this.ds.getDashboard(payload, 'reviewerDashboard').subscribe((res) => {
       this.dStats = res.dashboardStats;
-      this.assignedCertifications = this.processCertData(
-        res.assignedCertifications
-      );
+      this.assignedCertifications = this.processCertData(res.assignedCertifications);
       this.processCharts(res['chartData']);
 
       this.isLoading = false;
@@ -217,14 +215,7 @@ export class ReviewerDashboardComponent implements OnInit {
       datasets: [
         {
           label: 'Total',
-          backgroundColor: [
-            '#563666',
-            '#e7367d',
-            '#f7a931',
-            '#ec6927',
-            '#4eb4be',
-            '#92d050',
-          ],
+          backgroundColor: ['#563666', '#e7367d', '#f7a931', '#ec6927', '#4eb4be', '#92d050'],
           data: uwList.values,
         },
       ],

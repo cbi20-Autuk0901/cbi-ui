@@ -8,9 +8,8 @@ describe('ClimateBondInformationComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ ClimateBondInformationComponent ]
-    })
-    .compileComponents();
+      declarations: [ClimateBondInformationComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

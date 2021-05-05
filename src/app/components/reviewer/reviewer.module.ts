@@ -19,13 +19,7 @@ import { ReviewerCertificationQueueComponent } from './reviewer-certification-qu
     ReviewerReportsComponent,
     ReviewerSidebarComponent,
   ],
-  imports: [
-    CommonModule,
-    ReviewerRoutingModule,
-    PrimeModule,
-    NgxWigModule,
-    NgxExtendedPdfViewerModule,
-  ],
+  imports: [CommonModule, ReviewerRoutingModule, PrimeModule, NgxWigModule, NgxExtendedPdfViewerModule],
   exports: [ReviewerDashboardComponent, ReviewerSidebarComponent],
 })
 export class ReviewerModule {}

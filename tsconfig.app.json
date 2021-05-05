@@ -5,18 +5,13 @@
     "outDir": "./out-tsc/app",
     "types": [],
     "experimentalDecorators": true,
-    "importHelpers": true,
+    "importHelpers": true
   },
   "angularCompilerOptions": {
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true,
+    "strictTemplates": true
   },
-  "files": [
-    "src/main.ts",
-    "src/polyfills.ts"
-  ],
-  "include": [
-    "src/**/*.d.ts"
-  ]
+  "files": ["src/main.ts", "src/polyfills.ts"],
+  "include": ["src/**/*.d.ts"]
 }

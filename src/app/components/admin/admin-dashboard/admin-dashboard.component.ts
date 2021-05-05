@@ -136,12 +136,7 @@ export class AdminDashboardComponent implements OnInit {
   processCharts = (data) => {
     const statData = data['dashboardStats'];
     const diLabels = ['Bonds', 'Loans', 'Deposit', 'Others'];
-    const diValues = [
-      statData['bond'],
-      statData['loan'],
-      statData['deposit'],
-      statData['others'],
-    ];
+    const diValues = [statData['bond'], statData['loan'], statData['deposit'], statData['others']];
     this.diData = {
       labels: diLabels,
       datasets: [
@@ -181,14 +176,10 @@ export class AdminDashboardComponent implements OnInit {
     this.dData['mApprovedTotal'] = 0;
     this.dData['aApprovedTotal'] = 0;
 
-    const sortMon = this.pageData['monthlyStats'].sort(
-      (x, y) => x.index - y.index
-    );
+    const sortMon = this.pageData['monthlyStats'].sort((x, y) => x.index - y.index);
     for (let i = 0; i < this.filterSel; i++) {
-      this.dData['mApprovedTotal'] =
-        this.dData['mApprovedTotal'] + sortMon[i].manualApproval;
-      this.dData['aApprovedTotal'] =
-        this.dData['aApprovedTotal'] + sortMon[i].autoApproval;
+      this.dData['mApprovedTotal'] = this.dData['mApprovedTotal'] + sortMon[i].manualApproval;
+      this.dData['aApprovedTotal'] = this.dData['aApprovedTotal'] + sortMon[i].autoApproval;
       icLabel.push(sortMon[i].label);
       icData1.push(sortMon[i].manualApproval);
       icData2.push(sortMon[i].autoApproval);
@@ -214,9 +205,7 @@ export class AdminDashboardComponent implements OnInit {
       labels: ['Approved' /* , 'Auto' */],
       datasets: [
         {
-          data: [
-            this.dData['mApprovedTotal'] /* , this.dData['aApprovedTotal'] */,
-          ],
+          data: [this.dData['mApprovedTotal'] /* , this.dData['aApprovedTotal'] */],
           backgroundColor: ['#689F38', '#D32F2F'],
           hoverBackgroundColor: ['#689F38', '#D32F2F'],
         },

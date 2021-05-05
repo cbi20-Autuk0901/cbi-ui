@@ -32,8 +32,7 @@ export class CertificationAgreementComponent implements OnInit {
     this.reportSrc = '';
     this.reportName = '';
     this.reportHeaders = {
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
       Pragma: 'no-cache',
       Expires: '0',
     };
@@ -54,13 +53,11 @@ export class CertificationAgreementComponent implements OnInit {
 
     if (this.mainData['certId']) {
       this.ds.formResume('caForm', this.mainData).subscribe((data) => {
-        if (data.applicationDate)
-          data['applicationDate'] = new Date(data.applicationDate);
+        if (data.applicationDate) data['applicationDate'] = new Date(data.applicationDate);
         this.caForm.patchValue(data);
         if (
           this.mainData['certType'] === 'post' &&
-          (this.userData['userRole'] === 'programmaticIssuer' ||
-            this.userData['userRole'] === 'verifier')
+          (this.userData['userRole'] === 'programmaticIssuer' || this.userData['userRole'] === 'verifier')
         ) {
           this.caSignedUploaded = true;
           this.reportSrc = 'http://143.110.213.22:8883/file/' + data.agreement;
@@ -76,16 +73,9 @@ export class CertificationAgreementComponent implements OnInit {
   switchPage = (type: string) => {
     if (type === 'next') {
       if (this.caSignedUploaded) {
-        this.ds.updateValue(
-          'currentFormPage',
-          this.mainData['userRole'] === 'singleIssuer' ? 'cbiPage' : 'arPage'
-        );
+        this.ds.updateValue('currentFormPage', this.mainData['userRole'] === 'singleIssuer' ? 'cbiPage' : 'arPage');
       } else {
-        this.utils.showMessage(
-          'error',
-          'Error',
-          'Please upload Signed Certification Agreement'
-        );
+        this.utils.showMessage('error', 'Error', 'Please upload Signed Certification Agreement');
       }
     }
     if (type === 'back') {
@@ -140,11 +130,7 @@ export class CertificationAgreementComponent implements OnInit {
 
       this.ds.upload(payload, 'ca').subscribe(
         () => {
-          this.utils.showMessage(
-            'success',
-            'Success',
-            'File uploaded successfully'
-          );
+          this.utils.showMessage('success', 'Success', 'File uploaded successfully');
           this.caSignedUploaded = true;
         },
         (error) => {

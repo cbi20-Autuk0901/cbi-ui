@@ -1,6 +1,7 @@
 <div class="debt-instrument" *ngIf="!isLoading">
-  <h4 class="page-header" *ngIf="mainData['certId']">Certification ID: {{mainData['certId']}}</h4>
-  <app-climate-bond-information [mainData]="mainData" *ngIf="currentFormPage === 'cbiPage'"></app-climate-bond-information>
-  <app-certification-agreement [mainData]="mainData" *ngIf="currentFormPage === 'caPage'"></app-certification-agreement>
-  <app-assurance-report [mainData]="mainData" *ngIf="currentFormPage === 'arPage'"></app-assurance-report>
+ <h4 class="page-header" *ngIf="mainData['certId']">Certification ID: {{mainData['certId']}}</h4>
+ <app-climate-bond-information [mainData]="mainData" *ngIf="currentFormPage === 'cbiPage'">
+ </app-climate-bond-information>
+ <app-certification-agreement [mainData]="mainData" *ngIf="currentFormPage === 'caPage'"></app-certification-agreement>
+ <app-assurance-report [mainData]="mainData" *ngIf="currentFormPage === 'arPage'"></app-assurance-report>
 </div>

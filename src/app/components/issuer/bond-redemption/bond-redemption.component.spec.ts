@@ -8,9 +8,8 @@ describe('BondRedemptionComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ BondRedemptionComponent ]
-    })
-    .compileComponents();
+      declarations: [BondRedemptionComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {

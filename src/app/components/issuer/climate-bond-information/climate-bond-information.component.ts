@@ -1,11 +1,5 @@
 import { Component, Input, OnInit, ViewChild } from '@angular/core';
-import {
-  FormArray,
-  FormBuilder,
-  FormControl,
-  FormGroup,
-  Validators,
-} from '@angular/forms';
+import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 import { UtilsService } from '../../../services/utils/utils.service';
 
@@ -55,12 +49,8 @@ export class ClimateBondInformationComponent implements OnInit {
       daInstrumentType: [''],
       issueDate: [''],
       maturityDate: [''],
-      renewableEnergy: this.fb.array([
-        this.fb.control('', Validators.required),
-      ]),
-      renewableEnergyText: this.fb.array([
-        this.fb.control('', Validators.required),
-      ]),
+      renewableEnergy: this.fb.array([this.fb.control('', Validators.required)]),
+      renewableEnergyText: this.fb.array([this.fb.control('', Validators.required)]),
       financingAssets: ['', [Validators.required]],
       proceedsAllocation: ['', [Validators.required]],
       portfolioApproach: ['', [Validators.required]],
@@ -148,8 +138,7 @@ export class ClimateBondInformationComponent implements OnInit {
           }
         }
         if (name === 'issueDate' && val) FormData['issueDate'] = new Date(val);
-        if (name === 'maturityDate' && val)
-          FormData['maturityDate'] = new Date(val);
+        if (name === 'maturityDate' && val) FormData['maturityDate'] = new Date(val);
       });
 
       this[formName].patchValue(FormData);
@@ -158,11 +147,7 @@ export class ClimateBondInformationComponent implements OnInit {
 
   switchForm = (name: string) => {
     if (name === 'cbiFormContd' && !this.cbiFormSubmitted) {
-      this.utils.showMessage(
-        'warn',
-        'Warning',
-        'Please Save form before proceeding to next page'
-      );
+      this.utils.showMessage('warn', 'Warning', 'Please Save form before proceeding to next page');
       return false;
     }
     this.ds.formResume(name, this.mainData).subscribe(
@@ -172,29 +157,20 @@ export class ClimateBondInformationComponent implements OnInit {
         this.isLoading = false;
       },
       () => {
-        this.router
-          .navigateByUrl('/', { skipLocationChange: true })
-          .then(() => {
-            this.router.navigate(['/debt-instrument/pre/bond']);
-          });
+        this.router.navigateByUrl('/', { skipLocationChange: true }).then(() => {
+          this.router.navigate(['/debt-instrument/pre/bond']);
+        });
       }
     );
   };
 
   switchPage = (type: string) => {
     if (!this.cbiFormContdSubmitted) {
-      this.utils.showMessage(
-        'warn',
-        'Warning',
-        'Please Save form before proceeding to next page'
-      );
+      this.utils.showMessage('warn', 'Warning', 'Please Save form before proceeding to next page');
       return false;
     }
     if (type === 'next') {
-      this.ds.updateValue(
-        'currentFormPage',
-        this.mainData['userRole'] !== 'singleIssuer' ? 'caPage' : 'arPage'
-      );
+      this.ds.updateValue('currentFormPage', this.mainData['userRole'] !== 'singleIssuer' ? 'caPage' : 'arPage');
     }
 
     if (type === 'back') {
@@ -225,11 +201,7 @@ export class ClimateBondInformationComponent implements OnInit {
         const control = this[form].get(field);
         control.markAsDirty({ onlySelf: true });
       });
-      this.utils.showMessage(
-        'error',
-        'Error',
-        'Please fill all mandatory fields mentioned with "*" '
-      );
+      this.utils.showMessage('error', 'Error', 'Please fill all mandatory fields mentioned with "*" ');
     }
   };
 

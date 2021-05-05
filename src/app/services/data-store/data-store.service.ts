@@ -136,10 +136,7 @@ export class DatastoreService {
     return this.http.get(url, options);
   };
 
-  getApprovedCertifications = (
-    headers: object,
-    type?: string
-  ): Observable<any> => {
+  getApprovedCertifications = (headers: object, type?: string): Observable<any> => {
     let url: string = '/api/getApprovedCertifications';
 
     const options = {
@@ -157,10 +154,7 @@ export class DatastoreService {
 
   upload = (data: any, page: string): Observable<any> => {
     const formData = new FormData();
-    const url =
-      page === 'ar'
-        ? '/api/assuranceReport'
-        : '/api/signedCertificationAgreement';
+    const url = page === 'ar' ? '/api/assuranceReport' : '/api/signedCertificationAgreement';
     Object.entries(data).forEach(([key, value]): any => {
       formData.append(key, data[key]);
     });

@@ -4,9 +4,8 @@
   <p-table #dt1 [showCurrentPageReport]="true"
            currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
            [value]="filteredCertifications" selectionMode="single" [(selection)]="selectedCert" [rows]="10"
-           [autoLayout]="true" [paginator]="true"
-           [alwaysShowPaginator]="false" [pageLinks]="5" [resizableColumns]="true"
-           [globalFilterFields]="['certificationId']">
+           [autoLayout]="true" [paginator]="true" [alwaysShowPaginator]="false" [pageLinks]="5"
+           [resizableColumns]="true" [globalFilterFields]="['certificationId']">
    <ng-template pTemplate="caption">
     <div class="d-flex justify-content-between mb-3">
 

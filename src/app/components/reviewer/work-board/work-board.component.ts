@@ -33,8 +33,7 @@ export class WorkBoardComponent implements OnInit {
     private location: Location
   ) {
     this.pdfHeaders = {
-      'Cache-Control':
-        'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
+      'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
       Pragma: 'no-cache',
       Expires: '0',
     };
@@ -83,23 +82,18 @@ export class WorkBoardComponent implements OnInit {
       userEmail: this.userData['userEmail'],
     };
     this.ds.workBoard(payload).subscribe((res) => {
-      const selCert = res.assignedCertifications.find(
-        (cert) => cert['certificationId'] === cID
-      );
+      const selCert = res.assignedCertifications.find((cert) => cert['certificationId'] === cID);
 
       if (selCert && selCert['certificationStatus'] !== 'approved') {
         this.reviewCertification(selCert);
       } else {
         this.location.go('/work-board');
         this.certifications = res.assignedCertifications.map((e, i) => {
-          e['renewableEnergy'] =
-            (e['renewableEnergy'] && e['renewableEnergy'][0]) || '';
+          e['renewableEnergy'] = (e['renewableEnergy'] && e['renewableEnergy'][0]) || '';
           e['amountIssued'] = (e['amountIssued'] && e['amountIssued'][0]) || '';
-          e['localCurrency'] =
-            (e['localCurrency'] && e['localCurrency'][0]) || '';
+          e['localCurrency'] = (e['localCurrency'] && e['localCurrency'][0]) || '';
           e['underwriter'] = (e['underwriter'] && e['underwriter'][0]) || '';
-          e['renewableEnergyText'] =
-            (e['renewableEnergyText'] && e['renewableEnergyText'][0]) || '';
+          e['renewableEnergyText'] = (e['renewableEnergyText'] && e['renewableEnergyText'][0]) || '';
           e['no'] = i + 1;
           return e;
         });
@@ -117,9 +111,7 @@ export class WorkBoardComponent implements OnInit {
   };
 
   getListCount = (list, key) => {
-    const filteredList = list.filter(
-      (item) => item.certificationStatus === key
-    );
+    const filteredList = list.filter((item) => item.certificationStatus === key);
     return filteredList.length || 0;
   };
 
@@ -128,11 +120,7 @@ export class WorkBoardComponent implements OnInit {
       return e.approvedDate;
     });
     const sortedC = filteredC.sort((a, b) => {
-      return (
-        a.approvedDate &&
-        b.approvedDate &&
-        moment(b.approvedDate).diff(a.approvedDate)
-      );
+      return a.approvedDate && b.approvedDate && moment(b.approvedDate).diff(a.approvedDate);
     });
 
     return sortedC.slice(0, 3);
@@ -162,16 +150,10 @@ export class WorkBoardComponent implements OnInit {
     this.showApproveBtn(isCbi);
     if (fileName) {
       this.blocker.on();
-      this.pdfSrc =
-        'http://143.110.213.22:8883/file/' + this.selRevCertification[name];
+      this.pdfSrc = 'http://143.110.213.22:8883/file/' + this.selRevCertification[name];
     } else {
       this.pdfSrc = '';
-      if (!isCbi)
-        this.utils.showMessage(
-          'warn',
-          'Warning',
-          'No File uploaded under this name'
-        );
+      if (!isCbi) this.utils.showMessage('warn', 'Warning', 'No File uploaded under this name');
     }
   };
 

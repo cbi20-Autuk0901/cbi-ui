@@ -8,9 +8,8 @@ describe('AdminCertificationQueueComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AdminCertificationQueueComponent ]
-    })
-    .compileComponents();
+      declarations: [AdminCertificationQueueComponent],
+    }).compileComponents();
   });
 
   beforeEach(() => {
