@@ -1,0 +1,173 @@
+.chat-screen {
+  position: fixed;
+  bottom: 68px;
+  right: 20px;
+  z-index: 9999;
+  width: 350px;
+  background: #fff;
+  box-sizing: border-box;
+  border-radius: 15px;
+  box-shadow: 0px 15px 20px rgba(0, 0, 0, 0.1);
+  visibility: hidden;
+  &.show-chat {
+    -moz-transition: bottom 0.5s linear;
+    -webkit-transition: bottom 0.5s linear;
+    transition: bottom 0.5s linear;
+    visibility: visible;
+    bottom: 78px;
+  }
+  .chat-header {
+    display: flex;
+    justify-content: space-between;
+    background-image: linear-gradient(to right, #673ab7, #813bcb, #9e38de, #bc32ef, #dc22ff);
+    border-radius: 15px 15px 0 0;
+    padding: 15px;
+    .chat-header-title {
+      display: inline-block;
+      color: #fff;
+      font-size: 14px;
+    }
+    .chat-header-option {
+      display: inline-block;
+      .fa-power-off {
+        color: #ffffff;
+        cursor: pointer;
+      }
+    }
+  }
+  .chat-body {
+    padding: 25px;
+    display: inline-block;
+    min-height: 382px;
+    max-height: 382px;
+    background: #fbfbfb;
+    width: 100%;
+    overflow-y: auto;
+    .chat-start {
+      border: 1px solid #f8d4ff;
+      width: 150px;
+      border-radius: 50px;
+      padding: 6px 10px;
+      font-size: 12px;
+      margin: 0 auto;
+      text-align: center;
+      margin-bottom: 15px;
+      background: #fff;
+    }
+    .chat-bubble {
+      font-size: 14px;
+      font-weight: 400;
+      padding: 10px 15px;
+      box-shadow: none;
+      display: inline-block;
+      clear: both;
+      margin-bottom: 10px;
+      box-shadow: 0 5px 5px rgba(0, 0, 0, 0.02);
+      &.bot {
+        background-image: linear-gradient(to right, #673ab7, #813bcb, #9e38de, #bc32ef, #dc22ff);
+        color: #fff;
+        border-radius: 0 15px 15px 15px;
+        align-self: flex-start;
+        display: table;
+      }
+      &.user {
+        background-image: linear-gradient(to right, #ffffff, #ffffff, #ffffff, #ffffff, #ffffff);
+        color: #888ea8;
+        border-radius: 15px 0px 15px 15px;
+        float: right;
+        align-self: flex-end;
+        display: table;
+      }
+    }
+  }
+  .chat-input {
+    width: 100%;
+    position: relative;
+    margin-bottom: -5px;
+    input {
+      outline: 0;
+      width: 100%;
+      background: #ffffff;
+      padding: 15px 70px 15px 15px;
+      border-radius: 0 0 15px 15px;
+      resize: none;
+      border-width: 1px 0 0 0;
+      border-style: solid;
+      border-color: #f8f8f8;
+      color: #7a7a7a;
+      font-weight: normal;
+      font-size: 13px;
+      transition: border-color 0.5s ease;
+      &:focus {
+        border-color: #f9dcff;
+        + .input-action-icon {
+          a {
+            svg.feather-send {
+              color: #bc32ef;
+            }
+          }
+        }
+      }
+    }
+    .input-action-icon {
+      width: 61px;
+      white-space: nowrap;
+      position: absolute;
+      z-index: 1;
+      top: 15px;
+      right: 15px;
+      text-align: right;
+      a {
+        display: inline-block;
+        margin-left: 5px;
+        cursor: pointer;
+        svg {
+          height: 17px;
+          width: 17px;
+          color: #a9a9a9;
+        }
+      }
+    }
+  }
+}
+
+.chat-bot-icon {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  height: 50px;
+  width: 50px;
+  background-image: linear-gradient(to right, #673ab7, #813bcb, #9e38de, #bc32ef, #dc22ff);
+  z-index: 9999;
+  border-radius: 30px;
+  box-shadow: 0px 10px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+  img {
+    height: 90px;
+    width: 90px;
+    position: absolute;
+    right: -13px;
+    top: -33px;
+  }
+  svg {
+    color: #fff;
+    -moz-transition: all 0.5s linear;
+    -webkit-transition: all 0.5s linear;
+    transition: transform 0.5s linear;
+    position: absolute;
+    left: 13px;
+    top: 13px;
+    opacity: 0;
+    z-index: -1;
+    &.animate {
+      -moz-transform: rotate(360deg);
+      -webkit-transform: rotate(360deg);
+      transform: rotate(360deg);
+      opacity: 1;
+      z-index: 1;
+    }
+  }
+}

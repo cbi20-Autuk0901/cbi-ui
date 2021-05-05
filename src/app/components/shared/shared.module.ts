@@ -12,9 +12,34 @@ import { DashboardPageComponent } from './dashboard-page/dashboard-page.componen
 import { IssuerModule } from '../issuer/issuer.module';
 import { ReviewerModule } from '../reviewer/reviewer.module';
 import { AdminModule } from '../admin/admin.module';
+import { ChatBotComponent } from './chat-bot/chat-bot.component';
+import Amplify, { Interactions } from 'aws-amplify';
+
+Amplify.configure({
+  Auth: {
+    identityPoolId: 'us-east-1:f28c9c2d-18c3-47a2-9708-f54528aacd20',
+    region: 'us-east-1',
+  },
+  Interactions: {
+    bots: {
+      CBI_Test_Nonp: {
+        name: 'CBI_Test_Nonp',
+        alias: '$LATEST',
+        region: 'us-east-1',
+      },
+    },
+  },
+});
 
 @NgModule({
-  declarations: [HeaderComponent, SidebarComponent, LoginPageComponent, RegistrationComponent, DashboardPageComponent],
+  declarations: [
+    HeaderComponent,
+    SidebarComponent,
+    LoginPageComponent,
+    RegistrationComponent,
+    DashboardPageComponent,
+    ChatBotComponent,
+  ],
   imports: [
     CommonModule,
     SharedRoutingModule,
@@ -25,6 +50,6 @@ import { AdminModule } from '../admin/admin.module';
     ReviewerModule,
     AdminModule,
   ],
-  exports: [HeaderComponent, SidebarComponent],
+  exports: [HeaderComponent, SidebarComponent, ChatBotComponent],
 })
 export class SharedModule {}
