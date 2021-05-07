@@ -63,10 +63,10 @@ export class CertificationsListComponent implements OnInit {
 
       this.ds.submitAnnualReport(payload).subscribe(
         (res) => {
-          this.utils.showMessage('success', 'Success', 'Report Uploaded Successfully');
+          this.utils.showMessage('c', 'success', 'Success', 'Report Uploaded Successfully');
         },
         (error) => {
-          this.utils.showMessage('error', 'Error', 'Unable to Upload Report. Please try again.');
+          this.utils.showMessage('c', 'error', 'Error', 'Unable to Upload Report. Please try again.');
         }
       );
     }

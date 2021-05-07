@@ -8,8 +8,7 @@
      class="fa fa-angle-double-left" aria-hidden="true"></i> Back</a>
 </div>
 <div class="row">
- <div class="col-5"
-      *ngIf="!(mainData['certType'] === 'post' && (userData['userRole'] === 'programmaticIssuer' || userData['userRole'] === 'verifier'))">
+ <div class="col-5" *ngIf="!(mainData['certType'] === 'post')">
   <div class="form-card h-100">
    <div class="form-card__title">
     <div>User Information</div>
@@ -65,13 +64,11 @@
    </form>
   </div>
  </div>
- <div
-      [ngClass]="(mainData['certType'] === 'post' && (userData['userRole'] === 'programmaticIssuer' || userData['userRole'] === 'verifier')) ? 'col-12' : 'col-7'">
+ <div [ngClass]="mainData['certType'] === 'post' ? 'col-12' : 'col-7'">
   <div class="form-card h-100">
    <div class="form-card__title">
     <div>Agreement Document</div>
-    <div
-         *ngIf="!(mainData['certType'] === 'post' && (userData['userRole'] === 'programmaticIssuer' || userData['userRole'] === 'verifier'))">
+    <div *ngIf="!(mainData['certType'] === 'post')">
      <div class="btn btn-green upload-btn mr-3">
       Upload +
       <input type="file" (change)="uploadFile($event)">
@@ -96,9 +93,7 @@
 </div>
 <div class="row mt-3">
  <div class="col-6">
-  <a class="btn btn-green"
-     *ngIf="!(mainData['certType'] === 'post' && (userData['userRole'] === 'programmaticIssuer' || userData['userRole'] === 'verifier'))"
-     (click)="saveFormStatus('caForm')">Save</a>
+  <a class="btn btn-green" *ngIf="!(mainData['certType'] === 'post')" (click)="saveFormStatus('caForm')">Save</a>
  </div>
  <div class="col-6 text-right">
   <a class="next-link" (click)="switchPage('next')">

@@ -8,6 +8,9 @@
   "compilerOptions": {
     "experimentalDecorators": true
   },
+  "angularCompilerOptions": {
+    "strictTemplates": true
+  },
   "files": [],
   "include": ["src/**/*.d.ts", "src/**/*.ts"],
   "references": [

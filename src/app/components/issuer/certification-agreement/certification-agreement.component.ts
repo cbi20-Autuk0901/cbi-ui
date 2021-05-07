@@ -55,10 +55,7 @@ export class CertificationAgreementComponent implements OnInit {
       this.ds.formResume('caForm', this.mainData).subscribe((data) => {
         if (data.applicationDate) data['applicationDate'] = new Date(data.applicationDate);
         this.caForm.patchValue(data);
-        if (
-          this.mainData['certType'] === 'post' &&
-          (this.userData['userRole'] === 'programmaticIssuer' || this.userData['userRole'] === 'verifier')
-        ) {
+        if (this.mainData['certType'] === 'post') {
           this.caSignedUploaded = true;
           this.reportSrc = 'http://143.110.213.22:8883/file/' + data.agreement;
         }
@@ -75,7 +72,7 @@ export class CertificationAgreementComponent implements OnInit {
       if (this.caSignedUploaded) {
         this.ds.updateValue('currentFormPage', this.mainData['userRole'] === 'singleIssuer' ? 'cbiPage' : 'arPage');
       } else {
-        this.utils.showMessage('error', 'Error', 'Please upload Signed Certification Agreement');
+        this.utils.showMessage('c', 'error', 'Error', 'Please upload Signed Certification Agreement');
       }
     }
     if (type === 'back') {
@@ -109,11 +106,11 @@ export class CertificationAgreementComponent implements OnInit {
       (data) => {
         this.reportName = data.agreement;
         this.reportSrc = 'http://143.110.213.22:8883/file/' + data.agreement;
-        this.utils.showMessage('success', 'Success', 'Data Saved');
+        this.utils.showMessage('c', 'success', 'Success', 'Data Saved');
         this.blocker.on();
       },
       (error) => {
-        this.utils.showMessage('error', 'Error', 'Invalid Form Details');
+        this.utils.showMessage('c', 'error', 'Error', 'Invalid Form Details');
       }
     );
   };
@@ -130,11 +127,11 @@ export class CertificationAgreementComponent implements OnInit {
 
       this.ds.upload(payload, 'ca').subscribe(
         () => {
-          this.utils.showMessage('success', 'Success', 'File uploaded successfully');
+          this.utils.showMessage('c', 'success', 'Success', 'File uploaded successfully');
           this.caSignedUploaded = true;
         },
         (error) => {
-          this.utils.showMessage('error', 'Error', 'File upload failed');
+          this.utils.showMessage('c', 'error', 'Error', 'File upload failed');
         }
       );
     }

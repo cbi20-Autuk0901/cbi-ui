@@ -28,6 +28,7 @@ export class ChatBotComponent implements OnInit {
       $(this).children('svg').toggleClass('animate');
       $('.chat-screen').toggleClass('show-chat');
       this.chatStart = moment().format('MMMM Do YYYY, h:mm A');
+      this.conversation = [];
     });
     $('.end-chat').on('click', (e) => {
       $('.chat-bot-icon').children('img').toggleClass('hide');

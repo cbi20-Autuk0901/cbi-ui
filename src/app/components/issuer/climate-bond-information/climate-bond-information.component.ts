@@ -147,7 +147,7 @@ export class ClimateBondInformationComponent implements OnInit {
 
   switchForm = (name: string) => {
     if (name === 'cbiFormContd' && !this.cbiFormSubmitted) {
-      this.utils.showMessage('warn', 'Warning', 'Please Save form before proceeding to next page');
+      this.utils.showMessage('c', 'warn', 'Warning', 'Please Save form before proceeding to next page');
       return false;
     }
     this.ds.formResume(name, this.mainData).subscribe(
@@ -166,7 +166,7 @@ export class ClimateBondInformationComponent implements OnInit {
 
   switchPage = (type: string) => {
     if (!this.cbiFormContdSubmitted) {
-      this.utils.showMessage('warn', 'Warning', 'Please Save form before proceeding to next page');
+      this.utils.showMessage('c', 'warn', 'Warning', 'Please Save form before proceeding to next page');
       return false;
     }
     if (type === 'next') {
@@ -189,11 +189,11 @@ export class ClimateBondInformationComponent implements OnInit {
       };
       this.ds.formSave(payload, form).subscribe(
         (data) => {
-          this.utils.showMessage('success', 'Success', 'Data Saved');
+          this.utils.showMessage('c', 'success', 'Success', 'Data Saved');
           this[form + 'Submitted'] = true;
         },
         (error) => {
-          this.utils.showMessage('error', 'Error', 'Invalid Form Details');
+          this.utils.showMessage('c', 'error', 'Error', 'Invalid Form Details');
         }
       );
     } else {
@@ -201,7 +201,7 @@ export class ClimateBondInformationComponent implements OnInit {
         const control = this[form].get(field);
         control.markAsDirty({ onlySelf: true });
       });
-      this.utils.showMessage('error', 'Error', 'Please fill all mandatory fields mentioned with "*" ');
+      this.utils.showMessage('c', 'error', 'Error', 'Please fill all mandatory fields mentioned with "*" ');
     }
   };
 

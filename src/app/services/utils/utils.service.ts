@@ -59,9 +59,9 @@ export class UtilsService {
     });
   };
 
-  showMessage = (severity, title, msg) => {
+  showMessage = (position, severity, title, msg) => {
     this.ms.add({
-      key: 'c',
+      key: position,
       severity: severity,
       summary: title,
       detail: msg,

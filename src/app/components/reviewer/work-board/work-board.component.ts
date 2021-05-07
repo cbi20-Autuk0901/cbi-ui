@@ -153,7 +153,7 @@ export class WorkBoardComponent implements OnInit {
       this.pdfSrc = 'http://143.110.213.22:8883/file/' + this.selRevCertification[name];
     } else {
       this.pdfSrc = '';
-      if (!isCbi) this.utils.showMessage('warn', 'Warning', 'No File uploaded under this name');
+      if (!isCbi) this.utils.showMessage('c', 'warn', 'Warning', 'No File uploaded under this name');
     }
   };
 
@@ -184,7 +184,7 @@ export class WorkBoardComponent implements OnInit {
   };
 
   showError = (severity, title, msg) => {
-    this.utils.showMessage(severity, title, msg);
+    this.utils.showMessage('c', severity, title, msg);
     this.blocker.off();
   };
 }

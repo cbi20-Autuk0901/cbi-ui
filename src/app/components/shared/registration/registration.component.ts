@@ -87,7 +87,7 @@ export class RegistrationComponent implements OnInit {
     if (this.registerForm.valid) {
       const payload = this.registerForm.value;
       this.userS.registerUser(payload).subscribe((e) => {
-        this.utils.showMessage('success', 'Success', 'Registered Successfully');
+        this.utils.showMessage('c', 'success', 'Success', 'Registered Successfully');
         setTimeout(() => {
           this.router.navigate(['/login']);
         }, 1000);

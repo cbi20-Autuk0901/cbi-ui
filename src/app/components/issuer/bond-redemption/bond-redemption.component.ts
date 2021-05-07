@@ -56,10 +56,10 @@ export class BondRedemptionComponent implements OnInit {
     };
     this.ds.submitBondRedemption(payload).subscribe(
       (data) => {
-        this.utils.showMessage('success', 'Success', 'Application Submitted Successfully');
+        this.utils.showMessage('c', 'success', 'Success', 'Application Submitted Successfully');
       },
       (res) => {
-        this.utils.showMessage('error', 'Error', res.error.error);
+        this.utils.showMessage('c', 'error', 'Error', res.error.error);
       }
     );
   };

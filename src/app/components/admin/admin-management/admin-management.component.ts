@@ -93,7 +93,7 @@ export class AdminManagementComponent implements OnInit {
 
       this.ds.adminAddUser(payload).subscribe(
         (res) => {
-          this.utils.showMessage('success', 'Success', 'User Added Successfully');
+          this.utils.showMessage('c', 'success', 'Success', 'User Added Successfully');
           this.pgData = res;
           this.usrStats = res['userStats'];
           this.enableAddUsr = false;
@@ -101,11 +101,11 @@ export class AdminManagementComponent implements OnInit {
           form.reset();
         },
         (error) => {
-          this.utils.showMessage('error', 'Error', 'Unable to Add User. Please try again');
+          this.utils.showMessage('c', 'error', 'Error', 'Unable to Add User. Please try again');
         }
       );
     } else {
-      this.utils.showMessage('error', 'Error', 'All fields are mandatory');
+      this.utils.showMessage('c', 'error', 'Error', 'All fields are mandatory');
     }
   };
 
@@ -119,14 +119,14 @@ export class AdminManagementComponent implements OnInit {
 
     this.ds.adminUpdateUser(payload).subscribe(
       (res) => {
-        this.utils.showMessage('success', 'Success', 'User Updated Successfully');
+        this.utils.showMessage('c', 'success', 'Success', 'User Updated Successfully');
         this.pgData = res;
         this.usrStats = res['userStats'];
         this.enableAddUsr = false;
         this.changeView(this.currentView);
       },
       (error) => {
-        this.utils.showMessage('error', 'Error', 'Unable to Update User. Please try again');
+        this.utils.showMessage('c', 'error', 'Error', 'Unable to Update User. Please try again');
       }
     );
   };
@@ -139,14 +139,14 @@ export class AdminManagementComponent implements OnInit {
 
     this.ds.adminRemoveUser(payload).subscribe(
       (res) => {
-        this.utils.showMessage('success', 'Success', 'User Removed Successfully');
+        this.utils.showMessage('c', 'success', 'Success', 'User Removed Successfully');
         this.pgData = res;
         this.usrStats = res['userStats'];
         this.enableAddUsr = false;
         this.changeView(this.currentView);
       },
       (error) => {
-        this.utils.showMessage('error', 'Error', 'Unable to Remove User. Please try again');
+        this.utils.showMessage('c', 'error', 'Error', 'Unable to Remove User. Please try again');
       }
     );
   };
@@ -158,10 +158,15 @@ export class AdminManagementComponent implements OnInit {
     if (email) {
       this.ds.forgotPassword(payload).subscribe(
         (res) => {
-          this.utils.showMessage('success', 'Success', 'Password Reset successful. New password sent to User Mail');
+          this.utils.showMessage(
+            'c',
+            'success',
+            'Success',
+            'Password Reset successful. New password sent to User Mail'
+          );
         },
         (error) => {
-          this.utils.showMessage('error', 'Error', 'Unable to Reset Password. Please try again');
+          this.utils.showMessage('c', 'error', 'Error', 'Unable to Reset Password. Please try again');
         }
       );
     }
@@ -178,15 +183,15 @@ export class AdminManagementComponent implements OnInit {
 
     this.ds.adminInviteIssuer(payload).subscribe(
       (res) => {
-        this.utils.showMessage('success', 'Success', 'Registration Link is Successfully Sent');
+        this.utils.showMessage('c', 'success', 'Success', 'Registration Link is Successfully Sent');
 
         form.reset();
       },
       (error) => {
         if (error.status === 409) {
-          this.utils.showMessage('error', 'Error', 'Registration Link is Already sent to this Email');
+          this.utils.showMessage('c', 'error', 'Error', 'Registration Link is Already sent to this Email');
         } else {
-          this.utils.showMessage('error', 'Error', 'Unable to Send Registration Link. Please try again');
+          this.utils.showMessage('c', 'error', 'Error', 'Unable to Send Registration Link. Please try again');
         }
       }
     );

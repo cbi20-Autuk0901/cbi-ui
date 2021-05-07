@@ -55,11 +55,11 @@ export class AssuranceReportComponent implements OnInit {
           });
         },
         (error) => {
-          this.utils.showMessage('error', 'Error', 'Unable to Upload files. Please try again !');
+          this.utils.showMessage('c', 'error', 'Error', 'Unable to Upload files. Please try again !');
         }
       );
     } else {
-      this.utils.showMessage('error', 'Error', 'Please Upload Files to Submit Application');
+      this.utils.showMessage('c', 'error', 'Error', 'Please Upload Files to Submit Application');
     }
   };
 
