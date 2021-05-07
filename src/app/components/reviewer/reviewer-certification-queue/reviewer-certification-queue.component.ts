@@ -35,11 +35,11 @@ export class ReviewerCertificationQueueComponent implements OnInit {
       userEmail: this.userData['userEmail'],
     };
     this.ds.getCertQueue(payload).subscribe((e) => {
-      this.certifications = this.utils.addIndex(e.data);
-      this.filteredCertifications = this.certifications.map((e) => {
-        e['applicationDate'] = Date.parse(e['applicationDate']);
+      this.certifications = this.utils.addIndex(e.data).map((e) => {
+        e['applicationDate'] = e['applicationDate'] ? Date.parse(e['applicationDate']) : '';
         return e;
       });
+      this.filteredCertifications = this.certifications;
       this.selectedCert = this.filteredCertifications[0] || null;
       this.loading = false;
     });
@@ -54,7 +54,7 @@ export class ReviewerCertificationQueueComponent implements OnInit {
     this.ds.assignCertification(payload).subscribe((e) => {
       if (type === 'asn') {
         this.certifications = this.utils.addIndex(e.data).map((e) => {
-          e['applicationDate'] = Date.parse(e['applicationDate']);
+          e['applicationDate'] = e['applicationDate'] ? Date.parse(e['applicationDate']) : '';
           return e;
         });
         this.filteredCertifications = this.certifications;

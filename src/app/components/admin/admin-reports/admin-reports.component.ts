@@ -38,6 +38,7 @@ export class AdminReportsComponent implements OnInit {
         e['underwriter'] = (e['underwriter'] && e['underwriter'][0]) || '';
         e['renewableEnergyText'] = (e['renewableEnergyText'] && e['renewableEnergyText'][0]) || '';
         e['no'] = i + 1;
+        e['applicationDate'] = e['applicationDate'] ? Date.parse(e['applicationDate']) : '';
         return e;
       });
       this.statuses.forEach((st) => {
@@ -50,27 +51,5 @@ export class AdminReportsComponent implements OnInit {
   getListCount = (list, key) => {
     const filteredList = list.filter((item) => item.certificationStatus === key);
     return filteredList.length || 0;
-  };
-
-  modelData = (data) => {
-    let processedData = [];
-    let index = 0;
-    data.forEach((item) => {
-      if (item['certificationStatus'] === 'approved') {
-        const temp = {
-          no: ++index,
-          certId: item.certificationId,
-          name: item.uniqueName,
-          certType: item.certificationType,
-          date: item.applicationDate,
-          instrType: item.instrumentType,
-          status: item.certificationStatus,
-        };
-
-        processedData.push(temp);
-      }
-    });
-
-    return processedData;
   };
 }

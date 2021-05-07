@@ -22,7 +22,7 @@ export class ReviewerReportsComponent implements OnInit {
     };
     this.ds.getApprovedCertifications(payload).subscribe((e) => {
       this.certifications = this.utils.addIndex(e.assignedCertifications).map((e) => {
-        e['applicationDate'] = Date.parse(e['applicationDate']);
+        e['applicationDate'] = e['applicationDate'] ? Date.parse(e['applicationDate']) : '';
         return e;
       });
       this.loading = false;

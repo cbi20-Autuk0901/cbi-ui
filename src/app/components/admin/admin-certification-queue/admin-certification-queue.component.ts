@@ -36,7 +36,10 @@ export class AdminCertificationQueueComponent implements OnInit {
     };
     this.ds.getAdminCertQueue(payload).subscribe((response) => {
       this.apiData = response;
-      this.certifications = this.utils.addIndex(this.apiData['data']);
+      this.certifications = this.utils.addIndex(this.apiData['data']).map((e) => {
+        e['applicationDate'] = e['applicationDate'] ? Date.parse(e['applicationDate']) : '';
+        return e;
+      });
       this.filteredCertifications = this.certifications;
     });
   }
@@ -63,7 +66,10 @@ export class AdminCertificationQueueComponent implements OnInit {
     };
     this.ds.adminAssign(payload).subscribe((response) => {
       this.apiData = response;
-      this.certifications = this.utils.addIndex(this.apiData['data']);
+      this.certifications = this.utils.addIndex(this.apiData['data']).map((e) => {
+        e['applicationDate'] = e['applicationDate'] ? Date.parse(e['applicationDate']) : '';
+        return e;
+      });
       this.filteredCertifications = this.certifications;
     });
   };

@@ -69,7 +69,6 @@ export class WorkBoardComponent implements OnInit {
   }
 
   loadWorkBoard = (cID?: string) => {
-    console.log(cID);
     this.reportStatus = {
       caAssuranceReport: false,
       signedDocument: false,
@@ -95,6 +94,7 @@ export class WorkBoardComponent implements OnInit {
           e['underwriter'] = (e['underwriter'] && e['underwriter'][0]) || '';
           e['renewableEnergyText'] = (e['renewableEnergyText'] && e['renewableEnergyText'][0]) || '';
           e['no'] = i + 1;
+          e['applicationDate'] = e['applicationDate'] ? Date.parse(e['applicationDate']) : '';
           return e;
         });
         this.pdfSrc = '';
