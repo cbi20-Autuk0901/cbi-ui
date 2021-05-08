@@ -44,8 +44,8 @@
 .btn {
   font-size: 16px;
   border-radius: 4px;
-  padding: 2px 0;
   min-width: 120px;
+  padding: 2px 8px;
 
   &.btn-primary {
     background: #fff;
@@ -69,4 +69,9 @@
 .doc-viewer {
   height: 100%;
   min-height: 400px;
+}
+
+.back-link {
+  top: 3px;
+  position: relative;
 }

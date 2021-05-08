@@ -26,6 +26,7 @@ export class AppComponent implements OnChanges {
 
     this.router.events.subscribe((event: any) => {
       if (event instanceof NavigationEnd) {
+        this.utils.clearMessage();
         this.isLoggedin = !!this.utils.getStore('userData') && this.utils.getStore('userData')['userEmail'];
         this.currentPage = event.url;
         this.ds.updateValue('currentPage', this.currentPage);

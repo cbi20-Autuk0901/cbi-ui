@@ -16,12 +16,13 @@
         </div>
         <div class="btn btn-secondary upload-btn col-1">
          Upload +
-         <input type="file" name="file1" (change)="onChange($event, '1')">
+         <input #file1 (click)="file1.value = null" type="file" name="file1" (change)="onChange($event, '1')">
         </div>
        </div>
       </div>
       <div class="col-3 text-right">
        {{uploadedNames[1]}}
+       <i *ngIf="uploadedNames[1]" (click)="removeFile(1)" class="pl-3 cursor-pointer pi pi-times"></i>
       </div>
      </div>
      <div class="row mt-3">
@@ -33,12 +34,13 @@
         </div>
         <div class="btn btn-secondary upload-btn col-1">
          Upload +
-         <input type="file" name="file2" (change)="onChange($event, '2')">
+         <input type="file" #file2 (click)="file2.value = null" name="file2" (change)="onChange($event, '2')">
         </div>
        </div>
       </div>
       <div class="col-3 text-right">
        {{uploadedNames[2]}}
+       <i *ngIf="uploadedNames[2]" (click)="removeFile(2)" class="pl-3 cursor-pointer pi pi-times"></i>
       </div>
      </div>
      <div class="row mt-3">
@@ -50,12 +52,13 @@
         </div>
         <div class="btn btn-secondary upload-btn col-1">
          Upload +
-         <input type="file" name="file3" (change)="onChange($event, '3')">
+         <input type="file" #file3 (click)="file3.value = null" name="file3" (change)="onChange($event, '3')">
         </div>
        </div>
       </div>
       <div class="col-3 text-right">
        {{uploadedNames[3]}}
+       <i *ngIf="uploadedNames[3]" (click)="removeFile(3)" class="pl-3 cursor-pointer pi pi-times"></i>
       </div>
      </div>
      <div class="row mt-3">
@@ -67,12 +70,13 @@
         </div>
         <div class="btn btn-secondary upload-btn col-1">
          Upload +
-         <input type="file" name="file4" (change)="onChange($event, '4')">
+         <input type="file" #file4 (click)="file4.value = null" name="file4" (change)="onChange($event, '4')">
         </div>
        </div>
       </div>
       <div class="col-3 text-right">
        {{uploadedNames[4]}}
+       <i *ngIf="uploadedNames[4]" (click)="removeFile(4)" class="pl-3 cursor-pointer pi pi-times"></i>
       </div>
      </div>
      <div class="row mt-3">
@@ -84,12 +88,13 @@
         </div>
         <div class="btn btn-secondary upload-btn col-1">
          Upload +
-         <input type="file" name="file5" (change)="onChange($event, '5')">
+         <input type="file" #file5 (click)="file5.value = null" name="file5" (change)="onChange($event, '5')">
         </div>
        </div>
       </div>
       <div class="col-3 text-right">
        {{uploadedNames[5]}}
+       <i *ngIf="uploadedNames[5]" (click)="removeFile(5)" class="pl-3 cursor-pointer pi pi-times"></i>
       </div>
      </div>
     </form>

@@ -64,13 +64,10 @@ export class BondRedemptionComponent implements OnInit {
     );
   };
 
-  submitApplication = () => {
-    const payload = {
-      userEmail: this.mainData['userEmail'],
-      instrumentType: this.mainData['instrType'],
-      certificationType: this.mainData['certType'],
-      certificationId: this.mainData['certId'] || '',
-    };
+  removeFile = (index) => {
+    this.brForm.controls['file' + index].setValue(null);
+    this.brForm.controls['fileName' + index].setValue(null);
+    this.uploadedNames[index] = null;
   };
 
   onChange = (event, index) => {

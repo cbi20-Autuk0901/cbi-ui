@@ -146,6 +146,7 @@ export class ClimateBondInformationComponent implements OnInit {
   };
 
   switchForm = (name: string) => {
+    this.utils.clearMessage();
     if (name === 'cbiFormContd' && !this.cbiFormSubmitted) {
       this.utils.showMessage('c', 'warn', 'Warning', 'Please Save form before proceeding to next page');
       return false;
@@ -165,6 +166,7 @@ export class ClimateBondInformationComponent implements OnInit {
   };
 
   switchPage = (type: string) => {
+    this.utils.clearMessage();
     if (!this.cbiFormContdSubmitted) {
       this.utils.showMessage('c', 'warn', 'Warning', 'Please Save form before proceeding to next page');
       return false;
@@ -179,6 +181,7 @@ export class ClimateBondInformationComponent implements OnInit {
   };
 
   saveFormStatus = (form: string) => {
+    this.utils.clearMessage();
     if (this[form].valid) {
       const payload = {
         ...this[form].value,

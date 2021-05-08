@@ -483,10 +483,7 @@
  <div class="row mt-3">
   <div [ngClass]="currentForm === 'cbiForm' ? 'col-6' : 'col-5 offset-1'">
    <a class="btn btn-green" (click)="triggerFormSave()">Save</a>
-  </div>
-  <div class="col-6 text-right">
-   <a class="next-link" (click)="switchPage('next')" *ngIf="currentForm === 'cbiFormContd'">
-    Next <i class="fa fa-angle-double-right" aria-hidden="true"></i>
+   <a class="btn btn-green ml-2" (click)="switchPage('next')" *ngIf="currentForm === 'cbiFormContd'">Next
    </a>
   </div>
  </div>

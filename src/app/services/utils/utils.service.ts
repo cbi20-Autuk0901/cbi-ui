@@ -60,11 +60,15 @@ export class UtilsService {
   };
 
   showMessage = (position, severity, title, msg) => {
+    this.ms.clear();
     this.ms.add({
       key: position,
       severity: severity,
       summary: title,
       detail: msg,
     });
+  };
+  clearMessage = () => {
+    this.ms.clear();
   };
 }

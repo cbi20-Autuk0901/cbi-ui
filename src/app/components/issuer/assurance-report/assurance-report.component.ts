@@ -30,12 +30,19 @@ export class AssuranceReportComponent implements OnInit {
   }
 
   switchPage = (type: string) => {
+    this.utils.clearMessage();
     if (type === 'back') {
       this.ds.updateValue('currentFormPage', this.mainData['userRole'] !== 'singleIssuer' ? 'caPage' : 'cbiPage');
     }
   };
 
+  removeFile = (field, name) => {
+    this.arForm.controls[field].setValue(null);
+    this[name] = null;
+  };
+
   submitApplication = (form: string) => {
+    this.utils.clearMessage();
     if (this.arForm.valid) {
       const payload = {
         ...this[form].value,

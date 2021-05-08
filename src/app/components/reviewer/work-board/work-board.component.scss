@@ -32,6 +32,15 @@
   }
 }
 
+.scroll-panel {
+  ::ng-deep {
+    .p-scrollpanel {
+      width: 100%;
+      height: calc(100vh - 350px);
+    }
+  }
+}
+
 .status-text {
   &.approved {
     color: #689f38;

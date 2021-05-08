@@ -9,18 +9,19 @@
      <div class="card">
       <div class="card__ribbon"></div>
       <h4 class="title">Pre-Issuance Certification</h4>
-      <a [routerLink]="['/certification-types']" [queryParams]="{ certType: 'pre' }" class="btn btn-secondary">
+      <button [routerLink]="['/certification-types']" [queryParams]="{ certType: 'pre' }" class="btn btn-secondary"
+              [disabled]="appOpen">
        Apply
-      </a>
+      </button>
      </div>
     </div>
     <div class="col-6">
      <div class="card">
       <div class="card__ribbon"></div>
       <h4 class="title">Post-Issuance Certification</h4>
-      <a [routerLink]="['/certifications-listing']" [queryParams]="{ certType: 'post' }" class="btn btn-secondary">
+      <button [routerLink]="['/certifications-listing']" [queryParams]="{ certType: 'post' }" class="btn btn-secondary">
        Apply
-      </a>
+      </button>
      </div>
     </div>
    </div>

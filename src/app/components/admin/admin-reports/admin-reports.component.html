@@ -25,6 +25,8 @@
    </th>
    <th pSortableColumn="uniqueName">Name <p-sortIcon field="uniqueName"></p-sortIcon>
    </th>
+   <th pSortableColumn="reviewer">Reviewer <p-sortIcon field="reviewer"></p-sortIcon>
+   </th>
    <th pSortableColumn="applicationDate">Date <p-sortIcon field="applicationDate"></p-sortIcon>
    </th>
    <th pSortableColumn="certificationType">Certification Type <p-sortIcon field="certificationType"></p-sortIcon>
@@ -42,6 +44,7 @@
    <td>{{list.no}}</td>
    <td>{{list.certificationId}}</td>
    <td>{{list.uniqueName | titlecase}}</td>
+   <td>{{list.reviewer || '-'}}</td>
    <td>{{list.applicationDate | date: 'dd/MM/YYYY'}}</td>
    <td>
     {{list.certificationType +  (list.certificationType === 'pre' || list.certificationType === 'post' ? '-issuance' : '') | titlecase}}

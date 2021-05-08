@@ -21,6 +21,7 @@ export class CertificationAgreementComponent implements OnInit {
   reportSrc: string;
   reportName: string;
   reportHeaders: object;
+  reviewerEmail: string;
 
   constructor(
     private fb: FormBuilder,
@@ -31,6 +32,7 @@ export class CertificationAgreementComponent implements OnInit {
     this.caSignedUploaded = false;
     this.reportSrc = '';
     this.reportName = '';
+    this.reviewerEmail = '';
     this.reportHeaders = {
       'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
       Pragma: 'no-cache',
@@ -52,14 +54,20 @@ export class CertificationAgreementComponent implements OnInit {
     this.userData = this.utils.getStore('userData');
 
     if (this.mainData['certId']) {
-      this.ds.formResume('caForm', this.mainData).subscribe((data) => {
-        if (data.applicationDate) data['applicationDate'] = new Date(data.applicationDate);
-        this.caForm.patchValue(data);
-        if (this.mainData['certType'] === 'post') {
-          this.caSignedUploaded = true;
-          this.reportSrc = 'http://143.110.213.22:8883/file/' + data.agreement;
+      this.ds.formResume('caForm', this.mainData).subscribe(
+        (data) => {
+          if (data.applicationDate) data['applicationDate'] = new Date(data.applicationDate);
+          this.caForm.patchValue(data);
+          if (this.mainData['certType'] === 'post') {
+            this.caSignedUploaded = true;
+            this.reportSrc = 'http://143.110.213.22:8883/file/' + data.agreement;
+            this.reviewerEmail = data.reviewer;
+          }
+        },
+        (error) => {
+          this.utils.showMessage('c', 'error', 'Error', 'Please try again');
         }
-      });
+      );
     }
   }
 
@@ -68,6 +76,7 @@ export class CertificationAgreementComponent implements OnInit {
   };
 
   switchPage = (type: string) => {
+    this.utils.clearMessage();
     if (type === 'next') {
       if (this.caSignedUploaded) {
         this.ds.updateValue('currentFormPage', this.mainData['userRole'] === 'singleIssuer' ? 'cbiPage' : 'arPage');
@@ -85,6 +94,7 @@ export class CertificationAgreementComponent implements OnInit {
   }
 
   saveFormStatus = (form: string) => {
+    this.utils.clearMessage();
     this.reportSrc = '';
     const payload = {
       ...this[form].value,
@@ -116,6 +126,7 @@ export class CertificationAgreementComponent implements OnInit {
   };
 
   uploadFile = (event) => {
+    this.utils.clearMessage();
     if (event.target.files.length > 0) {
       const payload = {
         userEmail: this.mainData['userEmail'],

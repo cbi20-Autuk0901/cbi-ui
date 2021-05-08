@@ -16,9 +16,12 @@
     <div class="d-flex justify-content-between">
      <div class="btn btn-secondary upload-btn" *ngIf="!isSubmitted">
       Upload +
-      <input type="file" name="caAssuranceReport" (change)="onChange($event, 'caName')">
+      <input #caAssuranceReport type="file" name="caAssuranceReport" (change)="onChange($event, 'caName')"
+             (click)="caAssuranceReport.value = null">
      </div>
-     <div>{{caName}}</div>
+     <div>{{caName}}
+      <i *ngIf="caName" (click)="removeFile('caAssuranceReport', 'caName')" class="pl-3 cursor-pointer pi pi-times"></i>
+     </div>
     </div>
    </div>
   </div>
@@ -38,23 +41,25 @@
     <div class="d-flex justify-content-between">
      <div class="btn btn-secondary upload-btn" *ngIf="!isSubmitted">
       Upload +
-      <input type="file" name="gbAssuranceReport" (change)="onChange($event, 'gbName')">
+      <input #gbAssuranceReport type="file" name="gbAssuranceReport" (change)="onChange($event, 'gbName')"
+             (click)="gbAssuranceReport.value = null">
      </div>
-     <div>{{gbName}}</div>
+     <div>{{gbName}}<i *ngIf="gbName" (click)="removeFile('gbAssuranceReport', 'gbName')"
+         class="pl-3 cursor-pointer pi pi-times"></i>
+     </div>
     </div>
    </div>
   </div>
  </div>
 </form>
 <div class="row mt-3">
- <div class="col-6 offset-6 text-right">
+ <div class="col-12 text-left">
   <a class="btn btn-green py-2" *ngIf="!isSubmitted" (click)="submitApplication('arForm')">
    Submit Application
   </a>
   <button #submitModal class="d-none" data-toggle="modal" data-target="#submitModal"></button>
 
  </div>
- <div class="offset-1"></div>
 </div>
 
 <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"

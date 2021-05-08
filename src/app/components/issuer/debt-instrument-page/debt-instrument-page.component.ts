@@ -44,18 +44,22 @@ export class DebtInstrumentPageComponent implements OnInit {
       this.currentFormPage = data;
     });
 
-    if (this.certId) {
-      const formToCheck = this.userData['userRole'] === 'singleIssuer' ? 'caForm' : 'cbiForm';
-      this.ds.formResume(formToCheck, this.headers).subscribe(
-        (data) => {
-          this.loadPage();
-        },
-        () => {
-          this.generateId();
-        }
-      );
+    if (!this.utils.getStore('applicationOpen')) {
+      if (this.certId) {
+        const formToCheck = this.userData['userRole'] === 'singleIssuer' ? 'caForm' : 'cbiForm';
+        this.ds.formResume(formToCheck, this.headers).subscribe(
+          (data) => {
+            this.loadPage();
+          },
+          () => {
+            this.generateId();
+          }
+        );
+      } else {
+        this.generateId();
+      }
     } else {
-      this.generateId();
+      this.router.navigate(['/dashboard']);
     }
   }
 
