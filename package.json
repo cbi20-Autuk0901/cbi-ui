@@ -25,6 +25,7 @@
     "aws-sdk": "^2.900.0",
     "bootstrap": "^4.6.0",
     "chart.js": "^2.9.4",
+    "crypto-js": "^4.0.0",
     "jquery": "^3.6.0",
     "lodash-es": "^4.17.21",
     "moment": "^2.29.1",

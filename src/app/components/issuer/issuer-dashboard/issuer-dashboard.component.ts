@@ -24,13 +24,8 @@ export class IssuerDashboardComponent implements OnInit {
     this.ds.getDashboard(payload, 'issuerDashboard').subscribe((data) => {
       this.dashboardData = data;
       this.isLoading = false;
-      if (
-        this.dashboardData['recentCertificationStatus'].pre !== null &&
-        this.userData['userRole'] === 'singleIssuer'
-      ) {
-        this.utils.setStore('applicationOpen', true);
-      } else {
-        this.utils.setStore('applicationOpen', false);
+      if (this.userData['userRole'] === 'singleIssuer') {
+        this.utils.setStore('certStatus', data['recentCertificationStatus']);
       }
     });
   }

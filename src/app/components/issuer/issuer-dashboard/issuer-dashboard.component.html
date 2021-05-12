@@ -54,19 +54,29 @@
     <div class="recent-certifications__title">Certification Status</div>
     <div class="recent-certifications__list">
      <div class="recent-certifications__item">
-      <div class="recent-certifications__item__id">Pre-Issuance Certification</div>
+      <div class="recent-certifications__item__id">
+       <span>Pre-Issuance Certification</span>
+      </div>
       <div>
-       <i class="fa fa-check-circle"
+       <i class="fa fa-check-circle" *ngIf="dashboardData['recentCertificationStatus']['pre'] !== 'draft'"
           [ngClass]="{'active': dashboardData['recentCertificationStatus'] && (dashboardData['recentCertificationStatus']['pre'] === 'approved')}"
           aria-hidden="true"></i>
+       <a class="btn btn-secondary-sm" *ngIf="dashboardData['recentCertificationStatus']['pre'] === 'draft'"
+          [routerLink]="['/debt-instrument', 'pre', dashboardData['recentCertificationStatus'].instrumentType]"
+          [queryParams]="{certId:dashboardData['recentCertificationStatus'].certificationId}">Resume</a>
       </div>
      </div>
      <div class="recent-certifications__item">
-      <div class="recent-certifications__item__id">Post-Issuance Certification</div>
+      <div class="recent-certifications__item__id">
+       <span>Post-Issuance Certification</span>
+      </div>
       <div>
-       <i class="fa fa-check-circle"
+       <i class="fa fa-check-circle" *ngIf="dashboardData['recentCertificationStatus']['post'] !== 'draft'"
           [ngClass]="{'active': dashboardData['recentCertificationStatus'] && (dashboardData['recentCertificationStatus']['post'] === 'approved')}"
           aria-hidden="true"></i>
+       <a class="btn btn-secondary-sm" *ngIf="dashboardData['recentCertificationStatus']['post'] === 'draft'"
+          [routerLink]="['/debt-instrument', 'post', dashboardData['recentCertificationStatus'].instrumentType]"
+          [queryParams]="{certId:dashboardData['recentCertificationStatus'].certificationId}">Resume</a>
       </div>
      </div>
      <div class="recent-certifications__item">

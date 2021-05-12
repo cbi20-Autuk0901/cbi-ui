@@ -44,7 +44,14 @@ export class DebtInstrumentPageComponent implements OnInit {
       this.currentFormPage = data;
     });
 
-    if (!this.utils.getStore('applicationOpen')) {
+    if (
+      (this.certType === 'pre' &&
+        this.utils.getStore('certStatus') &&
+        this.utils.getStore('certStatus')['pre'] === null &&
+        this.userData['userRole'] === 'singleIssuer') ||
+      this.certType === 'post' ||
+      (this.certType === 'pre' && this.userData['userRole'] !== 'singleIssuer')
+    ) {
       if (this.certId) {
         const formToCheck = this.userData['userRole'] === 'singleIssuer' ? 'caForm' : 'cbiForm';
         this.ds.formResume(formToCheck, this.headers).subscribe(
@@ -65,16 +72,21 @@ export class DebtInstrumentPageComponent implements OnInit {
 
   generateId = () => {
     if (this.certType === 'pre') this.headers['certId'] = '';
-    this.ds.generateCertification(this.headers).subscribe((data) => {
-      this.router.navigate([], {
-        relativeTo: this.route,
-        queryParams: {
-          certId: data.certificationId,
-        },
-      });
-      this.certId = data.certificationId;
-      this.loadPage();
-    });
+    this.ds.generateCertification(this.headers).subscribe(
+      (data) => {
+        this.router.navigate([], {
+          relativeTo: this.route,
+          queryParams: {
+            certId: data.certificationId,
+          },
+        });
+        this.certId = data.certificationId;
+        this.loadPage();
+      },
+      (error) => {
+        this.router.navigate(['/dashboard']);
+      }
+    );
   };
 
   loadPage = () => {

@@ -58,12 +58,6 @@
       <input type="text" class="form-control" id="issuerContactPerson" formControlName="issuerContactPerson" />
      </div>
     </div>
-    <div class="form-group row">
-     <label for="signature" class="col-sm-6 col-form-label">Signature</label>
-     <div class="col-sm-6">
-      <input type="text" class="form-control" id="signature" formControlName="signature" />
-     </div>
-    </div>
    </form>
   </div>
  </div>
@@ -73,11 +67,11 @@
     <div>Agreement Document</div>
     <div *ngIf="!(mainData['certType'] === 'post')">
      <div class="btn btn-green upload-btn mr-3">
-      Upload +
+      Upload signed document +
       <input #fileUpload type="file" (change)="uploadFile($event)" (click)="fileUpload.value = null">
      </div>
 
-     <button class="btn btn-secondary" (click)="downloadPDF()">Download</button>
+     <button class="btn btn-secondary" (click)="downloadPDF()">Download for offline signature</button>
 
     </div>
    </div>

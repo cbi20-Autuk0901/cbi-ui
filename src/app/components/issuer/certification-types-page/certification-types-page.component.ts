@@ -14,10 +14,14 @@ export class CertTypesPageComponent implements OnInit {
     certType: '',
     instrType: '',
   };
+  userData: object;
   appOpen: boolean;
 
   constructor(private route: ActivatedRoute, private ds: DatastoreService, private utils: UtilsService) {
-    this.appOpen = this.utils.getStore('applicationOpen');
+    this.userData = this.utils.getStore('userData');
+    if (this.userData['userRole'] === 'singleIssuer') {
+      this.appOpen = this.utils.getStore('certStatus')['pre'] !== null;
+    }
   }
 
   ngOnInit(): void {

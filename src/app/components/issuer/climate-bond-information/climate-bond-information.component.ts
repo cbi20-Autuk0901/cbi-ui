@@ -72,7 +72,7 @@ export class ClimateBondInformationComponent implements OnInit {
       impactReportAddressLink: ['', [Validators.required]],
       quantitativeImpact: ['', [Validators.required]],
       headOfficeAddress: ['', [Validators.required]],
-      vatNumber: ['', [Validators.required]],
+      vatNumber: [''],
       businessRegistration: ['', [Validators.required]],
       contactName: [''],
       position: [''],

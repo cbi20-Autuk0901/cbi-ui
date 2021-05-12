@@ -20,7 +20,8 @@
              (click)="caAssuranceReport.value = null">
      </div>
      <div>{{caName}}
-      <i *ngIf="caName" (click)="removeFile('caAssuranceReport', 'caName')" class="pl-3 cursor-pointer pi pi-times"></i>
+      <i *ngIf="caName && !isSubmitted" (click)="removeFile('caAssuranceReport', 'caName')"
+         class="pl-3 cursor-pointer pi pi-times"></i>
      </div>
     </div>
    </div>
@@ -44,7 +45,7 @@
       <input #gbAssuranceReport type="file" name="gbAssuranceReport" (change)="onChange($event, 'gbName')"
              (click)="gbAssuranceReport.value = null">
      </div>
-     <div>{{gbName}}<i *ngIf="gbName" (click)="removeFile('gbAssuranceReport', 'gbName')"
+     <div>{{gbName}}<i *ngIf="gbName && !isSubmitted" (click)="removeFile('gbAssuranceReport', 'gbName')"
          class="pl-3 cursor-pointer pi pi-times"></i>
      </div>
     </div>

@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
-import { Subject } from 'rxjs';
+import AES from 'crypto-js/aes';
+import Utf8 from 'crypto-js/enc-utf8';
 
 @Injectable({
   providedIn: 'root',
@@ -10,12 +11,17 @@ export class UtilsService {
 
   setStore = (key, value) => {
     const lsData = JSON.stringify(value);
-    localStorage.setItem(key, lsData);
+    localStorage.setItem(key, AES.encrypt(lsData, '10c@1 st0r@g3 D@t@'));
   };
 
   getStore = (key) => {
     const lsData = localStorage.getItem(key);
-    const data = JSON.parse(lsData);
+    let data;
+    if (lsData) {
+      data = JSON.parse(AES.decrypt(lsData, '10c@1 st0r@g3 D@t@').toString(Utf8));
+    }
+    // console.log(key, JSON.parse(data));
+
     return data;
   };
 
