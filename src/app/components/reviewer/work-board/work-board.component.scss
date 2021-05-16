@@ -88,12 +88,19 @@
     }
   }
 
-  .pi-save {
+  .save {
     color: rgba(0, 0, 0, 0.4);
     position: absolute;
     right: 10px;
-    top: 36px;
+    top: 30px;
     cursor: pointer;
+    min-width: auto;
+    padding: 0 3px 0 10px;
+    margin: 0;
+    border-left: 1px solid #dedede;
+    border-radius: 0;
+    height: 30px;
+    font-weight: 600;
   }
 }
 

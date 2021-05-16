@@ -42,8 +42,11 @@
       <td>{{list.applicationDate | date: 'dd/MM/YYYY'}}</td>
       <td>{{list.renewableEnergy | titlecase}}</td>
       <td ngClass="{{list.certificationStatus + ' status-text'}}">
-       <span class="link" (click)="reviewCertification(list)">
-        {{list.certificationStatus === 'in-review' ? 'Under-Review' : list.certificationStatus | titlecase}}
+       <span *ngIf="list.certificationStatus === 'in-review'" class="link" (click)="reviewCertification(list)">
+        Under-Review
+       </span>
+       <span *ngIf="list.certificationStatus !== 'in-review'" class="link">
+        {{list.certificationStatus | titlecase}}
        </span>
       </td>
      </tr>
@@ -60,7 +63,7 @@
   </div>
   <div class="col-4 side-info">
    <div class="personal-workspace">
-    <h6>Personal Workspace <i class="pi pi-save" (click)="savePSpace()"></i></h6>
+    <h6>Personal Workspace <button class="save btn" (click)="savePSpace()">Save</button></h6>
     <ngx-wig [(ngModel)]="pworkSpace">
     </ngx-wig>
    </div>
