@@ -1,21 +1,25 @@
 <div class="sidebar-sticky__items">
  <ul class="nav flex-column align-content-center">
   <li class="nav-item">
-   <a class="nav-link fa fa-bar-chart" [ngClass]="{'active': page === '/dashboard'}" routerLink="dashboard">
-   </a>
+   <!-- <a class="nav-link fa fa-bar-chart" [ngClass]="{'active': page === '/dashboard'}" routerLink="dashboard">
+   </a> -->
+   <img class="nav-link" src="../../../../assets/images/dashboard-icon.png" routerLink="dashboard">
   </li>
   <li class="nav-item">
-   <a class="nav-link fa fa-users" [ngClass]="{'active': page === '/admin-management'}" routerLink="admin-management">
-   </a>
+   <!-- <a class="nav-link fa fa-users" [ngClass]="{'active': page === '/admin-management'}" routerLink="admin-management">
+   </a> -->
+   <img class="nav-link" src="../../../../assets/images/roles-icon.png" routerLink="admin-management">
   </li>
   <li class="nav-item">
-   <a class="nav-link fa fa-database" [ngClass]="{'active': page === '/admin-certification-queue'}"
+   <!-- <a class="nav-link fa fa-database" [ngClass]="{'active': page === '/admin-certification-queue'}"
       routerLink="admin-certification-queue">
-   </a>
+   </a> -->
+   <img class="nav-link" src="../../../../assets/images/queue-icon.png" routerLink="admin-certification-queue">
   </li>
   <li class="nav-item">
-   <a class="nav-link fa fa-folder" [ngClass]="{'active': page === '/admin-reports'}" routerLink="admin-reports">
-   </a>
+   <!-- <a class="nav-link fa fa-folder" [ngClass]="{'active': page === '/admin-reports'}" routerLink="admin-reports">
+   </a> -->
+   <img class="nav-link" src="../../../../assets/images/reports-icon.png" routerLink="admin-reports">
   </li>
  </ul>
 </div>

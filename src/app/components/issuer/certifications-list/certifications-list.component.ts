@@ -54,6 +54,7 @@ export class CertificationsListComponent implements OnInit {
 
   onChange = (event, data) => {
     if (event.target.files.length > 0) {
+      const fileName = event.target.files[0].name;
       const file = event.target.files[0];
       const payload = {
         annualReport: file,
@@ -64,6 +65,13 @@ export class CertificationsListComponent implements OnInit {
       this.ds.submitAnnualReport(payload).subscribe(
         (res) => {
           this.utils.showMessage('c', 'success', 'Success', 'Report Uploaded Successfully');
+          this.certifications.map((e) => {
+            if (e['no'] === data.no) {
+              e['fileName'] = fileName;
+            }
+
+            return e;
+          });
         },
         (error) => {
           this.utils.showMessage('c', 'error', 'Error', 'Unable to Upload Report. Please try again.');

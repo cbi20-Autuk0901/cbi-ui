@@ -120,7 +120,7 @@ export class DatastoreService {
         break;
       }
       case 'annualReport': {
-        url = '/api/getPostCertifications';
+        url = '/api/submitAnnualReport';
         break;
       }
       default: {

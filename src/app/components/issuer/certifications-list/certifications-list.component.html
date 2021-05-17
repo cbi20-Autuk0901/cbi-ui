@@ -25,13 +25,16 @@
    <td>{{list.date | date: 'dd/MM/YYYY'}}</td>
    <td>{{list.instrType | titlecase}}</td>
    <td>
-    <a class="btn btn-green" *ngIf="certType === 'post'" [routerLink]="['/debt-instrument', certType, list.instrType]"
-       [queryParams]="{certId:list.certId}">Apply</a>
-    <a class="btn btn-green" *ngIf="certType === 'bondRedemption'" [routerLink]="['/bond-redemption', list.instrType]"
-       [queryParams]="{certId:list.certId}">Apply</a>
-    <a class="btn btn-green upload-btn" *ngIf="certType === 'annualReport'">Upload
-     <input type="file" name="annualReport" (change)="onChange($event, list)">
-    </a>
+    <div *ngIf="!list.fileName">
+     <a class="btn btn-green" *ngIf="certType === 'post'" [routerLink]="['/debt-instrument', certType, list.instrType]"
+        [queryParams]="{certId:list.certId}">Apply</a>
+     <a class="btn btn-green" *ngIf="certType === 'bondRedemption'" [routerLink]="['/bond-redemption', list.instrType]"
+        [queryParams]="{certId:list.certId}">Apply</a>
+     <a class="btn btn-green upload-btn" *ngIf="certType === 'annualReport'">Upload
+      <input type="file" #file2 (click)="file2.value = null" name="annualReport" (change)="onChange($event, list)">
+     </a>
+    </div>
+    <div *ngIf="list.fileName">{{list.fileName}}</div>
    </td>
   </tr>
  </ng-template>
