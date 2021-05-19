@@ -193,19 +193,21 @@
        <div *ngIf="list.userEmail !== userData['userEmail']">
         <button *ngIf="!editing" pButton pRipple type="button" pInitEditableRow icon="pi pi-pencil"
                 (click)="onRowEditInit(list)" class="p-button-rounded p- p-button-success p-button-text"
-                pTooltip="Edit User" tooltipPosition="top"></button>
+                title="Edit User"></button>
         <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-trash"
-                class="p-button-rounded p-button-success p-button-text" pTooltip="Remove User" tooltipPosition="top"
-                (click)="removeUser(list)"></button>
+                class="p-button-rounded p-button-success p-button-text" title="Remove User"
+                (click)="confirmDelete($event, list, 'd' + list.no)"></button>
         <button *ngIf="!editing" pButton pRipple type="button" icon="pi pi-key"
-                class="p-button-rounded p-button-success p-button-text" pTooltip="Reset Password" tooltipPosition="top"
-                (click)="resetPassword(list.userEmail)"></button>
+                class="p-button-rounded p-button-success p-button-text" title="Reset Password"
+                (click)="confirmPasswordReset($event, list.userEmail, 'r' + list.no)"></button>
         <button *ngIf="editing" pButton pRipple type="button" pSaveEditableRow icon="pi pi-check"
                 (click)="updateUser(list, ri)" class="p-button-rounded p-button-text p-button-success p-mr-2"
-                pTooltip="Save" tooltipPosition="top"></button>
+                title="Save"></button>
         <button *ngIf="editing" pButton pRipple type="button" pCancelEditableRow icon="pi pi-times"
                 (click)="onRowEditCancel(list, ri)" class="p-button-rounded p-button-text p-button-danger cancelEdit"
-                pTooltip="Cancel" tooltipPosition="top"></button>
+                title="Cancel"></button>
+        <p-confirmPopup key="{{'d'+list.no}}"></p-confirmPopup>
+        <p-confirmPopup key="{{'r'+list.no}}"></p-confirmPopup>
        </div>
       </td>
      </tr>
@@ -222,6 +224,7 @@
   </form>
  </div>
 </div>
+
 <div class="modal fade" id="submitModal" tabindex="-1" role="dialog" aria-hidden="true">
  <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
   <div class="modal-content">

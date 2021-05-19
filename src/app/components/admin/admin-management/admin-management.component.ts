@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UtilsService } from '../../../services/utils/utils.service';
 import { startCase, camelCase } from 'lodash-es';
+import { ConfirmationService } from 'primeng/api';
 
 @Component({
   selector: 'app-admin-management',
@@ -20,7 +21,11 @@ export class AdminManagementComponent implements OnInit {
   enableAddUsr: boolean;
   clonedUsrs: { [s: string]: any } = {};
 
-  constructor(private ds: DatastoreService, private utils: UtilsService) {
+  constructor(
+    private ds: DatastoreService,
+    private utils: UtilsService,
+    private confirmationService: ConfirmationService
+  ) {
     this.isLoading = true;
     this.enableAddUsr = false;
     this.userData = this.utils.getStore('userData');
@@ -130,6 +135,40 @@ export class AdminManagementComponent implements OnInit {
       }
     );
   };
+
+  confirmDelete(event: Event, data, key) {
+    this.confirmationService.confirm({
+      target: event.target,
+      message: 'Are you sure that you want to delete the user?',
+      icon: 'pi pi-exclamation-triangle',
+      key: key,
+      rejectButtonStyleClass: 'btn btn-gray',
+      acceptButtonStyleClass: 'btn btn-yellow',
+      accept: () => {
+        this.removeUser(data);
+      },
+      reject: () => {
+        //reject action
+      },
+    });
+  }
+
+  confirmPasswordReset(event: Event, data, key) {
+    this.confirmationService.confirm({
+      target: event.target,
+      message: 'Are you sure that you want to reset password?',
+      icon: 'pi pi-exclamation-triangle',
+      key: key,
+      rejectButtonStyleClass: 'btn btn-gray',
+      acceptButtonStyleClass: 'btn btn-yellow',
+      accept: () => {
+        this.resetPassword(data);
+      },
+      reject: () => {
+        //reject action
+      },
+    });
+  }
 
   removeUser = (usr) => {
     const payload = {

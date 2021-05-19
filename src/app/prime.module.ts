@@ -6,7 +6,7 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { ToastModule } from 'primeng/toast';
 import { TableModule } from 'primeng/table';
 import { PaginatorModule } from 'primeng/paginator';
-import { MessageService } from 'primeng/api';
+import { ConfirmationService, MessageService } from 'primeng/api';
 import { DialogModule } from 'primeng/dialog';
 import { BadgeModule } from 'primeng/badge';
 import { ChartModule } from 'primeng/chart';
@@ -19,6 +19,7 @@ import { BlockUIModule } from 'primeng/blockui';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { ButtonModule } from 'primeng/button';
 import { TooltipModule } from 'primeng/tooltip';
+import { ConfirmPopupModule } from 'primeng/confirmpopup';
 
 @NgModule({
   declarations: [],
@@ -42,6 +43,7 @@ import { TooltipModule } from 'primeng/tooltip';
     AutoCompleteModule,
     ButtonModule,
     TooltipModule,
+    ConfirmPopupModule,
   ],
   exports: [
     CalendarModule,
@@ -62,7 +64,8 @@ import { TooltipModule } from 'primeng/tooltip';
     AutoCompleteModule,
     ButtonModule,
     TooltipModule,
+    ConfirmPopupModule,
   ],
-  providers: [MessageService],
+  providers: [MessageService, ConfirmationService],
 })
 export class PrimeModule {}

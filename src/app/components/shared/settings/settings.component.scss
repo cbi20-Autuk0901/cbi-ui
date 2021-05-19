@@ -1,0 +1,63 @@
+.content {
+  .form-group {
+    margin-bottom: 16px;
+    .form-control {
+      box-shadow: none;
+
+      &.ng-invalid.ng-dirty {
+        border: 1px solid #d00;
+      }
+    }
+  }
+
+  .form-title {
+    margin-top: 30px;
+    margin-bottom: 25px;
+    font-weight: 600;
+    font-size: 24px;
+    border-bottom: 1px solid;
+
+    &.profile {
+      color: #4eb4be;
+    }
+
+    &.password {
+      color: #29a457;
+    }
+  }
+
+  label {
+    font-size: 16px;
+    font-weight: 400;
+    color: #505050;
+    margin: 0;
+    padding-bottom: 5px;
+  }
+
+  input {
+    &:active,
+    &:focus {
+      outline: 0;
+      box-shadow: none;
+    }
+  }
+
+  .btn {
+    color: #fff;
+    font-size: 16px;
+    padding: 6px 35px;
+    margin-top: 30px;
+
+    &.btn-profile {
+      background-color: #4eb4be;
+    }
+
+    &.btn-password {
+      background-color: #29a457;
+    }
+
+    &:disabled {
+      background-color: #acacac;
+    }
+  }
+}

@@ -14,6 +14,7 @@ import { ReviewerModule } from '../reviewer/reviewer.module';
 import { AdminModule } from '../admin/admin.module';
 import { ChatBotComponent } from './chat-bot/chat-bot.component';
 import Amplify, { Interactions } from 'aws-amplify';
+import { SettingsComponent } from './settings/settings.component';
 
 Amplify.configure({
   Auth: {
@@ -39,6 +40,7 @@ Amplify.configure({
     RegistrationComponent,
     DashboardPageComponent,
     ChatBotComponent,
+    SettingsComponent,
   ],
   imports: [
     CommonModule,

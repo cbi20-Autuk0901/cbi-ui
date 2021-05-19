@@ -1,0 +1,172 @@
+<div class="content">
+ <div class="row no-gutters">
+  <div class="pl-5 col-6">
+   <form (ngSubmit)="updateProfile()" [formGroup]="profileForm" novalidate>
+    <div class="form-title profile">User Profile</div>
+    <div class="form-group">
+     <div class="form-row">
+      <div class="col-6">
+       <label for="firstName">First Name</label>
+       <input type="text" class="form-control" id="firstName" formControlName="firstName" />
+       <span class="text-danger error"
+             *ngIf="(profileControls.firstName.touched || profileSubmitted) && profileControls.firstName.errors?.required">
+        First Name is required
+       </span>
+      </div>
+      <div class="col-6">
+       <label for="lastName">Last Name</label>
+       <input type="text" class="form-control" id="lastName" formControlName="lastName" />
+       <span class="text-danger error"
+             *ngIf="(profileControls.lastName.touched || profileSubmitted) && profileControls.lastName.errors?.required">
+        Last Name is required
+       </span>
+      </div>
+     </div>
+    </div>
+    <div class="form-group">
+     <div class="form-row">
+      <div class="col-6"> <label for="userEmail">Email Address</label>
+       <input type="email" class="form-control" autocomplete="off" id="userEmail" formControlName="userEmail"
+              [readonly]="true" />
+       <span class="text-danger error"
+             *ngIf="(profileControls.userEmail.touched || profileSubmitted) && profileControls.userEmail.errors?.required">
+        Email is required
+       </span>
+       <span class="text-danger error"
+             *ngIf="(profileControls.userEmail.touched || profileSubmitted) && profileControls.userEmail.errors?.pattern">
+        Invalid Email
+       </span>
+      </div>
+      <div class="col-6"> <label for="companyName">Company Name</label>
+       <input type="text" class="form-control" id="companyName" formControlName="companyName" [readonly]="true" />
+       <span class="text-danger error"
+             *ngIf="(profileControls.companyName.touched || profileSubmitted) && profileControls.companyName.errors?.required">
+        Company Name is required
+       </span>
+      </div>
+     </div>
+    </div>
+    <div class="form-group">
+     <div class="form-row">
+      <div class="col-6">
+       <label for="location">Location</label>
+       <input type="text" class="form-control" id="location" formControlName="location" />
+       <span class="text-danger error"
+             *ngIf="(profileControls.location.touched || profileSubmitted) && profileControls.location.errors?.required">
+        Location is required
+       </span>
+      </div>
+      <div class="col-6">
+       <label for="phoneNumber">Phone Number</label>
+       <input type="text" class="form-control" id="phoneNumber" formControlName="phoneNumber" />
+       <span class="text-danger error"
+             *ngIf="(profileControls.phoneNumber.touched || profileSubmitted) && profileControls.phoneNumber.errors?.required">
+        Phone Number is required
+       </span>
+       <span class="text-danger error"
+             *ngIf="(profileControls.phoneNumber.touched || profileSubmitted) && profileControls.phoneNumber.errors?.pattern">
+        Invalid Phone Number
+       </span>
+      </div>
+     </div>
+    </div>
+    <div class="form-group">
+     <div class="form-row">
+      <div class="col-6">
+       <label for="invoiceCompanyName">Invoice Company Name</label>
+       <input type="text" class="form-control" id="invoiceCompanyName" formControlName="invoiceCompanyName" />
+       <span class="text-danger error"
+             *ngIf="(profileControls.invoiceCompanyName.touched || profileSubmitted) && profileControls.invoiceCompanyName.errors?.required">
+        Company Name is required
+       </span>
+      </div>
+      <div class="col-6">
+       <label for="businessRegistrationNo">Business Registration Number</label>
+       <input type="text" class="form-control" id="businessRegistrationNo" formControlName="businessRegistrationNo" />
+       <span class="text-danger error"
+             *ngIf="(profileControls.businessRegistrationNo.touched || profileSubmitted) && profileControls.businessRegistrationNo.errors?.required">
+        Business Registration Number is required
+       </span>
+      </div>
+     </div>
+    </div>
+    <div class="form-group">
+     <div class="form-row">
+      <div class="col-6">
+       <label for="invoiceEmail">Invoice Email Address</label>
+       <input type="email" class="form-control" id="invoiceEmail" formControlName="invoiceEmail" />
+       <span class="text-danger error"
+             *ngIf="(profileControls.invoiceEmail.touched || profileSubmitted) && profileControls.invoiceEmail.errors?.required">
+        Email Address is required
+       </span>
+       <span class="text-danger error"
+             *ngIf="(profileControls.invoiceEmail.touched || profileSubmitted) && profileControls.invoiceEmail.errors?.pattern">
+        Invalid Email Address
+       </span>
+      </div>
+      <div class="col-6">
+       <label for="businessAddress">Business Address</label>
+       <input type="text" class="form-control" id="businessAddress" formControlName="businessAddress" />
+       <span class="text-danger error"
+             *ngIf="(profileControls.businessAddress.touched || profileSubmitted) && profileControls.businessAddress.errors?.required">
+        Business Address is required
+       </span>
+      </div>
+     </div>
+    </div>
+    <div class="form-group text-center">
+     <button class="btn btn-profile" type="submit">Save</button>
+    </div>
+   </form>
+  </div>
+  <p-divider layout="vertical" class="col-2"> <b>OR</b></p-divider>
+  <div class="pr-5 col-4">
+   <div class="form-title password">Change Password</div>
+   <form (ngSubmit)="submitPassword()" [formGroup]="passwordForm" novalidate>
+    <div class="form-group">
+     <label for="oldPassword">Old Password</label>
+     <input type="password" class="form-control" id="oldPassword" formControlName="oldPassword"
+            autocomplete="new-password" />
+     <span class="text-danger error"
+           *ngIf="(passwordControls.oldPassword.touched || passwordSubmitted) && passwordControls.oldPassword.errors?.required">
+      Password is required
+     </span>
+     <span class="text-danger error"
+           *ngIf="(passwordControls.oldPassword.touched || passwordSubmitted) && passwordControls.oldPassword.errors?.pattern">
+      Password should contain minimum of 8 Characters with uppercase, lowercase, numbers & Special characters
+      {{ "! @ # $ % ^ & * ( ) _ + - = [ ] { } | '"}}
+     </span>
+    </div>
+    <div class="form-group">
+     <label for="newPassword">New Password</label>
+     <input type="password" class="form-control" id="newPassword" formControlName="newPassword"
+            autocomplete="new-password" />
+     <span class="text-danger error"
+           *ngIf="(passwordControls.newPassword.touched || passwordSubmitted) && passwordControls.newPassword.errors?.required">
+      Password is required
+     </span>
+     <span class="text-danger error"
+           *ngIf="(passwordControls.newPassword.touched || passwordSubmitted) && passwordControls.newPassword.errors?.pattern">
+      Password should contain minimum of 8 Characters with uppercase, lowercase, numbers & Special characters
+      {{ "! @ # $ % ^ & * ( ) _ + - = [ ] { } | '"}}
+     </span>
+    </div>
+    <div class="form-group">
+     <label for="confirmNewPassword">Confirm New Password</label>
+     <input type="password" class="form-control" id="confirmNewPassword" formControlName="confirmNewPassword" />
+     <span class="text-danger error"
+           *ngIf="(passwordControls.confirmNewPassword.touched || passwordSubmitted) && passwordControls.confirmNewPassword.errors?.required">
+      Please Confirm Password
+     </span>
+     <span class="text-danger error"
+           *ngIf="passwordControls.confirmNewPassword.touched && passwordControls.confirmNewPassword.errors?.passwordMismatch">
+      Passwords doesnot match
+     </span>
+    </div>
+    <div class="form-group text-center">
+     <button class="btn btn-password" type="submit">Submit</button>
+    </div>
+   </form>
+  </div>
+ </div>
+</div>

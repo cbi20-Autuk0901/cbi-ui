@@ -16,6 +16,7 @@ import { AdminReportsComponent } from './components/admin/admin-reports/admin-re
 import { ReviewerCertificationQueueComponent } from './components/reviewer/reviewer-certification-queue/reviewer-certification-queue.component';
 import { AdminCertificationQueueComponent } from './components/admin/admin-certification-queue/admin-certification-queue.component';
 import { AdminManagementComponent } from './components/admin/admin-management/admin-management.component';
+import { SettingsComponent } from './components/shared/settings/settings.component';
 
 const routes: Routes = [
   {
@@ -91,6 +92,11 @@ const routes: Routes = [
     path: 'admin-management',
     canActivate: [AuthGuard],
     component: AdminManagementComponent,
+  },
+  {
+    path: 'settings',
+    canActivate: [AuthGuard],
+    component: SettingsComponent,
   },
   { path: '', redirectTo: '/dashboard', pathMatch: 'full' },
   { path: '**', redirectTo: '/dashboard' },
