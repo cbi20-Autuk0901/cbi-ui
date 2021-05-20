@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
 import { CustomValidationService } from '../../../services/custom-validation/custom-validation.service';
+import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UserService } from '../../../services/user/user.service';
 import { UtilsService } from '../../../services/utils/utils.service';
 
@@ -15,57 +15,68 @@ export class SettingsComponent implements OnInit {
   passwordForm: FormGroup;
   profileSubmitted: boolean;
   passwordSubmitted: boolean;
-  token: string;
   isValidSession: boolean;
   isLoading: boolean;
+  userData: object;
 
   constructor(
     private userS: UserService,
     private fb: FormBuilder,
     private customValidator: CustomValidationService,
-    private utils: UtilsService,
-    private route: ActivatedRoute,
-    private router: Router
+    private utils: UtilsService
   ) {
+    this.userData = this.utils.getStore('userData');
     this.isLoading = true;
-    this.profileForm = this.fb.group(
-      {
-        firstName: ['', Validators.required],
-        lastName: ['', Validators.required],
-        userEmail: [
-          'hdsjfhdjfh@hjh.com',
-          [Validators.required, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')],
-        ],
-        companyName: ['sjdsjkdhjk', Validators.required],
-        location: ['', Validators.required],
-        invoiceCompanyName: ['', Validators.required],
-        businessRegistrationNo: ['', Validators.required],
-        invoiceEmail: [
-          '',
-          [Validators.required, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')],
-        ],
-        phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
-        businessAddress: ['', Validators.required],
+    this.userS.getProfile(this.userData['userEmail']).subscribe(
+      (res) => {
+        this.profileForm = this.fb.group(
+          {
+            firstName: [res['firstName'] || '', Validators.required],
+            lastName: [res['lastName'], Validators.required],
+            userEmail: [
+              res['userEmail'],
+              [Validators.required, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')],
+            ],
+            companyName: [res['companyName'], Validators.required],
+            location: [res['location'], Validators.required],
+            invoiceCompanyName: [res['invoiceCompanyName'], Validators.required],
+            businessRegistrationNo: [res['businessRegistrationNo'], Validators.required],
+            invoiceEmail: [
+              res['invoiceEmail'],
+              [Validators.required, Validators.pattern('^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$')],
+            ],
+            phoneNumber: [res['phoneNumber'], [Validators.required, Validators.pattern('^[0-9]*$')]],
+            businessAddress: [res['businessAddress'], Validators.required],
+          },
+          {
+            validator: this.customValidator.MatchPassword('password', 'confirmPassword'),
+          }
+        );
+        this.passwordForm = this.fb.group(
+          {
+            password: [
+              '',
+              [
+                Validators.required,
+                Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'),
+              ],
+            ],
+            newPassword: [
+              '',
+              [
+                Validators.required,
+                Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'),
+              ],
+            ],
+            confirmNewPassword: ['', Validators.required],
+          },
+          {
+            validator: this.customValidator.MatchPassword('newPassword', 'confirmNewPassword'),
+          }
+        );
+        this.isLoading = false;
       },
-      {
-        validator: this.customValidator.MatchPassword('password', 'confirmPassword'),
-      }
-    );
-    this.passwordForm = this.fb.group(
-      {
-        oldPassword: [
-          '',
-          [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')],
-        ],
-        newPassword: [
-          '',
-          [Validators.required, Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$')],
-        ],
-        confirmNewPassword: ['', Validators.required],
-      },
-      {
-        validator: this.customValidator.MatchPassword('newPassword', 'confirmNewPassword'),
-      }
+      (err) => {}
     );
   }
 
@@ -83,19 +94,40 @@ export class SettingsComponent implements OnInit {
     this.profileSubmitted = true;
     if (this.profileForm.valid) {
       const payload = this.profileForm.value;
-      this.userS.registerUser(payload).subscribe((e) => {
-        this.utils.showMessage('c', 'success', 'Success', 'Registered Successfully');
-      });
+      this.userS.updateProfile(payload).subscribe(
+        (e) => {
+          this.utils.showMessage('c', 'success', 'Success', 'Profile Updated');
+        },
+        (error) => {
+          this.utils.showMessage('c', 'error', 'Error', 'Please try again later');
+        }
+      );
     }
   };
 
-  submitPassword = () => {
+  changePassword = () => {
     this.passwordSubmitted = true;
     if (this.passwordForm.valid) {
-      const payload = this.passwordForm.value;
-      this.userS.registerUser(payload).subscribe((e) => {
-        this.utils.showMessage('c', 'success', 'Success', 'Registered Successfully');
-      });
+      const formData = this.passwordForm.value;
+      const payload = {
+        userEmail: this.userData['userEmail'],
+        oldPassword: formData['password'],
+        newPassword: formData['newPassword'],
+      };
+      this.userS.changePassword(payload).subscribe(
+        (e) => {
+          this.passwordForm.reset();
+          this.passwordSubmitted = false;
+          this.utils.showMessage('c', 'success', 'Success', 'Password Changed');
+        },
+        (e) => {
+          if (e.status === 403) {
+            this.utils.showMessage('c', 'error', 'Error', 'Wrong Password');
+          } else {
+            this.utils.showMessage('c', 'error', 'Error', 'Please try again later');
+          }
+        }
+      );
     }
   };
 }

@@ -10,6 +10,17 @@
     border: 2px solid #8dc63f;
     color: #ffffff;
   }
+
+  &.btn-yellow {
+    background-color: #f4ac34 !important;
+    border-color: #f4ac34 !important;
+    color: #ffffff;
+    &:focus,
+    &:active {
+      background-color: #f4ac34 !important;
+      border-color: #f4ac34 !important;
+    }
+  }
 }
 
 .status-text {

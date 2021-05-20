@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { LoginForm } from 'src/app/models/forms.model';
 import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
@@ -18,11 +17,26 @@ export class UserService {
     private utils: UtilsService
   ) {}
 
+  getProfile = (email: string): Observable<any> => {
+    const url = '/api/profile';
+    const options = {
+      headers: new HttpHeaders({
+        userEmail: email,
+      }),
+    };
+    return this.http.get(url, options);
+  };
+
+  updateProfile = (payload: object): Observable<any> => {
+    const url = '/api/profile';
+    return this.http.post(url, payload);
+  };
+
   isLoggedin = (): any => {
     return this.utils.getStore('isLoggedin');
   };
 
-  authenticateUser = (form: LoginForm): Observable<any> => {
+  authenticateUser = (form: any): Observable<any> => {
     const url = '/api/login';
 
     const payload = {
@@ -38,6 +52,11 @@ export class UserService {
 
   registerUser = (payload: object): Observable<any> => {
     const url = '/api/register';
+    return this.http.post(url, payload);
+  };
+
+  changePassword = (payload: object): Observable<any> => {
+    const url = '/api/changePassword';
     return this.http.post(url, payload);
   };
 

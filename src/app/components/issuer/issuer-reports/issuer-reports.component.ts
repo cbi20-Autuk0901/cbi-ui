@@ -66,4 +66,22 @@ export class IssuerReportsComponent implements OnInit {
     const filteredList = list.filter((item) => item.certificationStatus === key);
     return filteredList.length || 0;
   };
+
+  deleteCertification = (data) => {
+    const payload = {
+      certificationId: data['certId'],
+      certificationType: data['certType'],
+    };
+
+    this.ds.removeCertification(payload).subscribe(
+      (res) => {
+        const filCerts = this.certifications.filter((e) => e['certId'] !== data['certId']);
+        this.certifications = this.utils.addIndex(filCerts);
+        this.utils.showMessage('c', 'success', 'Success', 'Certification Deleted');
+      },
+      (error) => {
+        this.utils.showMessage('c', 'error', 'Error', 'Please try again later');
+      }
+    );
+  };
 }

@@ -189,6 +189,11 @@ export class DatastoreService {
     return this.http.get(url, options);
   };
 
+  removeCertification = (payload: object): Observable<any> => {
+    const url = '/api/deleteCertification';
+    return this.http.post(url, payload);
+  };
+
   getPageUrl = (page): string => {
     let url = '';
     switch (page) {

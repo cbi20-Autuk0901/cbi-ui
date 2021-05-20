@@ -62,9 +62,11 @@
       <a class="dropdown-item" target="_blank" href="{{'http://143.110.213.22:8883/file/'+list.approval}}">Approval</a>
      </div>
     </div>
-
-    <button type="button" *ngIf="list.status !== 'approved'" disabled class="btn btn-secondary btn-sm">Not
+    <button type="button" *ngIf="list.status !== 'approved' && list.status !== 'draft'" disabled
+            class="btn btn-secondary btn-sm">Not
      Available</button>
+    <button type="button" *ngIf="list.status === 'draft'" (click)="deleteCertification(list)"
+            class="btn btn-yellow btn-sm">Delete</button>
    </td>
   </tr>
  </ng-template>

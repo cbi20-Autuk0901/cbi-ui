@@ -1,4 +1,4 @@
-<div class="content">
+<div class="content" *ngIf="!isLoading">
  <div class="row no-gutters">
   <div class="pl-5 col-6">
    <form (ngSubmit)="updateProfile()" [formGroup]="profileForm" novalidate>
@@ -115,24 +115,23 @@
      </div>
     </div>
     <div class="form-group text-center">
-     <button class="btn btn-profile" type="submit">Save</button>
+     <button class="btn btn-profile" type="submit">Update</button>
     </div>
    </form>
   </div>
   <p-divider layout="vertical" class="col-2"> <b>OR</b></p-divider>
   <div class="pr-5 col-4">
    <div class="form-title password">Change Password</div>
-   <form (ngSubmit)="submitPassword()" [formGroup]="passwordForm" novalidate>
+   <form (ngSubmit)="changePassword()" [formGroup]="passwordForm" novalidate>
     <div class="form-group">
-     <label for="oldPassword">Old Password</label>
-     <input type="password" class="form-control" id="oldPassword" formControlName="oldPassword"
-            autocomplete="new-password" />
+     <label for="password">Password</label>
+     <input type="password" class="form-control" id="password" formControlName="password" autocomplete="new-password" />
      <span class="text-danger error"
-           *ngIf="(passwordControls.oldPassword.touched || passwordSubmitted) && passwordControls.oldPassword.errors?.required">
+           *ngIf="(passwordControls.password.touched || passwordSubmitted) && passwordControls.password.errors?.required">
       Password is required
      </span>
      <span class="text-danger error"
-           *ngIf="(passwordControls.oldPassword.touched || passwordSubmitted) && passwordControls.oldPassword.errors?.pattern">
+           *ngIf="(passwordControls.password.touched || passwordSubmitted) && passwordControls.password.errors?.pattern">
       Password should contain minimum of 8 Characters with uppercase, lowercase, numbers & Special characters
       {{ "! @ # $ % ^ & * ( ) _ + - = [ ] { } | '"}}
      </span>
@@ -143,7 +142,7 @@
             autocomplete="new-password" />
      <span class="text-danger error"
            *ngIf="(passwordControls.newPassword.touched || passwordSubmitted) && passwordControls.newPassword.errors?.required">
-      Password is required
+      New Password is required
      </span>
      <span class="text-danger error"
            *ngIf="(passwordControls.newPassword.touched || passwordSubmitted) && passwordControls.newPassword.errors?.pattern">
