@@ -50,8 +50,7 @@
         <div class="row">
          <div class="col-6">
           <label for="password">Password</label>
-          <input type="password" class="form-control" id="password" formControlName="password"
-                 autocomplete="new-password" />
+          <input type="password" class="form-control" id="password" formControlName="password" autocomplete="off" />
           <span class="text-danger error"
                 *ngIf="(controls.password.touched || submitted) && controls.password.errors?.required">
            Password is required
@@ -65,7 +64,8 @@
          </div>
          <div class="col-6">
           <label for="confirmPassword">Confirm Password</label>
-          <input type="password" class="form-control" id="confirmPassword" formControlName="confirmPassword" />
+          <input type="password" class="form-control" autocomplete="off" id="confirmPassword"
+                 formControlName="confirmPassword" />
           <span class="text-danger error"
                 *ngIf="(controls.confirmPassword.touched || submitted) && controls.confirmPassword.errors?.required">
            Please Confirm Password

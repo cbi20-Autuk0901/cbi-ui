@@ -16,6 +16,7 @@
    </th>
    <th pSortableColumn="instrumentType">Instrument Type <p-sortIcon field="instrumentType"></p-sortIcon>
    </th>
+   <th></th>
   </tr>
  </ng-template>
  <ng-template pTemplate="body" let-list>
@@ -28,6 +29,20 @@
    </td>
    <td>{{list.applicationDate | date: 'dd/MM/YYYY'}}</td>
    <td>{{list.instrumentType | titlecase}}</td>
+   <td>
+    <div class="dropdown" *ngIf="list.certificationStatus === 'approved'">
+     <button class="btn btn-green dropdown-toggle" data-boundary="window" type="button" id="dropdownMenuButton"
+             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+      Download
+     </button>
+     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+      <a class="dropdown-item" target="_blank" download *ngFor="let file of list.downloads"
+         href="{{'http://143.110.213.22:8883/file/'+file.path}}">{{file.name}}</a>
+     </div>
+    </div>
+    <button type="button" *ngIf="list.certificationStatus !== 'approved'" disabled class="btn btn-secondary btn-sm">Not
+     Available</button>
+   </td>
   </tr>
  </ng-template>
  <ng-template pTemplate="emptymessage" let-columns>

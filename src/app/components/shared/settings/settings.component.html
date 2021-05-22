@@ -1,7 +1,7 @@
 <div class="content" *ngIf="!isLoading">
  <div class="row no-gutters">
   <div class="pl-5 col-6">
-   <form (ngSubmit)="updateProfile()" [formGroup]="profileForm" novalidate>
+   <form (ngSubmit)="updateProfile()" autocomplete="off" [formGroup]="profileForm" novalidate>
     <div class="form-title profile">User Profile</div>
     <div class="form-group">
      <div class="form-row">
@@ -122,10 +122,10 @@
   <p-divider layout="vertical" class="col-2"> <b>OR</b></p-divider>
   <div class="pr-5 col-4">
    <div class="form-title password">Change Password</div>
-   <form (ngSubmit)="changePassword()" [formGroup]="passwordForm" novalidate>
+   <form (ngSubmit)="changePassword()" autocomplete="off" [formGroup]="passwordForm" novalidate>
     <div class="form-group">
      <label for="password">Password</label>
-     <input type="password" class="form-control" id="password" formControlName="password" autocomplete="new-password" />
+     <input type="password" class="form-control" id="password" formControlName="password" autocomplete="off" />
      <span class="text-danger error"
            *ngIf="(passwordControls.password.touched || passwordSubmitted) && passwordControls.password.errors?.required">
       Password is required
@@ -138,8 +138,7 @@
     </div>
     <div class="form-group">
      <label for="newPassword">New Password</label>
-     <input type="password" class="form-control" id="newPassword" formControlName="newPassword"
-            autocomplete="new-password" />
+     <input type="password" class="form-control" id="newPassword" formControlName="newPassword" autocomplete="off" />
      <span class="text-danger error"
            *ngIf="(passwordControls.newPassword.touched || passwordSubmitted) && passwordControls.newPassword.errors?.required">
       New Password is required
@@ -152,7 +151,8 @@
     </div>
     <div class="form-group">
      <label for="confirmNewPassword">Confirm New Password</label>
-     <input type="password" class="form-control" id="confirmNewPassword" formControlName="confirmNewPassword" />
+     <input type="password" class="form-control" id="confirmNewPassword" autocomplete="off"
+            formControlName="confirmNewPassword" />
      <span class="text-danger error"
            *ngIf="(passwordControls.confirmNewPassword.touched || passwordSubmitted) && passwordControls.confirmNewPassword.errors?.required">
       Please Confirm Password
