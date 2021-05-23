@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import AES from 'crypto-js/aes';
 import Utf8 from 'crypto-js/enc-utf8';
+import { isString } from 'lodash-es';
 
 @Injectable({
   providedIn: 'root',
@@ -10,37 +11,30 @@ export class UtilsService {
   constructor(private ms: MessageService) {}
 
   setStore = (key, value) => {
-    const lsData = JSON.stringify(value);
-    localStorage.setItem(key, AES.encrypt(lsData, '10c@1 st0r@g3 D@t@'));
+    const encData = this.encrypt(value, '10c@1 st0r@g3 D@t@');
+    localStorage.setItem(key, encData);
   };
 
   getStore = (key) => {
     const lsData = localStorage.getItem(key);
-    let data;
-    if (lsData) {
-      data = JSON.parse(AES.decrypt(lsData, '10c@1 st0r@g3 D@t@').toString(Utf8));
-    }
-    // console.log(key, JSON.parse(data));
-
-    return data;
+    return this.decrypt(lsData, '10c@1 st0r@g3 D@t@');
   };
 
-  toTitleCase = (str) => {
-    if (str) {
-      return str
-        .toLowerCase()
-        .split(' ')
-        .map(function (word) {
-          return word.charAt(0).toUpperCase() + word.slice(1);
-        })
-        .join(' ');
-    }
+  encrypt = (data, encKey) => {
+    const formatData = JSON.stringify({
+      data,
+    });
+    return AES.encrypt(formatData, encKey).toString();
   };
 
-  toSentenceCase = (str) => {
-    if (str) {
-      return str.replace(/(^[a-z])|(\s+[a-z])/g, (txt) => txt.toUpperCase());
+  decrypt = (data, encKey) => {
+    let orgData;
+    if (data) {
+      const deData = AES.decrypt(data, encKey).toString(Utf8);
+      orgData = JSON.parse(deData).data;
     }
+
+    return orgData;
   };
 
   generateYearList = (start: number, end: number) => {

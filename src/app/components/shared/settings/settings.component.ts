@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CustomValidationService } from '../../../services/custom-validation/custom-validation.service';
-import { DatastoreService } from '../../../services/data-store/data-store.service';
 import { UserService } from '../../../services/user/user.service';
 import { UtilsService } from '../../../services/utils/utils.service';
 
@@ -58,14 +57,14 @@ export class SettingsComponent implements OnInit {
               '',
               [
                 Validators.required,
-                Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'),
+                Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_+-={}|]).{8,}$'),
               ],
             ],
             newPassword: [
               '',
               [
                 Validators.required,
-                Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{8,}$'),
+                Validators.pattern('^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-_+-={}|]).{8,}$'),
               ],
             ],
             confirmNewPassword: ['', Validators.required],

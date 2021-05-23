@@ -101,7 +101,7 @@ export class WorkBoardComponent implements OnInit {
         this.statuses.forEach((st) => {
           st['count'] = this.getListCount(this.certifications, st['value']);
         });
-        this.pworkSpace = window.atob(res.workSpace.notes);
+        this.pworkSpace = this.utils.decrypt(res.workSpace.notes, 'w0rk SpaCE D@t@12334 []');
         this.recentCases = this.getRecentApproved(res.assignedCertifications);
         this.reviewCertification();
       }
@@ -127,8 +127,10 @@ export class WorkBoardComponent implements OnInit {
   };
 
   savePSpace = () => {
+    const encData = this.utils.encrypt(this.pworkSpace, 'w0rk SpaCE D@t@12334 []');
+
     const payload = {
-      workSpace: window.btoa(this.pworkSpace),
+      workSpace: encData,
       userEmail: this.userData['userEmail'],
     };
     this.ds.savePWorkSpace(payload).subscribe((e) => {
