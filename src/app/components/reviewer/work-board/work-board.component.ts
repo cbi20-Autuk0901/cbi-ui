@@ -82,9 +82,11 @@ export class WorkBoardComponent implements OnInit {
       userEmail: this.userData['userEmail'],
     };
     this.ds.workBoard(payload).subscribe((res) => {
-      const selCert = res.assignedCertifications.find((cert) => cert['certificationId'] === cID);
+      const selCert = res.assignedCertifications.find(
+        (cert) => cert['certificationId'] === cID && cert['certificationStatus'] !== 'approved'
+      );
 
-      if (selCert && selCert['certificationStatus'] !== 'approved') {
+      if (selCert) {
         this.reviewCertification(selCert);
       } else {
         this.location.go('/work-board');
