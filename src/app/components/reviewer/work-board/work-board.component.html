@@ -389,7 +389,7 @@
       Other Actions
      </button>
      <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-      <a class="dropdown-item" role="button" (click)="reviewerInput(false, reportStatus['currentReport'])">Reject</a>
+      <a class="dropdown-item" data-toggle="modal" data-target="#rejectCertification">Reject</a>
       <a class="dropdown-item" role="button" href="mailto:{{selRevCertification['userEmail']}}">Contact Issuer</a>
      </div>
     </div>
@@ -404,6 +404,21 @@
  </div>
 </div>
 
+<div class="modal fade" id="rejectCertification" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+     aria-hidden="true">
+ <div class="modal-dialog modal-dialog-centered" [ngClass]="{'modal-sm': !showSuccess}" role="document">
+  <div class="modal-content px-3 pb-4">
+   <button type="button" class="close ml-auto" data-dismiss="modal" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+   </button>
+   <h6 class="text-center">Are you sure ?</h6>
+   <div class="d-flex justify-content-between mt-4">
+    <button class="btn btn-red" data-dismiss="modal">No</button>
+    <button class="btn btn-green" data-dismiss="modal" (click)="rejectCertification()">Yes</button>
+   </div>
+  </div>
+ </div>
+</div>
 
 <div class="modal fade" id="approveCertModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
      aria-hidden="true">
@@ -430,7 +445,7 @@
       <i class="fa fa-check-circle reviewed"></i>
      </div>
      <div class="doc-list__item">
-      <span class="doc-list__item__name">Confirmation of Certificaiton</span>
+      <span class="doc-list__item__name">Confirmation of Certification</span>
       <i class="fa fa-check-circle reviewed"></i>
      </div>
      <div class="doc-list__item">

@@ -130,11 +130,6 @@
            *ngIf="(passwordControls.password.touched || passwordSubmitted) && passwordControls.password.errors?.required">
       Password is required
      </span>
-     <span class="text-danger error"
-           *ngIf="(passwordControls.password.touched || passwordSubmitted) && passwordControls.password.errors?.pattern">
-      Password should contain minimum of 8 Characters with uppercase, lowercase, numbers & Special characters
-      {{ "! @ # $ % ^ & * ( ) _ + - = [ ] { } | '"}}
-     </span>
     </div>
     <div class="form-group">
      <label for="newPassword">New Password</label>

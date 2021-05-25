@@ -41,6 +41,10 @@
   }
 }
 
+.dropdown-item {
+  cursor: pointer;
+}
+
 .status-text {
   &.approved {
     color: #689f38;

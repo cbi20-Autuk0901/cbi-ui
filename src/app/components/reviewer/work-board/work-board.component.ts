@@ -3,7 +3,7 @@ import { DatastoreService } from '../../../services/data-store/data-store.servic
 import { UtilsService } from '../../../services/utils/utils.service';
 import * as moment from 'moment';
 import { BlockerService } from '../../../services/blocker/blocker.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Location } from '@angular/common';
 
 @Component({
@@ -30,7 +30,8 @@ export class WorkBoardComponent implements OnInit {
     private utils: UtilsService,
     private blocker: BlockerService,
     private route: ActivatedRoute,
-    private location: Location
+    private location: Location,
+    private router: Router
   ) {
     this.pdfHeaders = {
       'Cache-Control': 'no-cache, no-store, must-revalidate, post-check=0, pre-check=0',
@@ -157,6 +158,22 @@ export class WorkBoardComponent implements OnInit {
       this.pdfSrc = '';
       if (!isCbi) this.utils.showMessage('c', 'warn', 'Warning', 'No File uploaded under this name');
     }
+  };
+
+  rejectCertification = () => {
+    const payload = {
+      certificationId: this.selRevCertification['certificationId'],
+      certificationType: this.selRevCertification['certificationType'],
+    };
+
+    this.ds.removeCertification(payload).subscribe(
+      (res) => {
+        this.loadWorkBoard();
+      },
+      (error) => {
+        this.utils.showMessage('c', 'error', 'Error', 'Unable to Reject now. Please try again');
+      }
+    );
   };
 
   reviewerInput = (input, name) => {
