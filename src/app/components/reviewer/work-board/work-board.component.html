@@ -1,4 +1,5 @@
-<div *ngIf="!loading && !selRevCertification">
+<div
+     *ngIf="!loading && !selRevCertification || this.selRevCertification && this.selRevCertification['certificationType'] === 'bondRedemption'">
  <div class="row">
   <div class="col-8">
    <h4 class="page-header">Work Board</h4>
@@ -41,13 +42,19 @@
       <td>{{list.uniqueName | titlecase}}</td>
       <td>{{list.applicationDate | date: 'dd/MM/YYYY'}}</td>
       <td>{{list.renewableEnergy | titlecase}}</td>
-      <td ngClass="{{list.certificationStatus + ' status-text'}}">
+      <td ngClass="{{list.certificationStatus + ' status-text'}}"
+          *ngIf="list.certificationType !== 'bondRedemption' ||  (list.certificationType === 'bondRedemption' && list.certificationStatus === 'approved')">
        <span *ngIf="list.certificationStatus === 'in-review'" class="link" (click)="reviewCertification(list)">
         Under-Review
        </span>
        <span *ngIf="list.certificationStatus !== 'in-review'" class="link">
         {{list.certificationStatus | titlecase}}
        </span>
+      </td>
+      <td *ngIf="list.certificationType === 'bondRedemption' && list.certificationStatus === 'in-review'"
+          class="user-actions">
+       <i class="pi pi-check" title="Approve" (click)="actionBondRedemption('approve', list)"></i>
+       <i class="pi pi-times" title="Reject" (click)="actionBondRedemption('reject', list)"></i>
       </td>
      </tr>
     </ng-template>
@@ -80,7 +87,8 @@
   </div>
  </div>
 </div>
-<div class="row" *ngIf="!loading && selRevCertification">
+<div class="row"
+     *ngIf="!loading && selRevCertification && this.selRevCertification['certificationType'] !== 'bondRedemption'">
  <div class="col-5">
   <div class="doc-list">
    <h6 class="heading">Pre-Issuance Documentation</h6>
@@ -382,7 +390,7 @@
      </div>
     </p-scrollPanel>
    </div>
-   <div class="doc-viewer__footer" *ngIf="reportStatus['pdfLoaded']">
+   <div class="doc-viewer__footer" *ngIf="reportStatus['pdfLoaded'] && !showSuccess">
     <div class="dropdown">
      <button class="btn btn-primary" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true"
              aria-expanded="false">

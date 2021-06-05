@@ -1,9 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { DatastoreService } from './../../../services/data-store/data-store.service';
-import { MessageService } from 'primeng/api';
 import { UtilsService } from '../../../services/utils/utils.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-bond-redemption',
@@ -18,9 +17,9 @@ export class BondRedemptionComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private ds: DatastoreService,
-    private messageService: MessageService,
     private utils: UtilsService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) {
     this.mainData = {
       ...this.utils.getStore('userData'),
@@ -57,6 +56,9 @@ export class BondRedemptionComponent implements OnInit {
     this.ds.submitBondRedemption(payload).subscribe(
       (data) => {
         this.utils.showMessage('c', 'success', 'Success', 'Application Submitted Successfully');
+        setTimeout(() => {
+          this.router.navigate(['/certifications-listing'], { queryParams: { certType: 'bondRedemption' } });
+        }, 1000);
       },
       (res) => {
         this.utils.showMessage('c', 'error', 'Error', res.error.error);
@@ -71,13 +73,17 @@ export class BondRedemptionComponent implements OnInit {
   };
 
   onChange = (event, index) => {
-    this.uploadedNames[index] = event.target.files[0].name;
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const currentControl = 'file' + index;
-      this.brForm.patchValue({
-        [currentControl]: file,
-      });
+    if (event.target.files[0].type === 'application/pdf') {
+      this.uploadedNames[index] = event.target.files[0].name;
+      if (event.target.files.length > 0) {
+        const file = event.target.files[0];
+        const currentControl = 'file' + index;
+        this.brForm.patchValue({
+          [currentControl]: file,
+        });
+      }
+    } else {
+      this.utils.showMessage('c', 'error', 'Error', 'Please upload a PDF format file');
     }
   };
 }

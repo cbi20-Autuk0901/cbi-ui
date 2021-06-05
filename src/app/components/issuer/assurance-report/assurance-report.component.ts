@@ -24,8 +24,8 @@ export class AssuranceReportComponent implements OnInit {
 
   ngOnInit(): void {
     this.arForm = this.fb.group({
-      caAssuranceReport: this.fb.control(null, [Validators.required]),
-      gbAssuranceReport: this.fb.control(null, [Validators.required]),
+      caAssuranceReport: this.fb.control(null),
+      gbAssuranceReport: this.fb.control(null),
     });
   }
 
@@ -71,13 +71,17 @@ export class AssuranceReportComponent implements OnInit {
   };
 
   onChange = (event, name) => {
-    this[name] = event.target.files[0].name;
-    if (event.target.files.length > 0) {
-      const file = event.target.files[0];
-      const currentControl = name === 'caName' ? 'caAssuranceReport' : 'gbAssuranceReport';
-      this.arForm.patchValue({
-        [currentControl]: file,
-      });
+    if (event.target.files[0].type === 'application/pdf') {
+      this[name] = event.target.files[0].name;
+      if (event.target.files.length > 0) {
+        const file = event.target.files[0];
+        const currentControl = name === 'caName' ? 'caAssuranceReport' : 'gbAssuranceReport';
+        this.arForm.patchValue({
+          [currentControl]: file,
+        });
+      }
+    } else {
+      this.utils.showMessage('c', 'error', 'Error', 'Please upload a PDF format file');
     }
   };
 }

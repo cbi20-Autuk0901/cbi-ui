@@ -152,7 +152,7 @@ export class WorkBoardComponent implements OnInit {
     const isCbi = !!(name === 'cbi');
     const fileName = this.selRevCertification[name];
 
-    this.showApproveBtn(isCbi);
+    this.showApproveBtn(isCbi || !this.selRevCertification[name]);
     if (fileName) {
       this.blocker.on();
       this.pdfSrc = 'http://143.110.213.22:8883/file/' + this.selRevCertification[name];
@@ -200,12 +200,21 @@ export class WorkBoardComponent implements OnInit {
     };
 
     this.ds.approveCertification(payload).subscribe((e) => {
-      this.showSuccess = true;
+      if (this.selRevCertification['certificationType'] === 'bondRedemption') {
+        this.loadWorkBoard();
+      } else {
+        this.showSuccess = true;
+      }
     });
   };
 
   showError = (severity, title, msg) => {
     this.utils.showMessage('c', severity, title, msg);
     this.blocker.off();
+  };
+
+  actionBondRedemption = (action: string, data: object) => {
+    this.selRevCertification = data;
+    action === 'approve' ? this.submitApproval() : this.rejectCertification();
   };
 }

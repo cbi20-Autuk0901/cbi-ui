@@ -14,6 +14,7 @@ export class CertificationsListComponent implements OnInit {
   certifications: Array<object>;
   loading: boolean = true;
   certType: string;
+  selectAnnualReport: File;
 
   constructor(private ds: DatastoreService, private utils: UtilsService, private route: ActivatedRoute) {
     this.userData = this.utils.getStore('userData');
@@ -53,30 +54,43 @@ export class CertificationsListComponent implements OnInit {
   };
 
   onChange = (event, data) => {
-    if (event.target.files.length > 0) {
-      const fileName = event.target.files[0].name;
-      const file = event.target.files[0];
-      const payload = {
-        annualReport: file,
-        certificationId: data['certId'],
-        certificationType: data['certType'],
-      };
-
-      this.ds.submitAnnualReport(payload).subscribe(
-        (res) => {
-          this.utils.showMessage('c', 'success', 'Success', 'Report Uploaded Successfully');
-          this.certifications.map((e) => {
-            if (e['no'] === data.no) {
-              e['fileName'] = fileName;
-            }
-
-            return e;
-          });
-        },
-        (error) => {
-          this.utils.showMessage('c', 'error', 'Error', 'Unable to Upload Report. Please try again.');
+    if (event.target.files.length > 0 && event.target.files[0].type === 'application/pdf') {
+      this.selectAnnualReport = event.target.files[0];
+      const fileName = this.selectAnnualReport.name;
+      this.certifications.map((e) => {
+        if (e['no'] === data.no) {
+          e['fileName'] = fileName;
+        } else {
+          e['fileName'] = '';
         }
-      );
+
+        return e;
+      });
+    } else {
+      this.utils.showMessage('c', 'error', 'Error', 'Please upload a PDF format file');
     }
+  };
+
+  uploadReport = (data) => {
+    const payload = {
+      annualReport: this.selectAnnualReport,
+      certificationId: data['certId'],
+      certificationType: data['certType'],
+    };
+
+    this.ds.submitAnnualReport(payload).subscribe(
+      (res) => {
+        this.utils.showMessage('c', 'success', 'Success', 'Report Uploaded Successfully');
+        this.clearUpload();
+      },
+      (error) => {
+        this.utils.showMessage('c', 'error', 'Error', 'Unable to Upload Report. Please try again.');
+      }
+    );
+  };
+
+  clearUpload = () => {
+    this.selectAnnualReport = null;
+    this.certifications.map((e) => (e['fileName'] = ''));
   };
 }

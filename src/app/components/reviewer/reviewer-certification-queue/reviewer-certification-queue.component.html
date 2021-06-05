@@ -65,7 +65,8 @@
       <div>{{selectedCert.uniqueName}}</div>
      </div>
      <div>
-      <button class="btn btn-green" (click)="assignCert(selectedCert, 'rev')">Review</button>
+      <button class="btn btn-green" *ngIf="selectedCert.certificationType !== 'bondRedemption'"
+              (click)="assignCert(selectedCert, 'rev')">Review</button>
      </div>
 
     </div>

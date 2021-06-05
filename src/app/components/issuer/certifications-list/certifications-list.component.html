@@ -34,7 +34,12 @@
       <input type="file" #file2 (click)="file2.value = null" name="annualReport" (change)="onChange($event, list)">
      </a>
     </div>
-    <div *ngIf="list.fileName">{{list.fileName}}</div>
+    <div *ngIf="list.fileName">
+     {{list.fileName}}
+     <i class="fa fa-cloud-upload" title="Upload" (click)="uploadReport(list)">
+     </i>
+     <i class="pi pi-times" (click)="clearUpload()" title="Cancel"></i>
+    </div>
    </td>
   </tr>
  </ng-template>

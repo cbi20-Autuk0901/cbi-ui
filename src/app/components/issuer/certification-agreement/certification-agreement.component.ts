@@ -127,7 +127,7 @@ export class CertificationAgreementComponent implements OnInit {
 
   uploadFile = (event) => {
     this.utils.clearMessage();
-    if (event.target.files.length > 0) {
+    if (event.target.files.length > 0 && event.target.files[0].type === 'application/pdf') {
       const payload = {
         userEmail: this.mainData['userEmail'],
         certificationType: this.mainData['certType'],
@@ -145,6 +145,8 @@ export class CertificationAgreementComponent implements OnInit {
           this.utils.showMessage('c', 'error', 'Error', 'File upload failed');
         }
       );
+    } else {
+      this.utils.showMessage('c', 'error', 'Error', 'Please upload a PDF format file');
     }
   };
 }
