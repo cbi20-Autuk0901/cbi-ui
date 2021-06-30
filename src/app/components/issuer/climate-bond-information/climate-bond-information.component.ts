@@ -5,7 +5,7 @@ import { UtilsService } from '../../../services/utils/utils.service';
 
 import { MessageService } from 'primeng/api';
 import { DatastoreService } from '../../../services/data-store/data-store.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-climate-bond-information',
@@ -23,7 +23,7 @@ export class ClimateBondInformationComponent implements OnInit {
 
   currentForm: string;
   instrType: string;
-  calendarYears: Array<object>;
+  allocationTimingList: Array<object>;
 
   isLoading: boolean;
 
@@ -36,17 +36,19 @@ export class ClimateBondInformationComponent implements OnInit {
   ) {
     this.isLoading = true;
     this.currentForm = 'cbiForm';
-    this.calendarYears = this.utils.generateYearList(2000, 2099);
+    this.allocationTimingList = this.generateAllocateTiming();
     this.cbiForm = this.fb.group({
       uniqueName: ['', [Validators.required]],
+      isInfoConfidential: ['', [Validators.required]],
       issuanceCountry: [''],
       cusip: [''],
       isin: [''],
       coupon: [''],
       amountIssued: this.fb.array(['']),
       localCurrency: this.fb.array(['']),
-      underwriter: this.fb.array(['']),
-      daInstrumentType: [''],
+      underwriter: this.fb.array([this.fb.control('', Validators.required)]),
+      daInstrumentType: ['', [Validators.required]],
+      leadUnderwriters: [''],
       issueDate: [''],
       maturityDate: [''],
       renewableEnergy: this.fb.array([this.fb.control('', Validators.required)]),
@@ -58,27 +60,28 @@ export class ClimateBondInformationComponent implements OnInit {
       proceedsType: ['', [Validators.required]],
       proceedsProcessDetail: ['', [Validators.required]],
       proceedsAllocationTiming: ['', [Validators.required]],
+      proceedsAllocationTimingExplanation: [''],
       proceedsUse: ['', [Validators.required]],
     });
     this.cbiFormContd = this.fb.group({
-      allocationReportFreq: ['', [Validators.required]],
-      allocationReportFormat: ['', [Validators.required]],
+      allocationReportFreq: [''],
+      allocationReportFormat: [''],
       allocationReportAccess: ['', [Validators.required]],
-      allocationReportAddressLink: ['', [Validators.required]],
+      allocationReportAddressLink: [''],
       breakdownInclusion: ['', [Validators.required]],
       impactReportFreq: ['', [Validators.required]],
       impactReportFormat: ['', [Validators.required]],
       impactReportAccess: ['', [Validators.required]],
       impactReportAddressLink: ['', [Validators.required]],
-      quantitativeImpact: ['', [Validators.required]],
-      headOfficeAddress: ['', [Validators.required]],
+      quantitativeImpact: [''],
+      headOfficeAddress: [''],
       vatNumber: [''],
-      businessRegistration: ['', [Validators.required]],
-      contactName: [''],
-      position: [''],
-      company: [''],
-      contactNumber: ['', [Validators.pattern('^[0-9]*$')]],
-      invoiceName: [''],
+      businessRegistration: [''],
+      contactName: ['', [Validators.required]],
+      position: ['', [Validators.required]],
+      company: ['', [Validators.required]],
+      contactNumber: ['', [Validators.required, Validators.pattern('^[0-9]*$')]],
+      invoiceName: ['', [Validators.required]],
     });
   }
 
@@ -92,6 +95,10 @@ export class ClimateBondInformationComponent implements OnInit {
     this.cbiFormContd.valueChanges.subscribe((e) => {
       this.cbiFormContdSubmitted = false;
     });
+  }
+
+  get isInfoConfidential() {
+    return this.cbiForm.get('isInfoConfidential') as FormArray;
   }
 
   get localCurrency() {
@@ -116,6 +123,12 @@ export class ClimateBondInformationComponent implements OnInit {
   }
   get maturityDate() {
     return this.cbiForm.get('maturityDate') as FormControl;
+  }
+  get proceedsAllocationTiming() {
+    return this.cbiForm.get('proceedsAllocationTiming') as FormControl;
+  }
+  get proceedsAllocationTimingExplanation() {
+    return this.cbiForm.get('proceedsAllocationTimingExplanation') as FormControl;
   }
 
   addField(name: string, value: string, required?: boolean) {
@@ -210,5 +223,23 @@ export class ClimateBondInformationComponent implements OnInit {
 
   triggerFormSave = () => {
     this.frmBtn.nativeElement.click();
+  };
+
+  generateAllocateTiming = () => {
+    let monthsList = [];
+    for (let i = 1; i <= 25; i++) {
+      monthsList.push({
+        name: i === 1 ? '1 month' : i === 25 ? '24+ months' : i + ' months',
+        value: i === 25 ? '24+' : i.toString(),
+      });
+    }
+
+    return monthsList;
+  };
+
+  atModalOpen = (event) => {
+    this.cbiForm.patchValue({
+      proceedsAllocationTimingExplanation: '',
+    });
   };
 }

@@ -34,7 +34,20 @@
         <label for="uniqueName" class="col-sm-4 col-form-label">
          Name of {{instrType | titlecase}}</label>
         <div class="col-sm-8">
-         <input type="text" class="form-control" id="uniqueName" formControlName="uniqueName" />
+         <input type="text" class="form-control" id="uniqueName" formControlName="uniqueName"
+                placeholder="This name will appear on the certificate" />
+        </div>
+       </div>
+       <div class="form-group row required">
+        <label for="isInfoConfidential" class="col-sm-8 col-form-label">
+         Is Bond Issuance information confidential?
+        </label>
+        <div class="col-sm-4">
+         <select class="form-control" id="isInfoConfidential" formControlName="isInfoConfidential">
+          <option value="">Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+         </select>
         </div>
        </div>
        <div class="form-group row">
@@ -47,35 +60,39 @@
          <input type="text" class="form-control" id="cusip" formControlName="cusip" />
         </div>
        </div>
-       <div class="form-group row">
+       <div class="form-group row" [ngClass]="{'required': isInfoConfidential.value  !== 'yes'}">
         <label for="lc" class="col-sm-4 col-form-label">Local Currency</label>
         <div formArrayName="localCurrency" class="col">
          <div [ngClass]="{'mb-3 position-relative': localCurrency.controls.length >1}"
               *ngFor="let _ of localCurrency.controls; index as i">
           <i class="pi pi-times close-field" (click)="removeField('localCurrency', i)" *ngIf="i !== 0 "></i>
-          <input type="text" class="form-control" [formControlName]="i" />
+          <input type="text" class="form-control" [formControlName]="i"
+                 [required]="isInfoConfidential.value  !== 'yes'" />
          </div>
         </div>
-        <label for="isin" class="col-sm-2 col-form-label">ISIN</label>
-        <div class="col">
-         <input type="text" class="form-control" id="isin" formControlName="isin" />
-        </div>
        </div>
-       <div class="form-group row">
+       <div class="form-group row" [ngClass]="{'required': isInfoConfidential.value  !== 'yes'}">
         <label for="amountIssued" class="col-sm-4 col-form-label">Amount Issued In Local Currency</label>
         <div formArrayName="amountIssued" class="col">
          <div [ngClass]="{'mb-3 position-relative': amountIssued.controls.length >1}"
               *ngFor="let _ of amountIssued.controls; index as i">
           <i class="pi pi-times close-field" (click)="removeField('amountIssued', i)" *ngIf="i !== 0 "></i>
-          <input type="text" class="form-control" [formControlName]="i" />
+          <input type="text" class="form-control" [formControlName]="i"
+                 [required]="isInfoConfidential.value  !== 'yes'" />
          </div>
+        </div>
+       </div>
+       <div class="form-group row">
+        <label for="isin" class="col-sm-4 col-form-label">ISIN</label>
+        <div class="col">
+         <input type="text" class="form-control" id="isin" formControlName="isin" />
         </div>
         <label for="coupon" class="col-sm-2 col-form-label">Coupon</label>
         <div class="col">
          <input type="text" class="form-control" id="coupon" formControlName="coupon" />
         </div>
        </div>
-       <div class="form-group row">
+       <div class="form-group row required">
         <label for="underwriter" class="col-sm-4 col-form-label">Verifier</label>
         <div formArrayName="underwriter" class="col-sm-8">
          <div [ngClass]="{'mb-3 position-relative': underwriter.controls.length >1}"
@@ -138,7 +155,7 @@
          </div>
         </div>
        </div>
-       <div class="form-group row">
+       <div class="form-group row required">
         <label for="daInstrumentType" class="col-sm-4 col-form-label">
          Instrument Type
         </label>
@@ -156,29 +173,44 @@
          </select>
         </div>
        </div>
-       <div class="form-group row">
+       <div class="form-group row" [ngClass]="{'required': isInfoConfidential.value  !== 'yes'}">
+        <label for="leadUnderwriters" class="col-sm-4 col-form-label">
+         Lead Underwriters</label>
+        <div class="col-sm-8">
+         <input type="text" class="form-control" id="leadUnderwriters" formControlName="leadUnderwriters"
+                [required]="isInfoConfidential.value  !== 'yes'" />
+        </div>
+       </div>
+       <div class="form-group row" [ngClass]="{'required': isInfoConfidential.value  !== 'yes'}">
         <label for="issueDate" class="col-sm-4 col-form-label">Issue Date</label>
         <div class="col-6">
          <p-calendar styleClass="form-control p-0" [showIcon]="true" icon="fa fa-calendar" formControlName="issueDate"
                      [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2099" inputId="issueDate"
-                     dateFormat="dd-mm-yy"></p-calendar>
+                     dateFormat="dd-mm-yy" [required]="isInfoConfidential.value  !== 'yes'"></p-calendar>
         </div>
        </div>
-       <div class="form-group row">
+       <div class="form-group row" [ngClass]="{'required': isInfoConfidential.value  !== 'yes'}">
         <label for="maturityDate" class="col-sm-4 col-form-label">Maturity Date</label>
         <div class="col-6">
          <p-calendar styleClass="form-control p-0" [showIcon]="true" icon="fa fa-calendar"
                      formControlName="maturityDate" [monthNavigator]="true" [yearNavigator]="true" yearRange="2000:2099"
-                     inputId="maturityDate" dateFormat="dd-mm-yy"></p-calendar>
+                     inputId="maturityDate" dateFormat="dd-mm-yy" [required]="isInfoConfidential.value  !== 'yes'">
+         </p-calendar>
         </div>
        </div>
       </div>
      </div>
      <div class="form-card__section">
       <div class="form-card__title">
-       <div>{{instrType | titlecase}} Details</div>
-       <a class="btn btn-secondary" (click)="addField('renewableEnergy', ''); addField('renewableEnergyText', ''); ">Add
-        +</a>
+       <div>Sector Criteria
+        <p class="form-card__title-note">Please utilise the 'Add' button if bond covers more than one sector criteria'
+        </p>
+       </div>
+       <div>
+        <a class="btn btn-secondary"
+           (click)="addField('renewableEnergy', ''); addField('renewableEnergyText', ''); ">Add
+         +</a>
+       </div>
       </div>
       <div class="form-card__body">
        <div class="form-group row required">
@@ -227,14 +259,21 @@
         <label for="financingAssets" class="col-sm-6 col-form-label">Refinancing of existing assets or financing new
          assets?</label>
         <div class="col-sm-6">
-         <input type="text" class="form-control" id="financingAssets" formControlName="financingAssets" />
+         <select class="form-control" formControlName="financingAssets">
+          <option value="">Select</option>
+          <option value="refinancingExisting">
+           Refinancing of existing assets</option>
+          <option value="refinancingNew">Refinancing of new assets</option>
+          <option value="both">Both</option>
+         </select>
         </div>
        </div>
        <div class="form-group row required">
         <label for="proceedsAllocation" class="col-sm-6 col-form-label">Proceeds allocation across different project
          categories?</label>
         <div class="col-sm-6">
-         <input type="text" class="form-control" id="proceedsAllocation" formControlName="proceedsAllocation" />
+         <input type="text" class="form-control" id="proceedsAllocation" formControlName="proceedsAllocation"
+                placeholder="eg: 30% solar, 70% wind" />
         </div>
        </div>
       </div>
@@ -248,7 +287,11 @@
         <label for="portfolioApproach" class="col-sm-6 col-form-label">Is there to be a portfolio(framework)
          approach?</label>
         <div class="col-sm-6">
-         <input type="text" class="form-control" id="portfolioApproach" formControlName="portfolioApproach" />
+         <select class="form-control" formControlName="portfolioApproach" required>
+          <option value="" selected>Select</option>
+          <option value="yes">Yes</option>
+          <option value="no">No</option>
+         </select>
         </div>
        </div>
        <div class="form-group row required">
@@ -274,7 +317,7 @@
        </div>
        <div class="form-group row required">
         <label for="proceedsProcessDetail" class="col-sm-6 col-form-label">Provide detail on either earmarking or
-         ringference process</label>
+         ringfencing process</label>
         <div class="col-sm-6">
          <input type="text" class="form-control" id="proceedsProcessDetail" formControlName="proceedsProcessDetail" />
         </div>
@@ -283,15 +326,67 @@
         <label for="proceedsAllocationTiming" class="col-sm-6 col-form-label">Timing for allocation of
          {{instrType | titlecase}} proceeds</label>
         <div class="col-sm-6">
-         <select class="form-control" formControlName="proceedsAllocationTiming">
+         <select class="form-control"
+                 formControlName="proceedsAllocationTiming"
+                 (change)="atModalOpen($event)">
           <option value="">Select</option>
-          <option *ngFor="let year of calendarYears" [ngValue]="year['value']">{{year['name']}}</option>
+          <option *ngFor="let month of allocationTimingList" value="{{month['value']}}">{{month['name']}}</option>
          </select>
+
+         <!-- <button type="button" #allocationTimingModal class="d-none" data-toggle="modal"
+                 data-backdrop="static"
+                 data-target="#allocationTimingModal"></button>
+
+         <div class="modal fade" id="allocationTimingModal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+           <div class="modal-content">
+            <button type="button" class="close d-none" data-dismiss="modal" aria-label="Close" #closeModalEle>
+            </button>
+            <div class="form-group">
+             <label for="proceedsAllocationTimingExplanation">Please explain the timing of this</label>
+             <textarea type="email" class="form-control" id="proceedsAllocationTimingExplanation"
+                       formControlName="proceedsAllocationTimingExplanation"></textarea>
+             <div class="mt-4 text-center"><a class="btn btn-green" (click)="closeModal()">Save</a></div>
+
+            </div>
+           </div>
+          </div>
+         </div> -->
+        </div>
+       </div>
+       <div class="form-group row"
+            [ngClass]="{'required': proceedsAllocationTiming.value  === '24+', 'd-none': proceedsAllocationTiming.value  !== '24+'}">
+        <label for="proceedsAllocationTiming" class="col-sm-6 col-form-label">
+         Please explain the timing of this</label>
+        <div class="col-sm-6">
+         <textarea type="email" class="form-control" id="proceedsAllocationTimingExplanation"
+                   formControlName="proceedsAllocationTimingExplanation"
+                   [required]="proceedsAllocationTiming.value === '24+'"></textarea>
+
+         <!-- <button type="button" #allocationTimingModal class="d-none" data-toggle="modal"
+                 data-backdrop="static"
+                 data-target="#allocationTimingModal"></button>
+
+         <div class="modal fade" id="allocationTimingModal" tabindex="-1" role="dialog" aria-hidden="true">
+          <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+           <div class="modal-content">
+            <button type="button" class="close d-none" data-dismiss="modal" aria-label="Close" #closeModalEle>
+            </button>
+            <div class="form-group">
+             <label for="proceedsAllocationTimingExplanation">Please explain the timing of this</label>
+             <textarea type="email" class="form-control" id="proceedsAllocationTimingExplanation"
+                       formControlName="proceedsAllocationTimingExplanation"></textarea>
+             <div class="mt-4 text-center"><a class="btn btn-green" (click)="closeModal()">Save</a></div>
+
+            </div>
+           </div>
+          </div>
+         </div> -->
         </div>
        </div>
        <div class="form-group row required">
-        <label for="proceedsUse" class="col-sm-6 col-form-label">Use of proceeds before allocation to Certified
-         assets/projects</label>
+        <label for="proceedsUse" class="col-sm-6 col-form-label">Decribe how the proceeds will be used before allocated
+         to assets / projects</label>
         <div class="col-sm-6">
          <input type="text" class="form-control" id="proceedsUse" formControlName="proceedsUse" />
         </div>
@@ -317,14 +412,14 @@
      <div class="form-card__section">
       <div class="form-card__title">Allocation Report</div>
       <div class="form-card__body">
-       <div class="form-group row required">
+       <!-- <div class="form-group row required">
         <label for="allocationReportFreq" class="col-sm-6 col-form-label">How often will there be a report? <br>(require
          one year at minimum)</label>
         <div class="col-sm-6">
          <input type="text" class="form-control" id="allocationReportFreq" formControlName="allocationReportFreq" />
         </div>
-       </div>
-       <div class="form-group row required">
+       </div> -->
+       <div class="form-group row">
         <label for="allocationReportFormat" class="col-sm-6 col-form-label">
          In what format (newsletter, part of CSR report, website disclosure / EMMA report)</label>
         <div class="col-sm-6">
@@ -336,10 +431,14 @@
          Will the report be public or bondholder/lender only?
         </label>
         <div class="col-sm-6">
-         <input type="text" class="form-control" id="allocationReportAccess" formControlName="allocationReportAccess" />
+         <select class="form-control" formControlName="allocationReportAccess">
+          <option value="">Select</option>
+          <option value="public">Public</option>
+          <option value="bondholderLender">Bondholder/lender</option>
+         </select>
         </div>
        </div>
-       <div class="form-group row required">
+       <div class="form-group row">
         <label for="allocationReportAddressLink" class="col-sm-6 col-form-label">
          If report will be on issuer website, please give website address
         </label>
@@ -392,21 +491,21 @@
                 formControlName="impactReportAddressLink" />
         </div>
        </div>
-       <div class="form-group row required">
+       <!-- <div class="form-group row required">
         <label for="quantitativeImpact" class="col-sm-6 col-form-label">
          Will there be quantitative impact indicators disclosed for each project category?
         </label>
         <div class="col-sm-6">
          <input type="text" class="form-control" id="quantitativeImpact" formControlName="quantitativeImpact" />
         </div>
-       </div>
+       </div> -->
       </div>
      </div>
     </div>
    </div>
    <div class="col">
     <div class="form-card">
-     <div class="form-card__section">
+     <!-- <div class="form-card__section">
       <div class="form-card__title">
        <div>Company Information</div>
       </div>
@@ -420,7 +519,8 @@
        <div class="form-group row">
         <label for="vatNumber" class="col-sm-4 col-form-label">VAT Number (EU Countries)</label>
         <div class="col-sm-8">
-         <input type="text" class="form-control" id="vatNumber" formControlName="vatNumber" />
+         <input type="text" class="form-control" id="vatNumber" formControlName="vatNumber"
+                placeholder="mandatory for EU issuers" />
         </div>
        </div>
        <div class="form-group row required">
@@ -430,31 +530,31 @@
         </div>
        </div>
       </div>
-     </div>
+     </div> -->
      <div class="form-card__section">
       <div class="form-card__title">
        <div>Contact Person</div>
       </div>
       <div class="form-card__body">
-       <div class="form-group row">
+       <div class="form-group row required">
         <label for="contactName" class="col-sm-4 col-form-label">Name</label>
         <div class="col-sm-8">
          <input type="text" class="form-control" id="contactName" formControlName="contactName" />
         </div>
        </div>
-       <div class="form-group row">
+       <div class="form-group row required">
         <label for="position" class="col-sm-4 col-form-label">Position</label>
         <div class="col-sm-8">
          <input type="text" class="form-control" id="position" formControlName="position" />
         </div>
        </div>
-       <div class="form-group row">
+       <div class="form-group row required">
         <label for="company" class="col-sm-4 col-form-label">Company</label>
         <div class="col-sm-8">
          <input type="text" class="form-control" id="company" formControlName="company" />
         </div>
        </div>
-       <div class="form-group row">
+       <div class="form-group row required">
         <label for="contactNumber" class="col-sm-4 col-form-label">Contact number</label>
         <div class="col-sm-8">
          <input type="text" class="form-control" id="contactNumber" formControlName="contactNumber" />
@@ -465,7 +565,7 @@
      <div class="form-card__section">
       <div class="form-card__title">Invoice Details</div>
       <div class="form-card__body">
-       <div class="form-group row">
+       <div class="form-group row required">
         <label for="invoiceName" class="col-sm-4 col-form-label">
          Invoice name
         </label>

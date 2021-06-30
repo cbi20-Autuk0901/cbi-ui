@@ -14,7 +14,13 @@
  <div class="col-5" *ngIf="!(mainData['certType'] === 'post')">
   <div class="form-card h-100">
    <div class="form-card__title">
-    <div>User Information</div>
+    <div>User Information for the Agreement
+     <p class="form-card__title-note">Please fill the details, save, and download the agreement for review and
+      signature.
+      Upload the signed agreement and
+      then proceed to complete the process.
+     </p>
+    </div>
    </div>
    <form [formGroup]="caForm">
     <div class="form-group row">
